@@ -21,6 +21,9 @@
   ::-webkit-scrollbar-thumb{background:#d7dae6;border-radius:8px}
   .mark{display:inline-block;line-height:0}
   .mark svg{display:block}
+  .ic{display:inline-block;vertical-align:-.18em;flex-shrink:0}
+  .club-ic{width:52px;height:52px;border-radius:14px;background:var(--soft);color:var(--pri);display:flex;align-items:center;justify-content:center;margin:0 auto}
+  .nav-item .ni svg,.k-ic svg{display:block}
   .avatar{border-radius:50%;background:var(--soft);color:var(--pri);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;background-size:cover;background-position:center;overflow:hidden}
 
   /* ---------- Login ---------- */
@@ -281,23 +284,16 @@
     <div class="brand"><span id="top-mark"></span>MBA <b>Lounge</b></div>
     <button class="school-chip" id="schoolChip" title="학교 변경"></button>
     <div class="spacer"></div>
-    <div class="search">🔎<input id="globalSearch" placeholder="원우·모임·게시글 검색" /></div>
+    <div class="search"><svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14M21 21l-4.3-4.3"/></svg><input id="globalSearch" placeholder="원우·모임·게시글 검색" /></div>
     <button class="me-btn" id="meBtn"><span class="avatar" id="meAv" style="width:40px;height:40px;font-size:15px"></span></button>
   </div>
 
   <div class="shell">
     <aside class="sidebar">
       <div class="side-h">메뉴</div>
-      <button class="nav-item" data-view="home"><span class="ni">🏠</span>홈</button>
-      <button class="nav-item" data-view="board"><span class="ni">💼</span>비즈니스 게시판</button>
-      <button class="nav-item" data-view="meet"><span class="ni">🤝</span>만남 · 미팅</button>
-      <button class="nav-item" data-view="dir"><span class="ni">📇</span>원우수첩</button>
-      <button class="nav-item" data-view="club"><span class="ni">🎫</span>동아리</button>
-      <button class="nav-item" data-view="notice"><span class="ni">🔔</span>공지</button>
-      <button class="nav-item" data-view="officer"><span class="ni">👑</span>임원 공지</button>
-      <button class="nav-item" data-view="officeradmin" id="nav-admin"><span class="ni">🛠️</span>임원 관리</button>
+      <div id="navMain"></div>
       <div class="side-h" style="margin-top:12px">내 활동</div>
-      <button class="nav-item" data-view="me"><span class="ni">👤</span>내 프로필</button>
+      <div id="navMine"></div>
     </aside>
     <main class="main" id="main"></main>
   </div>
@@ -331,6 +327,35 @@ function schoolMark(s,size){
 }
 function avatarHTML(u,size,cls){size=size||40;const st=`width:${size}px;height:${size}px;font-size:${Math.round(size*0.38)}px;`+((u&&u.photo)?`background-image:url('${u.photo}');color:transparent;`:'');
   return `<span class="avatar ${cls||''}" style="${st}">${(u&&u.photo)?'':((u&&u.name)||'?').slice(0,1)}</span>`;}
+const ICONS={
+  home:'M3 10.5 12 3l9 7.5M5 9.5V21h5v-6h4v6h5V9.5',
+  briefcase:'M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM8 6V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1M3 12h18',
+  users:'M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M21 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8',
+  idcard:'M3 5.5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM8.5 12.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4M5.5 17a3 3 0 0 1 6 0M14.5 9.5h4M14.5 12.5h4M14.5 15.5h3',
+  ticket:'M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2 2 2 0 0 0 0 4 2 2 0 0 1-2 2H6a2 2 0 0 1-2-2 2 2 0 0 0 0-4zM14 6.5v11',
+  bell:'M6 9a6 6 0 0 1 12 0c0 4.5 2 5.5 2 5.5H4S6 13.5 6 9M10 19a2 2 0 0 0 4 0',
+  award:'M12 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10M8.5 13 7.5 21l4.5-2.3L16.5 21l-1-8',
+  settings:'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6M20 12a1.6 1.6 0 0 0 .3 1.8 2 2 0 1 1-2.8 2.8 1.6 1.6 0 0 0-2.7 1.1V20a2 2 0 1 1-4 0 1.6 1.6 0 0 0-2.7-1.1 2 2 0 1 1-2.8-2.8A1.6 1.6 0 0 0 3.4 13.4a2 2 0 1 1 0-4A1.6 1.6 0 0 0 4.7 6.6a2 2 0 1 1 2.8-2.8A1.6 1.6 0 0 0 10 4.9a2 2 0 1 1 4 0 1.6 1.6 0 0 0 2.5 1.1 2 2 0 1 1 2.8 2.8A1.6 1.6 0 0 0 20 12z',
+  user:'M12 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M5.5 20a6.5 6.5 0 0 1 13 0',
+  calendar:'M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v13A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5zM4 9h16M8 3v3M16 3v3',
+  pin:'M12 21c4-4 7-7.5 7-11a7 7 0 1 0-14 0c0 3.5 3 7 7 11M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5',
+  tag:'M3.5 12.5V4.5A1 1 0 0 1 4.5 3.5h8L20.5 11.5a1.5 1.5 0 0 1 0 2L14 20a1.5 1.5 0 0 1-2 0zM7.5 7.5h.01',
+  lock:'M6 11a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 18 11v7.5A1.5 1.5 0 0 1 16.5 20h-9A1.5 1.5 0 0 1 6 18.5zM8.5 9.5V7a3.5 3.5 0 0 1 7 0v2.5',
+  heart:'M12 20C5.5 16 3 12 3 8.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 9 2.5C21 12 18.5 16 12 20z',
+  comment:'M20 12a8 8 0 0 1-11.5 7.2L4 20.5l1.3-4.4A8 8 0 1 1 20 12z',
+  search:'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14M21 21l-4.3-4.3',
+  camera:'M4 8.5A1.5 1.5 0 0 1 5.5 7h1.7l1-1.8h5.6l1 1.8h1.7A1.5 1.5 0 0 1 19 8.5v9A1.5 1.5 0 0 1 17.5 19h-12A1.5 1.5 0 0 1 4 17.5zM12 15.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6',
+  eye:'M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12M12 14.8a2.8 2.8 0 1 0 0-5.6 2.8 2.8 0 0 0 0 5.6',
+  check:'M20 6.5 9.5 17 4 11.5',
+  plus:'M12 5v14M5 12h14',
+  star:'M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8L3.5 9.7l5.9-.9z',
+  activity:'M3 12h4l2.5 7 5-14 2.5 7h4',
+  trend:'M4 16l5-5 4 4 7-8M16 7h5v5',
+  wine:'M8 3.5h8s.4 6.5-4 6.5-4-6.5-4-6.5zM12 10v8M8.5 21h7',
+  book:'M5 5.5A1.5 1.5 0 0 1 6.5 4H18v14H6.5A1.5 1.5 0 0 0 5 19.5zM7 4v13'
+};
+function ico(n,s){s=s||18;return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[n]||''}"/></svg>`;}
+function catIcon(c){return {'스포츠':'activity','비즈니스':'trend','취미':'wine','학습':'book'}[c]||'ticket';}
 
 const seedMembers=[
   {sid:'2021-1201',pw:'1234',name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',head:'제조 전략기획 · 신사업 개발',email:'sjyoon@oo.co.kr',phone:'010-2201-1188',birth:'1982-05-14',photo:'',career:[{c:'OO컨설팅',r:'컨설턴트',p:'2010–2015'},{c:'OO기업',r:'전략기획 차장',p:'2015–2021'}],clubs:['골프 동아리','재테크·투자 스터디'],officer:'회장',role:'member',exposure:'full'},
@@ -452,6 +477,9 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
+  const NAVM=[['home','홈','home'],['board','비즈니스 게시판','briefcase'],['meet','만남 · 미팅','users'],['dir','원우수첩','idcard'],['club','동아리','ticket'],['notice','공지','bell'],['officer','임원 공지','award'],['officeradmin','임원 관리','settings']];
+  document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item" data-view="${x[0]}"${x[0]==='officeradmin'?' id="nav-admin"':''}><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
+  document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>`;
   document.getElementById('nav-admin').style.display=(u.role==='admin')?'':'none';
   document.querySelectorAll('.nav-item').forEach(b=>{b.onclick=()=>go(b.dataset.view);});
   document.getElementById('schoolChip').onclick=switchSchool;
@@ -479,27 +507,27 @@ function viewHome(m){
   m.innerHTML=`
     <div class="hero-band">
       <div class="eyebrow" style="color:rgba(255,255,255,.85)">${s.name} MBA</div>
-      <h2>${esc(S.user.name)}님, 환영합니다 👋</h2>
+      <h2>${esc(S.user.name)}님, 환영합니다</h2>
       <p>오늘도 원우들과 만나고, 연결되고, 함께 사업을 키워보세요.</p>
       <span class="slogan">“${slogans[s.name]||'함께 성장하는 원우 네트워크'}”</span>
     </div>
     <div class="kpis">
-      <div class="kpi card"><div class="k-ic">🤝</div><div class="k-n">${S.meets.length}</div><div class="k-l">참여 가능한 만남·미팅</div></div>
-      <div class="kpi card"><div class="k-ic">📇</div><div class="k-n">${ex}</div><div class="k-l">교환한 연락처</div></div>
-      <div class="kpi card"><div class="k-ic">💼</div><div class="k-n">${S.posts.length}</div><div class="k-l">비즈니스 게시글</div></div>
+      <div class="kpi card"><div class="k-ic">${ico('users',24)}</div><div class="k-n">${S.meets.length}</div><div class="k-l">참여 가능한 만남·미팅</div></div>
+      <div class="kpi card"><div class="k-ic">${ico('idcard',24)}</div><div class="k-n">${ex}</div><div class="k-l">교환한 연락처</div></div>
+      <div class="kpi card"><div class="k-ic">${ico('briefcase',24)}</div><div class="k-n">${S.posts.length}</div><div class="k-l">비즈니스 게시글</div></div>
     </div>
     <div class="dash-grid">
       <div class="panel card">
-        <h3>🤝 다가오는 만남·미팅 <span class="more" data-go="meet">전체보기</span></h3>
+        <h3>${ico('users',18)} 다가오는 만남·미팅 <span class="more" data-go="meet">전체보기</span></h3>
         ${S.meets.slice(0,3).map(x=>`<div class="mini-row"><span class="date-chip">${x.date}</span><div><div class="mt">${esc(x.title)}</div><div class="ms">${esc(x.place)} · ${x.going}/${x.cap}명</div></div></div>`).join('')}
       </div>
       <div class="panel card">
-        <h3>💼 최신 비즈니스 소식 <span class="more" data-go="board">전체보기</span></h3>
+        <h3>${ico('briefcase',18)} 최신 비즈니스 소식 <span class="more" data-go="board">전체보기</span></h3>
         ${S.posts.slice(0,3).map(x=>`<div class="mini-row"><span class="cat-tag ${x.cat}">${catName(x.cat)}</span><div><div class="mt">${esc(x.title)}</div><div class="ms">${esc(x.who)} · ${esc(x.co)}</div></div></div>`).join('')}
       </div>
     </div>
     <div class="panel card" style="margin-top:16px">
-      <h3>📇 원우수첩에서 새로운 인연을 <span class="more" data-go="dir">원우 보기</span></h3>
+      <h3>${ico('idcard',18)} 원우수첩에서 새로운 인연을 <span class="more" data-go="dir">원우 보기</span></h3>
       <p style="color:var(--sub);font-size:13.5px;margin-top:4px">관심 있는 원우와 연락처를 교환하고 사업·커리어로 연결되세요.</p>
     </div>`;
   m.querySelectorAll('[data-go]').forEach(e=>e.addEventListener('click',()=>go(e.dataset.go)));
@@ -514,7 +542,7 @@ function viewBoard(m){
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Business</div><h1>비즈니스 게시판</h1><p>원우들과 사업 제휴·투자·채용·정보를 나누세요.</p></div>
-      <button class="btn" id="newPost">＋ 글쓰기</button></div>
+      <button class="btn" id="newPost">${ico('plus',15)} 글쓰기</button></div>
     <div class="chip-row">${cats.map(c=>`<button class="chip ${boardCat===c[0]?'on':''}" data-c="${c[0]}">${c[1]}</button>`).join('')}</div>
     <div id="postList">${list.map(postHTML).join('')||'<div class="empty">아직 게시글이 없습니다. 첫 글을 남겨보세요.</div>'}</div>`;
   m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{boardCat=c.dataset.c;viewBoard(m);}));
@@ -527,8 +555,8 @@ function postHTML(p){
       <span class="cat-tag ${p.cat}">${catName(p.cat)}</span></div>
     <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div>
     <div class="post-actions">
-      <button class="like ${p.liked?'on':''}" data-id="${p.id}">❤ <span>${p.likes}</span></button>
-      <button class="cbtn" data-id="${p.id}">💬 댓글 ${p.comments.length}</button></div>
+      <button class="like ${p.liked?'on':''}" data-id="${p.id}">${ico('heart',15)} <span>${p.likes}</span></button>
+      <button class="cbtn" data-id="${p.id}">${ico('comment',15)} 댓글 ${p.comments.length}</button></div>
     <div class="comments">
       ${p.comments.map(c=>`<div class="cmt"><b>${esc(c.by)}</b><span>${esc(c.txt)}</span></div>`).join('')}
       <div class="cmt-form"><input placeholder="댓글 달기..." data-id="${p.id}"><button class="btn sm cadd" data-id="${p.id}">등록</button></div>
@@ -554,7 +582,7 @@ function viewMeet(m){
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Meet</div><h1>만남 · 미팅</h1><p>원우들과의 모임과 네트워킹 행사에 참여하세요.</p></div>
-      <button class="btn" id="newMeet">＋ 모임 만들기</button></div>
+      <button class="btn" id="newMeet">${ico('plus',15)} 모임 만들기</button></div>
     <div class="meet-grid">${S.meets.map(meetHTML).join('')}</div>`;
   m.querySelector('#newMeet').addEventListener('click',newMeet);
   m.querySelectorAll('.attend').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);
@@ -562,11 +590,11 @@ function viewMeet(m){
 }
 function meetHTML(x){const pct=Math.min(100,Math.round(x.going/x.cap*100));
   return `<div class="meet-card card">
-    <div class="m-date">📅 ${x.date}</div><h3>${esc(x.title)}</h3>
-    <div class="m-info"><span>📍 ${esc(x.place)}</span><span>🏷 ${esc(x.org)}</span><span>👤 주최 ${esc(x.by)}</span></div>
+    <div class="m-date">${ico('calendar',15)} ${x.date}</div><h3>${esc(x.title)}</h3>
+    <div class="m-info"><span>${ico('pin',14)} ${esc(x.place)}</span><span>${ico('tag',14)} ${esc(x.org)}</span><span>${ico('user',14)} 주최 ${esc(x.by)}</span></div>
     <div style="color:#464c59;font-size:13.5px;margin-top:10px;flex:1">${esc(x.desc)}</div>
     <div class="meet-foot"><div class="cap-bar"><i style="width:${pct}%"></i></div><span class="cap-txt">${x.going}/${x.cap}</span>
-      <button class="attend ${x.attend?'going':''}" data-id="${x.id}">${x.attend?'참여중 ✓':'참여하기'}</button></div></div>`;
+      <button class="attend ${x.attend?'going':''}" data-id="${x.id}">${x.attend?ico('check',13)+' 참여중':'참여하기'}</button></div></div>`;
 }
 function newMeet(){
   openModal('모임 만들기',`
@@ -606,20 +634,20 @@ function memHTML(x){
   const expBadge=exp==='full'?'<span class="badge-exp full">전체 공개</span>':(exp==='minimal'?'<span class="badge-exp minimal">최소 공개</span>':'<span class="badge-exp">기본</span>');
   let rows=`<div class="kv"><span class="k">학번</span><span class="v">${esc(x.sid)}</span></div>
     <div class="kv"><span class="k">이메일</span><span class="v">${esc(x.email)}</span></div>
-    <div class="kv"><span class="k">생년월일</span><span class="v">${canSee('birth')?(esc(x.birth)||'—'):'<span class="lock">🔒 교환 후 공개</span>'}</span></div>
-    <div class="kv"><span class="k">연락처</span><span class="v">${canSee('phone')?(esc(x.phone)||'—'):'<span class="lock">🔒 교환 후 공개</span>'}</span></div>`;
-  let careerHTML=canSee('career')?((x.career&&x.career.length)?x.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>'):'<div class="lock">🔒 교환 후 공개</div>';
+    <div class="kv"><span class="k">생년월일</span><span class="v">${canSee('birth')?(esc(x.birth)||'—'):('<span class="lock">'+ico('lock',13)+' 교환 후 공개</span>')}</span></div>
+    <div class="kv"><span class="k">연락처</span><span class="v">${canSee('phone')?(esc(x.phone)||'—'):('<span class="lock">'+ico('lock',13)+' 교환 후 공개</span>')}</span></div>`;
+  let careerHTML=canSee('career')?((x.career&&x.career.length)?x.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>'):('<div class="lock">'+ico('lock',13)+' 교환 후 공개</div>');
   const needExch=(!done)&&(EXP[exp].protect.length>0);
   return `<div class="mem-card card">
     <div class="mem-top">${avatarHTML(x,56,'mem-av')}
-      <div style="flex:1"><div class="mem-nm">${esc(x.name)} ${x.officer?`<span class="badge-off">👑 ${esc(x.officer)}</span>`:''} ${expBadge}</div>
+      <div style="flex:1"><div class="mem-nm">${esc(x.name)} ${x.officer?`<span class="badge-off">${ico('star',11)} ${esc(x.officer)}</span>`:''} ${expBadge}</div>
         <div class="mem-sub">${ss?ss.short:''} · ${esc(x.course)} ${x.gisu}기</div>
         <div class="mem-head">${esc(x.company)} · ${esc(x.title)}</div>
         ${x.head?`<div class="mem-sub" style="margin-top:3px">“${esc(x.head)}”</div>`:''}</div></div>
     <div class="mem-sec">${rows}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">소속 동아리</div>${(x.clubs&&x.clubs.length)?`<div class="club-tags">${x.clubs.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div>`:'<div class="lock">없음</div>'}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">이력</div>${careerHTML}</div>
-    ${needExch?`<div class="exch-line"><button class="btn sm exch" data-k="${key}">연락처 교환</button><span class="lock">교환하면 잠긴 정보가 공개됩니다</span></div>`:(done?'<div class="exch-line"><span class="exchanged">✓ 연락처 교환 완료</span></div>':'')}
+    ${needExch?`<div class="exch-line"><button class="btn sm exch" data-k="${key}">연락처 교환</button><span class="lock">교환하면 잠긴 정보가 공개됩니다</span></div>`:(done?('<div class="exch-line"><span class="exchanged">'+ico('check',13)+' 연락처 교환 완료</span></div>'):'')}
   </div>`;
 }
 
@@ -630,9 +658,9 @@ function viewClub(m){
     <div class="page-head"><div class="eyebrow">Clubs</div><h1>동아리</h1><p>관심 있는 동아리에 가입하면 내 프로필과 원우수첩에 '소속 동아리'로 자동 표시됩니다.</p></div>
     ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
     <div class="dir-grid">${seedClubs.map(c=>{const j=mine.includes(c.name);return `
-      <div class="club-card card"><div class="club-emoji">${c.emoji}</div><div class="club-nm">${esc(c.name)}</div>
+      <div class="club-card card"><div class="club-ic">${ico(catIcon(c.cat),26)}</div><div class="club-nm">${esc(c.name)}</div>
         <div class="club-cat">${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명</div><div class="club-desc">${esc(c.desc)}</div>
-        <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${j?'가입됨 ✓ · 탈퇴하기':'＋ 가입하기'}</button></div>`;}).join('')}</div>`;
+        <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${j?ico('check',13)+' 가입됨 · 탈퇴하기':ico('plus',15)+' 가입하기'}</button></div>`;}).join('')}</div>`;
   m.querySelectorAll('.join').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.c;const arr=S.user.clubs||[];
     const i=arr.indexOf(n);if(i>=0){arr.splice(i,1);toast(n+' 탈퇴했습니다');}else{arr.push(n);toast(n+' 가입 완료');}S.user.clubs=arr;save();viewClub(m);}));
 }
@@ -641,12 +669,12 @@ function viewClub(m){
 function isOfficer(){return !!(S.user.officer)||S.user.role==='admin';}
 function viewOfficer(m){
   if(!isOfficer()){m.innerHTML=`<div class="page-head"><div class="eyebrow">Officers</div><h1>임원 공지</h1></div>
-    <div class="card" style="padding:44px;text-align:center"><div style="font-size:36px">🔒</div><p style="margin-top:12px;color:var(--sub);font-size:14.5px">임원진 전용 공지 게시판입니다.<br>임원으로 임명되면 열람·작성할 수 있습니다.</p></div>`;return;}
+    <div class="card" style="padding:44px;text-align:center"><div style="color:var(--pri);margin-bottom:6px">${ico('lock',40)}</div><p style="margin-top:12px;color:var(--sub);font-size:14.5px">임원진 전용 공지 게시판입니다.<br>임원으로 임명되면 열람·작성할 수 있습니다.</p></div>`;return;}
   m.innerHTML=`<div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Officers</div><h1>임원 공지</h1><p>임원진만 열람·작성하는 내부 공지 게시판입니다.</p></div>
-      <button class="btn" id="newOff">＋ 공지 작성</button></div>
+      <button class="btn" id="newOff">${ico('plus',15)} 공지 작성</button></div>
     <div>${S.officerPosts.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
-      <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">👑 ${esc(p.role)}</span></div><div class="meta">${p.date}</div></div></div>
+      <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">${ico('star',11)} ${esc(p.role)}</span></div><div class="meta">${p.date}</div></div></div>
       <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}</div>`;
   m.querySelector('#newOff').addEventListener('click',()=>openModal('임원 공지 작성',
     `<div class="fld"><label>제목</label><input id="of-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="of-b" placeholder="임원진에게 전달할 내용을 적어주세요"></textarea></div>`,
@@ -671,7 +699,7 @@ function viewOfficerAdmin(m){
       ${invites.length?invites.map((iv,i)=>`<div class="mini-row"><div style="flex:1"><div class="mt">${esc(iv.name)} — ${esc(iv.role)}</div><div class="ms">승인 대기</div></div><button class="btn sm apprv" data-i="${i}">승인</button> <button class="btn sm gray rej" data-i="${i}">취소</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">대기 중인 초대가 없습니다.</div>'}</div>
     <div class="card" style="padding:24px">
       <div style="font-weight:800;margin-bottom:12px">현재 임원진 (${officers.length}명)</div>
-      ${officers.length?officers.map(x=>`<div class="mini-row"><span class="badge-off">👑 ${esc(x.officer)}</span><div style="flex:1"><div class="mt">${esc(x.name)}</div><div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div><button class="btn sm gray unoff" data-k="${esc(x.sid)}">해제</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">임명된 임원이 없습니다.</div>'}</div>`;
+      ${officers.length?officers.map(x=>`<div class="mini-row"><span class="badge-off">${ico('star',11)} ${esc(x.officer)}</span><div style="flex:1"><div class="mt">${esc(x.name)}</div><div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div><button class="btn sm gray unoff" data-k="${esc(x.sid)}">해제</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">임명된 임원이 없습니다.</div>'}</div>`;
   m.querySelector('#inv-send').addEventListener('click',()=>{const sid=document.getElementById('inv-mem').value;const acc=acctBySid(sid);if(!acc)return;const role=document.getElementById('inv-role').value;
     S.officerInvites=S.officerInvites||[];S.officerInvites.push({sid:sid,name:acc.name,role:role});save();viewOfficerAdmin(m);toast(acc.name+'님께 '+role+' 임원 초대를 보냈습니다');});
   m.querySelectorAll('.apprv').forEach(b=>b.addEventListener('click',()=>{const iv=S.officerInvites[b.dataset.i];const acc=acctBySid(iv.sid);if(acc)acc.officer=iv.role;S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast(iv.name+'님이 '+iv.role+'(으)로 임명되었습니다');}));
@@ -691,15 +719,15 @@ function viewNotice(m){
 function expTitle(e){return {full:'전체 공개',basic:'기본 (권장)',minimal:'최소 공개'}[e];}
 function expDesc(e){return {full:'연락처·생년월일·이력까지 모두 공개',basic:'이력은 공개, 연락처·생년월일은 연락처 교환 후 공개',minimal:'이름·학교·회사 등 필수 정보만, 연락처·생년월일·이력은 교환 후 공개'}[e];}
 function myPreviewCard(){const u=S.user,ss=schoolByName(u.school),exp=u.exposure||'basic';
-  const canSee=f=>!isProtected(exp,f);const lock='<span class="lock">🔒 교환 후 공개</span>';
+  const canSee=f=>!isProtected(exp,f);const lock=('<span class="lock">'+ico('lock',13)+' 교환 후 공개</span>');
   let rows=`<div class="kv"><span class="k">학번</span><span class="v">${esc(u.sid)||'—'}</span></div>
     <div class="kv"><span class="k">이메일</span><span class="v">${esc(u.email)||'—'}</span></div>
     <div class="kv"><span class="k">생년월일</span><span class="v">${canSee('birth')?(esc(u.birth)||'—'):lock}</span></div>
     <div class="kv"><span class="k">연락처</span><span class="v">${canSee('phone')?(esc(u.phone)||'—'):lock}</span></div>`;
-  let career=canSee('career')?((u.career&&u.career.length)?u.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>'):'<div class="lock">🔒 교환 후 공개</div>';
+  let career=canSee('career')?((u.career&&u.career.length)?u.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>'):('<div class="lock">'+ico('lock',13)+' 교환 후 공개</div>');
   return `<div class="mem-card card" style="max-width:340px">
     <div class="mem-top">${avatarHTML(u,56,'mem-av')}
-      <div style="flex:1"><div class="mem-nm">${esc(u.name)||'나'} ${u.officer?`<span class="badge-off">👑 ${esc(u.officer)}</span>`:''}</div>
+      <div style="flex:1"><div class="mem-nm">${esc(u.name)||'나'} ${u.officer?`<span class="badge-off">${ico('star',11)} ${esc(u.officer)}</span>`:''}</div>
         <div class="mem-sub">${ss?ss.short:''} · ${esc(u.course)} ${u.gisu}기</div>
         <div class="mem-head">${esc(u.company)} · ${esc(u.title)}</div></div></div>
     <div class="mem-sec">${rows}</div>
@@ -713,9 +741,9 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
     <div class="card" style="padding:28px;max-width:620px">
       <div class="photo-edit">
         <span id="me-av" class="avatar photo-big" style="width:76px;height:76px;font-size:28px"></span>
-        <div><div style="font-size:20px;font-weight:800">${esc(u.name)} ${u.officer?`<span class="badge-off">👑 ${esc(u.officer)}</span>`:''}</div>
+        <div><div style="font-size:20px;font-weight:800">${esc(u.name)} ${u.officer?`<span class="badge-off">${ico('star',11)} ${esc(u.officer)}</span>`:''}</div>
           <div style="color:var(--sub);font-size:13px;margin:4px 0 8px">${s.short} · ${esc(u.course)} ${u.gisu}기 · 학번 ${esc(u.sid)}</div>
-          <div class="photo-btns"><button class="btn sm ghost" id="btn-photo">📷 사진 변경</button><button class="btn sm gray" id="btn-photo-del">삭제</button></div>
+          <div class="photo-btns"><button class="btn sm ghost" id="btn-photo">${ico('camera',15)} 사진 변경</button><button class="btn sm gray" id="btn-photo-del">삭제</button></div>
           <input type="file" id="me-photo" accept="image/*" hidden></div>
         <span style="margin-left:auto">${schoolMark(s,40)}</span>
       </div>
@@ -734,14 +762,14 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
       <div style="font-weight:800;font-size:16px">이력 (경력)</div>
       <p style="color:var(--sub);font-size:13px;margin-top:4px;margin-bottom:14px">과거 회사·역할·기간을 추가하세요. (선택 · 공개 범위 설정의 영향을 받습니다)</p>
       <div id="careerList"></div>
-      <button class="btn ghost sm" id="addCareer">＋ 경력 추가</button>
+      <button class="btn ghost sm" id="addCareer">${ico('plus',15)} 경력 추가</button>
       <div style="margin-top:16px"><button class="btn" id="saveCareer">이력 저장</button></div>
     </div>
     <div class="card" style="padding:28px;max-width:620px;margin-top:16px">
       <div style="font-weight:800;font-size:16px">개인정보 공개 범위</div>
       <p style="color:var(--sub);font-size:13.5px;margin-top:4px;margin-bottom:16px">학번·이름·회사·직책·이메일은 항상 공개됩니다. 아래에서 <b>연락처·생년월일·이력</b>의 공개 정도를 선택하세요.</p>
       <div class="exp-seg">${['full','basic','minimal'].map(e=>`<button class="exp-opt ${(u.exposure||'basic')===e?'on':''}" data-e="${e}"><b>${expTitle(e)}</b><span>${expDesc(e)}</span></button>`).join('')}</div>
-      <div style="margin-top:20px"><div style="font-weight:700;font-size:13px;color:var(--sub);margin-bottom:10px">👀 다른 원우에게 보이는 내 카드 미리보기</div><div id="prevBox">${myPreviewCard()}</div></div>
+      <div style="margin-top:20px"><div style="font-weight:700;font-size:13px;color:var(--sub);margin-bottom:10px">${ico('eye',15)} 다른 원우에게 보이는 내 카드 미리보기</div><div id="prevBox">${myPreviewCard()}</div></div>
     </div>`;
   renderMeAvatar(m);renderCareerEditor(m);
   m.querySelector('#btn-photo').addEventListener('click',()=>m.querySelector('#me-photo').click());
@@ -773,9 +801,9 @@ function doSearch(q){q=q.trim();if(!q)return;
   const mem=realMembers().filter(x=>(x.name+x.company+x.title+x.sid).includes(q));
   const meets=S.meets.filter(x=>(x.title+x.place+x.org).includes(q));
   openModal('“'+esc(q)+'” 검색 결과',`
-    <p style="font-weight:800;margin:6px 0 6px">💼 게시글 ${posts.length}</p>${posts.map(p=>`<div class="cmt"><b>${esc(p.who)}</b><span>${esc(p.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
-    <p style="font-weight:800;margin:14px 0 6px">📇 원우 ${mem.length}</p>${mem.map(x=>`<div class="cmt"><b>${esc(x.name)}</b><span>${esc(x.company)} ${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
-    <p style="font-weight:800;margin:14px 0 6px">🤝 모임 ${meets.length}</p>${meets.map(x=>`<div class="cmt"><b>${esc(x.date)}</b><span>${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}`,null,true);
+    <p style="font-weight:800;margin:6px 0 6px">${ico('briefcase',15)} 게시글 ${posts.length}</p>${posts.map(p=>`<div class="cmt"><b>${esc(p.who)}</b><span>${esc(p.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
+    <p style="font-weight:800;margin:14px 0 6px">${ico('idcard',15)} 원우 ${mem.length}</p>${mem.map(x=>`<div class="cmt"><b>${esc(x.name)}</b><span>${esc(x.company)} ${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
+    <p style="font-weight:800;margin:14px 0 6px">${ico('users',15)} 모임 ${meets.length}</p>${meets.map(x=>`<div class="cmt"><b>${esc(x.date)}</b><span>${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}`,null,true);
 }
 
 /* ---------- utils ---------- */
