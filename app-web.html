@@ -175,6 +175,7 @@
   .badge-exp{font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:8px;background:var(--soft);color:var(--pri)}
   .badge-exp.full{background:var(--green-s);color:#1E9E54}
   .badge-exp.minimal{background:#FBEAEA;color:#C0392B}
+  .badge-off{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:8px;background:#FFF4D6;color:#B07A00;border:1px solid #F1D98A}
   .exchanged{color:var(--green);font-weight:800;font-size:12.5px}
 
   /* clubs */
@@ -267,6 +268,8 @@
       <button class="nav-item" data-view="dir"><span class="ni">📇</span>원우수첩</button>
       <button class="nav-item" data-view="club"><span class="ni">🎫</span>동아리</button>
       <button class="nav-item" data-view="notice"><span class="ni">🔔</span>공지</button>
+      <button class="nav-item" data-view="officer"><span class="ni">👑</span>임원 공지</button>
+      <button class="nav-item" data-view="officeradmin" id="nav-admin"><span class="ni">🛠️</span>임원 관리</button>
       <div class="side-h" style="margin-top:12px">내 활동</div>
       <button class="nav-item" data-view="me"><span class="ni">👤</span>내 프로필</button>
     </aside>
@@ -305,14 +308,14 @@ function schoolMark(s,size){
    항상 공개: 학번(sid)·이름·학교·회사·직책·이메일·헤드라인
    조절 대상: 연락처(phone)·생년월일(birth)·이력(career) */
 const seedMembers=[
-  {sid:'2021-1201',name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',head:'제조 전략기획 · 신사업 개발',email:'sjyoon@oo.co.kr',phone:'010-2201-1188',birth:'1982-05-14',career:[{c:'OO컨설팅',r:'컨설턴트',p:'2010–2015'},{c:'OO기업',r:'전략기획 차장',p:'2015–2021'}],clubs:['골프 동아리','재테크·투자 스터디'],exposure:'full'},
+  {sid:'2021-1201',name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',head:'제조 전략기획 · 신사업 개발',email:'sjyoon@oo.co.kr',phone:'010-2201-1188',birth:'1982-05-14',career:[{c:'OO컨설팅',r:'컨설턴트',p:'2010–2015'},{c:'OO기업',r:'전략기획 차장',p:'2015–2021'}],clubs:['골프 동아리','재테크·투자 스터디'],officer:'회장',exposure:'full'},
   {sid:'2021-1202',name:'박민호',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO전자',title:'기획팀 차장',head:'전자·부품 사업기획',email:'mhpark@oo-elec.com',phone:'010-3312-4501',birth:'1984-09-02',career:[{c:'OO반도체',r:'기획 대리',p:'2012–2018'}],clubs:['축구 동아리'],exposure:'basic'},
   {sid:'2020-1105',name:'이서연',school:'연세대학교',gisu:11,course:'Executive MBA',company:'OO금융',title:'IB본부 팀장',head:'IB · M&A 자문',email:'sylee@oofin.com',phone:'010-8890-2277',birth:'1983-01-27',career:[{c:'OO증권',r:'애널리스트',p:'2009–2016'}],clubs:['와인 동호회','재테크·투자 스터디'],exposure:'minimal'},
-  {sid:'2021-1210',name:'최강민',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO제약',title:'마케팅 이사',head:'헬스케어 마케팅 리더',email:'kmchoi@oopharm.com',phone:'010-4456-9012',birth:'1980-11-30',career:[{c:'OO생활건강',r:'BM',p:'2008–2016'}],clubs:['골프 동아리'],exposure:'basic'},
+  {sid:'2021-1210',name:'최강민',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO제약',title:'마케팅 이사',head:'헬스케어 마케팅 리더',email:'kmchoi@oopharm.com',phone:'010-4456-9012',birth:'1980-11-30',career:[{c:'OO생활건강',r:'BM',p:'2008–2016'}],clubs:['골프 동아리'],officer:'총무',exposure:'basic'},
   {sid:'2022-1305',name:'정하늘',school:'연세대학교',gisu:13,course:'MBA',company:'스타트업 OOO',title:'대표',head:'B2B SaaS 창업가',email:'sky@ooo.io',phone:'010-7788-3344',birth:'1988-07-19',career:[{c:'OO테크',r:'PM',p:'2014–2020'}],clubs:['창업 동아리'],exposure:'full'},
   {sid:'2021-1215',name:'김도윤',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO건설',title:'해외사업부 부장',head:'해외 인프라 사업개발',email:'dykim@oocon.com',phone:'010-5567-8123',birth:'1981-03-08',career:[{c:'OO엔지니어링',r:'PM',p:'2007–2017'}],clubs:['축구 동아리','골프 동아리'],exposure:'basic'},
-  {sid:'2019-1008',name:'김태영',school:'고려대학교',gisu:10,course:'Executive MBA',company:'OO상사',title:'영업본부 상무',head:'글로벌 무역·유통',email:'tykim@oocorp.com',phone:'010-9901-4567',birth:'1978-12-11',career:[{c:'OO물산',r:'지사장',p:'2005–2015'}],clubs:['골프 동아리'],exposure:'minimal'},
-  {sid:'2023-1402',name:'한지민',school:'서강대학교',gisu:14,course:'MBA',company:'OO테크',title:'CTO',head:'AI 플랫폼 · 엔지니어링 리더',email:'jmhan@ootech.io',phone:'010-2345-6789',birth:'1987-06-23',career:[{c:'OO소프트',r:'테크리드',p:'2013–2021'}],clubs:['창업 동아리','독서 모임'],exposure:'basic'},
+  {sid:'2019-1008',name:'김태영',school:'고려대학교',gisu:10,course:'Executive MBA',company:'OO상사',title:'영업본부 상무',head:'글로벌 무역·유통',email:'tykim@oocorp.com',phone:'010-9901-4567',birth:'1978-12-11',career:[{c:'OO물산',r:'지사장',p:'2005–2015'}],clubs:['골프 동아리'],officer:'부회장',exposure:'minimal'},
+  {sid:'2023-1402',name:'한지민',school:'서강대학교',gisu:14,course:'MBA',company:'OO테크',title:'CTO',head:'AI 플랫폼 · 엔지니어링 리더',email:'jmhan@ootech.io',phone:'010-2345-6789',birth:'1987-06-23',career:[{c:'OO소프트',r:'테크리드',p:'2013–2021'}],clubs:['창업 동아리','독서 모임'],officer:'학술부장',exposure:'basic'},
   {sid:'2021-1220',name:'오세훈',school:'고려대학교',gisu:12,course:'MBA',company:'OO물산',title:'전략기획 부장',head:'유통·물류 전략',email:'shoh@oomulsan.com',phone:'010-6612-3300',birth:'1983-08-05',career:[{c:'OO유통',r:'기획 차장',p:'2011–2019'}],clubs:['마라톤 크루'],exposure:'full'},
 ];
 /* 동아리 목록 (앱에서 가입 → 소속으로 노출) */
@@ -325,6 +328,12 @@ const seedClubs=[
   {id:'run',name:'마라톤 크루',cat:'스포츠',emoji:'🏃',desc:'한강 러닝과 마라톤 대회 참가',members:58},
   {id:'book',name:'독서 모임',cat:'학습',emoji:'📚',desc:'경영·인문 도서 토론 모임',members:83},
   {id:'tennis',name:'테니스 동아리',cat:'스포츠',emoji:'🎾',desc:'초보 환영, 정기 테니스 모임',members:47},
+];
+/* MBA 임원 직책 (관리자가 부여, 초대→승인) */
+const officerRoles=['회장','부회장','총무','학술부장','대외협력부장','기수대표'];
+const seedOfficerPosts=[
+  {id:'of1',by:'윤수정',role:'회장',date:'26.06.19',title:'6월 임원 회의 결과 공유',body:'하반기 정기 행사 일정과 예산안을 확정했습니다. 각 부서별 담당자는 세부 실행안을 다음 회의 전까지 정리해 주세요.'},
+  {id:'of2',by:'최강민',role:'총무',date:'26.06.15',title:'5월 회비 집행 내역 보고',body:'5월 회비 집행 내역을 공유합니다. 상세 내역과 영수증은 총무에게 문의 바랍니다.'},
 ];
 
 const seedPosts=[
@@ -348,10 +357,10 @@ const seedNotices=[
 ];
 
 /* ===================== STATE ===================== */
-const LS='mbaweb_v4';
+const LS='mbaweb_v5';
 let S=load();
 function load(){try{const r=JSON.parse(localStorage.getItem(LS));if(r&&r.user)return r;}catch(e){}
-  return {user:null,posts:seedPosts,meets:seedMeets,notices:seedNotices,members:seedMembers,exchanged:[]};}
+  return {user:null,posts:seedPosts,meets:seedMeets,notices:seedNotices,members:seedMembers,exchanged:[],officerPosts:seedOfficerPosts,officerInvites:[]};}
 function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
 function schoolByName(n){return schools.find(s=>s.name===n);}
 
@@ -387,7 +396,7 @@ function gv(id){return document.getElementById(id).value.trim();}
 function doLogin(){
   S.user={sid:gv('in-sid'),name:gv('in-name'),school:pickedSchool.name,gisu:gv('in-gisu')||'12',course:'MBA',
     birth:gv('in-birth'),company:gv('in-company'),title:gv('in-title'),head:gv('in-head'),
-    email:gv('in-email'),phone:gv('in-phone'),career:[],clubs:[],exposure:'basic'};
+    email:gv('in-email'),phone:gv('in-phone'),career:[],clubs:[],officer:'',role:'admin',exposure:'basic'};
   save();enterApp();
 }
 
@@ -396,6 +405,10 @@ function enterApp(){
   if(!S.user.exposure)S.user.exposure='basic';
   if(!S.user.career)S.user.career=[];
   if(!S.user.clubs)S.user.clubs=[];
+  if(S.user.role===undefined)S.user.role='admin';
+  if(S.user.officer===undefined)S.user.officer='';
+  if(!S.officerPosts)S.officerPosts=seedOfficerPosts;
+  if(!S.officerInvites)S.officerInvites=[];
   const s=schoolByName(S.user.school)||schools[0];
   applyTheme(s);
   document.getElementById('login').classList.add('hidden');
@@ -403,6 +416,7 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   document.getElementById('meAv').textContent=S.user.name.slice(0,1);
+  document.getElementById('nav-admin').style.display=(S.user.role==='admin')?'':'none';
   document.querySelectorAll('.nav-item').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
   document.getElementById('schoolChip').addEventListener('click',switchSchool);
   document.getElementById('meBtn').addEventListener('click',()=>go('me'));
@@ -420,7 +434,7 @@ let currentView='home';
 function go(v){currentView=v;
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
   const m=document.getElementById('main');window.scrollTo(0,0);
-  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,me:viewMe}[v]||viewHome)(m);
+  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,officeradmin:viewOfficerAdmin,me:viewMe}[v]||viewHome)(m);
 }
 
 /* ---------- HOME ---------- */
@@ -578,7 +592,7 @@ function memHTML(x){
   return `<div class="mem-card card">
     <div class="mem-top">
       <div class="mem-av">${x.name.slice(0,1)}</div>
-      <div style="flex:1"><div class="mem-nm">${esc(x.name)} ${expBadge}</div>
+      <div style="flex:1"><div class="mem-nm">${esc(x.name)} ${x.officer?`<span class="badge-off">👑 ${esc(x.officer)}</span>`:''} ${expBadge}</div>
         <div class="mem-sub">${ss?ss.short:''} · ${esc(x.course)} ${x.gisu}기</div>
         <div class="mem-head">${esc(x.company)} · ${esc(x.title)}</div>
         ${x.head?`<div class="mem-sub" style="margin-top:3px">“${esc(x.head)}”</div>`:''}
@@ -609,6 +623,59 @@ function viewClub(m){
     const i=arr.indexOf(n);if(i>=0){arr.splice(i,1);toast(n+' 탈퇴했습니다');}else{arr.push(n);toast(n+' 가입 완료');}S.user.clubs=arr;save();viewClub(m);}));
 }
 
+/* ---------- OFFICERS (임원) ---------- */
+function isOfficer(){return !!(S.user.officer)||S.user.role==='admin';}
+function viewOfficer(m){
+  if(!isOfficer()){
+    m.innerHTML=`<div class="page-head"><div class="eyebrow">Officers</div><h1>임원 공지</h1></div>
+      <div class="card" style="padding:44px;text-align:center"><div style="font-size:36px">🔒</div>
+      <p style="margin-top:12px;color:var(--sub);font-size:14.5px">임원진 전용 공지 게시판입니다.<br>임원으로 임명되면 열람·작성할 수 있습니다.</p></div>`;
+    return;
+  }
+  m.innerHTML=`<div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
+      <div><div class="eyebrow">Officers</div><h1>임원 공지</h1><p>임원진만 열람·작성하는 내부 공지 게시판입니다.</p></div>
+      <button class="btn" id="newOff">＋ 공지 작성</button></div>
+    <div>${S.officerPosts.map(p=>`<div class="post-card card"><div class="post-top"><span class="avatar">${p.by.slice(0,1)}</span>
+      <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">👑 ${esc(p.role)}</span></div><div class="meta">${p.date}</div></div></div>
+      <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}</div>`;
+  m.querySelector('#newOff').addEventListener('click',()=>openModal('임원 공지 작성',
+    `<div class="fld"><label>제목</label><input id="of-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="of-b" placeholder="임원진에게 전달할 내용을 적어주세요"></textarea></div>`,
+    ()=>{const t=val('of-t');if(!t){toast('제목을 입력하세요');return false;}
+      S.officerPosts.unshift({id:'of'+Date.now(),by:S.user.name,role:S.user.officer||'관리자',date:today(),title:t,body:val('of-b')});
+      save();go('officer');toast('임원 공지가 등록되었습니다');}));
+}
+function viewOfficerAdmin(m){
+  if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
+  const officers=S.members.filter(x=>x.officer);
+  const invites=S.officerInvites||[];
+  const cand=S.members.filter(x=>!x.officer);
+  m.innerHTML=`<div class="page-head"><div class="eyebrow">Admin</div><h1>임원 관리</h1><p>임원을 임명(초대)하고 승인 요청을 관리합니다. <b>초대 → 대상자 승인</b> 시 임원 직책이 부여됩니다.</p></div>
+    <div class="card" style="padding:24px;margin-bottom:16px">
+      <div style="font-weight:800;margin-bottom:12px">임원 초대</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <select id="inv-mem" style="flex:1;min-width:200px;border:1.5px solid var(--line);border-radius:10px;padding:11px;font-family:inherit">${cand.map(x=>`<option value="${esc(x.name)}|${esc(x.school)}|${x.gisu}">${esc(x.name)} · ${schoolByName(x.school)?schoolByName(x.school).short:''} ${x.gisu}기 · ${esc(x.company)}</option>`).join('')}</select>
+        <select id="inv-role" style="border:1.5px solid var(--line);border-radius:10px;padding:11px;font-family:inherit">${officerRoles.map(r=>`<option>${r}</option>`).join('')}</select>
+        <button class="btn" id="inv-send">초대 보내기</button>
+      </div>
+    </div>
+    <div class="card" style="padding:24px;margin-bottom:16px">
+      <div style="font-weight:800;margin-bottom:12px">승인 대기 (초대됨) ${invites.length?`· ${invites.length}`:''}</div>
+      ${invites.length?invites.map((iv,i)=>`<div class="mini-row"><div style="flex:1"><div class="mt">${esc(iv.name)} — ${esc(iv.role)}</div><div class="ms">${esc(iv.school)} ${iv.gisu}기 · 승인 대기</div></div><button class="btn sm apprv" data-i="${i}">승인</button> <button class="btn sm gray rej" data-i="${i}">취소</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">대기 중인 초대가 없습니다.</div>'}
+    </div>
+    <div class="card" style="padding:24px">
+      <div style="font-weight:800;margin-bottom:12px">현재 임원진 (${officers.length}명)</div>
+      ${officers.length?officers.map(x=>`<div class="mini-row"><span class="badge-off">👑 ${esc(x.officer)}</span><div style="flex:1"><div class="mt">${esc(x.name)}</div><div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div><button class="btn sm gray unoff" data-k="${esc(x.name)}">해제</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">임명된 임원이 없습니다.</div>'}
+    </div>`;
+  m.querySelector('#inv-send').addEventListener('click',()=>{const v=document.getElementById('inv-mem').value;if(!v){toast('대상을 선택하세요');return;}
+    const parts=v.split('|');const role=document.getElementById('inv-role').value;
+    S.officerInvites=S.officerInvites||[];S.officerInvites.push({name:parts[0],school:parts[1],gisu:parts[2],role:role,status:'pending'});save();viewOfficerAdmin(m);toast(parts[0]+'님께 '+role+' 임원 초대를 보냈습니다');});
+  m.querySelectorAll('.apprv').forEach(b=>b.addEventListener('click',()=>{const iv=S.officerInvites[b.dataset.i];
+    const mem=S.members.find(x=>x.name===iv.name&&x.school===iv.school&&String(x.gisu)===String(iv.gisu));if(mem)mem.officer=iv.role;
+    S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast(iv.name+'님이 '+iv.role+'(으)로 임명되었습니다');}));
+  m.querySelectorAll('.rej').forEach(b=>b.addEventListener('click',()=>{S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast('초대를 취소했습니다');}));
+  m.querySelectorAll('.unoff').forEach(b=>b.addEventListener('click',()=>{const mem=S.members.find(x=>x.name===b.dataset.k);if(mem)mem.officer='';save();viewOfficerAdmin(m);toast('임원 직책을 해제했습니다');}));
+}
+
 /* ---------- NOTICE ---------- */
 function viewNotice(m){
   m.innerHTML=`<div class="page-head"><div class="eyebrow">Notice</div><h1>공지</h1><p>학교·동아리·전국 공지를 한곳에서 확인하세요.</p></div>
@@ -630,7 +697,7 @@ function myPreviewCard(){const u=S.user, ss=schoolByName(u.school), exp=u.exposu
   let career=canSee('career')?((u.career&&u.career.length)?u.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>'):'<div class="lock">🔒 교환 후 공개</div>';
   return `<div class="mem-card card" style="max-width:320px">
     <div class="mem-top"><div class="mem-av">${(u.name||'나').slice(0,1)}</div>
-      <div style="flex:1"><div class="mem-nm">${esc(u.name)||'나'}</div>
+      <div style="flex:1"><div class="mem-nm">${esc(u.name)||'나'} ${u.officer?`<span class="badge-off">👑 ${esc(u.officer)}</span>`:''}</div>
         <div class="mem-sub">${ss?ss.short:''} · ${esc(u.course)} ${u.gisu}기</div>
         <div class="mem-head">${esc(u.company)} · ${esc(u.title)}</div></div></div>
     <div class="mem-sec">${rows}</div>
