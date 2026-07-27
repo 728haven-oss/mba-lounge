@@ -21,19 +21,23 @@
   ::-webkit-scrollbar-thumb{background:#d7dae6;border-radius:8px}
   .mark{display:inline-block;line-height:0}
   .mark svg{display:block}
+  .avatar{border-radius:50%;background:var(--soft);color:var(--pri);font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;background-size:cover;background-position:center;overflow:hidden}
 
   /* ---------- Login ---------- */
   #login{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
     background:radial-gradient(1000px 600px at 50% -10%,var(--soft),var(--bg));padding:24px;overflow:auto}
-  .login-card{background:var(--card);border-radius:26px;box-shadow:0 30px 80px rgba(31,36,48,.16);width:100%;max-width:760px;padding:44px;margin:auto}
+  .login-card{background:var(--card);border-radius:26px;box-shadow:0 30px 80px rgba(31,36,48,.16);width:100%;max-width:760px;padding:40px;margin:auto}
   .login-brand{display:flex;align-items:center;gap:12px;font-size:26px;font-weight:800;justify-content:center}
   .login-brand b{color:var(--pri)}
   .login-sub{text-align:center;color:var(--sub);margin-top:8px;font-size:14.5px}
-  .login-step{font-weight:800;margin:28px 0 14px;font-size:15px;display:flex;align-items:center;gap:8px}
-  .login-step .st-n{width:24px;height:24px;border-radius:50%;background:var(--pri);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .tabs{display:flex;gap:8px;background:var(--bg);border-radius:12px;padding:5px;margin:26px auto 20px;max-width:320px}
+  .tabs button{flex:1;border:none;background:none;padding:10px;border-radius:9px;font-weight:800;font-size:14.5px;color:var(--sub)}
+  .tabs button.on{background:#fff;color:var(--pri);box-shadow:var(--shadow)}
+  .login-step{font-weight:800;margin:20px 0 12px;font-size:14.5px;display:flex;align-items:center;gap:8px}
+  .login-step .st-n{width:22px;height:22px;border-radius:50%;background:var(--pri);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:800}
   .school-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
   @media(max-width:640px){.school-grid{grid-template-columns:repeat(3,1fr)}}
-  .school-btn{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:.15s;text-align:center}
+  .school-btn{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;transition:.15s;text-align:center}
   .school-btn:hover{border-color:var(--pri);transform:translateY(-2px);box-shadow:var(--shadow)}
   .school-btn.sel{border-color:var(--pri);background:var(--soft)}
   .school-btn .snm{font-size:12px;font-weight:700;color:var(--ink)}
@@ -44,11 +48,14 @@
   .fld input,.fld select,.fld textarea{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:12px 13px;font-size:14px;background:#fff;outline:none;font-family:inherit}
   .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--pri)}
   .fld.full{grid-column:1 / -1}
-  .login-go{margin-top:26px;width:100%;border:none;border-radius:13px;padding:15px;font-size:16px;font-weight:800;color:#fff;
+  .remember{display:flex;align-items:center;gap:9px;margin-top:14px;font-size:14px;font-weight:600;color:#444b59;cursor:pointer}
+  .remember input{width:18px;height:18px;accent-color:var(--pri)}
+  .login-go{margin-top:20px;width:100%;border:none;border-radius:13px;padding:15px;font-size:16px;font-weight:800;color:#fff;
     background:linear-gradient(135deg,var(--pri),var(--pri2));box-shadow:0 12px 26px rgba(108,92,231,.35);transition:.15s}
   .login-go:hover{transform:translateY(-1px)}
   .login-go:disabled{opacity:.5;cursor:not-allowed;transform:none}
-  .login-note{text-align:center;color:var(--sub);font-size:12px;margin-top:14px}
+  .login-note{text-align:center;color:var(--sub);font-size:12px;margin-top:16px;line-height:1.7}
+  .login-note code{background:var(--bg);padding:2px 6px;border-radius:5px;color:var(--pri-dark);font-weight:700}
 
   /* ---------- App shell ---------- */
   .topbar{position:sticky;top:0;z-index:40;height:64px;background:#fff;border-bottom:1px solid var(--line);
@@ -63,7 +70,6 @@
   .search input{border:none;background:none;outline:none;width:100%;font-size:14px;color:var(--ink)}
   @media(max-width:900px){.search{display:none}}
   .me-btn{display:flex;align-items:center;gap:10px;background:none;border:none;padding:4px}
-  .avatar{width:40px;height:40px;border-radius:50%;background:var(--soft);color:var(--pri);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 
   .shell{display:grid;grid-template-columns:248px 1fr;align-items:start;max-width:1280px;margin:0 auto}
   @media(max-width:860px){.shell{grid-template-columns:1fr}}
@@ -153,13 +159,13 @@
   .cap-bar i{display:block;height:100%;background:var(--pri)}
   .cap-txt{font-size:12.5px;color:var(--sub);font-weight:700}
 
-  /* directory / 원우수첩 */
+  /* directory */
   .dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   @media(max-width:1000px){.dir-grid{grid-template-columns:1fr 1fr}}
   @media(max-width:640px){.dir-grid{grid-template-columns:1fr}}
   .mem-card{padding:22px}
   .mem-top{display:flex;align-items:center;gap:14px}
-  .mem-av{width:56px;height:56px;border-radius:50%;background:var(--soft);color:var(--pri);font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .mem-av{width:56px;height:56px;font-size:20px}
   .mem-nm{font-weight:800;font-size:16px}
   .mem-sub{color:var(--sub);font-size:12.5px;margin-top:2px}
   .mem-head{font-size:13px;color:#464c59;margin-top:3px;font-weight:600}
@@ -171,7 +177,7 @@
   .career-item{font-size:12.5px;color:#4a5160;padding:3px 0;display:flex;gap:8px}
   .career-item .cc{font-weight:700;color:#333a48}
   .career-item .cp{color:var(--sub);margin-left:auto;white-space:nowrap}
-  .exch-line{margin-top:12px;display:flex;align-items:center;gap:10px}
+  .exch-line{margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .badge-exp{font-size:10.5px;font-weight:800;padding:3px 8px;border-radius:8px;background:var(--soft);color:var(--pri)}
   .badge-exp.full{background:var(--green-s);color:#1E9E54}
   .badge-exp.minimal{background:#FBEAEA;color:#C0392B}
@@ -186,6 +192,7 @@
   .club-desc{color:#4a5160;font-size:13px;margin-top:10px;min-height:38px}
   .club-tags{display:flex;flex-wrap:wrap;gap:6px}
   .club-chip{background:var(--soft);color:var(--pri);font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px}
+
   /* profile exposure */
   .exp-seg{display:flex;flex-direction:column;gap:10px}
   .exp-opt{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:3px}
@@ -199,6 +206,9 @@
   .career-row input:focus{border-color:var(--pri)}
   .career-row .del{border:none;background:#F3EEF0;color:#C0392B;border-radius:8px;font-weight:800;font-size:16px;height:34px}
   @media(max-width:600px){.career-row{grid-template-columns:1fr 1fr;}.career-row .cp-in{grid-column:1/2}.career-row .del{grid-column:2/3;width:44px;justify-self:end}}
+  .photo-edit{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+  .photo-big{width:76px;height:76px;font-size:28px}
+  .photo-btns{display:flex;gap:8px}
 
   /* notices */
   .notice-row{padding:18px 22px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line);cursor:pointer}
@@ -229,23 +239,39 @@
     <div class="login-brand"><span id="login-mark"></span>MBA <b>Lounge</b></div>
     <div class="login-sub">라운지, 만남이 쉬워지는 공간 · 데스크톱 웹앱</div>
 
-    <div class="login-step"><span class="st-n">1</span>학교를 선택하세요</div>
-    <div class="school-grid" id="schoolGrid"></div>
+    <div class="tabs"><button id="tab-login" class="on">로그인</button><button id="tab-signup">회원가입</button></div>
 
-    <div class="login-step"><span class="st-n">2</span>프로필 정보를 입력하세요</div>
-    <div class="fields">
-      <div class="fld"><label>학번 <span class="req">*</span></label><input id="in-sid" placeholder="예: 2024-12345" /></div>
-      <div class="fld"><label>이름 <span class="req">*</span></label><input id="in-name" placeholder="예: 김재성" /></div>
-      <div class="fld"><label>기수 <span class="req">*</span></label><input id="in-gisu" placeholder="예: 12" /></div>
-      <div class="fld"><label>생년월일</label><input id="in-birth" type="text" placeholder="예: 1985-03-12" /></div>
-      <div class="fld"><label>현재 회사 <span class="req">*</span></label><input id="in-company" placeholder="예: OO기업" /></div>
-      <div class="fld"><label>직책 <span class="req">*</span></label><input id="in-title" placeholder="예: 전략기획 부장" /></div>
-      <div class="fld"><label>이메일 <span class="req">*</span></label><input id="in-email" placeholder="예: me@company.com" /></div>
-      <div class="fld"><label>연락처</label><input id="in-phone" placeholder="예: 010-0000-0000" /></div>
-      <div class="fld full"><label>한 줄 소개 (헤드라인)</label><input id="in-head" placeholder="예: 제조업 전략기획 · 신사업 개발 관심" /></div>
+    <!-- LOGIN PANE -->
+    <div id="pane-login">
+      <div class="fields">
+        <div class="fld full"><label>학번 (아이디) <span class="req">*</span></label><input id="lg-sid" placeholder="예: 2021-1201" /></div>
+        <div class="fld full"><label>비밀번호 <span class="req">*</span></label><input id="lg-pw" type="password" value="1234" placeholder="비밀번호" /></div>
+      </div>
+      <label class="remember"><input type="checkbox" id="lg-remember" checked />자동 로그인 (다음에 자동으로 입장)</label>
+      <button class="login-go" id="loginBtn">로그인</button>
+      <div class="login-note">데모 계정 — 학번 <code>2021-1201</code> / 비번 <code>1234</code> (윤수정 · 회장)<br>학교 관리자 <code>admin-yonsei</code> · 테스트 <code>test-yonsei</code> / 비번 <code>1234</code></div>
     </div>
-    <button class="login-go" id="loginGo" disabled>선택한 학교로 시작하기</button>
-    <div class="login-note">학번·이름·회사·직책·이메일은 항상 공개됩니다. 연락처·생년월일·이력은 프로필에서 공개 범위를 조절할 수 있어요.</div>
+
+    <!-- SIGNUP PANE -->
+    <div id="pane-signup" class="hidden">
+      <div class="login-step"><span class="st-n">1</span>학교를 선택하세요</div>
+      <div class="school-grid" id="schoolGrid"></div>
+      <div class="login-step"><span class="st-n">2</span>프로필 정보를 입력하세요</div>
+      <div class="fields">
+        <div class="fld"><label>학번 (아이디) <span class="req">*</span></label><input id="su-sid" placeholder="예: 2024-12345" /></div>
+        <div class="fld"><label>비밀번호 <span class="req">*</span></label><input id="su-pw" value="1234" placeholder="기본 1234" /></div>
+        <div class="fld"><label>이름 <span class="req">*</span></label><input id="su-name" placeholder="예: 김재성" /></div>
+        <div class="fld"><label>기수 <span class="req">*</span></label><input id="su-gisu" placeholder="예: 12" /></div>
+        <div class="fld"><label>생년월일</label><input id="su-birth" placeholder="예: 1985-03-12" /></div>
+        <div class="fld"><label>현재 회사 <span class="req">*</span></label><input id="su-company" placeholder="예: OO기업" /></div>
+        <div class="fld"><label>직책 <span class="req">*</span></label><input id="su-title" placeholder="예: 전략기획 부장" /></div>
+        <div class="fld"><label>이메일 <span class="req">*</span></label><input id="su-email" placeholder="예: me@company.com" /></div>
+        <div class="fld"><label>연락처</label><input id="su-phone" placeholder="예: 010-0000-0000" /></div>
+        <div class="fld full"><label>한 줄 소개 (헤드라인)</label><input id="su-head" placeholder="예: 제조업 전략기획 · 신사업 개발 관심" /></div>
+      </div>
+      <button class="login-go" id="signupBtn">가입하고 시작하기</button>
+      <div class="login-note">학번·이름·회사·직책·이메일은 항상 공개됩니다. 연락처·생년월일·이력은 가입 후 프로필에서 공개 범위를 조절할 수 있어요.</div>
+    </div>
   </div>
 </div>
 
@@ -256,7 +282,7 @@
     <button class="school-chip" id="schoolChip" title="학교 변경"></button>
     <div class="spacer"></div>
     <div class="search">🔎<input id="globalSearch" placeholder="원우·모임·게시글 검색" /></div>
-    <button class="me-btn" id="meBtn"><span class="avatar" id="meAv"></span></button>
+    <button class="me-btn" id="meBtn"><span class="avatar" id="meAv" style="width:40px;height:40px;font-size:15px"></span></button>
   </div>
 
   <div class="shell">
@@ -303,22 +329,26 @@ function schoolMark(s,size){
     <text x="20" y="${s.short.length>2?27:28}" text-anchor="middle" fill="#fff" font-size="${fs}" font-weight="800" font-family="sans-serif">${s.short}</text>
   </svg></span>`;
 }
+function avatarHTML(u,size,cls){size=size||40;const st=`width:${size}px;height:${size}px;font-size:${Math.round(size*0.38)}px;`+((u&&u.photo)?`background-image:url('${u.photo}');color:transparent;`:'');
+  return `<span class="avatar ${cls||''}" style="${st}">${(u&&u.photo)?'':((u&&u.name)||'?').slice(0,1)}</span>`;}
 
-/* Members. exposure: full(전체공개)/basic(기본)/minimal(최소공개)
-   항상 공개: 학번(sid)·이름·학교·회사·직책·이메일·헤드라인
-   조절 대상: 연락처(phone)·생년월일(birth)·이력(career) */
 const seedMembers=[
-  {sid:'2021-1201',name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',head:'제조 전략기획 · 신사업 개발',email:'sjyoon@oo.co.kr',phone:'010-2201-1188',birth:'1982-05-14',career:[{c:'OO컨설팅',r:'컨설턴트',p:'2010–2015'},{c:'OO기업',r:'전략기획 차장',p:'2015–2021'}],clubs:['골프 동아리','재테크·투자 스터디'],officer:'회장',exposure:'full'},
-  {sid:'2021-1202',name:'박민호',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO전자',title:'기획팀 차장',head:'전자·부품 사업기획',email:'mhpark@oo-elec.com',phone:'010-3312-4501',birth:'1984-09-02',career:[{c:'OO반도체',r:'기획 대리',p:'2012–2018'}],clubs:['축구 동아리'],exposure:'basic'},
-  {sid:'2020-1105',name:'이서연',school:'연세대학교',gisu:11,course:'Executive MBA',company:'OO금융',title:'IB본부 팀장',head:'IB · M&A 자문',email:'sylee@oofin.com',phone:'010-8890-2277',birth:'1983-01-27',career:[{c:'OO증권',r:'애널리스트',p:'2009–2016'}],clubs:['와인 동호회','재테크·투자 스터디'],exposure:'minimal'},
-  {sid:'2021-1210',name:'최강민',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO제약',title:'마케팅 이사',head:'헬스케어 마케팅 리더',email:'kmchoi@oopharm.com',phone:'010-4456-9012',birth:'1980-11-30',career:[{c:'OO생활건강',r:'BM',p:'2008–2016'}],clubs:['골프 동아리'],officer:'총무',exposure:'basic'},
-  {sid:'2022-1305',name:'정하늘',school:'연세대학교',gisu:13,course:'MBA',company:'스타트업 OOO',title:'대표',head:'B2B SaaS 창업가',email:'sky@ooo.io',phone:'010-7788-3344',birth:'1988-07-19',career:[{c:'OO테크',r:'PM',p:'2014–2020'}],clubs:['창업 동아리'],exposure:'full'},
-  {sid:'2021-1215',name:'김도윤',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO건설',title:'해외사업부 부장',head:'해외 인프라 사업개발',email:'dykim@oocon.com',phone:'010-5567-8123',birth:'1981-03-08',career:[{c:'OO엔지니어링',r:'PM',p:'2007–2017'}],clubs:['축구 동아리','골프 동아리'],exposure:'basic'},
-  {sid:'2019-1008',name:'김태영',school:'고려대학교',gisu:10,course:'Executive MBA',company:'OO상사',title:'영업본부 상무',head:'글로벌 무역·유통',email:'tykim@oocorp.com',phone:'010-9901-4567',birth:'1978-12-11',career:[{c:'OO물산',r:'지사장',p:'2005–2015'}],clubs:['골프 동아리'],officer:'부회장',exposure:'minimal'},
-  {sid:'2023-1402',name:'한지민',school:'서강대학교',gisu:14,course:'MBA',company:'OO테크',title:'CTO',head:'AI 플랫폼 · 엔지니어링 리더',email:'jmhan@ootech.io',phone:'010-2345-6789',birth:'1987-06-23',career:[{c:'OO소프트',r:'테크리드',p:'2013–2021'}],clubs:['창업 동아리','독서 모임'],officer:'학술부장',exposure:'basic'},
-  {sid:'2021-1220',name:'오세훈',school:'고려대학교',gisu:12,course:'MBA',company:'OO물산',title:'전략기획 부장',head:'유통·물류 전략',email:'shoh@oomulsan.com',phone:'010-6612-3300',birth:'1983-08-05',career:[{c:'OO유통',r:'기획 차장',p:'2011–2019'}],clubs:['마라톤 크루'],exposure:'full'},
+  {sid:'2021-1201',pw:'1234',name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',head:'제조 전략기획 · 신사업 개발',email:'sjyoon@oo.co.kr',phone:'010-2201-1188',birth:'1982-05-14',photo:'',career:[{c:'OO컨설팅',r:'컨설턴트',p:'2010–2015'},{c:'OO기업',r:'전략기획 차장',p:'2015–2021'}],clubs:['골프 동아리','재테크·투자 스터디'],officer:'회장',role:'member',exposure:'full'},
+  {sid:'2021-1202',pw:'1234',name:'박민호',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO전자',title:'기획팀 차장',head:'전자·부품 사업기획',email:'mhpark@oo-elec.com',phone:'010-3312-4501',birth:'1984-09-02',photo:'',career:[{c:'OO반도체',r:'기획 대리',p:'2012–2018'}],clubs:['축구 동아리'],officer:'',role:'member',exposure:'basic'},
+  {sid:'2020-1105',pw:'1234',name:'이서연',school:'연세대학교',gisu:11,course:'Executive MBA',company:'OO금융',title:'IB본부 팀장',head:'IB · M&A 자문',email:'sylee@oofin.com',phone:'010-8890-2277',birth:'1983-01-27',photo:'',career:[{c:'OO증권',r:'애널리스트',p:'2009–2016'}],clubs:['와인 동호회','재테크·투자 스터디'],officer:'',role:'member',exposure:'minimal'},
+  {sid:'2021-1210',pw:'1234',name:'최강민',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO제약',title:'마케팅 이사',head:'헬스케어 마케팅 리더',email:'kmchoi@oopharm.com',phone:'010-4456-9012',birth:'1980-11-30',photo:'',career:[{c:'OO생활건강',r:'BM',p:'2008–2016'}],clubs:['골프 동아리'],officer:'총무',role:'member',exposure:'basic'},
+  {sid:'2022-1305',pw:'1234',name:'정하늘',school:'연세대학교',gisu:13,course:'MBA',company:'스타트업 OOO',title:'대표',head:'B2B SaaS 창업가',email:'sky@ooo.io',phone:'010-7788-3344',birth:'1988-07-19',photo:'',career:[{c:'OO테크',r:'PM',p:'2014–2020'}],clubs:['창업 동아리'],officer:'',role:'member',exposure:'full'},
+  {sid:'2021-1215',pw:'1234',name:'김도윤',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO건설',title:'해외사업부 부장',head:'해외 인프라 사업개발',email:'dykim@oocon.com',phone:'010-5567-8123',birth:'1981-03-08',photo:'',career:[{c:'OO엔지니어링',r:'PM',p:'2007–2017'}],clubs:['축구 동아리','골프 동아리'],officer:'',role:'member',exposure:'basic'},
+  {sid:'2019-1008',pw:'1234',name:'김태영',school:'고려대학교',gisu:10,course:'Executive MBA',company:'OO상사',title:'영업본부 상무',head:'글로벌 무역·유통',email:'tykim@oocorp.com',phone:'010-9901-4567',birth:'1978-12-11',photo:'',career:[{c:'OO물산',r:'지사장',p:'2005–2015'}],clubs:['골프 동아리'],officer:'부회장',role:'member',exposure:'minimal'},
+  {sid:'2023-1402',pw:'1234',name:'한지민',school:'서강대학교',gisu:14,course:'MBA',company:'OO테크',title:'CTO',head:'AI 플랫폼 · 엔지니어링 리더',email:'jmhan@ootech.io',phone:'010-2345-6789',birth:'1987-06-23',photo:'',career:[{c:'OO소프트',r:'테크리드',p:'2013–2021'}],clubs:['창업 동아리','독서 모임'],officer:'학술부장',role:'member',exposure:'basic'},
+  {sid:'2021-1220',pw:'1234',name:'오세훈',school:'고려대학교',gisu:12,course:'MBA',company:'OO물산',title:'전략기획 부장',head:'유통·물류 전략',email:'shoh@oomulsan.com',phone:'010-6612-3300',birth:'1983-08-05',photo:'',career:[{c:'OO유통',r:'기획 차장',p:'2011–2019'}],clubs:['마라톤 크루'],officer:'',role:'member',exposure:'full'},
 ];
-/* 동아리 목록 (앱에서 가입 → 소속으로 노출) */
+/* 학교별 관리자(ADMIN)·테스트(TEST) 계정 자동 생성 — 아이디: admin-학교 / test-학교, 비번 1234 */
+function buildSystemAccounts(){const out=[];schools.forEach(s=>{
+  out.push({sid:'admin-'+s.id,pw:'1234',name:s.short+' 관리자',school:s.name,gisu:'-',course:'운영',company:'MBA Lounge 운영팀',title:'학교 관리자',head:'',email:'admin@'+s.id+'.mba',phone:'',birth:'',photo:'',career:[],clubs:[],officer:'',role:'admin',exposure:'basic',system:true});
+  out.push({sid:'test-'+s.id,pw:'1234',name:s.short+' 테스트',school:s.name,gisu:'-',course:'테스트',company:'-',title:'테스트 계정',head:'',email:'test@'+s.id+'.mba',phone:'',birth:'',photo:'',career:[],clubs:[],officer:'',role:'member',exposure:'basic',system:true});
+});return out;}
+
 const seedClubs=[
   {id:'golf',name:'골프 동아리',cat:'스포츠',emoji:'⛳',desc:'주말 라운딩·친선전 중심의 네트워킹 골프 모임',members:128},
   {id:'startup',name:'창업 동아리',cat:'비즈니스',emoji:'🚀',desc:'창업·투자 관심 원우들의 아이템 공유와 데모데이',members:96},
@@ -329,27 +359,23 @@ const seedClubs=[
   {id:'book',name:'독서 모임',cat:'학습',emoji:'📚',desc:'경영·인문 도서 토론 모임',members:83},
   {id:'tennis',name:'테니스 동아리',cat:'스포츠',emoji:'🎾',desc:'초보 환영, 정기 테니스 모임',members:47},
 ];
-/* MBA 임원 직책 (관리자가 부여, 초대→승인) */
 const officerRoles=['회장','부회장','총무','학술부장','대외협력부장','기수대표'];
 const seedOfficerPosts=[
   {id:'of1',by:'윤수정',role:'회장',date:'26.06.19',title:'6월 임원 회의 결과 공유',body:'하반기 정기 행사 일정과 예산안을 확정했습니다. 각 부서별 담당자는 세부 실행안을 다음 회의 전까지 정리해 주세요.'},
   {id:'of2',by:'최강민',role:'총무',date:'26.06.15',title:'5월 회비 집행 내역 보고',body:'5월 회비 집행 내역을 공유합니다. 상세 내역과 영수증은 총무에게 문의 바랍니다.'},
 ];
-
 const seedPosts=[
   {id:'p1',cat:'deal',who:'김태영',co:'OO상사 · 영업본부 상무',date:'26.06.18',title:'물류 자동화 솔루션 공동 사업 제안',body:'제조·유통 원우님들과 물류 자동화(WMS) 도입 공동 구매 및 파일럿을 추진하고자 합니다. 관심 있으신 분 댓글 주세요.',likes:34,liked:false,comments:[{by:'윤수정',txt:'제조 쪽에서 관심 있습니다. 자료 공유 가능할까요?'}]},
   {id:'p2',cat:'invest',who:'정하늘',co:'스타트업 OOO · 대표',date:'26.06.17',title:'시리즈A 브릿지 라운드, MBA 원우 엔젤 모집',body:'B2B SaaS 스타트업 브릿지 라운드를 오픈합니다. 원우 대상 우선 배정. IR 자료는 개별 연락 주시면 전달드립니다.',likes:21,liked:false,comments:[]},
   {id:'p3',cat:'hire',who:'최강민',co:'OO제약 · 마케팅 이사',date:'26.06.15',title:'디지털 마케팅 팀장 채용 (경력)',body:'헬스케어 디지털 마케팅 팀장을 찾습니다. 원우 추천 환영합니다. 상세 JD는 댓글/DM으로 안내드립니다.',likes:12,liked:false,comments:[{by:'박민호',txt:'주변에 적임자 있어 추천드리겠습니다.'}]},
   {id:'p4',cat:'info',who:'이서연',co:'OO금융 · IB본부 팀장',date:'26.06.14',title:'2026 하반기 M&A 시장 동향 자료 공유',body:'하반기 국내 미드마켓 M&A 동향 리포트를 공유합니다. 원우님들 사업 확장 검토 시 참고하세요.',likes:41,liked:false,comments:[]},
 ];
-
 const seedMeets=[
   {id:'m1',date:'6/29',title:'연세대 MBA 골프 친선 모임',org:'연세대학교 MBA',place:'뉴서울CC',by:'윤수정',cap:16,going:11,attend:false,desc:'네트워킹 골프 라운딩. 초보 환영, 조 편성 후 안내드립니다.'},
   {id:'m2',date:'7/02',title:'신입 원우 환영 네트워킹 디너',org:'연세대학교 MBA',place:'강남 OO레스토랑',by:'정하늘',cap:30,going:18,attend:false,desc:'이번 학기 신입 원우 환영 자리. 명함 지참 권장.'},
   {id:'m3',date:'7/09',title:'창업·투자 라운드테이블',org:'연세대 창업동아리',place:'디캠프 선릉',by:'정하늘',cap:20,going:9,attend:false,desc:'창업/투자 관심 원우 대상 소규모 라운드테이블. 아이템 피칭 3분.'},
   {id:'m4',date:'7/16',title:'업종별 비즈니스 조찬회',org:'연세대학교 MBA',place:'여의도 OO호텔',by:'김도윤',cap:24,going:14,attend:false,desc:'업종별 테이블로 나눠 사업 정보 교류. 조찬 제공.'},
 ];
-
 const seedNotices=[
   {id:'n1',src:'학교',title:'연세대학교 MBA 하계 특강 일정 안내',date:'26.06.20',body:'하계 특강이 7월 중 매주 수요일 저녁 7시에 진행됩니다. 신청은 행정실로 문의 바랍니다.'},
   {id:'n2',src:'동아리',title:'연세대 축구 — 7월 정기전 장소 변경',date:'26.06.19',body:'7월 정기전 장소가 노천극장 옆 운동장으로 변경되었습니다. 착오 없으시기 바랍니다.'},
@@ -357,74 +383,84 @@ const seedNotices=[
 ];
 
 /* ===================== STATE ===================== */
-const LS='mbaweb_v5';
+const LS='mbaweb_v6';
 let S=load();
-function load(){try{const r=JSON.parse(localStorage.getItem(LS));if(r&&r.user)return r;}catch(e){}
-  return {user:null,posts:seedPosts,meets:seedMeets,notices:seedNotices,members:seedMembers,exchanged:[],officerPosts:seedOfficerPosts,officerInvites:[]};}
+function load(){try{const r=JSON.parse(localStorage.getItem(LS));if(r&&r.accounts)return r;}catch(e){}
+  return {accounts:seedMembers.concat(buildSystemAccounts()),session:null,remember:true,exchanged:[],posts:seedPosts,meets:seedMeets,notices:seedNotices,officerPosts:seedOfficerPosts,officerInvites:[]};}
 function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
 function schoolByName(n){return schools.find(s=>s.name===n);}
+function acctBySid(sid){return S.accounts.find(a=>a.sid===sid);}
 
 /* ===================== THEME ===================== */
 function applyTheme(s){const r=document.documentElement.style;
   r.setProperty('--pri',s.color);r.setProperty('--pri2',s.c2);r.setProperty('--soft',s.soft);}
 
-/* ===================== LOGIN ===================== */
-const LOGIN_IDS=['in-sid','in-name','in-gisu','in-birth','in-company','in-title','in-email','in-phone','in-head'];
+/* ===================== LOGIN / AUTH ===================== */
 let pickedSchool=null;
 function buildLogin(){
-  document.getElementById('login-mark').innerHTML=schoolMark(schools[0],34);
+  document.getElementById('login-mark').innerHTML=schoolMark(schools[0],32);
   const grid=document.getElementById('schoolGrid');
-  grid.innerHTML=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,34)}<span class="snm">${s.short}</span></button>`).join('');
+  grid.innerHTML=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,32)}<span class="snm">${s.short}</span></button>`).join('');
   grid.querySelectorAll('.school-btn').forEach(b=>b.addEventListener('click',()=>{
     pickedSchool=schools.find(s=>s.id===b.dataset.id);
     grid.querySelectorAll('.school-btn').forEach(x=>x.classList.remove('sel'));
-    b.classList.add('sel');
-    applyTheme(pickedSchool);
-    document.getElementById('login-mark').innerHTML=schoolMark(pickedSchool,34);
-    validateLogin();
+    b.classList.add('sel');applyTheme(pickedSchool);
+    document.getElementById('login-mark').innerHTML=schoolMark(pickedSchool,32);
   }));
-  LOGIN_IDS.forEach(id=>document.getElementById(id).addEventListener('input',validateLogin));
-  document.getElementById('loginGo').addEventListener('click',doLogin);
+  document.getElementById('tab-login').addEventListener('click',()=>switchTab('login'));
+  document.getElementById('tab-signup').addEventListener('click',()=>switchTab('signup'));
+  document.getElementById('loginBtn').addEventListener('click',doLogin);
+  document.getElementById('signupBtn').addEventListener('click',doSignup);
+  document.getElementById('lg-pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 }
-function validateLogin(){
-  const need=['in-sid','in-name','in-gisu','in-company','in-title','in-email'];
-  const ok=pickedSchool && need.every(id=>document.getElementById(id).value.trim());
-  document.getElementById('loginGo').disabled=!ok;
-  if(pickedSchool)document.getElementById('loginGo').textContent=pickedSchool.name+'(으)로 시작하기';
+function switchTab(t){
+  document.getElementById('tab-login').classList.toggle('on',t==='login');
+  document.getElementById('tab-signup').classList.toggle('on',t==='signup');
+  document.getElementById('pane-login').classList.toggle('hidden',t!=='login');
+  document.getElementById('pane-signup').classList.toggle('hidden',t!=='signup');
+}
+function doLogin(){
+  const sid=gv('lg-sid'),pw=document.getElementById('lg-pw').value;
+  if(!sid){toast('학번을 입력하세요');return;}
+  const acc=acctBySid(sid);
+  if(!acc){toast('등록되지 않은 학번입니다. 회원가입을 이용하세요');return;}
+  if(acc.pw!==pw){toast('비밀번호가 올바르지 않습니다');return;}
+  S.session=sid;S.remember=document.getElementById('lg-remember').checked;save();enterApp();
+}
+function doSignup(){
+  if(!pickedSchool){toast('학교를 선택하세요');return;}
+  const sid=gv('su-sid');
+  const need=['su-sid','su-name','su-gisu','su-company','su-title','su-email'];
+  if(!need.every(id=>gv(id))){toast('필수 항목(*)을 모두 입력하세요');return;}
+  if(acctBySid(sid)){toast('이미 등록된 학번입니다');return;}
+  const acc={sid:sid,pw:gv('su-pw')||'1234',name:gv('su-name'),school:pickedSchool.name,gisu:gv('su-gisu'),course:'MBA',
+    birth:gv('su-birth'),company:gv('su-company'),title:gv('su-title'),head:gv('su-head'),email:gv('su-email'),phone:gv('su-phone'),
+    photo:'',career:[],clubs:[],officer:'',role:'member',exposure:'basic'};
+  S.accounts.push(acc);S.session=sid;S.remember=true;save();enterApp();
 }
 function gv(id){return document.getElementById(id).value.trim();}
-function doLogin(){
-  S.user={sid:gv('in-sid'),name:gv('in-name'),school:pickedSchool.name,gisu:gv('in-gisu')||'12',course:'MBA',
-    birth:gv('in-birth'),company:gv('in-company'),title:gv('in-title'),head:gv('in-head'),
-    email:gv('in-email'),phone:gv('in-phone'),career:[],clubs:[],officer:'',role:'admin',exposure:'basic'};
-  save();enterApp();
-}
 
 /* ===================== APP ===================== */
 function enterApp(){
-  if(!S.user.exposure)S.user.exposure='basic';
-  if(!S.user.career)S.user.career=[];
-  if(!S.user.clubs)S.user.clubs=[];
-  if(S.user.role===undefined)S.user.role='admin';
-  if(S.user.officer===undefined)S.user.officer='';
-  if(!S.officerPosts)S.officerPosts=seedOfficerPosts;
-  if(!S.officerInvites)S.officerInvites=[];
-  const s=schoolByName(S.user.school)||schools[0];
+  S.user=acctBySid(S.session);if(!S.user){S.session=null;save();return;}
+  const u=S.user;
+  if(!u.career)u.career=[];if(!u.clubs)u.clubs=[];if(u.exposure===undefined)u.exposure='basic';if(u.role===undefined)u.role='member';if(u.officer===undefined)u.officer='';
+  const s=schoolByName(u.school)||schools[0];
   applyTheme(s);
   document.getElementById('login').classList.add('hidden');
   document.getElementById('app').classList.remove('hidden');
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
-  document.getElementById('meAv').textContent=S.user.name.slice(0,1);
-  document.getElementById('nav-admin').style.display=(S.user.role==='admin')?'':'none';
-  document.querySelectorAll('.nav-item').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
-  document.getElementById('schoolChip').addEventListener('click',switchSchool);
-  document.getElementById('meBtn').addEventListener('click',()=>go('me'));
-  document.getElementById('globalSearch').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch(e.target.value);});
+  const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
+  document.getElementById('nav-admin').style.display=(u.role==='admin')?'':'none';
+  document.querySelectorAll('.nav-item').forEach(b=>{b.onclick=()=>go(b.dataset.view);});
+  document.getElementById('schoolChip').onclick=switchSchool;
+  document.getElementById('meBtn').onclick=()=>go('me');
+  document.getElementById('globalSearch').onkeydown=e=>{if(e.key==='Enter')doSearch(e.target.value);};
   go('home');
 }
 function switchSchool(){
-  const opts=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,34)}<span class="snm">${s.short}</span></button>`).join('');
+  const opts=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,32)}<span class="snm">${s.short}</span></button>`).join('');
   openModal('학교 변경',`<p style="color:var(--sub);font-size:13.5px;margin-bottom:14px">학교를 바꾸면 화면 테마와 소식이 해당 학교로 전환됩니다.</p><div class="school-grid">${opts}</div>`,null,true);
   document.querySelectorAll('.modal .school-btn').forEach(b=>b.addEventListener('click',()=>{
     const s=schools.find(x=>x.id===b.dataset.id);S.user.school=s.name;save();closeModal();enterApp();toast(s.name+' 테마로 전환되었습니다');
@@ -439,8 +475,7 @@ function go(v){currentView=v;
 
 /* ---------- HOME ---------- */
 function viewHome(m){
-  const s=schoolByName(S.user.school)||schools[0];
-  const ex=S.exchanged.length;
+  const s=schoolByName(S.user.school)||schools[0];const ex=S.exchanged.length;
   m.innerHTML=`
     <div class="hero-band">
       <div class="eyebrow" style="color:rgba(255,255,255,.85)">${s.name} MBA</div>
@@ -479,24 +514,21 @@ function viewBoard(m){
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Business</div><h1>비즈니스 게시판</h1><p>원우들과 사업 제휴·투자·채용·정보를 나누세요.</p></div>
-      <button class="btn" id="newPost">＋ 글쓰기</button>
-    </div>
+      <button class="btn" id="newPost">＋ 글쓰기</button></div>
     <div class="chip-row">${cats.map(c=>`<button class="chip ${boardCat===c[0]?'on':''}" data-c="${c[0]}">${c[1]}</button>`).join('')}</div>
     <div id="postList">${list.map(postHTML).join('')||'<div class="empty">아직 게시글이 없습니다. 첫 글을 남겨보세요.</div>'}</div>`;
   m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{boardCat=c.dataset.c;viewBoard(m);}));
-  m.querySelector('#newPost').addEventListener('click',newPost);
-  bindPost(m);
+  m.querySelector('#newPost').addEventListener('click',newPost);bindPost(m);
 }
 function postHTML(p){
   return `<div class="post-card card" data-id="${p.id}">
-    <div class="post-top"><span class="avatar">${p.who.slice(0,1)}</span>
+    <div class="post-top">${avatarHTML({name:p.who},40)}
       <div style="flex:1"><div class="who">${esc(p.who)}</div><div class="meta">${esc(p.co)} · ${p.date}</div></div>
       <span class="cat-tag ${p.cat}">${catName(p.cat)}</span></div>
     <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div>
     <div class="post-actions">
       <button class="like ${p.liked?'on':''}" data-id="${p.id}">❤ <span>${p.likes}</span></button>
-      <button class="cbtn" data-id="${p.id}">💬 댓글 ${p.comments.length}</button>
-    </div>
+      <button class="cbtn" data-id="${p.id}">💬 댓글 ${p.comments.length}</button></div>
     <div class="comments">
       ${p.comments.map(c=>`<div class="cmt"><b>${esc(c.by)}</b><span>${esc(c.txt)}</span></div>`).join('')}
       <div class="cmt-form"><input placeholder="댓글 달기..." data-id="${p.id}"><button class="btn sm cadd" data-id="${p.id}">등록</button></div>
@@ -522,8 +554,7 @@ function viewMeet(m){
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Meet</div><h1>만남 · 미팅</h1><p>원우들과의 모임과 네트워킹 행사에 참여하세요.</p></div>
-      <button class="btn" id="newMeet">＋ 모임 만들기</button>
-    </div>
+      <button class="btn" id="newMeet">＋ 모임 만들기</button></div>
     <div class="meet-grid">${S.meets.map(meetHTML).join('')}</div>`;
   m.querySelector('#newMeet').addEventListener('click',newMeet);
   m.querySelectorAll('.attend').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);
@@ -553,51 +584,38 @@ function newMeet(){
 
 /* ---------- DIRECTORY (원우수첩) ---------- */
 let dirScope='all';
-const EXP={full:{t:'전체 공개',protect:[]},basic:{t:'기본',protect:['phone','birth']},minimal:{t:'최소 공개',protect:['phone','birth','career']}};
-function isProtected(exp,field){return (EXP[exp]||EXP.basic).protect.includes(field);}
-function memKey(x){return x.name+'|'+x.school+'|'+x.gisu;}
-
+const EXP={full:{protect:[]},basic:{protect:['phone','birth']},minimal:{protect:['phone','birth','career']}};
+function isProtected(exp,f){return (EXP[exp]||EXP.basic).protect.includes(f);}
+function realMembers(){return S.accounts.filter(a=>!a.system);}
 function viewDir(m){
   const mine=S.user.school;
-  const list=S.members.filter(x=>dirScope==='all'||x.school===mine);
+  const list=realMembers().filter(x=>x.sid!==S.user.sid&&(dirScope==='all'||x.school===mine));
   m.innerHTML=`
     <div class="page-head"><div class="eyebrow">Directory</div><h1>원우수첩</h1><p>원우와 연락처를 교환하고 사업·커리어로 연결되세요. 각 원우가 설정한 공개 범위에 따라 보이는 정보가 달라집니다.</p></div>
     <div class="chip-row">
       <button class="chip ${dirScope==='all'?'on':''}" data-s="all">전국 원우</button>
-      <button class="chip ${dirScope==='mine'?'on':''}" data-s="mine">우리 학교</button>
-    </div>
+      <button class="chip ${dirScope==='mine'?'on':''}" data-s="mine">우리 학교</button></div>
     <div class="dir-grid">${list.map(memHTML).join('')||'<div class="empty">표시할 원우가 없습니다.</div>'}</div>`;
   m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{dirScope=c.dataset.s;viewDir(m);}));
   m.querySelectorAll('.exch').forEach(b=>b.addEventListener('click',()=>{const key=b.dataset.k;
     if(!S.exchanged.includes(key)){S.exchanged.push(key);save();}viewDir(m);toast('연락처를 교환했습니다');}));
 }
 function memHTML(x){
-  const key=memKey(x), done=S.exchanged.includes(key), ss=schoolByName(x.school), exp=x.exposure||'basic';
+  const key=x.sid,done=S.exchanged.includes(key),ss=schoolByName(x.school),exp=x.exposure||'basic';
   const canSee=f=>!isProtected(exp,f)||done;
   const expBadge=exp==='full'?'<span class="badge-exp full">전체 공개</span>':(exp==='minimal'?'<span class="badge-exp minimal">최소 공개</span>':'<span class="badge-exp">기본</span>');
-  // core (always public)
-  let rows=`
-    <div class="kv"><span class="k">학번</span><span class="v">${esc(x.sid)}</span></div>
-    <div class="kv"><span class="k">이메일</span><span class="v">${esc(x.email)}</span></div>`;
-  // birth (adjustable)
-  rows+=`<div class="kv"><span class="k">생년월일</span><span class="v">${canSee('birth')?(esc(x.birth)||'—'):'<span class="lock">🔒 교환 후 공개</span>'}</span></div>`;
-  // phone (adjustable)
-  rows+=`<div class="kv"><span class="k">연락처</span><span class="v">${canSee('phone')?(esc(x.phone)||'—'):'<span class="lock">🔒 교환 후 공개</span>'}</span></div>`;
-  // career (adjustable)
-  let careerHTML;
-  if(canSee('career')){
-    careerHTML=(x.career&&x.career.length)?x.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>';
-  }else{careerHTML='<div class="lock">🔒 교환 후 공개</div>';}
+  let rows=`<div class="kv"><span class="k">학번</span><span class="v">${esc(x.sid)}</span></div>
+    <div class="kv"><span class="k">이메일</span><span class="v">${esc(x.email)}</span></div>
+    <div class="kv"><span class="k">생년월일</span><span class="v">${canSee('birth')?(esc(x.birth)||'—'):'<span class="lock">🔒 교환 후 공개</span>'}</span></div>
+    <div class="kv"><span class="k">연락처</span><span class="v">${canSee('phone')?(esc(x.phone)||'—'):'<span class="lock">🔒 교환 후 공개</span>'}</span></div>`;
+  let careerHTML=canSee('career')?((x.career&&x.career.length)?x.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>'):'<div class="lock">🔒 교환 후 공개</div>';
   const needExch=(!done)&&(EXP[exp].protect.length>0);
   return `<div class="mem-card card">
-    <div class="mem-top">
-      <div class="mem-av">${x.name.slice(0,1)}</div>
+    <div class="mem-top">${avatarHTML(x,56,'mem-av')}
       <div style="flex:1"><div class="mem-nm">${esc(x.name)} ${x.officer?`<span class="badge-off">👑 ${esc(x.officer)}</span>`:''} ${expBadge}</div>
         <div class="mem-sub">${ss?ss.short:''} · ${esc(x.course)} ${x.gisu}기</div>
         <div class="mem-head">${esc(x.company)} · ${esc(x.title)}</div>
-        ${x.head?`<div class="mem-sub" style="margin-top:3px">“${esc(x.head)}”</div>`:''}
-      </div>
-    </div>
+        ${x.head?`<div class="mem-sub" style="margin-top:3px">“${esc(x.head)}”</div>`:''}</div></div>
     <div class="mem-sec">${rows}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">소속 동아리</div>${(x.clubs&&x.clubs.length)?`<div class="club-tags">${x.clubs.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div>`:'<div class="lock">없음</div>'}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">이력</div>${careerHTML}</div>
@@ -605,37 +623,29 @@ function memHTML(x){
   </div>`;
 }
 
-/* ---------- CLUBS (동아리) ---------- */
+/* ---------- CLUBS ---------- */
 function viewClub(m){
   const mine=S.user.clubs||[];
   m.innerHTML=`
     <div class="page-head"><div class="eyebrow">Clubs</div><h1>동아리</h1><p>관심 있는 동아리에 가입하면 내 프로필과 원우수첩에 '소속 동아리'로 자동 표시됩니다.</p></div>
     ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
     <div class="dir-grid">${seedClubs.map(c=>{const j=mine.includes(c.name);return `
-      <div class="club-card card">
-        <div class="club-emoji">${c.emoji}</div>
-        <div class="club-nm">${esc(c.name)}</div>
-        <div class="club-cat">${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명</div>
-        <div class="club-desc">${esc(c.desc)}</div>
-        <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${j?'가입됨 ✓ · 탈퇴하기':'＋ 가입하기'}</button>
-      </div>`;}).join('')}</div>`;
+      <div class="club-card card"><div class="club-emoji">${c.emoji}</div><div class="club-nm">${esc(c.name)}</div>
+        <div class="club-cat">${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명</div><div class="club-desc">${esc(c.desc)}</div>
+        <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${j?'가입됨 ✓ · 탈퇴하기':'＋ 가입하기'}</button></div>`;}).join('')}</div>`;
   m.querySelectorAll('.join').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.c;const arr=S.user.clubs||[];
     const i=arr.indexOf(n);if(i>=0){arr.splice(i,1);toast(n+' 탈퇴했습니다');}else{arr.push(n);toast(n+' 가입 완료');}S.user.clubs=arr;save();viewClub(m);}));
 }
 
-/* ---------- OFFICERS (임원) ---------- */
+/* ---------- OFFICERS ---------- */
 function isOfficer(){return !!(S.user.officer)||S.user.role==='admin';}
 function viewOfficer(m){
-  if(!isOfficer()){
-    m.innerHTML=`<div class="page-head"><div class="eyebrow">Officers</div><h1>임원 공지</h1></div>
-      <div class="card" style="padding:44px;text-align:center"><div style="font-size:36px">🔒</div>
-      <p style="margin-top:12px;color:var(--sub);font-size:14.5px">임원진 전용 공지 게시판입니다.<br>임원으로 임명되면 열람·작성할 수 있습니다.</p></div>`;
-    return;
-  }
+  if(!isOfficer()){m.innerHTML=`<div class="page-head"><div class="eyebrow">Officers</div><h1>임원 공지</h1></div>
+    <div class="card" style="padding:44px;text-align:center"><div style="font-size:36px">🔒</div><p style="margin-top:12px;color:var(--sub);font-size:14.5px">임원진 전용 공지 게시판입니다.<br>임원으로 임명되면 열람·작성할 수 있습니다.</p></div>`;return;}
   m.innerHTML=`<div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Officers</div><h1>임원 공지</h1><p>임원진만 열람·작성하는 내부 공지 게시판입니다.</p></div>
       <button class="btn" id="newOff">＋ 공지 작성</button></div>
-    <div>${S.officerPosts.map(p=>`<div class="post-card card"><div class="post-top"><span class="avatar">${p.by.slice(0,1)}</span>
+    <div>${S.officerPosts.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
       <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">👑 ${esc(p.role)}</span></div><div class="meta">${p.date}</div></div></div>
       <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}</div>`;
   m.querySelector('#newOff').addEventListener('click',()=>openModal('임원 공지 작성',
@@ -646,34 +656,27 @@ function viewOfficer(m){
 }
 function viewOfficerAdmin(m){
   if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
-  const officers=S.members.filter(x=>x.officer);
+  const officers=realMembers().filter(x=>x.officer);
   const invites=S.officerInvites||[];
-  const cand=S.members.filter(x=>!x.officer);
+  const cand=realMembers().filter(x=>!x.officer);
   m.innerHTML=`<div class="page-head"><div class="eyebrow">Admin</div><h1>임원 관리</h1><p>임원을 임명(초대)하고 승인 요청을 관리합니다. <b>초대 → 대상자 승인</b> 시 임원 직책이 부여됩니다.</p></div>
     <div class="card" style="padding:24px;margin-bottom:16px">
       <div style="font-weight:800;margin-bottom:12px">임원 초대</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-        <select id="inv-mem" style="flex:1;min-width:200px;border:1.5px solid var(--line);border-radius:10px;padding:11px;font-family:inherit">${cand.map(x=>`<option value="${esc(x.name)}|${esc(x.school)}|${x.gisu}">${esc(x.name)} · ${schoolByName(x.school)?schoolByName(x.school).short:''} ${x.gisu}기 · ${esc(x.company)}</option>`).join('')}</select>
+        <select id="inv-mem" style="flex:1;min-width:200px;border:1.5px solid var(--line);border-radius:10px;padding:11px;font-family:inherit">${cand.map(x=>`<option value="${esc(x.sid)}">${esc(x.name)} · ${schoolByName(x.school)?schoolByName(x.school).short:''} ${x.gisu}기 · ${esc(x.company)}</option>`).join('')}</select>
         <select id="inv-role" style="border:1.5px solid var(--line);border-radius:10px;padding:11px;font-family:inherit">${officerRoles.map(r=>`<option>${r}</option>`).join('')}</select>
-        <button class="btn" id="inv-send">초대 보내기</button>
-      </div>
-    </div>
+        <button class="btn" id="inv-send">초대 보내기</button></div></div>
     <div class="card" style="padding:24px;margin-bottom:16px">
-      <div style="font-weight:800;margin-bottom:12px">승인 대기 (초대됨) ${invites.length?`· ${invites.length}`:''}</div>
-      ${invites.length?invites.map((iv,i)=>`<div class="mini-row"><div style="flex:1"><div class="mt">${esc(iv.name)} — ${esc(iv.role)}</div><div class="ms">${esc(iv.school)} ${iv.gisu}기 · 승인 대기</div></div><button class="btn sm apprv" data-i="${i}">승인</button> <button class="btn sm gray rej" data-i="${i}">취소</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">대기 중인 초대가 없습니다.</div>'}
-    </div>
+      <div style="font-weight:800;margin-bottom:12px">승인 대기 (초대됨)${invites.length?` · ${invites.length}`:''}</div>
+      ${invites.length?invites.map((iv,i)=>`<div class="mini-row"><div style="flex:1"><div class="mt">${esc(iv.name)} — ${esc(iv.role)}</div><div class="ms">승인 대기</div></div><button class="btn sm apprv" data-i="${i}">승인</button> <button class="btn sm gray rej" data-i="${i}">취소</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">대기 중인 초대가 없습니다.</div>'}</div>
     <div class="card" style="padding:24px">
       <div style="font-weight:800;margin-bottom:12px">현재 임원진 (${officers.length}명)</div>
-      ${officers.length?officers.map(x=>`<div class="mini-row"><span class="badge-off">👑 ${esc(x.officer)}</span><div style="flex:1"><div class="mt">${esc(x.name)}</div><div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div><button class="btn sm gray unoff" data-k="${esc(x.name)}">해제</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">임명된 임원이 없습니다.</div>'}
-    </div>`;
-  m.querySelector('#inv-send').addEventListener('click',()=>{const v=document.getElementById('inv-mem').value;if(!v){toast('대상을 선택하세요');return;}
-    const parts=v.split('|');const role=document.getElementById('inv-role').value;
-    S.officerInvites=S.officerInvites||[];S.officerInvites.push({name:parts[0],school:parts[1],gisu:parts[2],role:role,status:'pending'});save();viewOfficerAdmin(m);toast(parts[0]+'님께 '+role+' 임원 초대를 보냈습니다');});
-  m.querySelectorAll('.apprv').forEach(b=>b.addEventListener('click',()=>{const iv=S.officerInvites[b.dataset.i];
-    const mem=S.members.find(x=>x.name===iv.name&&x.school===iv.school&&String(x.gisu)===String(iv.gisu));if(mem)mem.officer=iv.role;
-    S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast(iv.name+'님이 '+iv.role+'(으)로 임명되었습니다');}));
+      ${officers.length?officers.map(x=>`<div class="mini-row"><span class="badge-off">👑 ${esc(x.officer)}</span><div style="flex:1"><div class="mt">${esc(x.name)}</div><div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div><button class="btn sm gray unoff" data-k="${esc(x.sid)}">해제</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">임명된 임원이 없습니다.</div>'}</div>`;
+  m.querySelector('#inv-send').addEventListener('click',()=>{const sid=document.getElementById('inv-mem').value;const acc=acctBySid(sid);if(!acc)return;const role=document.getElementById('inv-role').value;
+    S.officerInvites=S.officerInvites||[];S.officerInvites.push({sid:sid,name:acc.name,role:role});save();viewOfficerAdmin(m);toast(acc.name+'님께 '+role+' 임원 초대를 보냈습니다');});
+  m.querySelectorAll('.apprv').forEach(b=>b.addEventListener('click',()=>{const iv=S.officerInvites[b.dataset.i];const acc=acctBySid(iv.sid);if(acc)acc.officer=iv.role;S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast(iv.name+'님이 '+iv.role+'(으)로 임명되었습니다');}));
   m.querySelectorAll('.rej').forEach(b=>b.addEventListener('click',()=>{S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast('초대를 취소했습니다');}));
-  m.querySelectorAll('.unoff').forEach(b=>b.addEventListener('click',()=>{const mem=S.members.find(x=>x.name===b.dataset.k);if(mem)mem.officer='';save();viewOfficerAdmin(m);toast('임원 직책을 해제했습니다');}));
+  m.querySelectorAll('.unoff').forEach(b=>b.addEventListener('click',()=>{const acc=acctBySid(b.dataset.k);if(acc)acc.officer='';save();viewOfficerAdmin(m);toast('임원 직책을 해제했습니다');}));
 }
 
 /* ---------- NOTICE ---------- */
@@ -684,35 +687,36 @@ function viewNotice(m){
     openModal(esc(n.title),`<p style="color:var(--sub);font-size:12.5px;margin-bottom:12px">${n.src} · ${n.date}</p><p style="font-size:14.5px;line-height:1.7">${esc(n.body)}</p>`,null,true);}));
 }
 
-/* ---------- ME (profile) ---------- */
+/* ---------- ME ---------- */
 function expTitle(e){return {full:'전체 공개',basic:'기본 (권장)',minimal:'최소 공개'}[e];}
 function expDesc(e){return {full:'연락처·생년월일·이력까지 모두 공개',basic:'이력은 공개, 연락처·생년월일은 연락처 교환 후 공개',minimal:'이름·학교·회사 등 필수 정보만, 연락처·생년월일·이력은 교환 후 공개'}[e];}
-function myPreviewCard(){const u=S.user, ss=schoolByName(u.school), exp=u.exposure||'basic';
-  const canSee=f=>!isProtected(exp,f);
-  const lock='<span class="lock">🔒 교환 후 공개</span>';
+function myPreviewCard(){const u=S.user,ss=schoolByName(u.school),exp=u.exposure||'basic';
+  const canSee=f=>!isProtected(exp,f);const lock='<span class="lock">🔒 교환 후 공개</span>';
   let rows=`<div class="kv"><span class="k">학번</span><span class="v">${esc(u.sid)||'—'}</span></div>
     <div class="kv"><span class="k">이메일</span><span class="v">${esc(u.email)||'—'}</span></div>
     <div class="kv"><span class="k">생년월일</span><span class="v">${canSee('birth')?(esc(u.birth)||'—'):lock}</span></div>
     <div class="kv"><span class="k">연락처</span><span class="v">${canSee('phone')?(esc(u.phone)||'—'):lock}</span></div>`;
   let career=canSee('career')?((u.career&&u.career.length)?u.career.map(c=>`<div class="career-item"><span class="cc">${esc(c.c)}</span> ${esc(c.r)}<span class="cp">${esc(c.p)}</span></div>`).join(''):'<div class="lock">이력 없음</div>'):'<div class="lock">🔒 교환 후 공개</div>';
-  return `<div class="mem-card card" style="max-width:320px">
-    <div class="mem-top"><div class="mem-av">${(u.name||'나').slice(0,1)}</div>
+  return `<div class="mem-card card" style="max-width:340px">
+    <div class="mem-top">${avatarHTML(u,56,'mem-av')}
       <div style="flex:1"><div class="mem-nm">${esc(u.name)||'나'} ${u.officer?`<span class="badge-off">👑 ${esc(u.officer)}</span>`:''}</div>
         <div class="mem-sub">${ss?ss.short:''} · ${esc(u.course)} ${u.gisu}기</div>
         <div class="mem-head">${esc(u.company)} · ${esc(u.title)}</div></div></div>
     <div class="mem-sec">${rows}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">소속 동아리</div>${(u.clubs&&u.clubs.length)?`<div class="club-tags">${u.clubs.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div>`:'<div class="lock">없음 · 동아리 메뉴에서 가입</div>'}</div>
-    <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">이력</div>${career}</div>
-  </div>`;
+    <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">이력</div>${career}</div></div>`;
 }
 let editCareer=[];
 function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.user;
   editCareer=(u.career||[]).map(c=>({...c}));
   m.innerHTML=`<div class="page-head"><div class="eyebrow">Profile</div><h1>내 프로필</h1></div>
     <div class="card" style="padding:28px;max-width:620px">
-      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
-        <span class="avatar" style="width:64px;height:64px;font-size:24px">${(u.name||'나').slice(0,1)}</span>
-        <div><div style="font-size:20px;font-weight:800">${esc(u.name)}</div><div style="color:var(--sub);font-size:13.5px;margin-top:2px">${s.short} · ${esc(u.course)} ${u.gisu}기 · 학번 ${esc(u.sid)||'—'}</div></div>
+      <div class="photo-edit">
+        <span id="me-av" class="avatar photo-big" style="width:76px;height:76px;font-size:28px"></span>
+        <div><div style="font-size:20px;font-weight:800">${esc(u.name)} ${u.officer?`<span class="badge-off">👑 ${esc(u.officer)}</span>`:''}</div>
+          <div style="color:var(--sub);font-size:13px;margin:4px 0 8px">${s.short} · ${esc(u.course)} ${u.gisu}기 · 학번 ${esc(u.sid)}</div>
+          <div class="photo-btns"><button class="btn sm ghost" id="btn-photo">📷 사진 변경</button><button class="btn sm gray" id="btn-photo-del">삭제</button></div>
+          <input type="file" id="me-photo" accept="image/*" hidden></div>
         <span style="margin-left:auto">${schoolMark(s,40)}</span>
       </div>
       <div class="fields">
@@ -722,10 +726,10 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
         <div class="fld"><label>이메일 <span class="req">*</span></label><input id="me-em" value="${esc(u.email)}"></div>
         <div class="fld"><label>연락처</label><input id="me-ph" value="${esc(u.phone)}"></div>
         <div class="fld"><label>생년월일</label><input id="me-bd" value="${esc(u.birth)}" placeholder="예: 1985-03-12"></div>
+        <div class="fld"><label>비밀번호 변경</label><input id="me-pw" value="${esc(u.pw)}"></div>
       </div>
       <div style="margin-top:18px;display:flex;gap:10px"><button class="btn" id="me-save">기본 정보 저장</button><button class="btn gray" id="me-out">로그아웃</button></div>
     </div>
-
     <div class="card" style="padding:28px;max-width:620px;margin-top:16px">
       <div style="font-weight:800;font-size:16px">이력 (경력)</div>
       <p style="color:var(--sub);font-size:13px;margin-top:4px;margin-bottom:14px">과거 회사·역할·기간을 추가하세요. (선택 · 공개 범위 설정의 영향을 받습니다)</p>
@@ -733,27 +737,25 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
       <button class="btn ghost sm" id="addCareer">＋ 경력 추가</button>
       <div style="margin-top:16px"><button class="btn" id="saveCareer">이력 저장</button></div>
     </div>
-
     <div class="card" style="padding:28px;max-width:620px;margin-top:16px">
       <div style="font-weight:800;font-size:16px">개인정보 공개 범위</div>
       <p style="color:var(--sub);font-size:13.5px;margin-top:4px;margin-bottom:16px">학번·이름·회사·직책·이메일은 항상 공개됩니다. 아래에서 <b>연락처·생년월일·이력</b>의 공개 정도를 선택하세요.</p>
-      <div class="exp-seg">
-        ${['full','basic','minimal'].map(e=>`<button class="exp-opt ${(u.exposure||'basic')===e?'on':''}" data-e="${e}"><b>${expTitle(e)}</b><span>${expDesc(e)}</span></button>`).join('')}
-      </div>
-      <div style="margin-top:20px">
-        <div style="font-weight:700;font-size:13px;color:var(--sub);margin-bottom:10px">👀 다른 원우에게 보이는 내 카드 미리보기</div>
-        <div id="prevBox">${myPreviewCard()}</div>
-      </div>
+      <div class="exp-seg">${['full','basic','minimal'].map(e=>`<button class="exp-opt ${(u.exposure||'basic')===e?'on':''}" data-e="${e}"><b>${expTitle(e)}</b><span>${expDesc(e)}</span></button>`).join('')}</div>
+      <div style="margin-top:20px"><div style="font-weight:700;font-size:13px;color:var(--sub);margin-bottom:10px">👀 다른 원우에게 보이는 내 카드 미리보기</div><div id="prevBox">${myPreviewCard()}</div></div>
     </div>`;
-  renderCareerEditor(m);
+  renderMeAvatar(m);renderCareerEditor(m);
+  m.querySelector('#btn-photo').addEventListener('click',()=>m.querySelector('#me-photo').click());
+  m.querySelector('#me-photo').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{u.photo=rd.result;save();renderMeAvatar(m);document.getElementById('meAv').style.backgroundImage=`url('${u.photo}')`;document.getElementById('meAv').style.color='transparent';document.getElementById('meAv').textContent='';m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('프로필 사진이 변경되었습니다');};rd.readAsDataURL(f);});
+  m.querySelector('#btn-photo-del').addEventListener('click',()=>{u.photo='';save();renderMeAvatar(m);const a=document.getElementById('meAv');a.style.backgroundImage='';a.style.color='';a.textContent=u.name.slice(0,1);m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('사진을 삭제했습니다');});
   m.querySelector('#addCareer').addEventListener('click',()=>{editCareer.push({c:'',r:'',p:''});renderCareerEditor(m);});
   m.querySelector('#saveCareer').addEventListener('click',()=>{u.career=editCareer.filter(c=>c.c.trim()||c.r.trim());save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('이력이 저장되었습니다');});
-  m.querySelector('#me-save').addEventListener('click',()=>{u.company=val('me-co');u.title=val('me-ti');u.head=val('me-head');u.email=val('me-em');u.phone=val('me-ph');u.birth=val('me-bd');save();document.getElementById('meAv').textContent=(u.name||'나').slice(0,1);m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('저장되었습니다');});
-  m.querySelector('#me-out').addEventListener('click',()=>{if(confirm('로그아웃하시겠어요? (데모 데이터는 유지됩니다)')){S.user=null;save();location.reload();}});
+  m.querySelector('#me-save').addEventListener('click',()=>{u.company=val('me-co');u.title=val('me-ti');u.head=val('me-head');u.email=val('me-em');u.phone=val('me-ph');u.birth=val('me-bd');u.pw=val('me-pw')||'1234';save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('저장되었습니다');});
+  m.querySelector('#me-out').addEventListener('click',()=>{if(confirm('로그아웃하시겠어요?')){S.session=null;save();location.reload();}});
   m.querySelectorAll('.exp-opt').forEach(b=>b.addEventListener('click',()=>{u.exposure=b.dataset.e;save();
     m.querySelectorAll('.exp-opt').forEach(o=>o.classList.toggle('on',o.dataset.e===u.exposure));
     m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('공개 범위: '+expTitle(u.exposure));}));
 }
+function renderMeAvatar(m){const u=S.user;const a=m.querySelector('#me-av');a.style.cssText='width:76px;height:76px;font-size:28px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');a.textContent=u.photo?'':u.name.slice(0,1);}
 function renderCareerEditor(m){
   const box=m.querySelector('#careerList');
   box.innerHTML=editCareer.map((c,i)=>`<div class="career-row">
@@ -768,7 +770,7 @@ function renderCareerEditor(m){
 /* ---------- search ---------- */
 function doSearch(q){q=q.trim();if(!q)return;
   const posts=S.posts.filter(p=>(p.title+p.body+p.who).includes(q));
-  const mem=S.members.filter(x=>(x.name+x.company+x.title+x.sid).includes(q));
+  const mem=realMembers().filter(x=>(x.name+x.company+x.title+x.sid).includes(q));
   const meets=S.meets.filter(x=>(x.title+x.place+x.org).includes(q));
   openModal('“'+esc(q)+'” 검색 결과',`
     <p style="font-weight:800;margin:6px 0 6px">💼 게시글 ${posts.length}</p>${posts.map(p=>`<div class="cmt"><b>${esc(p.who)}</b><span>${esc(p.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
@@ -776,7 +778,7 @@ function doSearch(q){q=q.trim();if(!q)return;
     <p style="font-weight:800;margin:14px 0 6px">🤝 모임 ${meets.length}</p>${meets.map(x=>`<div class="cmt"><b>${esc(x.date)}</b><span>${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}`,null,true);
 }
 
-/* ---------- modal / toast / utils ---------- */
+/* ---------- utils ---------- */
 function openModal(title,html,onOk,infoOnly){
   const bg=document.createElement('div');bg.className='modal-bg';
   bg.innerHTML=`<div class="modal"><h3>${title}</h3><div class="mbody">${html}</div>
@@ -795,7 +797,7 @@ function today(){const d=new Date();return (d.getMonth()+1)+'/'+d.getDate();}
 
 /* ---------- boot ---------- */
 buildLogin();
-if(S.user){enterApp();}
+if(S.session && S.remember && acctBySid(S.session)){enterApp();}
 </script>
 </body>
 </html>
