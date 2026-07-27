@@ -177,6 +177,14 @@
   .badge-exp.minimal{background:#FBEAEA;color:#C0392B}
   .exchanged{color:var(--green);font-weight:800;font-size:12.5px}
 
+  /* clubs */
+  .club-card{padding:22px;text-align:center}
+  .club-emoji{font-size:34px}
+  .club-nm{font-weight:800;font-size:16px;margin-top:8px}
+  .club-cat{color:var(--sub);font-size:12.5px;margin-top:3px}
+  .club-desc{color:#4a5160;font-size:13px;margin-top:10px;min-height:38px}
+  .club-tags{display:flex;flex-wrap:wrap;gap:6px}
+  .club-chip{background:var(--soft);color:var(--pri);font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:20px}
   /* profile exposure */
   .exp-seg{display:flex;flex-direction:column;gap:10px}
   .exp-opt{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:3px}
@@ -257,6 +265,7 @@
       <button class="nav-item" data-view="board"><span class="ni">💼</span>비즈니스 게시판</button>
       <button class="nav-item" data-view="meet"><span class="ni">🤝</span>만남 · 미팅</button>
       <button class="nav-item" data-view="dir"><span class="ni">📇</span>원우수첩</button>
+      <button class="nav-item" data-view="club"><span class="ni">🎫</span>동아리</button>
       <button class="nav-item" data-view="notice"><span class="ni">🔔</span>공지</button>
       <div class="side-h" style="margin-top:12px">내 활동</div>
       <button class="nav-item" data-view="me"><span class="ni">👤</span>내 프로필</button>
@@ -296,15 +305,26 @@ function schoolMark(s,size){
    항상 공개: 학번(sid)·이름·학교·회사·직책·이메일·헤드라인
    조절 대상: 연락처(phone)·생년월일(birth)·이력(career) */
 const seedMembers=[
-  {sid:'2021-1201',name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',head:'제조 전략기획 · 신사업 개발',email:'sjyoon@oo.co.kr',phone:'010-2201-1188',birth:'1982-05-14',career:[{c:'OO컨설팅',r:'컨설턴트',p:'2010–2015'},{c:'OO기업',r:'전략기획 차장',p:'2015–2021'}],exposure:'full'},
-  {sid:'2021-1202',name:'박민호',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO전자',title:'기획팀 차장',head:'전자·부품 사업기획',email:'mhpark@oo-elec.com',phone:'010-3312-4501',birth:'1984-09-02',career:[{c:'OO반도체',r:'기획 대리',p:'2012–2018'}],exposure:'basic'},
-  {sid:'2020-1105',name:'이서연',school:'연세대학교',gisu:11,course:'Executive MBA',company:'OO금융',title:'IB본부 팀장',head:'IB · M&A 자문',email:'sylee@oofin.com',phone:'010-8890-2277',birth:'1983-01-27',career:[{c:'OO증권',r:'애널리스트',p:'2009–2016'}],exposure:'minimal'},
-  {sid:'2021-1210',name:'최강민',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO제약',title:'마케팅 이사',head:'헬스케어 마케팅 리더',email:'kmchoi@oopharm.com',phone:'010-4456-9012',birth:'1980-11-30',career:[{c:'OO생활건강',r:'BM',p:'2008–2016'}],exposure:'basic'},
-  {sid:'2022-1305',name:'정하늘',school:'연세대학교',gisu:13,course:'MBA',company:'스타트업 OOO',title:'대표',head:'B2B SaaS 창업가',email:'sky@ooo.io',phone:'010-7788-3344',birth:'1988-07-19',career:[{c:'OO테크',r:'PM',p:'2014–2020'}],exposure:'full'},
-  {sid:'2021-1215',name:'김도윤',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO건설',title:'해외사업부 부장',head:'해외 인프라 사업개발',email:'dykim@oocon.com',phone:'010-5567-8123',birth:'1981-03-08',career:[{c:'OO엔지니어링',r:'PM',p:'2007–2017'}],exposure:'basic'},
-  {sid:'2019-1008',name:'김태영',school:'고려대학교',gisu:10,course:'Executive MBA',company:'OO상사',title:'영업본부 상무',head:'글로벌 무역·유통',email:'tykim@oocorp.com',phone:'010-9901-4567',birth:'1978-12-11',career:[{c:'OO물산',r:'지사장',p:'2005–2015'}],exposure:'minimal'},
-  {sid:'2023-1402',name:'한지민',school:'서강대학교',gisu:14,course:'MBA',company:'OO테크',title:'CTO',head:'AI 플랫폼 · 엔지니어링 리더',email:'jmhan@ootech.io',phone:'010-2345-6789',birth:'1987-06-23',career:[{c:'OO소프트',r:'테크리드',p:'2013–2021'}],exposure:'basic'},
-  {sid:'2021-1220',name:'오세훈',school:'고려대학교',gisu:12,course:'MBA',company:'OO물산',title:'전략기획 부장',head:'유통·물류 전략',email:'shoh@oomulsan.com',phone:'010-6612-3300',birth:'1983-08-05',career:[{c:'OO유통',r:'기획 차장',p:'2011–2019'}],exposure:'full'},
+  {sid:'2021-1201',name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',head:'제조 전략기획 · 신사업 개발',email:'sjyoon@oo.co.kr',phone:'010-2201-1188',birth:'1982-05-14',career:[{c:'OO컨설팅',r:'컨설턴트',p:'2010–2015'},{c:'OO기업',r:'전략기획 차장',p:'2015–2021'}],clubs:['골프 동아리','재테크·투자 스터디'],exposure:'full'},
+  {sid:'2021-1202',name:'박민호',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO전자',title:'기획팀 차장',head:'전자·부품 사업기획',email:'mhpark@oo-elec.com',phone:'010-3312-4501',birth:'1984-09-02',career:[{c:'OO반도체',r:'기획 대리',p:'2012–2018'}],clubs:['축구 동아리'],exposure:'basic'},
+  {sid:'2020-1105',name:'이서연',school:'연세대학교',gisu:11,course:'Executive MBA',company:'OO금융',title:'IB본부 팀장',head:'IB · M&A 자문',email:'sylee@oofin.com',phone:'010-8890-2277',birth:'1983-01-27',career:[{c:'OO증권',r:'애널리스트',p:'2009–2016'}],clubs:['와인 동호회','재테크·투자 스터디'],exposure:'minimal'},
+  {sid:'2021-1210',name:'최강민',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO제약',title:'마케팅 이사',head:'헬스케어 마케팅 리더',email:'kmchoi@oopharm.com',phone:'010-4456-9012',birth:'1980-11-30',career:[{c:'OO생활건강',r:'BM',p:'2008–2016'}],clubs:['골프 동아리'],exposure:'basic'},
+  {sid:'2022-1305',name:'정하늘',school:'연세대학교',gisu:13,course:'MBA',company:'스타트업 OOO',title:'대표',head:'B2B SaaS 창업가',email:'sky@ooo.io',phone:'010-7788-3344',birth:'1988-07-19',career:[{c:'OO테크',r:'PM',p:'2014–2020'}],clubs:['창업 동아리'],exposure:'full'},
+  {sid:'2021-1215',name:'김도윤',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO건설',title:'해외사업부 부장',head:'해외 인프라 사업개발',email:'dykim@oocon.com',phone:'010-5567-8123',birth:'1981-03-08',career:[{c:'OO엔지니어링',r:'PM',p:'2007–2017'}],clubs:['축구 동아리','골프 동아리'],exposure:'basic'},
+  {sid:'2019-1008',name:'김태영',school:'고려대학교',gisu:10,course:'Executive MBA',company:'OO상사',title:'영업본부 상무',head:'글로벌 무역·유통',email:'tykim@oocorp.com',phone:'010-9901-4567',birth:'1978-12-11',career:[{c:'OO물산',r:'지사장',p:'2005–2015'}],clubs:['골프 동아리'],exposure:'minimal'},
+  {sid:'2023-1402',name:'한지민',school:'서강대학교',gisu:14,course:'MBA',company:'OO테크',title:'CTO',head:'AI 플랫폼 · 엔지니어링 리더',email:'jmhan@ootech.io',phone:'010-2345-6789',birth:'1987-06-23',career:[{c:'OO소프트',r:'테크리드',p:'2013–2021'}],clubs:['창업 동아리','독서 모임'],exposure:'basic'},
+  {sid:'2021-1220',name:'오세훈',school:'고려대학교',gisu:12,course:'MBA',company:'OO물산',title:'전략기획 부장',head:'유통·물류 전략',email:'shoh@oomulsan.com',phone:'010-6612-3300',birth:'1983-08-05',career:[{c:'OO유통',r:'기획 차장',p:'2011–2019'}],clubs:['마라톤 크루'],exposure:'full'},
+];
+/* 동아리 목록 (앱에서 가입 → 소속으로 노출) */
+const seedClubs=[
+  {id:'golf',name:'골프 동아리',cat:'스포츠',emoji:'⛳',desc:'주말 라운딩·친선전 중심의 네트워킹 골프 모임',members:128},
+  {id:'startup',name:'창업 동아리',cat:'비즈니스',emoji:'🚀',desc:'창업·투자 관심 원우들의 아이템 공유와 데모데이',members:96},
+  {id:'wine',name:'와인 동호회',cat:'취미',emoji:'🍷',desc:'와인 테이스팅과 미식 네트워킹',members:74},
+  {id:'invest',name:'재테크·투자 스터디',cat:'비즈니스',emoji:'📈',desc:'주식·부동산·대체투자 스터디와 정보 공유',members:152},
+  {id:'soccer',name:'축구 동아리',cat:'스포츠',emoji:'⚽',desc:'주말 풋살과 학교 대항 리그전',members:64},
+  {id:'run',name:'마라톤 크루',cat:'스포츠',emoji:'🏃',desc:'한강 러닝과 마라톤 대회 참가',members:58},
+  {id:'book',name:'독서 모임',cat:'학습',emoji:'📚',desc:'경영·인문 도서 토론 모임',members:83},
+  {id:'tennis',name:'테니스 동아리',cat:'스포츠',emoji:'🎾',desc:'초보 환영, 정기 테니스 모임',members:47},
 ];
 
 const seedPosts=[
@@ -328,7 +348,7 @@ const seedNotices=[
 ];
 
 /* ===================== STATE ===================== */
-const LS='mbaweb_v3';
+const LS='mbaweb_v4';
 let S=load();
 function load(){try{const r=JSON.parse(localStorage.getItem(LS));if(r&&r.user)return r;}catch(e){}
   return {user:null,posts:seedPosts,meets:seedMeets,notices:seedNotices,members:seedMembers,exchanged:[]};}
@@ -367,7 +387,7 @@ function gv(id){return document.getElementById(id).value.trim();}
 function doLogin(){
   S.user={sid:gv('in-sid'),name:gv('in-name'),school:pickedSchool.name,gisu:gv('in-gisu')||'12',course:'MBA',
     birth:gv('in-birth'),company:gv('in-company'),title:gv('in-title'),head:gv('in-head'),
-    email:gv('in-email'),phone:gv('in-phone'),career:[],exposure:'basic'};
+    email:gv('in-email'),phone:gv('in-phone'),career:[],clubs:[],exposure:'basic'};
   save();enterApp();
 }
 
@@ -375,6 +395,7 @@ function doLogin(){
 function enterApp(){
   if(!S.user.exposure)S.user.exposure='basic';
   if(!S.user.career)S.user.career=[];
+  if(!S.user.clubs)S.user.clubs=[];
   const s=schoolByName(S.user.school)||schools[0];
   applyTheme(s);
   document.getElementById('login').classList.add('hidden');
@@ -399,7 +420,7 @@ let currentView='home';
 function go(v){currentView=v;
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
   const m=document.getElementById('main');window.scrollTo(0,0);
-  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,notice:viewNotice,me:viewMe}[v]||viewHome)(m);
+  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,me:viewMe}[v]||viewHome)(m);
 }
 
 /* ---------- HOME ---------- */
@@ -564,9 +585,28 @@ function memHTML(x){
       </div>
     </div>
     <div class="mem-sec">${rows}</div>
+    <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">소속 동아리</div>${(x.clubs&&x.clubs.length)?`<div class="club-tags">${x.clubs.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div>`:'<div class="lock">없음</div>'}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">이력</div>${careerHTML}</div>
     ${needExch?`<div class="exch-line"><button class="btn sm exch" data-k="${key}">연락처 교환</button><span class="lock">교환하면 잠긴 정보가 공개됩니다</span></div>`:(done?'<div class="exch-line"><span class="exchanged">✓ 연락처 교환 완료</span></div>':'')}
   </div>`;
+}
+
+/* ---------- CLUBS (동아리) ---------- */
+function viewClub(m){
+  const mine=S.user.clubs||[];
+  m.innerHTML=`
+    <div class="page-head"><div class="eyebrow">Clubs</div><h1>동아리</h1><p>관심 있는 동아리에 가입하면 내 프로필과 원우수첩에 '소속 동아리'로 자동 표시됩니다.</p></div>
+    ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
+    <div class="dir-grid">${seedClubs.map(c=>{const j=mine.includes(c.name);return `
+      <div class="club-card card">
+        <div class="club-emoji">${c.emoji}</div>
+        <div class="club-nm">${esc(c.name)}</div>
+        <div class="club-cat">${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명</div>
+        <div class="club-desc">${esc(c.desc)}</div>
+        <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${j?'가입됨 ✓ · 탈퇴하기':'＋ 가입하기'}</button>
+      </div>`;}).join('')}</div>`;
+  m.querySelectorAll('.join').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.c;const arr=S.user.clubs||[];
+    const i=arr.indexOf(n);if(i>=0){arr.splice(i,1);toast(n+' 탈퇴했습니다');}else{arr.push(n);toast(n+' 가입 완료');}S.user.clubs=arr;save();viewClub(m);}));
 }
 
 /* ---------- NOTICE ---------- */
@@ -594,6 +634,7 @@ function myPreviewCard(){const u=S.user, ss=schoolByName(u.school), exp=u.exposu
         <div class="mem-sub">${ss?ss.short:''} · ${esc(u.course)} ${u.gisu}기</div>
         <div class="mem-head">${esc(u.company)} · ${esc(u.title)}</div></div></div>
     <div class="mem-sec">${rows}</div>
+    <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">소속 동아리</div>${(u.clubs&&u.clubs.length)?`<div class="club-tags">${u.clubs.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div>`:'<div class="lock">없음 · 동아리 메뉴에서 가입</div>'}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">이력</div>${career}</div>
   </div>`;
 }
