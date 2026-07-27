@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MBA Lounge — 웹앱</title>
+<meta name="theme-color" content="#6C5CE7" />
+<style>
+  :root{
+    --pri:#6C5CE7; --pri2:#8B7CF7; --soft:#EFEBFF;
+    --bg:#F5F6FB; --card:#fff; --ink:#1F2430; --sub:#8A90A0; --line:#ECEEF4;
+    --shadow:0 2px 16px rgba(31,36,48,.07); --r:16px;
+    --green:#22C55E; --green-s:#E9F9EF; --amber:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif}
+  body{background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  button{font-family:inherit;cursor:pointer}
+  a{color:inherit;text-decoration:none}
+  .hidden{display:none !important}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#d7dae6;border-radius:8px}
+
+  /* ---------- School shield ---------- */
+  .mark{display:inline-block;line-height:0}
+  .mark svg{display:block}
+
+  /* ---------- Login ---------- */
+  #login{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(1000px 600px at 50% -10%,var(--soft),var(--bg));padding:24px;overflow:auto}
+  .login-card{background:var(--card);border-radius:26px;box-shadow:0 30px 80px rgba(31,36,48,.16);width:100%;max-width:720px;padding:44px;margin:auto}
+  .login-brand{display:flex;align-items:center;gap:12px;font-size:26px;font-weight:800;justify-content:center}
+  .login-brand b{color:var(--pri)}
+  .login-sub{text-align:center;color:var(--sub);margin-top:8px;font-size:14.5px}
+  .login-step{font-weight:800;margin:30px 0 14px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .login-step .st-n{width:24px;height:24px;border-radius:50%;background:var(--pri);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .school-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  @media(max-width:640px){.school-grid{grid-template-columns:repeat(3,1fr)}}
+  .school-btn{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:.15s;text-align:center}
+  .school-btn:hover{border-color:var(--pri);transform:translateY(-2px);box-shadow:var(--shadow)}
+  .school-btn.sel{border-color:var(--pri);background:var(--soft)}
+  .school-btn .snm{font-size:12px;font-weight:700;color:var(--ink)}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  @media(max-width:640px){.fields{grid-template-columns:1fr}}
+  .fld label{display:block;font-size:12.5px;font-weight:700;color:var(--sub);margin-bottom:6px}
+  .fld input,.fld select{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:12px 13px;font-size:14px;background:#fff;outline:none}
+  .fld input:focus,.fld select:focus{border-color:var(--pri)}
+  .login-go{margin-top:26px;width:100%;border:none;border-radius:13px;padding:15px;font-size:16px;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,var(--pri),var(--pri2));box-shadow:0 12px 26px rgba(108,92,231,.35);transition:.15s}
+  .login-go:hover{transform:translateY(-1px)}
+  .login-go:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .login-note{text-align:center;color:var(--sub);font-size:12px;margin-top:14px}
+
+  /* ---------- App shell ---------- */
+  .topbar{position:sticky;top:0;z-index:40;height:64px;background:#fff;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:16px;padding:0 22px}
+  .topbar .brand{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800}
+  .topbar .brand b{color:var(--pri)}
+  .school-chip{display:flex;align-items:center;gap:9px;background:var(--soft);color:var(--pri);border:1px solid transparent;
+    border-radius:22px;padding:6px 14px 6px 8px;font-weight:800;font-size:13.5px;cursor:pointer}
+  .school-chip:hover{border-color:var(--pri)}
+  .topbar .spacer{flex:1}
+  .search{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:9px 14px;width:280px;color:var(--sub)}
+  .search input{border:none;background:none;outline:none;width:100%;font-size:14px;color:var(--ink)}
+  @media(max-width:900px){.search{display:none}}
+  .me-btn{display:flex;align-items:center;gap:10px;background:none;border:none;padding:4px}
+  .avatar{width:40px;height:40px;border-radius:50%;background:var(--soft);color:var(--pri);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+
+  .shell{display:grid;grid-template-columns:248px 1fr;align-items:start;max-width:1280px;margin:0 auto}
+  @media(max-width:860px){.shell{grid-template-columns:1fr}}
+  .sidebar{position:sticky;top:64px;padding:22px 16px;height:calc(100vh - 64px);overflow:auto}
+  @media(max-width:860px){.sidebar{position:static;height:auto;display:flex;gap:8px;overflow-x:auto;padding:12px}}
+  .side-h{font-size:11px;font-weight:800;color:var(--sub);letter-spacing:.6px;padding:10px 14px 6px;text-transform:uppercase}
+  @media(max-width:860px){.side-h{display:none}}
+  .nav-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;color:#565b6b;font-weight:700;font-size:14.5px;white-space:nowrap;border:none;background:none;width:100%;text-align:left;transition:.12s}
+  .nav-item .ni{font-size:18px;width:22px;text-align:center}
+  .nav-item:hover{background:var(--card);color:var(--ink)}
+  .nav-item.active{background:var(--pri);color:#fff;box-shadow:0 8px 20px rgba(108,92,231,.3)}
+  .nav-item .badge{margin-left:auto;background:var(--pri);color:#fff;font-size:11px;font-weight:800;border-radius:10px;padding:1px 7px}
+  .nav-item.active .badge{background:rgba(255,255,255,.28)}
+
+  .main{padding:28px 34px 70px;min-height:calc(100vh - 64px)}
+  @media(max-width:640px){.main{padding:20px 16px 60px}}
+  .page-head{margin-bottom:22px}
+  .page-head h1{font-size:26px;font-weight:800;letter-spacing:-.4px}
+  .page-head p{color:var(--sub);margin-top:6px;font-size:14.5px}
+  .eyebrow{color:var(--pri);font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+
+  /* generic */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  .btn{border:none;border-radius:11px;padding:11px 18px;font-weight:800;font-size:14px;background:var(--pri);color:#fff;transition:.12s}
+  .btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+  .btn.ghost{background:#fff;color:var(--pri);border:1.5px solid var(--soft)}
+  .btn.sm{padding:8px 13px;font-size:13px;border-radius:10px}
+  .btn.gray{background:#EEF0F5;color:#6b7180}
+  .chip-row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:18px}
+  .chip{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:8px 15px;font-size:13px;font-weight:700;color:var(--sub)}
+  .chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+  .empty{color:var(--sub);text-align:center;padding:40px;font-size:14px}
+
+  /* dashboard */
+  .hero-band{border-radius:22px;padding:34px 36px;color:#fff;background:linear-gradient(135deg,var(--pri),var(--pri2));position:relative;overflow:hidden}
+  .hero-band::after{content:"";position:absolute;right:-40px;top:-40px;width:200px;height:200px;background:rgba(255,255,255,.1);border-radius:50%}
+  .hero-band h2{font-size:24px;font-weight:800;position:relative}
+  .hero-band p{color:rgba(255,255,255,.9);margin-top:8px;position:relative;font-size:14.5px}
+  .hero-band .slogan{margin-top:16px;display:inline-block;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:7px 15px;border-radius:20px;font-weight:700;font-size:13.5px;position:relative}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  @media(max-width:640px){.kpis{grid-template-columns:1fr}}
+  .kpi{padding:22px;text-align:left}
+  .kpi .k-ic{width:44px;height:44px;border-radius:12px;background:var(--soft);color:var(--pri);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px}
+  .kpi .k-n{font-size:26px;font-weight:800}
+  .kpi .k-l{color:var(--sub);font-size:13.5px;margin-top:2px}
+  .dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  @media(max-width:860px){.dash-grid{grid-template-columns:1fr}}
+  .panel{padding:22px}
+  .panel h3{font-size:16px;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+  .panel h3 .more{margin-left:auto;font-size:12.5px;color:var(--pri);font-weight:700;cursor:pointer}
+  .mini-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .mini-row:first-of-type{border-top:none}
+  .mini-row .mt{font-weight:700;font-size:14px}
+  .mini-row .ms{color:var(--sub);font-size:12.5px;margin-top:2px}
+  .date-chip{background:var(--soft);color:var(--pri);border-radius:11px;font-size:12px;font-weight:800;padding:8px 10px;text-align:center;min-width:52px;flex-shrink:0}
+
+  /* posts */
+  .post-card{padding:22px;margin-bottom:14px}
+  .post-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .post-top .who{font-weight:800;font-size:14px}
+  .post-top .meta{color:var(--sub);font-size:12.5px}
+  .cat-tag{font-size:11.5px;font-weight:800;padding:4px 10px;border-radius:20px;background:var(--soft);color:var(--pri)}
+  .cat-tag.deal{background:#FFF3E0;color:#C77700}
+  .cat-tag.invest{background:#E7F6EE;color:#1E9E54}
+  .cat-tag.hire{background:#E8EEFF;color:#3B5BDB}
+  .cat-tag.info{background:#F0EEFB;color:#6C5CE7}
+  .post-card h3{font-size:17px;font-weight:800}
+  .post-card .body{color:#464c59;margin-top:8px;font-size:14.5px;white-space:pre-wrap}
+  .post-actions{display:flex;gap:18px;margin-top:14px;color:var(--sub);font-size:13px;font-weight:700}
+  .post-actions button{background:none;border:none;color:var(--sub);font-weight:700;font-size:13px;display:flex;align-items:center;gap:5px}
+  .post-actions button.on{color:var(--pri)}
+  .comments{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+  .cmt{display:flex;gap:9px;font-size:13.5px;padding:5px 0}
+  .cmt b{font-weight:800}
+  .cmt-form{display:flex;gap:8px;margin-top:10px}
+  .cmt-form input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px;outline:none}
+  .cmt-form input:focus{border-color:var(--pri)}
+
+  /* meetups */
+  .meet-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  @media(max-width:860px){.meet-grid{grid-template-columns:1fr}}
+  .meet-card{padding:22px;display:flex;flex-direction:column}
+  .meet-card .m-date{display:inline-flex;align-items:center;gap:8px;color:var(--pri);font-weight:800;font-size:13px}
+  .meet-card h3{font-size:17px;font-weight:800;margin-top:10px}
+  .meet-card .m-info{color:var(--sub);font-size:13px;margin-top:8px;display:flex;flex-direction:column;gap:4px}
+  .meet-foot{display:flex;align-items:center;gap:12px;margin-top:16px}
+  .attend{border:1.5px solid var(--green);color:var(--green);background:#fff;border-radius:11px;padding:9px 16px;font-weight:800;font-size:13.5px}
+  .attend.going{background:var(--green);color:#fff}
+  .cap-bar{flex:1;height:8px;background:#EEF0F5;border-radius:6px;overflow:hidden}
+  .cap-bar i{display:block;height:100%;background:var(--pri)}
+  .cap-txt{font-size:12.5px;color:var(--sub);font-weight:700}
+
+  /* directory / 원우수첩 */
+  .dir-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:1000px){.dir-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:640px){.dir-grid{grid-template-columns:1fr}}
+  .mem-card{padding:22px;text-align:center}
+  .mem-card .m-av{width:64px;height:64px;border-radius:50%;background:var(--soft);color:var(--pri);font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+  .mem-card .m-nm{font-weight:800;font-size:16px}
+  .mem-card .m-sub{color:var(--sub);font-size:12.5px;margin-top:3px}
+  .mem-card .m-co{margin-top:10px;font-size:13.5px;font-weight:700}
+  .mem-card .m-ti{color:var(--sub);font-size:12.5px}
+  .contact-box{margin-top:14px;border-top:1px solid var(--line);padding-top:14px;font-size:13px}
+  .contact-box .cline{display:flex;align-items:center;justify-content:center;gap:8px;color:#464c59;padding:3px 0}
+  .masked{filter:blur(5px);user-select:none}
+  .exchanged{color:var(--green);font-weight:800;font-size:12.5px;margin-top:6px}
+
+  /* notices */
+  .notice-row{padding:18px 22px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line);cursor:pointer}
+  .notice-row:last-child{border-bottom:none}
+  .notice-row:hover{background:var(--bg)}
+  .notice-row .src{font-size:11px;font-weight:800;padding:4px 9px;border-radius:8px;background:var(--soft);color:var(--pri);flex-shrink:0}
+  .notice-row .nt{font-weight:700;font-size:14.5px}
+  .notice-row .nd{color:var(--sub);font-size:12px;margin-top:2px}
+
+  /* modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(20,18,31,.5);z-index:80;display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal{background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:88vh;overflow:auto;padding:28px}
+  .modal h3{font-size:19px;font-weight:800;margin-bottom:16px}
+  .modal .fld{margin-bottom:14px}
+  .modal textarea{width:100%;border:1.5px solid var(--line);border-radius:11px;padding:12px;font-size:14px;outline:none;resize:vertical;min-height:110px;font-family:inherit}
+  .modal textarea:focus{border-color:var(--pri)}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+
+  /* toast */
+  #toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:120;opacity:0;transition:.25s;pointer-events:none}
+  #toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- ================= LOGIN ================= -->
+<div id="login">
+  <div class="login-card">
+    <div class="login-brand"><span id="login-mark"></span>MBA <b>Lounge</b></div>
+    <div class="login-sub">라운지, 만남이 쉬워지는 공간 · 데스크톱 웹앱</div>
+
+    <div class="login-step"><span class="st-n">1</span>학교를 선택하세요</div>
+    <div class="school-grid" id="schoolGrid"></div>
+
+    <div class="login-step"><span class="st-n">2</span>내 정보를 입력하세요</div>
+    <div class="fields">
+      <div class="fld"><label>이름</label><input id="in-name" placeholder="예: 김재성" /></div>
+      <div class="fld"><label>기수</label><input id="in-gisu" placeholder="예: 12" /></div>
+      <div class="fld"><label>회사 / 소속</label><input id="in-company" placeholder="예: OO기업" /></div>
+      <div class="fld"><label>직함</label><input id="in-title" placeholder="예: 기획팀 부장" /></div>
+      <div class="fld"><label>이메일 (연락처 교환용)</label><input id="in-email" placeholder="예: me@company.com" /></div>
+      <div class="fld"><label>전화 (연락처 교환용)</label><input id="in-phone" placeholder="예: 010-0000-0000" /></div>
+    </div>
+    <button class="login-go" id="loginGo" disabled>선택한 학교로 시작하기</button>
+    <div class="login-note">데모 데이터는 이 브라우저에만 저장됩니다 · 서버 연동 시 여러 기기에서 공유됩니다</div>
+  </div>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="brand"><span id="top-mark"></span>MBA <b>Lounge</b></div>
+    <button class="school-chip" id="schoolChip" title="학교 변경"></button>
+    <div class="spacer"></div>
+    <div class="search">🔎<input id="globalSearch" placeholder="원우·모임·게시글 검색" /></div>
+    <button class="me-btn" id="meBtn"><span class="avatar" id="meAv"></span></button>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="side-h">메뉴</div>
+      <button class="nav-item" data-view="home"><span class="ni">🏠</span>홈</button>
+      <button class="nav-item" data-view="board"><span class="ni">💼</span>비즈니스 게시판</button>
+      <button class="nav-item" data-view="meet"><span class="ni">🤝</span>만남 · 미팅</button>
+      <button class="nav-item" data-view="dir"><span class="ni">📇</span>원우수첩</button>
+      <button class="nav-item" data-view="notice"><span class="ni">🔔</span>공지</button>
+      <div class="side-h" style="margin-top:12px">내 활동</div>
+      <button class="nav-item" data-view="me"><span class="ni">👤</span>내 프로필</button>
+    </aside>
+
+    <main class="main" id="main"></main>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ===================== DATA ===================== */
+const schools=[
+  {id:'yonsei',name:'연세대학교',short:'연세',color:'#003876',c2:'#33619B',soft:'#E7EEF7'},
+  {id:'snu',name:'서울대학교',short:'서울',color:'#16348C',c2:'#4C61AC',soft:'#E9ECF7'},
+  {id:'kaist',name:'카이스트',short:'KAIST',color:'#004191',c2:'#3D6FB4',soft:'#E6EFF9'},
+  {id:'korea',name:'고려대학교',short:'고려',color:'#8E0E1F',c2:'#B14755',soft:'#F7E9EB'},
+  {id:'sogang',name:'서강대학교',short:'서강',color:'#B3242F',c2:'#C95F67',soft:'#FAECED'},
+  {id:'hanyang',name:'한양대학교',short:'한양',color:'#1A6FAF',c2:'#5295C4',soft:'#E8F2F9'},
+  {id:'ewha',name:'이화여자대학교',short:'이화',color:'#00462A',c2:'#337059',soft:'#E6F0EC'},
+  {id:'cau',name:'중앙대학교',short:'중앙',color:'#1240AB',c2:'#4A6CC2',soft:'#E8EDF9'},
+  {id:'konkuk',name:'건국대학교',short:'건국',color:'#036B3F',c2:'#3A9069',soft:'#E6F3EC'},
+  {id:'skku',name:'성균관대학교',short:'성균관',color:'#0F6B5C',c2:'#46927F',soft:'#E7F3F0'},
+];
+const slogans={'연세대학교':'연세인의 푸른 자부심','서울대학교':'겨레의 빛, 진리의 전당','카이스트':'미래를 만드는 과학의 심장','고려대학교':'민족의 아성, 붉은 호랑이','서강대학교':'그대, 서강의 자랑이듯','한양대학교':'사랑의 실천, 한양의 힘','이화여자대학교':'진·선·미의 빛, 이화','중앙대학교':'의에 죽고 참에 살자','건국대학교':'성실한 일꾼, 건국의 기상','성균관대학교':'인의예지, 600년의 전통'};
+
+function schoolMark(s,size){
+  const sz=size||34; const fs=s.short.length>=4?8:(s.short.length>2?9.5:11);
+  return `<span class="mark"><svg viewBox="0 0 40 48" width="${sz}" height="${Math.round(sz*1.18)}">
+    <defs><linearGradient id="g-${s.id}-${sz}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${s.color}"/><stop offset="1" stop-color="${s.c2}"/></linearGradient></defs>
+    <path d="M20 2 L37 8 V24 C37 36 29 43 20 46 C11 43 3 36 3 24 V8 Z" fill="url(#g-${s.id}-${sz})" stroke="rgba(255,255,255,.55)" stroke-width="1.6"/>
+    <text x="20" y="${s.short.length>2?27:28}" text-anchor="middle" fill="#fff" font-size="${fs}" font-weight="800" font-family="sans-serif">${s.short}</text>
+  </svg></span>`;
+}
+
+/* Seed members (원우수첩) */
+const seedMembers=[
+  {name:'윤수정',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO기업',title:'전략기획 부장',email:'sjyoon@oo.co.kr',phone:'010-2201-1188'},
+  {name:'박민호',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO전자',title:'기획팀 차장',email:'mhpark@oo-elec.com',phone:'010-3312-4501'},
+  {name:'이서연',school:'연세대학교',gisu:11,course:'Executive MBA',company:'OO금융',title:'IB본부 팀장',email:'sylee@oofin.com',phone:'010-8890-2277'},
+  {name:'최강민',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO제약',title:'마케팅 이사',email:'kmchoi@oopharm.com',phone:'010-4456-9012'},
+  {name:'정하늘',school:'연세대학교',gisu:13,course:'MBA',company:'스타트업 OOO',title:'대표',email:'sky@ooo.io',phone:'010-7788-3344'},
+  {name:'김도윤',school:'연세대학교',gisu:12,course:'Executive MBA',company:'OO건설',title:'해외사업부 부장',email:'dykim@oocon.com',phone:'010-5567-8123'},
+  {name:'김태영',school:'고려대학교',gisu:10,course:'Executive MBA',company:'OO상사',title:'영업본부 상무',email:'tykim@oocorp.com',phone:'010-9901-4567'},
+  {name:'한지민',school:'서강대학교',gisu:14,course:'MBA',company:'OO테크',title:'CTO',email:'jmhan@ootech.io',phone:'010-2345-6789'},
+  {name:'오세훈',school:'고려대학교',gisu:12,course:'MBA',company:'OO물산',title:'전략기획 부장',email:'shoh@oomulsan.com',phone:'010-6612-3300'},
+];
+
+const seedPosts=[
+  {id:'p1',cat:'deal',school:'연세대학교',who:'김태영',co:'OO상사 · 영업본부 상무',date:'26.06.18',title:'물류 자동화 솔루션 공동 사업 제안',body:'제조·유통 원우님들과 물류 자동화(WMS) 도입 공동 구매 및 파일럿을 추진하고자 합니다. 관심 있으신 분 댓글 주세요.',likes:34,liked:false,comments:[{by:'윤수정',txt:'제조 쪽에서 관심 있습니다. 자료 공유 가능할까요?'}]},
+  {id:'p2',cat:'invest',school:'연세대학교',who:'정하늘',co:'스타트업 OOO · 대표',date:'26.06.17',title:'시리즈A 브릿지 라운드, MBA 원우 엔젤 모집',body:'B2B SaaS 스타트업 브릿지 라운드를 오픈합니다. 원우 대상 우선 배정. IR 자료는 개별 연락 주시면 전달드립니다.',likes:21,liked:false,comments:[]},
+  {id:'p3',cat:'hire',school:'연세대학교',who:'최강민',co:'OO제약 · 마케팅 이사',date:'26.06.15',title:'디지털 마케팅 팀장 채용 (경력)',body:'헬스케어 디지털 마케팅 팀장을 찾습니다. 원우 추천 환영합니다. 상세 JD는 댓글/DM으로 안내드립니다.',likes:12,liked:false,comments:[{by:'박민호',txt:'주변에 적임자 있어 추천드리겠습니다.'}]},
+  {id:'p4',cat:'info',school:'연세대학교',who:'이서연',co:'OO금융 · IB본부 팀장',date:'26.06.14',title:'2026 하반기 M&A 시장 동향 자료 공유',body:'하반기 국내 미드마켓 M&A 동향 리포트를 공유합니다. 원우님들 사업 확장 검토 시 참고하세요.',likes:41,liked:false,comments:[]},
+];
+
+const seedMeets=[
+  {id:'m1',school:'연세대학교',date:'6/29',title:'연세대 MBA 골프 친선 모임',org:'연세대학교 MBA',place:'뉴서울CC',by:'윤수정',cap:16,going:11,attend:false,desc:'네트워킹 골프 라운딩. 초보 환영, 조 편성 후 안내드립니다.'},
+  {id:'m2',school:'연세대학교',date:'7/02',title:'신입 원우 환영 네트워킹 디너',org:'연세대학교 MBA',place:'강남 OO레스토랑',by:'정하늘',cap:30,going:18,attend:false,desc:'이번 학기 신입 원우 환영 자리. 명함 지참 권장.'},
+  {id:'m3',school:'연세대학교',date:'7/09',title:'창업·투자 라운드테이블',org:'연세대 창업동아리',place:'디캠프 선릉',by:'정하늘',cap:20,going:9,attend:false,desc:'창업/투자 관심 원우 대상 소규모 라운드테이블. 아이템 피칭 3분.'},
+  {id:'m4',school:'연세대학교',date:'7/16',title:'업종별 비즈니스 조찬회',org:'연세대학교 MBA',place:'여의도 OO호텔',by:'김도윤',cap:24,going:14,attend:false,desc:'업종별 테이블로 나눠 사업 정보 교류. 조찬 제공.'},
+];
+
+const seedNotices=[
+  {id:'n1',src:'학교',school:'연세대학교',title:'연세대학교 MBA 하계 특강 일정 안내',date:'26.06.20',body:'하계 특강이 7월 중 매주 수요일 저녁 7시에 진행됩니다. 신청은 행정실로 문의 바랍니다.'},
+  {id:'n2',src:'동아리',school:'연세대학교',title:'연세대 축구 — 7월 정기전 장소 변경',date:'26.06.19',body:'7월 정기전 장소가 노천극장 옆 운동장으로 변경되었습니다. 착오 없으시기 바랍니다.'},
+  {id:'n3',src:'전국',school:'전국',title:'전국 MBA 통합 체육대회 추진위원 모집',date:'26.06.17',body:'올 가을 전국 MBA 통합 체육대회를 추진합니다. 학교별 추진위원 2명씩 모집합니다.'},
+];
+
+/* ===================== STATE (localStorage) ===================== */
+const LS='mbaweb_v1';
+let S=load();
+function load(){try{const r=JSON.parse(localStorage.getItem(LS));if(r&&r.user)return r;}catch(e){}
+  return {user:null,posts:seedPosts,meets:seedMeets,notices:seedNotices,members:seedMembers,exchanged:[]};}
+function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
+function schoolByName(n){return schools.find(s=>s.name===n);}
+
+/* ===================== THEME ===================== */
+function applyTheme(s){const r=document.documentElement.style;
+  r.setProperty('--pri',s.color);r.setProperty('--pri2',s.c2);r.setProperty('--soft',s.soft);}
+
+/* ===================== LOGIN ===================== */
+let pickedSchool=null;
+function buildLogin(){
+  document.getElementById('login-mark').innerHTML=schoolMark(schools[0],34);
+  const grid=document.getElementById('schoolGrid');
+  grid.innerHTML=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,34)}<span class="snm">${s.short}</span></button>`).join('');
+  grid.querySelectorAll('.school-btn').forEach(b=>b.addEventListener('click',()=>{
+    pickedSchool=schools.find(s=>s.id===b.dataset.id);
+    grid.querySelectorAll('.school-btn').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    applyTheme(pickedSchool);
+    document.getElementById('login-mark').innerHTML=schoolMark(pickedSchool,34);
+    validateLogin();
+  }));
+  ['in-name','in-gisu','in-company','in-title','in-email','in-phone'].forEach(id=>
+    document.getElementById(id).addEventListener('input',validateLogin));
+  document.getElementById('loginGo').addEventListener('click',doLogin);
+}
+function validateLogin(){
+  const ok=pickedSchool && document.getElementById('in-name').value.trim();
+  document.getElementById('loginGo').disabled=!ok;
+  if(pickedSchool)document.getElementById('loginGo').textContent=pickedSchool.name+'(으)로 시작하기';
+}
+function doLogin(){
+  S.user={name:document.getElementById('in-name').value.trim(),school:pickedSchool.name,
+    gisu:document.getElementById('in-gisu').value.trim()||'12',course:'MBA',
+    company:document.getElementById('in-company').value.trim()||'미입력',
+    title:document.getElementById('in-title').value.trim()||'',
+    email:document.getElementById('in-email').value.trim()||'미입력',
+    phone:document.getElementById('in-phone').value.trim()||'미입력'};
+  save();enterApp();
+}
+
+/* ===================== APP ===================== */
+function enterApp(){
+  const s=schoolByName(S.user.school)||schools[0];
+  applyTheme(s);
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('top-mark').innerHTML=schoolMark(s,30);
+  document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
+  document.getElementById('meAv').textContent=S.user.name.slice(0,1);
+  document.querySelectorAll('.nav-item').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+  document.getElementById('schoolChip').addEventListener('click',switchSchool);
+  document.getElementById('meBtn').addEventListener('click',()=>go('me'));
+  document.getElementById('globalSearch').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch(e.target.value);});
+  go('home');
+}
+function switchSchool(){
+  const opts=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,34)}<span class="snm">${s.short}</span></button>`).join('');
+  openModal('학교 변경',`<p style="color:var(--sub);font-size:13.5px;margin-bottom:14px">학교를 바꾸면 화면 테마와 소식이 해당 학교로 전환됩니다.</p><div class="school-grid">${opts}</div>`,null,true);
+  document.querySelectorAll('.modal .school-btn').forEach(b=>b.addEventListener('click',()=>{
+    const s=schools.find(x=>x.id===b.dataset.id);S.user.school=s.name;save();closeModal();enterApp();toast(s.name+' 테마로 전환되었습니다');
+  }));
+}
+let currentView='home';
+function go(v){currentView=v;
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  const m=document.getElementById('main');m.scrollTop=0;window.scrollTo(0,0);
+  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,notice:viewNotice,me:viewMe}[v]||viewHome)(m);
+}
+
+/* ---------- HOME ---------- */
+function viewHome(m){
+  const s=schoolByName(S.user.school)||schools[0];
+  const myMeets=S.meets.filter(x=>x.attend).length;
+  const ex=S.exchanged.length;
+  m.innerHTML=`
+    <div class="hero-band">
+      <div class="eyebrow" style="color:rgba(255,255,255,.85)">${s.name} MBA</div>
+      <h2>${S.user.name}님, 환영합니다 👋</h2>
+      <p>오늘도 원우들과 만나고, 연결되고, 함께 사업을 키워보세요.</p>
+      <span class="slogan">“${slogans[s.name]||'함께 성장하는 원우 네트워크'}”</span>
+    </div>
+    <div class="kpis">
+      <div class="kpi card"><div class="k-ic">🤝</div><div class="k-n">${S.meets.length}</div><div class="k-l">참여 가능한 만남·미팅</div></div>
+      <div class="kpi card"><div class="k-ic">📇</div><div class="k-n">${ex}</div><div class="k-l">교환한 연락처</div></div>
+      <div class="kpi card"><div class="k-ic">💼</div><div class="k-n">${S.posts.length}</div><div class="k-l">비즈니스 게시글</div></div>
+    </div>
+    <div class="dash-grid">
+      <div class="panel card">
+        <h3>🤝 다가오는 만남·미팅 <span class="more" data-go="meet">전체보기</span></h3>
+        ${S.meets.slice(0,3).map(x=>`<div class="mini-row"><span class="date-chip">${x.date}</span><div><div class="mt">${x.title}</div><div class="ms">${x.place} · ${x.going}/${x.cap}명</div></div></div>`).join('')}
+      </div>
+      <div class="panel card">
+        <h3>💼 최신 비즈니스 소식 <span class="more" data-go="board">전체보기</span></h3>
+        ${S.posts.slice(0,3).map(x=>`<div class="mini-row"><span class="cat-tag ${x.cat}">${catName(x.cat)}</span><div><div class="mt">${x.title}</div><div class="ms">${x.who} · ${x.co}</div></div></div>`).join('')}
+      </div>
+    </div>
+    <div class="panel card" style="margin-top:16px">
+      <h3>📇 원우수첩에서 새로운 인연을 <span class="more" data-go="dir">원우 보기</span></h3>
+      <p style="color:var(--sub);font-size:13.5px;margin-top:4px">관심 있는 원우와 연락처를 교환하고 사업·커리어로 연결되세요.</p>
+    </div>`;
+  m.querySelectorAll('[data-go]').forEach(e=>e.addEventListener('click',()=>go(e.dataset.go)));
+}
+
+/* ---------- BOARD (business) ---------- */
+let boardCat='all';
+function catName(c){return {deal:'사업제휴',invest:'투자',hire:'채용',info:'정보공유'}[c]||c;}
+function viewBoard(m){
+  const cats=[['all','전체'],['deal','사업제휴'],['invest','투자'],['hire','채용'],['info','정보공유']];
+  const list=S.posts.filter(p=>boardCat==='all'||p.cat===boardCat);
+  m.innerHTML=`
+    <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
+      <div><div class="eyebrow">Business</div><h1>비즈니스 게시판</h1><p>원우들과 사업 제휴·투자·채용·정보를 나누세요.</p></div>
+      <button class="btn" id="newPost">＋ 글쓰기</button>
+    </div>
+    <div class="chip-row">${cats.map(c=>`<button class="chip ${boardCat===c[0]?'on':''}" data-c="${c[0]}">${c[1]}</button>`).join('')}</div>
+    <div id="postList">${list.map(postHTML).join('')||'<div class="empty">아직 게시글이 없습니다. 첫 글을 남겨보세요.</div>'}</div>`;
+  m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{boardCat=c.dataset.c;viewBoard(m);}));
+  m.querySelector('#newPost').addEventListener('click',newPost);
+  bindPost(m);
+}
+function postHTML(p){
+  return `<div class="post-card card" data-id="${p.id}">
+    <div class="post-top"><span class="avatar">${p.who.slice(0,1)}</span>
+      <div style="flex:1"><div class="who">${p.who}</div><div class="meta">${p.co} · ${p.date}</div></div>
+      <span class="cat-tag ${p.cat}">${catName(p.cat)}</span></div>
+    <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div>
+    <div class="post-actions">
+      <button class="like ${p.liked?'on':''}" data-id="${p.id}">❤ <span>${p.likes}</span></button>
+      <button class="cbtn" data-id="${p.id}">💬 댓글 ${p.comments.length}</button>
+    </div>
+    <div class="comments" id="cm-${p.id}">
+      ${p.comments.map(c=>`<div class="cmt"><b>${esc(c.by)}</b><span>${esc(c.txt)}</span></div>`).join('')}
+      <div class="cmt-form"><input placeholder="댓글 달기..." data-id="${p.id}"><button class="btn sm cadd" data-id="${p.id}">등록</button></div>
+    </div></div>`;
+}
+function bindPost(m){
+  m.querySelectorAll('.like').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);p.liked=!p.liked;p.likes+=p.liked?1:-1;save();b.classList.toggle('on',p.liked);b.querySelector('span').textContent=p.likes;}));
+  m.querySelectorAll('.cadd').forEach(b=>b.addEventListener('click',()=>{const inp=m.querySelector('.cmt-form input[data-id="'+b.dataset.id+'"]');const t=inp.value.trim();if(!t)return;const p=S.posts.find(x=>x.id===b.dataset.id);p.comments.push({by:S.user.name,txt:t});save();viewBoard(m);}));
+}
+function newPost(){
+  openModal('비즈니스 글쓰기',`
+    <div class="fld"><label>카테고리</label><select id="np-cat"><option value="deal">사업제휴</option><option value="invest">투자</option><option value="hire">채용</option><option value="info">정보공유</option></select></div>
+    <div class="fld"><label>제목</label><input id="np-title" placeholder="제목을 입력하세요"></div>
+    <div class="fld"><label>내용</label><textarea id="np-body" placeholder="원우들과 나누고 싶은 사업 이야기를 적어보세요"></textarea></div>`,
+    ()=>{const t=document.getElementById('np-title').value.trim();if(!t){toast('제목을 입력하세요');return false;}
+      S.posts.unshift({id:'p'+Date.now(),cat:document.getElementById('np-cat').value,school:S.user.school,who:S.user.name,
+        co:(S.user.company+(S.user.title?' · '+S.user.title:'')),date:today(),title:t,body:document.getElementById('np-body').value.trim(),likes:0,liked:false,comments:[]});
+      save();go('board');toast('게시글이 등록되었습니다');});
+}
+
+/* ---------- MEET ---------- */
+function viewMeet(m){
+  m.innerHTML=`
+    <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
+      <div><div class="eyebrow">Meet</div><h1>만남 · 미팅</h1><p>원우들과의 모임과 네트워킹 행사에 참여하세요.</p></div>
+      <button class="btn" id="newMeet">＋ 모임 만들기</button>
+    </div>
+    <div class="meet-grid">${S.meets.map(meetHTML).join('')}</div>`;
+  m.querySelector('#newMeet').addEventListener('click',newMeet);
+  m.querySelectorAll('.attend').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);
+    x.attend=!x.attend;x.going+=x.attend?1:-1;save();viewMeet(m);toast(x.attend?'참여 신청 완료':'참여를 취소했습니다');}));
+}
+function meetHTML(x){const pct=Math.min(100,Math.round(x.going/x.cap*100));
+  return `<div class="meet-card card">
+    <div class="m-date">📅 ${x.date}</div><h3>${esc(x.title)}</h3>
+    <div class="m-info"><span>📍 ${esc(x.place)}</span><span>🏷 ${esc(x.org)}</span><span>👤 주최 ${esc(x.by)}</span></div>
+    <div style="color:#464c59;font-size:13.5px;margin-top:10px;flex:1">${esc(x.desc)}</div>
+    <div class="meet-foot"><div class="cap-bar"><i style="width:${pct}%"></i></div><span class="cap-txt">${x.going}/${x.cap}</span>
+      <button class="attend ${x.attend?'going':''}" data-id="${x.id}">${x.attend?'참여중 ✓':'참여하기'}</button></div></div>`;
+}
+function newMeet(){
+  openModal('모임 만들기',`
+    <div class="fld"><label>모임명</label><input id="nm-title" placeholder="예: 업종별 비즈니스 조찬회"></div>
+    <div class="fld"><label>날짜 (M/D)</label><input id="nm-date" placeholder="예: 7/20"></div>
+    <div class="fld"><label>장소</label><input id="nm-place" placeholder="예: 강남 OO"></div>
+    <div class="fld"><label>정원</label><input id="nm-cap" placeholder="예: 20" type="number"></div>
+    <div class="fld"><label>소개</label><textarea id="nm-desc" placeholder="모임을 소개해 주세요"></textarea></div>`,
+    ()=>{const t=document.getElementById('nm-title').value.trim();if(!t){toast('모임명을 입력하세요');return false;}
+      S.meets.unshift({id:'m'+Date.now(),school:S.user.school,date:document.getElementById('nm-date').value.trim()||today(),
+        title:t,org:S.user.school+' MBA',place:document.getElementById('nm-place').value.trim()||'미정',by:S.user.name,
+        cap:parseInt(document.getElementById('nm-cap').value)||20,going:1,attend:true,desc:document.getElementById('nm-desc').value.trim()});
+      save();go('meet');toast('모임이 생성되었습니다');});
+}
+
+/* ---------- DIRECTORY (연락처 교환) ---------- */
+let dirScope='all';
+function viewDir(m){
+  const mine=schoolByName(S.user.school)?S.user.school:'';
+  const list=S.members.filter(x=>dirScope==='all'||x.school===mine);
+  m.innerHTML=`
+    <div class="page-head"><div class="eyebrow">Directory</div><h1>원우수첩</h1><p>원우와 연락처를 교환하고 사업·커리어로 연결되세요.</p></div>
+    <div class="chip-row">
+      <button class="chip ${dirScope==='all'?'on':''}" data-s="all">전국 원우</button>
+      <button class="chip ${dirScope==='mine'?'on':''}" data-s="mine">우리 학교</button>
+    </div>
+    <div class="dir-grid">${list.map(memHTML).join('')||'<div class="empty">표시할 원우가 없습니다.</div>'}</div>`;
+  m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{dirScope=c.dataset.s;viewDir(m);}));
+  m.querySelectorAll('.exch').forEach(b=>b.addEventListener('click',()=>{const key=b.dataset.k;
+    if(!S.exchanged.includes(key)){S.exchanged.push(key);save();}viewDir(m);toast('연락처를 교환했습니다');}));
+}
+function memHTML(x){const key=x.name+'|'+x.school+'|'+x.gisu;const done=S.exchanged.includes(key);
+  const ss=schoolByName(x.school);
+  return `<div class="mem-card card">
+    <div class="m-av">${x.name.slice(0,1)}</div>
+    <div class="m-nm">${esc(x.name)}</div>
+    <div class="m-sub">${ss?ss.short:''} · ${x.course} ${x.gisu}기</div>
+    <div class="m-co">${esc(x.company)}</div><div class="m-ti">${esc(x.title)}</div>
+    <div class="contact-box">
+      <div class="cline">✉️ <span class="${done?'':'masked'}">${done?esc(x.email):'email@hidden.com'}</span></div>
+      <div class="cline">📞 <span class="${done?'':'masked'}">${done?esc(x.phone):'010-0000-0000'}</span></div>
+      ${done?'<div class="exchanged">✓ 연락처 교환 완료</div>':`<button class="btn sm exch" style="margin-top:10px" data-k="${key}">연락처 교환</button>`}
+    </div></div>`;
+}
+
+/* ---------- NOTICE ---------- */
+function viewNotice(m){
+  m.innerHTML=`<div class="page-head"><div class="eyebrow">Notice</div><h1>공지</h1><p>학교·동아리·전국 공지를 한곳에서 확인하세요.</p></div>
+    <div class="card">${S.notices.map(n=>`<div class="notice-row" data-id="${n.id}"><span class="src">${n.src}</span><div style="flex:1"><div class="nt">${esc(n.title)}</div><div class="nd">${n.date}</div></div><span style="color:#c9ccd6">›</span></div>`).join('')}</div>`;
+  m.querySelectorAll('.notice-row').forEach(r=>r.addEventListener('click',()=>{const n=S.notices.find(x=>x.id===r.dataset.id);
+    openModal(n.title,`<p style="color:var(--sub);font-size:12.5px;margin-bottom:12px">${n.src} · ${n.date}</p><p style="font-size:14.5px;line-height:1.7">${esc(n.body)}</p>`,null,true);}));
+}
+
+/* ---------- ME ---------- */
+function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.user;
+  m.innerHTML=`<div class="page-head"><div class="eyebrow">Profile</div><h1>내 프로필</h1></div>
+    <div class="card" style="padding:28px;max-width:560px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px">
+        <span class="avatar" style="width:64px;height:64px;font-size:24px">${u.name.slice(0,1)}</span>
+        <div><div style="font-size:20px;font-weight:800">${esc(u.name)}</div><div style="color:var(--sub);font-size:13.5px;margin-top:2px">${s.short} · ${u.course} ${u.gisu}기</div></div>
+        <span style="margin-left:auto">${schoolMark(s,40)}</span>
+      </div>
+      <div class="fld" style="margin-bottom:12px"><label>회사 / 소속</label><input id="me-co" value="${esc(u.company)}"></div>
+      <div class="fld" style="margin-bottom:12px"><label>직함</label><input id="me-ti" value="${esc(u.title)}"></div>
+      <div class="fld" style="margin-bottom:12px"><label>이메일</label><input id="me-em" value="${esc(u.email)}"></div>
+      <div class="fld" style="margin-bottom:18px"><label>전화</label><input id="me-ph" value="${esc(u.phone)}"></div>
+      <div style="display:flex;gap:10px"><button class="btn" id="me-save">저장</button><button class="btn gray" id="me-out">로그아웃</button></div>
+    </div>`;
+  m.querySelector('#me-save').addEventListener('click',()=>{u.company=val('me-co');u.title=val('me-ti');u.email=val('me-em');u.phone=val('me-ph');save();toast('저장되었습니다');});
+  m.querySelector('#me-out').addEventListener('click',()=>{if(confirm('로그아웃하시겠어요? (데모 데이터는 유지됩니다)')){S.user=null;save();location.reload();}});
+}
+
+/* ---------- search ---------- */
+function doSearch(q){q=q.trim();if(!q)return;
+  const posts=S.posts.filter(p=>(p.title+p.body+p.who).includes(q));
+  const mem=S.members.filter(x=>(x.name+x.company+x.title).includes(q));
+  const meets=S.meets.filter(x=>(x.title+x.place+x.org).includes(q));
+  openModal('“'+q+'” 검색 결과',`
+    <p style="font-weight:800;margin:6px 0 6px">💼 게시글 ${posts.length}</p>${posts.map(p=>`<div class="cmt"><b>${esc(p.who)}</b><span>${esc(p.title)}</span></div>`).join('')||'<div class="ms" style="color:var(--sub);font-size:13px">없음</div>'}
+    <p style="font-weight:800;margin:14px 0 6px">📇 원우 ${mem.length}</p>${mem.map(x=>`<div class="cmt"><b>${esc(x.name)}</b><span>${esc(x.company)} ${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
+    <p style="font-weight:800;margin:14px 0 6px">🤝 모임 ${meets.length}</p>${meets.map(x=>`<div class="cmt"><b>${esc(x.date)}</b><span>${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}`,null,true);
+}
+
+/* ---------- modal / toast / utils ---------- */
+function openModal(title,html,onOk,infoOnly){
+  const bg=document.createElement('div');bg.className='modal-bg';
+  bg.innerHTML=`<div class="modal"><h3>${title}</h3><div class="mbody">${html}</div>
+    <div class="modal-actions">${infoOnly?'<button class="btn" data-x>닫기</button>':'<button class="btn gray" data-x>취소</button><button class="btn" data-ok>확인</button>'}</div></div>`;
+  document.body.appendChild(bg);
+  bg.addEventListener('click',e=>{if(e.target===bg)bg.remove();});
+  bg.querySelector('[data-x]').addEventListener('click',()=>bg.remove());
+  const ok=bg.querySelector('[data-ok]');if(ok)ok.addEventListener('click',()=>{if(onOk&&onOk()===false)return;bg.remove();});
+  window._modal=bg;
+}
+function closeModal(){if(window._modal)window._modal.remove();}
+function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>el.classList.remove('show'),2000);}
+function esc(s){return (s==null?'':''+s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function val(id){return document.getElementById(id).value.trim();}
+function today(){const d=new Date();return (d.getMonth()+1)+'/'+d.getDate();}
+
+/* ---------- boot ---------- */
+buildLogin();
+if(S.user){enterApp();}
+</script>
+</body>
+</html>

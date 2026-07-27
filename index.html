@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- GOOGLE_SITE_VERIFICATION_PLACEHOLDER -->
+  <title>MBA Lounge | MBA 재학·동문 커뮤니티 라운지</title>
+  <meta name="description" content="MBA Lounge는 전국 MBA 재학생과 동문을 위한 커뮤니티 앱입니다. 전국·학교·동아리 게시판, 모임 일정, 공지, 원우수첩으로 원우 네트워킹이 쉬워집니다." />
+  <meta name="author" content="MBA Lounge" />
+  <meta name="theme-color" content="#6C5CE7" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MBA Lounge | MBA 재학·동문 커뮤니티 라운지" />
+  <meta property="og:description" content="라운지, 모임이 쉬워지는 공간 — 전국 MBA 원우 네트워킹 커뮤니티 앱" />
+  <meta property="og:site_name" content="MBA Lounge" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <style>
+    :root{
+      --pri:#6C5CE7; --pri-dark:#4b3fc4; --pri-2:#8b7bf0; --pri-soft:#efeafe; --pri-soft2:#f7f5ff;
+      --ink:#1b1930; --muted:#6b6880; --line:#eae7f5; --bg:#ffffff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","맑은 고딕",sans-serif;color:var(--ink);line-height:1.65;background:var(--bg);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+    section{scroll-margin-top:80px}
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:20px;letter-spacing:-.3px}
+    .brand img{width:36px;height:36px;border-radius:10px}
+    .nav-links{display:flex;gap:32px;font-size:15px;font-weight:600;color:var(--muted)}
+    .nav-links a{position:relative;transition:color .15s}
+    .nav-links a:hover{color:var(--pri)}
+    .cta{background:var(--pri);color:#fff;padding:11px 20px;border-radius:10px;font-weight:700;font-size:14px;transition:background .15s;white-space:nowrap}
+    .cta:hover{background:var(--pri-dark)}
+    @media(max-width:820px){.nav-links{display:none}}
+    /* Hero */
+    .hero{background:radial-gradient(1100px 520px at 78% -12%,var(--pri-soft) 0%,#fff 62%);padding:74px 0 60px;overflow:hidden}
+    .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);color:var(--pri-dark);font-weight:700;font-size:13px;padding:8px 15px;border-radius:22px;box-shadow:0 4px 14px rgba(108,92,231,.08)}
+    .pill .d{width:7px;height:7px;border-radius:50%;background:var(--pri)}
+    .hero h1{font-size:50px;line-height:1.14;font-weight:800;letter-spacing:-1.2px;margin-top:20px}
+    .hero h1 .accent{color:var(--pri)}
+    .hero p.lead{margin-top:22px;font-size:18px;color:var(--muted);max-width:520px}
+    .hero-actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+    .btn{padding:15px 26px;border-radius:12px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:9px;border:2px solid var(--pri);cursor:pointer;transition:all .15s}
+    .btn-primary{background:var(--pri);color:#fff}
+    .btn-primary:hover{background:var(--pri-dark);border-color:var(--pri-dark);transform:translateY(-1px)}
+    .btn-ghost{color:var(--pri);background:#fff}
+    .btn-ghost:hover{background:var(--pri-soft)}
+    .hero-note{margin-top:16px;font-size:13px;color:var(--muted)}
+    .hero-visual{display:flex;justify-content:center;position:relative}
+    .hero-visual::after{content:"";position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(139,123,240,.35),transparent 70%);z-index:0;border-radius:50%}
+    /* Phone mockup */
+    .phone{width:280px;border-radius:40px;background:#15121f;padding:12px;box-shadow:0 34px 80px rgba(76,63,196,.32);position:relative;z-index:1}
+    .phone::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:24px;background:#15121f;border-radius:0 0 16px 16px;z-index:2}
+    .phone img{border-radius:28px;width:100%}
+    @media(max-width:860px){.hero-inner{grid-template-columns:1fr;text-align:center}.hero p.lead{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.hero h1{font-size:36px}.hero-note{text-align:center}}
+    /* Stat strip */
+    .stripe{background:var(--ink);color:#fff}
+    .stripe .row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:34px 0}
+    .stat{text-align:center}
+    .stat .n{font-size:30px;font-weight:800;color:#b6a9ff}
+    .stat .l{color:#b9b6cc;font-size:13.5px;margin-top:4px}
+    @media(max-width:640px){.stripe .row{grid-template-columns:1fr 1fr;gap:26px}}
+    /* Sections */
+    section.block{padding:76px 0}
+    .center{text-align:center}
+    .eyebrow{color:var(--pri);font-weight:800;font-size:13px;letter-spacing:1.6px;text-transform:uppercase}
+    h2.title{font-size:34px;font-weight:800;margin-top:10px;letter-spacing:-.6px}
+    .sub{color:var(--muted);margin-top:13px;max-width:640px;font-size:16.5px}
+    .center .sub{margin-left:auto;margin-right:auto}
+    .grid{display:grid;gap:22px;margin-top:46px}
+    .g4{grid-template-columns:repeat(4,1fr)}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    @media(max-width:900px){.g4{grid-template-columns:1fr 1fr}}
+    @media(max-width:760px){.g3{grid-template-columns:1fr}}
+    @media(max-width:520px){.g4{grid-template-columns:1fr}}
+    .card{border:1px solid var(--line);border-radius:18px;padding:30px;background:#fff;transition:transform .16s,box-shadow .16s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(108,92,231,.13)}
+    .card .ico{width:50px;height:50px;border-radius:13px;background:var(--pri-soft);display:flex;align-items:center;justify-content:center;font-size:25px;margin-bottom:17px}
+    .card h3{font-size:17.5px;font-weight:800}
+    .card p{color:var(--muted);font-size:14.5px;margin-top:9px}
+    /* How it works */
+    .steps{background:var(--pri-soft2)}
+    .step{position:relative;text-align:center;padding:0 10px}
+    .step .num{width:56px;height:56px;margin:0 auto 18px;border-radius:50%;background:var(--pri);color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(108,92,231,.35)}
+    .step h3{font-size:18px;font-weight:800}
+    .step p{color:var(--muted);font-size:14.5px;margin-top:8px}
+    /* Screens */
+    .shots{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;margin-top:48px}
+    .shot{width:250px}
+    .shot .phone{width:250px}
+    .shot .cap{text-align:center;margin-top:18px;font-weight:800;font-size:15.5px}
+    .shot .cap span{display:block;color:var(--muted);font-weight:500;font-size:13px;margin-top:3px}
+    /* Audience */
+    .band{background:linear-gradient(135deg,var(--pri) 0%,var(--pri-dark) 100%);color:#fff;border-radius:26px;padding:60px;text-align:center;position:relative;overflow:hidden}
+    .band::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;background:rgba(255,255,255,.08);border-radius:50%}
+    .band h2{font-size:32px;font-weight:800;letter-spacing:-.4px;position:relative}
+    .band p{color:#e6e1ff;margin-top:16px;font-size:17px;max-width:640px;margin-left:auto;margin-right:auto;position:relative}
+    .tags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px;position:relative}
+    .tags span{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:9px 18px;border-radius:22px;font-weight:600;font-size:14.5px}
+    /* FAQ */
+    .faq{max-width:780px;margin:44px auto 0}
+    .qa{border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden;background:#fff}
+    .qa button{width:100%;text-align:left;background:none;border:none;padding:20px 22px;font-size:16px;font-weight:700;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit}
+    .qa button:hover{color:var(--pri)}
+    .qa .ic{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--pri-soft);color:var(--pri);display:flex;align-items:center;justify-content:center;font-weight:800;transition:transform .2s}
+    .qa.open .ic{transform:rotate(45deg)}
+    .qa .ans{max-height:0;overflow:hidden;transition:max-height .25s ease;color:var(--muted);font-size:15px}
+    .qa .ans p{padding:0 22px 20px}
+    /* Try / Live demo */
+    .try{background:linear-gradient(180deg,#faf9ff 0%,#fff 100%)}
+    .try-wrap{display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:center;margin-top:46px}
+    .try-copy h3{font-size:22px;font-weight:800;margin-top:6px}
+    .try-copy ul{list-style:none;margin-top:20px}
+    .try-copy li{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;font-size:15.5px;color:#3d3a52}
+    .try-copy li b{color:var(--ink)}
+    .try-copy .chk{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--pri-soft);color:var(--pri);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+    .try-actions{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+    .demo-device{justify-self:center;width:400px;max-width:100%;background:#15121f;border-radius:44px;padding:14px;box-shadow:0 40px 90px rgba(76,63,196,.34);position:relative}
+    .demo-device::before{content:"";position:absolute;top:24px;left:50%;transform:translateX(-50%);width:130px;height:26px;background:#15121f;border-radius:0 0 16px 16px;z-index:3;pointer-events:none}
+    .demo-device iframe{width:100%;height:760px;border:none;border-radius:32px;background:#F4F5FA;display:block}
+    .demo-badge{position:absolute;top:-14px;right:22px;background:var(--pri);color:#fff;font-size:12px;font-weight:800;padding:6px 14px;border-radius:20px;box-shadow:0 6px 16px rgba(108,92,231,.4);z-index:4}
+    @media(max-width:900px){.try-wrap{grid-template-columns:1fr;gap:32px}.demo-device{width:390px}}
+    /* Contact */
+    .contact-box{background:var(--pri-soft2);border:1px solid var(--line);border-radius:22px;padding:48px;text-align:center;max-width:720px;margin:44px auto 0}
+    /* Footer */
+    footer{border-top:1px solid var(--line);padding:52px 0 40px;margin-top:20px;color:var(--muted);font-size:14px}
+    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+    .foot-links a{display:block;padding:6px 0;font-weight:600;color:var(--muted)}
+    .foot-links a:hover{color:var(--pri)}
+    .foot-h{font-weight:800;color:var(--ink);font-size:14px;margin-bottom:8px}
+    .biz{line-height:1.9;font-size:12.5px;color:#8f8ca3;margin-top:14px}
+    .copy{border-top:1px solid var(--line);margin-top:34px;padding-top:22px;font-size:12.5px;color:#a09dae}
+    @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:24px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a href="#top" class="brand"><img src="icon.png" alt="MBA Lounge 로고" />MBA Lounge</a>
+      <nav class="nav-links">
+        <a href="#features">기능</a>
+        <a href="#how">이용 방법</a>
+        <a href="#try">체험하기</a>
+        <a href="#screens">화면</a>
+        <a href="#faq">자주 묻는 질문</a>
+        <a href="#contact">문의</a>
+      </nav>
+      <a href="#try" class="cta">앱 체험하기</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="wrap hero-inner">
+        <div>
+          <span class="pill"><span class="d"></span>MBA 재학 · 동문 커뮤니티</span>
+          <h1>라운지,<br /><span class="accent">모임이 쉬워지는</span> 공간</h1>
+          <p class="lead">전국 MBA 원우가 한곳에서 소통합니다. 전국·학교·동아리 게시판부터 모임 일정, 공지, 원우수첩까지 — 흩어져 있던 네트워킹을 하나의 앱에서.</p>
+          <div class="hero-actions">
+            <a href="#try" class="btn btn-primary">지금 앱 체험하기 →</a>
+            <a href="#features" class="btn btn-ghost">기능 살펴보기</a>
+          </div>
+          <p class="hero-note">📱 Google Play 출시 준비 중 · 지금 웹에서 바로 체험 가능</p>
+        </div>
+        <div class="hero-visual">
+          <div class="phone"><img src="shot_2_board.png" alt="MBA Lounge 게시판 화면 미리보기" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stat strip -->
+    <div class="stripe">
+      <div class="wrap row">
+        <div class="stat"><div class="n">전국</div><div class="l">MBA 원우 네트워크</div></div>
+        <div class="stat"><div class="n">3단계</div><div class="l">전국·학교·동아리 게시판</div></div>
+        <div class="stat"><div class="n">4가지</div><div class="l">게시판·모임·공지·원우수첩</div></div>
+        <div class="stat"><div class="n">무료</div><div class="l">누구나 이용 가능</div></div>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section class="block" id="features">
+      <div class="wrap center">
+        <p class="eyebrow">Features</p>
+        <h2 class="title">원우 네트워킹, 이 앱 하나로</h2>
+        <p class="sub">흩어져 있던 MBA 커뮤니티 활동을 하나의 라운지에 담았습니다.</p>
+      </div>
+      <div class="wrap">
+        <div class="grid g4">
+          <div class="card">
+            <div class="ico">📋</div>
+            <h3>통합 게시판</h3>
+            <p>전국(Hall)·학교·동아리별 게시판에서 정보와 소식을 나누고, 댓글·좋아요로 소통하세요.</p>
+          </div>
+          <div class="card">
+            <div class="ico">📅</div>
+            <h3>모임 일정</h3>
+            <p>네트워킹 모임과 행사 일정을 한눈에 확인하고 참여를 관리합니다.</p>
+          </div>
+          <div class="card">
+            <div class="ico">🔔</div>
+            <h3>공지</h3>
+            <p>학교·동아리 주요 공지를 놓치지 않도록 한곳에 모아 알려드립니다.</p>
+          </div>
+          <div class="card">
+            <div class="ico">👥</div>
+            <h3>원우수첩</h3>
+            <p>같은 목표를 향해 달리는 원우들을 찾고 연결되는 네트워킹 공간.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="block steps" id="how">
+      <div class="wrap center">
+        <p class="eyebrow">How it works</p>
+        <h2 class="title">3단계면 충분합니다</h2>
+        <p class="sub">복잡한 절차 없이, 지금 바로 원우들과 연결되세요.</p>
+      </div>
+      <div class="wrap">
+        <div class="grid g3">
+          <div class="step">
+            <div class="num">1</div>
+            <h3>간편 로그인</h3>
+            <p>이메일로 빠르게 가입하고 프로필을 설정하면 준비 끝.</p>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <h3>게시판 · 모임 참여</h3>
+            <p>전국·학교·동아리 게시판을 둘러보고 관심 모임에 참여하세요.</p>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <h3>원우와 네트워킹</h3>
+            <p>원우수첩으로 사람을 찾고, 모임과 행사로 관계를 넓혀가세요.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Try / Live demo -->
+    <section class="block try" id="try">
+      <div class="wrap center">
+        <p class="eyebrow">Live Demo</p>
+        <h2 class="title">지금 바로 앱을 체험하세요</h2>
+        <p class="sub">설치 없이 웹에서 실제 MBA Lounge를 실행해 보세요. 모바일 앱과 컴퓨터용 웹앱을 모두 제공합니다.</p>
+      </div>
+      <div class="wrap">
+        <div class="try-wrap">
+          <div class="try-copy">
+            <p class="eyebrow">체험 가이드</p>
+            <h3>클릭 몇 번으로 앱을 둘러보세요</h3>
+            <ul>
+              <li><span class="chk">✓</span><span><b>로그인 화면</b>에서 학교를 선택하면 앱 전체 색상이 학교 테마로 바뀝니다.</span></li>
+              <li><span class="chk">✓</span><span><b>게시판</b>에서 전국·학교·동아리 글을 살펴보고 새 글을 작성해 보세요.</span></li>
+              <li><span class="chk">✓</span><span><b>모임 일정</b>과 <b>공지</b>, <b>원우수첩</b>까지 하단 탭으로 이동할 수 있습니다.</span></li>
+              <li><span class="chk">✓</span><span>데모 데이터는 이 브라우저에만 저장되며, 실제 사용자와 공유되지 않습니다.</span></li>
+            </ul>
+            <div class="try-actions">
+              <a href="app-web.html" target="_blank" rel="noopener" class="btn btn-primary">💻 컴퓨터용 웹앱 열기 →</a>
+              <a href="app.html" target="_blank" rel="noopener" class="btn btn-ghost">📱 모바일 앱 체험</a>
+            </div>
+          </div>
+          <div class="demo-device">
+            <span class="demo-badge">LIVE</span>
+            <iframe src="app.html" title="MBA Lounge 앱 체험" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screens -->
+    <section class="block" id="screens">
+      <div class="wrap center">
+        <p class="eyebrow">Screens</p>
+        <h2 class="title">앱 미리보기</h2>
+        <p class="sub">간편한 로그인부터 게시판, 모임 일정까지 직관적인 화면.</p>
+      </div>
+      <div class="wrap">
+        <div class="shots">
+          <div class="shot">
+            <div class="phone"><img src="shot_1_login.png" alt="MBA Lounge 로그인 화면" /></div>
+            <div class="cap">간편 로그인<span>이메일로 빠르게 시작</span></div>
+          </div>
+          <div class="shot">
+            <div class="phone"><img src="shot_2_board.png" alt="MBA Lounge 통합 게시판 화면" /></div>
+            <div class="cap">통합 게시판<span>전국·학교·동아리 소식</span></div>
+          </div>
+          <div class="shot">
+            <div class="phone"><img src="shot_3_schedule.png" alt="MBA Lounge 모임 일정 화면" /></div>
+            <div class="cap">모임 일정<span>행사·네트워킹 관리</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Audience -->
+    <section class="block" id="who">
+      <div class="wrap">
+        <div class="band">
+          <h2>MBA 재학생과 동문을 위한 공간</h2>
+          <p>학교와 기수를 넘어 전국 MBA 원우가 연결됩니다. 정보 공유, 스터디, 창업 동아리, 네트워킹 모임 — 모두 MBA Lounge에서 시작하세요.</p>
+          <div class="tags">
+            <span>재학생</span><span>동문</span><span>학교별 커뮤니티</span><span>동아리</span><span>네트워킹 모임</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="block steps" id="faq">
+      <div class="wrap center">
+        <p class="eyebrow">FAQ</p>
+        <h2 class="title">자주 묻는 질문</h2>
+        <p class="sub">궁금한 점을 미리 정리했어요.</p>
+      </div>
+      <div class="wrap">
+        <div class="faq">
+          <div class="qa">
+            <button type="button"><span>MBA Lounge는 어떤 앱인가요?</span><span class="ic">+</span></button>
+            <div class="ans"><p>전국 MBA 재학생·동문을 위한 커뮤니티 앱입니다. 전국·학교·동아리 게시판, 모임 일정, 공지, 원우수첩 기능으로 원우 간 소통과 네트워킹을 돕습니다.</p></div>
+          </div>
+          <div class="qa">
+            <button type="button"><span>누가 이용할 수 있나요?</span><span class="ic">+</span></button>
+            <div class="ans"><p>MBA 과정 재학생과 졸업 동문이라면 누구나 이용할 수 있습니다. 학교와 기수에 관계없이 전국 단위로 연결됩니다.</p></div>
+          </div>
+          <div class="qa">
+            <button type="button"><span>이용 요금이 있나요?</span><span class="ic">+</span></button>
+            <div class="ans"><p>기본 커뮤니티 기능은 무료로 제공됩니다. 별도의 유료 기능이 추가될 경우 앱 내에서 안내드립니다.</p></div>
+          </div>
+          <div class="qa">
+            <button type="button"><span>언제 출시되나요?</span><span class="ic">+</span></button>
+            <div class="ans"><p>현재 Android(Google Play) 출시를 준비 중입니다. 출시 소식을 받고 싶으시면 아래 문의 이메일로 알려주세요.</p></div>
+          </div>
+          <div class="qa">
+            <button type="button"><span>개인정보는 어떻게 관리되나요?</span><span class="ic">+</span></button>
+            <div class="ans"><p>수집하는 정보와 이용 목적은 <a href="privacy.html" style="color:var(--pri);font-weight:700">개인정보처리방침</a>에서 확인하실 수 있습니다. 관련 법령을 준수하여 안전하게 관리합니다.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="block center" id="contact">
+      <div class="wrap">
+        <p class="eyebrow">Contact</p>
+        <h2 class="title">문의하기</h2>
+        <div class="contact-box">
+          <p style="font-size:17px;color:var(--muted)">앱 이용 문의, 출시 알림 신청, 제휴 제안은 이메일로 보내주세요.</p>
+          <a href="mailto:728haven@gmail.com?subject=MBA%20Lounge%20문의" class="btn btn-primary" style="margin:22px auto 0;width:max-content">✉️ 728haven@gmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div>
+          <a href="#top" class="brand" style="font-size:19px"><img src="icon.png" alt="" style="width:32px;height:32px;border-radius:9px" />MBA Lounge</a>
+          <p style="margin-top:14px;max-width:320px;font-size:13.5px">전국 MBA 재학생과 동문을 잇는 커뮤니티 라운지. 라운지, 모임이 쉬워지는 공간.</p>
+          <p class="biz">© 2026 MBA Lounge · 문의 728haven@gmail.com</p>
+        </div>
+        <div class="foot-links">
+          <div class="foot-h">바로가기</div>
+          <a href="#features">기능</a>
+          <a href="#how">이용 방법</a>
+          <a href="#screens">화면</a>
+          <a href="#faq">자주 묻는 질문</a>
+        </div>
+        <div class="foot-links">
+          <div class="foot-h">정책 · 문의</div>
+          <a href="privacy.html">개인정보처리방침</a>
+          <a href="#contact">문의</a>
+          <a href="mailto:728haven@gmail.com">이메일 보내기</a>
+        </div>
+      </div>
+      <p class="copy">© 2026 MBA Lounge. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.qa button').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var qa = btn.parentElement;
+        var ans = qa.querySelector('.ans');
+        var isOpen = qa.classList.contains('open');
+        document.querySelectorAll('.qa').forEach(function(o){
+          o.classList.remove('open');
+          o.querySelector('.ans').style.maxHeight = null;
+        });
+        if(!isOpen){
+          qa.classList.add('open');
+          ans.style.maxHeight = ans.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
