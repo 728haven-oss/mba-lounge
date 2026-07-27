@@ -411,7 +411,7 @@ const seedNotices=[
 const LS='mbaweb_v6';
 let S=load();
 function load(){try{const r=JSON.parse(localStorage.getItem(LS));if(r&&r.accounts)return r;}catch(e){}
-  return {accounts:seedMembers.concat(buildSystemAccounts()),session:null,remember:true,exchanged:[],posts:seedPosts,meets:seedMeets,notices:seedNotices,officerPosts:seedOfficerPosts,officerInvites:[]};}
+  return {accounts:seedMembers.concat(buildSystemAccounts()),session:null,remember:true,exchanged:[],posts:seedPosts,meets:seedMeets,notices:seedNotices,officerPosts:seedOfficerPosts,officerInvites:[],clubs:seedClubs.map(c=>({...c,icon:''}))};}
 function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
 function schoolByName(n){return schools.find(s=>s.name===n);}
 function acctBySid(sid){return S.accounts.find(a=>a.sid===sid);}
@@ -470,6 +470,7 @@ function enterApp(){
   S.user=acctBySid(S.session);if(!S.user){S.session=null;save();return;}
   const u=S.user;
   if(!u.career)u.career=[];if(!u.clubs)u.clubs=[];if(u.exposure===undefined)u.exposure='basic';if(u.role===undefined)u.role='member';if(u.officer===undefined)u.officer='';
+  if(!S.clubs)S.clubs=seedClubs.map(c=>({...c,icon:''}));
   const s=schoolByName(u.school)||schools[0];
   applyTheme(s);
   document.getElementById('login').classList.add('hidden');
@@ -652,17 +653,40 @@ function memHTML(x){
 }
 
 /* ---------- CLUBS ---------- */
+function clubIcHTML(c){return c.icon?`<div class="club-ic" style="background-image:url('${c.icon}');background-size:cover;background-position:center"></div>`:`<div class="club-ic">${ico(catIcon(c.cat),26)}</div>`;}
 function viewClub(m){
   const mine=S.user.clubs||[];
   m.innerHTML=`
-    <div class="page-head"><div class="eyebrow">Clubs</div><h1>동아리</h1><p>관심 있는 동아리에 가입하면 내 프로필과 원우수첩에 '소속 동아리'로 자동 표시됩니다.</p></div>
+    <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
+      <div><div class="eyebrow">Clubs</div><h1>동아리</h1><p>가입하면 프로필·원우수첩에 '소속 동아리'로 표시됩니다. 각 동아리 아이콘은 직접 등록·변경할 수 있어요.</p></div>
+      <button class="btn" id="newClub">${ico('plus',15)} 동아리 만들기</button></div>
     ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
-    <div class="dir-grid">${seedClubs.map(c=>{const j=mine.includes(c.name);return `
-      <div class="club-card card"><div class="club-ic">${ico(catIcon(c.cat),26)}</div><div class="club-nm">${esc(c.name)}</div>
+    <div class="dir-grid">${S.clubs.map(c=>{const j=mine.includes(c.name);return `
+      <div class="club-card card">${clubIcHTML(c)}<div class="club-nm">${esc(c.name)}</div>
         <div class="club-cat">${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명</div><div class="club-desc">${esc(c.desc)}</div>
-        <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${j?ico('check',13)+' 가입됨 · 탈퇴하기':ico('plus',15)+' 가입하기'}</button></div>`;}).join('')}</div>`;
+        <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${j?ico('check',13)+' 가입됨 · 탈퇴하기':ico('plus',15)+' 가입하기'}</button>
+        <button class="ic-change" data-c="${esc(c.name)}" style="margin-top:8px;background:none;border:none;color:var(--sub);font-size:12px;font-weight:600;width:100%;cursor:pointer">${ico('camera',13)} 아이콘 변경</button></div>`;}).join('')}</div>
+    <input type="file" id="clubIconInput" accept="image/*" hidden>`;
   m.querySelectorAll('.join').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.c;const arr=S.user.clubs||[];
     const i=arr.indexOf(n);if(i>=0){arr.splice(i,1);toast(n+' 탈퇴했습니다');}else{arr.push(n);toast(n+' 가입 완료');}S.user.clubs=arr;save();viewClub(m);}));
+  let targetClub=null;const fi=m.querySelector('#clubIconInput');
+  m.querySelectorAll('.ic-change').forEach(b=>b.addEventListener('click',()=>{targetClub=b.dataset.c;fi.value='';fi.click();}));
+  fi.addEventListener('change',e=>{const f=e.target.files[0];if(!f||!targetClub)return;const rd=new FileReader();rd.onload=()=>{const c=S.clubs.find(x=>x.name===targetClub);if(c)c.icon=rd.result;save();viewClub(m);toast(targetClub+' 아이콘이 등록되었습니다');};rd.readAsDataURL(f);});
+  m.querySelector('#newClub').addEventListener('click',newClub);
+}
+function newClub(){
+  let iconData='';
+  openModal('동아리 만들기',`
+    <div class="fld"><label>동아리명</label><input id="nc-name" placeholder="예: 골프 동아리"></div>
+    <div class="fld"><label>카테고리</label><select id="nc-cat"><option>스포츠</option><option>비즈니스</option><option>취미</option><option>학습</option></select></div>
+    <div class="fld"><label>소개</label><input id="nc-desc" placeholder="한 줄 소개"></div>
+    <div class="fld"><label>아이콘 (직접 등록)</label><div style="display:flex;align-items:center;gap:12px"><span id="nc-prev" class="club-ic" style="width:46px;height:46px;border-radius:12px">${ico('ticket',22)}</span><button type="button" class="btn sm ghost" id="nc-pic">${ico('camera',14)} 이미지 업로드</button></div><input type="file" id="nc-file" accept="image/*" hidden></div>`,
+    ()=>{const name=val('nc-name');if(!name){toast('동아리명을 입력하세요');return false;}if(S.clubs.find(c=>c.name===name)){toast('이미 있는 동아리명입니다');return false;}
+      S.clubs.push({id:'c'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',members:1,icon:iconData});
+      save();go('club');toast('동아리가 생성되었습니다');});
+  const pic=document.getElementById('nc-pic'),file=document.getElementById('nc-file'),prev=document.getElementById('nc-prev');
+  pic.addEventListener('click',()=>file.click());
+  file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{iconData=rd.result;prev.style.cssText='width:46px;height:46px;border-radius:12px;background-image:url(\''+iconData+'\');background-size:cover;background-position:center';prev.innerHTML='';};rd.readAsDataURL(f);});
 }
 
 /* ---------- OFFICERS ---------- */
