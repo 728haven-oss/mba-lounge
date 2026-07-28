@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MBA Lounge — 웹앱</title>
 <meta name="theme-color" content="#6C5CE7" />
+<link rel="manifest" href="manifest.json" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="MBA Lounge" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<link rel="icon" type="image/png" href="icon-192.png" />
 <style>
   :root{
     --pri:#6C5CE7; --pri2:#8B7CF7; --soft:#EFEBFF;
@@ -850,6 +857,8 @@ function today(){const d=new Date();return (d.getMonth()+1)+'/'+d.getDate();}
 /* ---------- boot ---------- */
 buildLogin();
 if(S.session && S.remember && acctBySid(S.session)){enterApp();}
+/* PWA: 서비스워커 등록 (설치·오프라인 지원) */
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 </script>
 </body>
 </html>
