@@ -610,6 +610,7 @@ function enterApp(){
   if(!S.clubPosts)S.clubPosts={};
   if(!S.clubRooms)S.clubRooms={};
   if(!S.jokbo)S.jokbo=[];
+  if(!S.clubRequests)S.clubRequests=[];
   const s=schoolByName(u.school)||schools[0];
   applyTheme(s);
   document.getElementById('login').classList.add('hidden');
@@ -909,6 +910,7 @@ function viewClub(m){
     <div class="chip-row">
       <button class="chip ${clubScope==='school'?'on':''}" data-s="school">우리 학교</button>
       <button class="chip ${clubScope==='all'?'on':''}" data-s="all">전체 MBA</button></div>
+    ${(S.clubRequests||[]).filter(r=>r.bySid===S.user.sid&&r.status==='pending').map(r=>`<div class="card" style="padding:12px 18px;margin-bottom:12px;font-size:13px;color:var(--sub)">${ico('lock',13)} 「${esc(r.name)}」 개설 신청이 관리자 승인 대기 중입니다.</div>`).join('')}
     ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
     <div class="dir-grid">${list.map(c=>{const j=mine.includes(c.name);return `
       <div class="club-card card"><div class="crOpen" data-c="${esc(c.name)}" style="cursor:pointer" title="${j?'동아리방 입장':'가입 후 이용 가능'}">${clubIcHTML(c)}</div><div class="club-nm">${esc(c.name)}</div>
@@ -1029,10 +1031,15 @@ function newClub(){
     <div class="fld"><label>소개</label><input id="nc-desc" placeholder="한 줄 소개"></div>
     <div class="fld"><label>아이콘 (직접 등록)</label><div style="display:flex;align-items:center;gap:12px"><span id="nc-prev" class="club-ic" style="width:46px;height:46px;border-radius:12px">${ico('ticket',22)}</span><button type="button" class="btn sm ghost" id="nc-pic">${ico('camera',14)} 이미지 업로드</button></div><input type="file" id="nc-file" accept="image/*" hidden></div>`,
     ()=>{const name=val('nc-name');if(!name){toast('동아리명을 입력하세요');return false;}if(S.clubs.find(c=>c.name===name)){toast('이미 있는 동아리명입니다');return false;}
+      if(!S.clubRequests)S.clubRequests=[];
+      if(S.clubRequests.find(r=>r.name===name&&r.status==='pending')){toast('이미 승인 대기 중인 동아리명입니다');return false;}
       const sc=document.getElementById('nc-scope').value;
-      S.clubs.push({id:'c'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',members:1,icon:iconData,scope:sc,school:sc==='school'?S.user.school:''});
-      clubScope=sc;
-      save();go('club');toast('동아리가 생성되었습니다');});
+      if(S.user.role==='admin'){/* 관리자는 즉시 개설 */
+        S.clubs.push({id:'c'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',members:1,icon:iconData,scope:sc,school:sc==='school'?S.user.school:''});
+        clubScope=sc;save();go('club');toast('동아리가 생성되었습니다');return;}
+      /* 일반 원우는 관리자(임원방) 승인 후 개설 */
+      S.clubRequests.push({id:'cr'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',icon:iconData,scope:sc,school:sc==='school'?S.user.school:S.user.school,by:S.user.name,bySid:S.user.sid,date:today(),status:'pending'});
+      save();go('club');toast('개설 신청 완료! 관리자 승인 후 목록에 공개됩니다 ✅');});
   const pic=document.getElementById('nc-pic'),file=document.getElementById('nc-file'),prev=document.getElementById('nc-prev');
   pic.addEventListener('click',()=>file.click());
   file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{iconData=rd.result;prev.style.cssText='width:46px;height:46px;border-radius:12px;background-image:url(\''+iconData+'\');background-size:cover;background-position:center';prev.innerHTML='';};rd.readAsDataURL(f);});
@@ -1040,20 +1047,69 @@ function newClub(){
 
 /* ---------- OFFICERS ---------- */
 function isOfficer(){return !!(S.user.officer)||S.user.role==='admin';}
-function viewOfficer(m){
+/* 임원방 — 임원 공지 · 전체 공지 관리 · 동아리 승인 · 가입 승인 (운영 허브) */
+let offTab='post';
+function viewOfficer(m,tab){
   if(!isOfficer()){m.innerHTML=`<div class="page-head"><div class="eyebrow">Officers</div><h1>임원방</h1></div>
     <div class="card" style="padding:44px;text-align:center"><div style="color:var(--pri);margin-bottom:6px">${ico('lock',40)}</div><p style="margin-top:12px;color:var(--sub);font-size:14.5px">임원진 전용 공간입니다.<br>임원으로 임명되면 열람·작성할 수 있습니다.</p></div>`;return;}
-  m.innerHTML=`<div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
-      <div><div class="eyebrow">Officers</div><h1>임원방</h1><p>임원진만 열람·작성하는 임원 전용 공간입니다.</p></div>
-      <button class="btn" id="newOff">${ico('plus',15)} 공지 작성</button></div>
-    <div>${S.officerPosts.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
+  if(tab)offTab=tab;
+  if(!S.clubRequests)S.clubRequests=[];
+  const pendClubs=S.clubRequests.filter(r=>r.status==='pending');
+  const T=[['post','임원 공지','award'],['notice','전체 공지 관리','bell'],['clubok','동아리 승인'+(pendClubs.length?' ('+pendClubs.length+')':''),'ticket'],['signup','가입 승인','usercheck']];
+  let body='';
+  if(offTab==='post'){
+    body=`<button class="btn sm" id="newOff" style="margin-bottom:14px">${ico('plus',14)} 임원 공지 작성</button>
+      ${S.officerPosts.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
       <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">${ico('star',11)} ${esc(p.role)}</span></div><div class="meta">${p.date}</div></div></div>
-      <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}</div>`;
-  m.querySelector('#newOff').addEventListener('click',()=>openModal('임원 공지 작성',
+      <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}`;
+  }else if(offTab==='notice'){
+    body=`<div class="card" style="padding:16px 20px;margin-bottom:14px;color:var(--sub);font-size:13px">여기서 등록한 공지는 BZ 게시판의 <b>공지</b> 탭에 전체 원우에게 노출됩니다.</div>
+      <button class="btn sm" id="newNotice" style="margin-bottom:14px">${ico('plus',14)} 전체 공지 작성</button>
+      <div class="card">${S.notices.map(n=>`<div class="notice-row"><span class="src">${n.src}</span><div style="flex:1"><div class="nt">${esc(n.title)}</div><div class="nd">${n.date}</div></div></div>`).join('')||'<div class="empty">등록된 공지가 없습니다.</div>'}</div>`;
+  }else if(offTab==='clubok'){
+    body=`<div class="card" style="padding:16px 20px;margin-bottom:14px;color:var(--sub);font-size:13px">원우가 신청한 동아리 개설을 검토하고 승인하면 동아리 목록에 공개됩니다.</div>
+      ${pendClubs.length?`<div class="card" style="padding:6px 20px">${pendClubs.map(r=>`<div class="mini-row">
+        <div style="flex:1"><div class="mt">${esc(r.name)} <span class="club-chip">${r.scope==='school'?esc((schoolByName(r.school)||{}).short||r.school)+' 동아리':'전체 MBA'}</span></div>
+          <div class="ms">${esc(r.cat)} · ${esc(r.desc)} · 신청 ${esc(r.by)} · ${r.date}</div></div>
+        <button class="btn sm cok" data-id="${r.id}">승인</button> <button class="btn sm gray crej" data-id="${r.id}">거절</button></div>`).join('')}</div>`
+      :'<div class="empty">승인 대기 중인 동아리 신청이 없습니다.</div>'}`;
+  }else if(offTab==='signup'){
+    body=`<div id="suWrap" class="card" style="padding:24px"><div class="ms" style="color:var(--sub)">불러오는 중…</div></div>`;
+  }
+  m.innerHTML=`<div class="page-head"><div class="eyebrow">Officers</div><h1>임원방</h1><p>임원진의 소통과 운영(공지·동아리 승인·가입 승인)이 이뤄지는 공간입니다.</p></div>
+    <div class="chip-row">${T.map(t=>`<button class="chip ${offTab===t[0]?'on':''}" data-t="${t[0]}">${ico(t[2],13)} ${t[1]}</button>`).join('')}</div>
+    <div>${body}</div>`;
+  m.querySelectorAll('.chip-row .chip').forEach(b=>b.onclick=()=>viewOfficer(m,b.dataset.t));
+  const bind=(id,fn)=>{const e=m.querySelector(id);if(e)e.onclick=fn;};
+  bind('#newOff',()=>openModal('임원 공지 작성',
     `<div class="fld"><label>제목</label><input id="of-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="of-b" placeholder="임원진에게 전달할 내용을 적어주세요"></textarea></div>`,
     ()=>{const t=val('of-t');if(!t){toast('제목을 입력하세요');return false;}
       S.officerPosts.unshift({id:'of'+Date.now(),by:S.user.name,role:S.user.officer||'관리자',date:today(),title:t,body:val('of-b')});
-      save();go('officer');toast('임원 공지가 등록되었습니다');}));
+      save();viewOfficer(m,'post');toast('임원 공지가 등록되었습니다');}));
+  bind('#newNotice',()=>openModal('전체 공지 작성',
+    `<div class="fld"><label>제목</label><input id="nn-t" placeholder="공지 제목"></div>
+     <div class="fld"><label>내용</label><textarea id="nn-b" placeholder="전체 원우에게 알릴 내용"></textarea></div>`,
+    ()=>{const t=val('nn-t');if(!t){toast('제목을 입력하세요');return false;}
+      const ss=schoolByName(S.user.school);
+      S.notices.unshift({id:'n'+Date.now(),src:ss?ss.short:'공지',title:t,body:val('nn-b'),date:today()});
+      save();viewOfficer(m,'notice');toast('전체 공지가 등록되었습니다');}));
+  m.querySelectorAll('.cok').forEach(b=>b.onclick=()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
+    r.status='approved';
+    S.clubs.push({id:'c'+Date.now(),name:r.name,cat:r.cat,desc:r.desc,members:1,icon:r.icon||'',scope:r.scope,school:r.school});
+    save();viewOfficer(m,'clubok');toast('「'+r.name+'」 개설을 승인했습니다 🎉');});
+  m.querySelectorAll('.crej').forEach(b=>b.onclick=()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
+    r.status='rejected';save();viewOfficer(m,'clubok');toast('신청을 거절했습니다');});
+  if(offTab==='signup')renderSignupQueue(m.querySelector('#suWrap'),()=>viewOfficer(m,'signup'));
+}
+/* 가입 승인 큐 — 임원방·관리자 화면 공용 */
+async function renderSignupQueue(w,refresh){
+  if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">백엔드(Firebase)가 아직 연결되지 않았습니다.</div>';return;}
+  let pend=[];
+  try{pend=await fbListByStatus('pending');}catch(e){w.innerHTML='<div class="ms" style="color:var(--sub)">목록을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.</div>';return;}
+  if(!pend.length){w.innerHTML='<div class="ms" style="color:var(--sub)">승인 대기 중인 가입 신청이 없습니다.</div>';return;}
+  w.innerHTML=`<div style="font-weight:800;margin-bottom:12px">승인 대기 · ${pend.length}명</div>`+pend.map(p=>`<div class="mini-row"><div style="flex:1"><div class="mt">${esc(p.name)} · ${esc(p.sid)}</div><div class="ms">${esc(schoolByName(p.school)?schoolByName(p.school).short:p.school)} ${esc(p.gisu)}기 · ${esc(p.company)} ${esc(p.title)} · ${esc(p.email)}</div></div><button class="btn sm suok" data-k="${esc(p.sid)}">승인</button> <button class="btn sm gray surej" data-k="${esc(p.sid)}">거절</button></div>`).join('');
+  w.querySelectorAll('.suok').forEach(b=>b.addEventListener('click',async()=>{try{await fbSetStatus(b.dataset.k,'approved');toast('승인했습니다');refresh();}catch(e){toast('처리 중 오류가 발생했습니다');}}));
+  w.querySelectorAll('.surej').forEach(b=>b.addEventListener('click',async()=>{try{await fbSetStatus(b.dataset.k,'rejected');toast('거절했습니다');refresh();}catch(e){toast('처리 중 오류가 발생했습니다');}}));
 }
 async function viewLogs(m){
   if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
@@ -1081,14 +1137,7 @@ async function viewSignups(m){
   if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
   m.innerHTML=`<div class="page-head"><div class="eyebrow">Admin</div><h1>가입 승인</h1><p>새 가입 신청을 검토하고 <b>승인</b>해야 로그인할 수 있습니다.</p></div>
     <div id="suWrap" class="card" style="padding:24px"><div class="ms" style="color:var(--sub)">불러오는 중…</div></div>`;
-  const w=document.getElementById('suWrap');
-  if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">백엔드(Firebase)가 아직 연결되지 않았습니다. 연결하면 실시간 가입 신청이 여기에 표시됩니다.</div>';return;}
-  let pend=[];
-  try{pend=await fbListByStatus('pending');}catch(e){w.innerHTML='<div class="ms" style="color:var(--sub)">목록을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.</div>';return;}
-  if(!pend.length){w.innerHTML='<div class="ms" style="color:var(--sub)">승인 대기 중인 신청이 없습니다.</div>';return;}
-  w.innerHTML=`<div style="font-weight:800;margin-bottom:12px">승인 대기 · ${pend.length}명</div>`+pend.map(p=>`<div class="mini-row"><div style="flex:1"><div class="mt">${esc(p.name)} · ${esc(p.sid)}</div><div class="ms">${esc(schoolByName(p.school)?schoolByName(p.school).short:p.school)} ${esc(p.gisu)}기 · ${esc(p.company)} ${esc(p.title)} · ${esc(p.email)}</div></div><button class="btn sm suok" data-k="${esc(p.sid)}">승인</button> <button class="btn sm gray surej" data-k="${esc(p.sid)}">거절</button></div>`).join('');
-  w.querySelectorAll('.suok').forEach(b=>b.addEventListener('click',async()=>{try{await fbSetStatus(b.dataset.k,'approved');toast('승인했습니다');viewSignups(m);}catch(e){toast('처리 중 오류가 발생했습니다');}}));
-  w.querySelectorAll('.surej').forEach(b=>b.addEventListener('click',async()=>{try{await fbSetStatus(b.dataset.k,'rejected');toast('거절했습니다');viewSignups(m);}catch(e){toast('처리 중 오류가 발생했습니다');}}));
+  renderSignupQueue(document.getElementById('suWrap'),()=>viewSignups(m));
 }
 function viewOfficerAdmin(m){
   if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
