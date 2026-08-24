@@ -249,6 +249,24 @@
   #toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:120;opacity:0;transition:.25s;pointer-events:none}
   #toast.show{opacity:1}
 
+  /* 전체메뉴(햄버거) & 모바일 서브탭 — 데스크톱에서는 숨김 */
+  .menu-btn{display:none;background:none;border:none;color:var(--ink);padding:6px;border-radius:10px}
+  .mob-subtabs{display:none}
+  .drawer-bg{position:fixed;inset:0;background:rgba(20,18,31,.45);z-index:90}
+  .drawer{position:fixed;top:0;right:0;bottom:0;width:80%;max-width:330px;background:#fff;z-index:95;
+    box-shadow:-12px 0 34px rgba(0,0,0,.18);padding:0 0 calc(16px + env(safe-area-inset-bottom,0px));overflow:auto;
+    border-radius:18px 0 0 18px;display:flex;flex-direction:column}
+  .drawer .d-head{display:flex;align-items:center;gap:10px;padding:calc(18px + env(safe-area-inset-top,0px)) 18px 14px;
+    border-bottom:1px solid var(--line);font-weight:800;font-size:16px}
+  .drawer .d-head .d-x{margin-left:auto;background:none;border:none;font-size:22px;color:var(--sub);padding:4px 8px}
+  .drawer .d-sec{font-size:11px;font-weight:800;color:var(--sub);letter-spacing:.6px;text-transform:uppercase;padding:16px 20px 6px}
+  .drawer .d-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:none;
+    padding:13px 20px;font-size:14.5px;font-weight:700;color:#3b4152}
+  .drawer .d-item .ni{color:var(--pri);width:22px;text-align:center}
+  .drawer .d-item.active{background:var(--soft);color:var(--pri)}
+  .drawer .d-out{margin:14px 18px 0;border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:11px;
+    font-weight:700;font-size:13.5px;color:#6b7180}
+
   /* ===================== Mobile (phone) ===================== */
   @media(max-width:860px){
     .topbar{position:sticky;top:0;height:auto;min-height:56px;
@@ -265,13 +283,26 @@
       background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(20,25,40,.09);z-index:65}
     .sidebar::-webkit-scrollbar{display:none}
     #navMain,#navMine{display:contents}
-    .nav-item{flex:0 0 auto;width:auto;flex-direction:column;gap:3px;min-width:64px;padding:7px 6px;border-radius:12px;
+    .side-h{display:none}
+    /* 하단 탭은 핵심 4개만: 홈 · 게시판 · 동아리 · 원우수첩 (나머지는 전체메뉴로) */
+    .sidebar .nav-item{display:none}
+    .sidebar .nav-item.nav-mob{display:flex;flex:1 1 0;width:auto;flex-direction:column;gap:3px;min-width:0;padding:7px 4px;border-radius:12px;
       font-size:11px;font-weight:700;white-space:nowrap;text-align:center;justify-content:center;color:#565b6b}
+    .sidebar .nav-item[data-view=home]{order:1}
+    .sidebar .nav-item[data-view=board]{order:2}
+    .sidebar .nav-item[data-view=club]{order:3}
+    .sidebar .nav-item[data-view=dir]{order:4}
     .nav-item .ni{font-size:22px;width:auto}
     .nav-item:hover{background:none;color:#565b6b}
     .nav-item.active{background:var(--soft);color:var(--pri);box-shadow:none}
     .main{padding:18px 16px calc(94px + env(safe-area-inset-bottom,0px));min-height:auto}
     #toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+    /* 상단 햄버거(전체메뉴) 노출, 검색은 전체메뉴 안으로 */
+    .menu-btn{display:flex;align-items:center}
+    /* 게시판 계열(게시판·만남·공지·임원) 상단 서브탭 */
+    .mob-subtabs{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 0 16px;padding-bottom:2px}
+    .mob-subtabs::-webkit-scrollbar{display:none}
+    .mob-subtabs .chip{flex:0 0 auto}
   }
 </style>
 </head>
@@ -324,10 +355,11 @@
 <div id="app" class="hidden">
   <div class="topbar">
     <div class="brand"><span id="top-mark"></span>MBA <b>Lounge</b></div>
-    <button class="school-chip" id="schoolChip" title="학교 변경"></button>
+    <button class="school-chip" id="schoolChip" title="내 학교" style="cursor:default"></button>
     <div class="spacer"></div>
     <div class="search"><svg class="ic" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14M21 21l-4.3-4.3"/></svg><input id="globalSearch" placeholder="원우·모임·게시글 검색" /></div>
     <button class="me-btn" id="meBtn"><span class="avatar" id="meAv" style="width:40px;height:40px;font-size:15px"></span></button>
+    <button class="menu-btn" id="menuBtn" title="전체메뉴"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
   </div>
 
   <div class="shell">
@@ -578,28 +610,60 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
-  const NAVM=[['home','홈','home'],['board','비즈니스 게시판','briefcase'],['meet','만남 · 미팅','users'],['dir','원우수첩','idcard'],['club','동아리','ticket'],['notice','공지','bell'],['officer','임원 공지','award'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
-  document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item${x[3]==='admin'?' nav-admin-only':''}" data-view="${x[0]}"><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
+  const NAVM=[['home','홈','home','','mob'],['board','게시판','briefcase','','mob'],['meet','만남 · 미팅','users'],['dir','원우수첩','idcard','','mob'],['club','동아리','ticket','','mob'],['notice','공지','bell'],['officer','임원 공지','award'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
+  window.NAVM_ALL=NAVM;
+  document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item${x[3]==='admin'?' nav-admin-only':''}${x[4]==='mob'?' nav-mob':''}" data-view="${x[0]}"><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
   document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>`;
   document.querySelectorAll('.nav-admin-only').forEach(el=>{el.style.display=(u.role==='admin')?'':'none';});
   document.querySelectorAll('.nav-item').forEach(b=>{b.onclick=()=>go(b.dataset.view);});
-  document.getElementById('schoolChip').onclick=switchSchool;
+  document.getElementById('menuBtn').onclick=openMenuDrawer;
   document.getElementById('meBtn').onclick=()=>go('me');
   document.getElementById('globalSearch').onkeydown=e=>{if(e.key==='Enter')doSearch(e.target.value);};
   go('home');
 }
-function switchSchool(){
-  const opts=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,32)}<span class="snm">${s.short}</span></button>`).join('');
-  openModal('학교 변경',`<p style="color:var(--sub);font-size:13.5px;margin-bottom:14px">학교를 바꾸면 화면 테마와 소식이 해당 학교로 전환됩니다.</p><div class="school-grid">${opts}</div>`,null,true);
-  document.querySelectorAll('.modal .school-btn').forEach(b=>b.addEventListener('click',()=>{
-    const s=schools.find(x=>x.id===b.dataset.id);S.user.school=s.name;save();closeModal();enterApp();toast(s.name+' 테마로 전환되었습니다');
-  }));
+/* 전체메뉴 드로어 (삼단바) — 모든 메뉴를 한눈에 */
+function openMenuDrawer(){
+  closeMenuDrawer();
+  const u=S.user;const s=schoolByName(u.school)||schools[0];
+  const item=(v,label,ic)=>`<button class="d-item${currentView===v?' active':''}" data-view="${v}"><span class="ni">${ico(ic,19)}</span>${label}</button>`;
+  const bg=document.createElement('div');bg.className='drawer-bg';bg.id='drawerBg';
+  const dr=document.createElement('div');dr.className='drawer';dr.id='drawer';
+  dr.innerHTML=`
+    <div class="d-head">${schoolMark(s,24)}<span>${s.short} MBA Lounge</span><button class="d-x" id="drawerX">✕</button></div>
+    <div class="d-sec">메인</div>
+    ${item('home','홈','home')}${item('board','비즈니스 게시판','briefcase')}${item('meet','만남 · 미팅','users')}${item('notice','공지','bell')}${item('officer','임원 공지','award')}
+    <div class="d-sec">커뮤니티</div>
+    ${item('club','동아리','ticket')}${item('dir','원우수첩','idcard')}
+    <div class="d-sec">내 활동</div>
+    ${item('me','내 프로필','user')}
+    ${u.role==='admin'?`<div class="d-sec">관리자</div>${item('signups','가입 승인','usercheck')}${item('officeradmin','임원 관리','settings')}${item('logs','오류 로그','activity')}`:''}
+    <button class="d-out" id="drawerOut">로그아웃</button>`;
+  document.body.appendChild(bg);document.body.appendChild(dr);
+  bg.onclick=closeMenuDrawer;
+  dr.querySelector('#drawerX').onclick=closeMenuDrawer;
+  dr.querySelector('#drawerOut').onclick=()=>{if(confirm('로그아웃하시겠어요?')){S.session=null;save();location.reload();}};
+  dr.querySelectorAll('.d-item').forEach(b=>b.onclick=()=>{closeMenuDrawer();go(b.dataset.view);});
 }
+function closeMenuDrawer(){['drawerBg','drawer'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});}
 let currentView='home';
+const BOARD_FAMILY=['board','meet','notice','officer'];
 function go(v){currentView=v;
-  document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  const isMob=window.matchMedia('(max-width:860px)').matches;
+  document.querySelectorAll('.nav-item').forEach(b=>{
+    let on=b.dataset.view===v;
+    if(isMob&&b.dataset.view==='board'&&BOARD_FAMILY.includes(v))on=true;
+    b.classList.toggle('active',on);
+  });
   const m=document.getElementById('main');window.scrollTo(0,0);
   ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,signups:viewSignups,officeradmin:viewOfficerAdmin,logs:viewLogs,me:viewMe}[v]||viewHome)(m);
+  /* 모바일: 게시판 계열 화면 상단에 서브탭(게시판·만남·공지·임원) 노출 */
+  if(BOARD_FAMILY.includes(v)){
+    const bar=document.createElement('div');bar.className='mob-subtabs';
+    const names={board:'게시판',meet:'만남 · 미팅',notice:'공지',officer:'임원 공지'};
+    bar.innerHTML=BOARD_FAMILY.map(x=>`<button class="chip${x===v?' on':''}" data-view="${x}">${names[x]}</button>`).join('');
+    bar.querySelectorAll('.chip').forEach(c=>c.onclick=()=>go(c.dataset.view));
+    m.prepend(bar);
+  }
 }
 
 /* ---------- HOME ---------- */
