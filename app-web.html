@@ -658,7 +658,7 @@ function openMenuDrawer(){
 }
 function closeMenuDrawer(){['drawerBg','drawer'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});}
 let currentView='home';
-const BOARD_FAMILY=['board','meet','notice'];
+const BOARD_FAMILY=['notice','board','meet'];
 function go(v){currentView=v;
   const isMob=window.matchMedia('(max-width:860px)').matches;
   document.querySelectorAll('.nav-item').forEach(b=>{
@@ -914,7 +914,7 @@ function viewClub(m){
     ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
     <div class="dir-grid">${list.map(c=>{const j=mine.includes(c.name);return `
       <div class="club-card card"><div class="crOpen" data-c="${esc(c.name)}" style="cursor:pointer" title="${j?'동아리방 입장':'가입 후 이용 가능'}">${clubIcHTML(c)}</div><div class="club-nm">${esc(c.name)}</div>
-        <div class="club-cat">${clubScopeLabel(c)} · ${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명</div><div class="club-desc">${esc(c.desc)}</div>
+        <div class="club-cat">${clubScopeLabel(c)} · ${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명${c.leader?' · 회장 '+esc(c.leader):''}</div><div class="club-desc">${esc(c.desc)}</div>
         ${j?`<button class="btn sm room" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${ico('comment',14)} 동아리방 입장</button>`:''}
         <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:${j?'8px':'14px'};width:100%">${j?ico('check',13)+' 가입됨 · 탈퇴하기':ico('plus',15)+' 가입하기'}</button>
         <button class="ic-change" data-c="${esc(c.name)}" style="margin-top:8px;background:none;border:none;color:var(--sub);font-size:12px;font-weight:600;width:100%;cursor:pointer">${ico('camera',13)} 아이콘 변경</button></div>`;}).join('')||`<div class="empty">아직 ${clubScope==='school'?'우리 학교':'전체 MBA'} 동아리가 없습니다.<br>첫 동아리를 만들어보세요!</div>`}</div>
@@ -946,10 +946,12 @@ function viewClubRoom(m,name,tab){
   const joined=(S.user.clubs||[]).includes(name);
   if(tab)crTab=tab;
   const r=clubRoom(name);
+  const isLeader=(c.leaderSid===S.user.sid)||S.user.role==='admin';
   const T=[['notice','공지사항','bell'],['post','게시판','comment'],['photo','사진첩','camera'],['member','회원 목록','users'],['ledger','회계 현황','trend']];
   let body='';
   if(crTab==='notice'){
-    body=`${joined?`<button class="btn sm" id="crAddNotice" style="margin-bottom:14px">${ico('plus',14)} 공지 올리기</button>`:''}
+    body=`${isLeader?`<button class="btn sm" id="crAddNotice" style="margin-bottom:14px">${ico('plus',14)} 공지 올리기</button>`
+        :`<div class="card" style="padding:12px 18px;margin-bottom:14px;font-size:12.5px;color:var(--sub)">${ico('lock',13)} 공지는 동아리 회장만 올릴 수 있습니다.</div>`}
       ${r.notices.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
         <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">${ico('bell',11)} 공지</span></div><div class="meta">${p.date}</div></div></div>
         <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}`;
@@ -966,11 +968,13 @@ function viewClubRoom(m,name,tab){
         :'<div class="empty">아직 사진이 없습니다. 모임 사진을 올려보세요! 📷</div>'}`;
   }else if(crTab==='member'){
     const mem=realMembers().filter(x=>(x.clubs||[]).includes(name));
-    body=`<div class="card" style="padding:6px 20px">
-      ${mem.map(x=>`<div class="mini-row">${avatarHTML(x,40)}
-        <div style="flex:1"><div class="mt">${esc(x.name)} ${x.officer?`<span class="badge-off">${ico('star',11)} ${esc(x.officer)}</span>`:''}</div>
+    body=`${isLeader?`<div class="card" style="padding:12px 18px;margin-bottom:14px;font-size:12.5px;color:var(--sub)">${ico('star',13)} 회장 권한: 회원 내보내기와 회장 지정이 가능합니다.</div>`:''}
+      <div class="card" style="padding:6px 20px">
+      ${mem.map(x=>{const isL=c.leaderSid===x.sid;return `<div class="mini-row">${avatarHTML(x,40)}
+        <div style="flex:1"><div class="mt">${esc(x.name)} ${isL?`<span class="badge-off">${ico('star',11)} 동아리 회장</span>`:''} ${x.officer?`<span class="badge-off">${ico('star',11)} ${esc(x.officer)}</span>`:''}</div>
           <div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div>
-        <span class="ms">${(schoolByName(x.school)||{}).short||''} ${x.gisu}기</span></div>`).join('')||'<div class="empty">아직 회원이 없습니다.</div>'}</div>`;
+        <span class="ms">${(schoolByName(x.school)||{}).short||''} ${x.gisu}기</span>
+        ${(isLeader&&x.sid!==S.user.sid)?`${!isL?`<button class="btn sm ghost mLead" data-s="${esc(x.sid)}">회장 지정</button>`:''} <button class="btn sm gray mKick" data-s="${esc(x.sid)}">내보내기</button>`:''}</div>`;}).join('')||'<div class="empty">아직 회원이 없습니다.</div>'}</div>`;
   }else if(crTab==='ledger'){
     const inc=r.ledger.filter(l=>l.type==='in').reduce((a,b)=>a+b.amount,0);
     const out=r.ledger.filter(l=>l.type==='out').reduce((a,b)=>a+b.amount,0);
@@ -998,6 +1002,16 @@ function viewClubRoom(m,name,tab){
   m.querySelector('#crBack').onclick=()=>go('club');
   m.querySelectorAll('.chip-row .chip').forEach(b=>b.onclick=()=>viewClubRoom(m,name,b.dataset.t));
   const bind=(id,fn)=>{const e=m.querySelector(id);if(e)e.onclick=fn;};
+  m.querySelectorAll('.mKick').forEach(b=>b.onclick=()=>{
+    if(!confirm('이 회원을 동아리에서 내보낼까요?'))return;
+    const a=S.accounts.find(x=>x.sid===b.dataset.s);
+    if(a&&a.clubs)a.clubs=a.clubs.filter(n=>n!==name);
+    save();viewClubRoom(m,name,'member');toast('동아리에서 내보냈습니다');});
+  m.querySelectorAll('.mLead').forEach(b=>b.onclick=()=>{
+    const a=S.accounts.find(x=>x.sid===b.dataset.s);if(!a)return;
+    if(!confirm(a.name+'님을 새 회장으로 지정할까요?'))return;
+    c.leader=a.name;c.leaderSid=a.sid;
+    save();viewClubRoom(m,name,'member');toast(a.name+'님이 새 회장이 되었습니다 👑');});
   bind('#crAddNotice',()=>openModal(name+' 공지 올리기',
     `<div class="fld"><label>제목</label><input id="cn-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="cn-b" placeholder="동아리 회원들에게 알릴 내용"></textarea></div>`,
     ()=>{const t=val('cn-t');if(!t){toast('제목을 입력하세요');return false;}
@@ -1035,7 +1049,7 @@ function newClub(){
       if(S.clubRequests.find(r=>r.name===name&&r.status==='pending')){toast('이미 승인 대기 중인 동아리명입니다');return false;}
       const sc=document.getElementById('nc-scope').value;
       if(S.user.role==='admin'){/* 관리자는 즉시 개설 */
-        S.clubs.push({id:'c'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',members:1,icon:iconData,scope:sc,school:sc==='school'?S.user.school:''});
+        S.clubs.push({id:'c'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',members:1,icon:iconData,scope:sc,school:sc==='school'?S.user.school:'',leader:S.user.name,leaderSid:S.user.sid});
         clubScope=sc;save();go('club');toast('동아리가 생성되었습니다');return;}
       /* 일반 원우는 관리자(임원방) 승인 후 개설 */
       S.clubRequests.push({id:'cr'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',icon:iconData,scope:sc,school:sc==='school'?S.user.school:S.user.school,by:S.user.name,bySid:S.user.sid,date:today(),status:'pending'});
@@ -1046,7 +1060,7 @@ function newClub(){
 }
 
 /* ---------- OFFICERS ---------- */
-function isOfficer(){return !!(S.user.officer)||S.user.role==='admin';}
+function isOfficer(){return !!(S.user.officer)||S.user.role==='admin'||(S.clubs||[]).some(c=>c.leaderSid===S.user.sid);}
 /* 임원방 — 임원 공지 · 전체 공지 관리 · 동아리 승인 · 가입 승인 (운영 허브) */
 let offTab='post';
 function viewOfficer(m,tab){
@@ -1095,8 +1109,8 @@ function viewOfficer(m,tab){
       save();viewOfficer(m,'notice');toast('전체 공지가 등록되었습니다');}));
   m.querySelectorAll('.cok').forEach(b=>b.onclick=()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
     r.status='approved';
-    S.clubs.push({id:'c'+Date.now(),name:r.name,cat:r.cat,desc:r.desc,members:1,icon:r.icon||'',scope:r.scope,school:r.school});
-    save();viewOfficer(m,'clubok');toast('「'+r.name+'」 개설을 승인했습니다 🎉');});
+    S.clubs.push({id:'c'+Date.now(),name:r.name,cat:r.cat,desc:r.desc,members:1,icon:r.icon||'',scope:r.scope,school:r.school,leader:r.by,leaderSid:r.bySid});
+    save();viewOfficer(m,'clubok');toast('「'+r.name+'」 개설을 승인했습니다. 회장: '+r.by+' 🎉');});
   m.querySelectorAll('.crej').forEach(b=>b.onclick=()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
     r.status='rejected';save();viewOfficer(m,'clubok');toast('신청을 거절했습니다');});
   if(offTab==='signup')renderSignupQueue(m.querySelector('#suWrap'),()=>viewOfficer(m,'signup'));
