@@ -251,6 +251,7 @@
 
   /* 전체메뉴(햄버거) & 모바일 서브탭 — 데스크톱에서는 숨김 */
   .menu-btn{display:none;background:none;border:none;color:var(--ink);padding:6px;border-radius:10px}
+  .nav-more{display:none}
   .mob-subtabs{display:none}
   .drawer-bg{position:fixed;inset:0;background:rgba(20,18,31,.45);z-index:90}
   .drawer{position:fixed;top:0;right:0;bottom:0;width:80%;max-width:330px;background:#fff;z-index:95;
@@ -288,10 +289,10 @@
     .sidebar .nav-item{display:none}
     .sidebar .nav-item.nav-mob{display:flex;flex:1 1 0;width:auto;flex-direction:column;gap:3px;min-width:0;padding:7px 4px;border-radius:12px;
       font-size:11px;font-weight:700;white-space:nowrap;text-align:center;justify-content:center;color:#565b6b}
-    .sidebar .nav-item[data-view=home]{order:1}
-    .sidebar .nav-item[data-view=board]{order:2}
-    .sidebar .nav-item[data-view=club]{order:3}
-    .sidebar .nav-item[data-view=dir]{order:4}
+    .sidebar .nav-item[data-view=board]{order:1}
+    .sidebar .nav-item[data-view=club]{order:2}
+    .sidebar .nav-item[data-view=dir]{order:3}
+    .sidebar .nav-item.nav-more{order:4}
     .nav-item .ni{font-size:22px;width:auto}
     .nav-item:hover{background:none;color:#565b6b}
     .nav-item.active{background:var(--soft);color:var(--pri);box-shadow:none}
@@ -610,13 +611,17 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
-  const NAVM=[['home','홈','home','','mob'],['board','게시판','briefcase','','mob'],['meet','만남 · 미팅','users'],['dir','원우수첩','idcard','','mob'],['club','동아리','ticket','','mob'],['notice','공지','bell'],['officer','임원 공지','award'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
+  const NAVM=[['home','홈','home'],['board','게시판','briefcase','','mob'],['meet','만남 · 미팅','users'],['dir','원우수첩','idcard','','mob'],['club','동아리','ticket','','mob'],['notice','공지','bell'],['officer','임원 공지','award'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
   window.NAVM_ALL=NAVM;
   document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item${x[3]==='admin'?' nav-admin-only':''}${x[4]==='mob'?' nav-mob':''}" data-view="${x[0]}"><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
-  document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>`;
+  document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>
+    <button class="nav-item nav-mob nav-more" id="navMoreBtn"><span class="ni"><svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span>전체</button>`;
   document.querySelectorAll('.nav-admin-only').forEach(el=>{el.style.display=(u.role==='admin')?'':'none';});
-  document.querySelectorAll('.nav-item').forEach(b=>{b.onclick=()=>go(b.dataset.view);});
+  document.querySelectorAll('.nav-item').forEach(b=>{if(b.dataset.view)b.onclick=()=>go(b.dataset.view);});
+  document.getElementById('navMoreBtn').onclick=openMenuDrawer;
   document.getElementById('menuBtn').onclick=openMenuDrawer;
+  document.querySelector('.topbar .brand').onclick=()=>go('home');
+  document.querySelector('.topbar .brand').style.cursor='pointer';
   document.getElementById('meBtn').onclick=()=>go('me');
   document.getElementById('globalSearch').onkeydown=e=>{if(e.key==='Enter')doSearch(e.target.value);};
   go('home');
