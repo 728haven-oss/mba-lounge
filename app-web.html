@@ -608,6 +608,8 @@ function enterApp(){
   if(!S.clubs)S.clubs=seedClubs.map(c=>({...c,icon:''}));
   S.clubs.forEach(c=>{if(!c.scope)c.scope='all';});
   if(!S.clubPosts)S.clubPosts={};
+  if(!S.clubRooms)S.clubRooms={};
+  if(!S.jokbo)S.jokbo=[];
   const s=schoolByName(u.school)||schools[0];
   applyTheme(s);
   document.getElementById('login').classList.add('hidden');
@@ -615,7 +617,7 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
-  const NAVM=[['home','홈','home'],['board','BZ 게시판','briefcase','','mob'],['club','동아리','ticket','','mob'],['notice','공지','bell'],['officer','임원방','award'],['dir','원우수첩','idcard','','mob'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
+  const NAVM=[['home','홈','home'],['board','BZ 게시판','briefcase','','mob'],['jokbo','족보','book'],['club','동아리','ticket','','mob'],['officer','임원방','award'],['dir','원우수첩','idcard','','mob'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
   window.NAVM_ALL=NAVM;
   document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item${x[3]==='admin'?' nav-admin-only':''}${x[4]==='mob'?' nav-mob':''}" data-view="${x[0]}"><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
   document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>
@@ -640,7 +642,7 @@ function openMenuDrawer(){
   dr.innerHTML=`
     <div class="d-head">${schoolMark(s,24)}<span>${s.short} MBA Lounge</span><button class="d-x" id="drawerX">✕</button></div>
     <div class="d-sec">메인</div>
-    ${item('home','홈','home')}${item('board','BZ 게시판','briefcase')}${item('meet','만남 · 미팅','users')}${item('notice','공지','bell')}${item('officer','임원방','award')}
+    ${item('home','홈','home')}${item('board','BZ 게시판','briefcase')}${item('meet','만남 · 미팅','users')}${item('jokbo','족보','book')}${item('officer','임원방','award')}
     <div class="d-sec">커뮤니티</div>
     ${item('club','동아리','ticket')}${item('dir','원우수첩','idcard')}
     <div class="d-sec">내 활동</div>
@@ -664,7 +666,7 @@ function go(v){currentView=v;
     b.classList.toggle('active',on);
   });
   const m=document.getElementById('main');window.scrollTo(0,0);
-  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,signups:viewSignups,officeradmin:viewOfficerAdmin,logs:viewLogs,me:viewMe}[v]||viewHome)(m);
+  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,jokbo:viewJokboHome,signups:viewSignups,officeradmin:viewOfficerAdmin,logs:viewLogs,me:viewMe}[v]||viewHome)(m);
   /* 모바일: 게시판 계열 화면 상단에 서브탭(게시판·만남·공지·임원) 노출 */
   if(BOARD_FAMILY.includes(v)){
     const bar=document.createElement('div');bar.className='mob-subtabs';
@@ -711,7 +713,7 @@ function viewHome(m){
 let boardCat='all';
 function catName(c){return {deal:'사업제휴',invest:'투자',hire:'채용',info:'정보공유',jokbo:'족보'}[c]||c;}
 function viewBoard(m){
-  const cats=[['all','전체'],['deal','사업제휴'],['invest','투자'],['hire','채용'],['info','정보공유'],['jokbo','족보']];
+  const cats=[['all','전체'],['deal','사업제휴'],['invest','투자'],['hire','채용'],['info','정보공유']];
   const list=S.posts.filter(p=>boardCat==='all'||p.cat===boardCat);
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
@@ -722,14 +724,66 @@ function viewBoard(m){
   m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{boardCat=c.dataset.c;viewBoard(m);}));
   m.querySelector('#newPost').addEventListener('click',newPost);bindPost(m);
 }
+/* ---- 족보: 수업(클래스)별로 여러 원우가 꼬리에 꼬리를 물고 기록 + 수업 만족도 ---- */
+function starHTML(v){let s='';for(let i=1;i<=5;i++){s+=`<span style="color:${i<=Math.round(v)?'#F5B301':'#D9DCE5'};font-size:14px">★</span>`;}return `<span>${s}</span>`;}
+function jokboAvg(j){const r=j.ratings||{};const vals=Object.values(r);return {v:vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0,n:vals.length};}
+function viewJokboHome(m){
+  if(!S.jokbo)S.jokbo=[];
+  m.innerHTML=`
+    <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
+      <div><div class="eyebrow">Jokbo</div><h1>족보</h1><p>수업(클래스)별로 원우들이 꼬리에 꼬리를 물고 기록을 이어갑니다. 수업 만족도(★)도 남겨보세요!</p></div>
+      <button class="btn" id="newJokbo">${ico('plus',15)} 수업 추가</button></div>
+    <div class="dir-grid">${S.jokbo.map(j=>{const last=j.entries[j.entries.length-1];const avg=jokboAvg(j);return `
+      <div class="club-card card" style="text-align:left">
+        <div class="club-nm">${ico('book',16)} ${esc(j.course)}</div>
+        <div class="club-cat">${j.prof?esc(j.prof)+' 교수님 · ':''}기록 ${j.entries.length}개${last?' · 최근 '+last.date:''}</div>
+        <div style="margin-top:6px">${starHTML(avg.v)} <span style="font-size:12px;color:var(--sub);font-weight:700">${avg.n?avg.v.toFixed(1)+' ('+avg.n+'명)':'첫 만족도를 남겨보세요'}</span></div>
+        <div class="club-desc">${last?'“'+esc(last.title)+'”':'아직 기록이 없습니다. 첫 기록을 남겨보세요.'}</div>
+        <button class="btn sm openJ" data-id="${j.id}" style="margin-top:12px;width:100%">${ico('book',14)} 족보 열기 · 이어쓰기</button></div>`;}).join('')||'<div class="empty">등록된 수업이 없습니다.<br>수업을 추가해 첫 족보를 시작하세요!</div>'}</div>`;
+  m.querySelectorAll('.openJ').forEach(b=>b.addEventListener('click',()=>viewJokbo(m,b.dataset.id)));
+  m.querySelector('#newJokbo').addEventListener('click',()=>openModal('족보 수업 추가',
+    `<div class="fld"><label>수업명 <span class="req">*</span></label><input id="jb-course" placeholder="예: 재무관리"></div>
+     <div class="fld"><label>교수님</label><input id="jb-prof" placeholder="예: 홍길동"></div>`,
+    ()=>{const c=val('jb-course');if(!c){toast('수업명을 입력하세요');return false;}
+      if(S.jokbo.find(x=>x.course===c&&x.prof===val('jb-prof'))){toast('이미 등록된 수업입니다');return false;}
+      const j={id:'j'+Date.now(),course:c,prof:val('jb-prof'),by:S.user.name,entries:[],ratings:{}};
+      S.jokbo.unshift(j);save();viewJokbo(m,j.id);toast('수업이 등록되었습니다. 기록을 이어서 적어보세요!');}));
+}
+function viewJokbo(m,id){
+  if(!S.jokbo)S.jokbo=[];
+  const j=S.jokbo.find(x=>x.id===id);if(!j){go('jokbo');return;}
+  if(!j.ratings)j.ratings={};
+  const avg=jokboAvg(j);const myR=j.ratings[S.user.sid]||0;
+  m.innerHTML=`
+    <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <div><div class="eyebrow">Jokbo</div><h1>${ico('book',22)} ${esc(j.course)}</h1>
+        <p>${j.prof?esc(j.prof)+' 교수님 · ':''}기록 ${j.entries.length}개 — 꼬리에 꼬리를 물고 이어집니다</p></div>
+      <div style="display:flex;gap:8px"><button class="btn gray sm" id="jbBack">← 족보 목록</button><button class="btn sm" id="jbAdd">${ico('plus',14)} 이어서 적기</button></div></div>
+    <div class="card" style="padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div><div style="font-size:12px;font-weight:800;color:var(--sub)">수업 만족도</div>
+        <div>${starHTML(avg.v)} <b style="font-size:15px">${avg.n?avg.v.toFixed(1):'-'}</b> <span style="font-size:12px;color:var(--sub)">${avg.n}명 참여</span></div></div>
+      <div style="margin-left:auto;text-align:right"><div style="font-size:12px;font-weight:800;color:var(--sub)">내 별점 ${myR?'('+myR+'점)':'— 눌러서 남기기'}</div>
+        <div id="myStars">${[1,2,3,4,5].map(i=>`<button data-v="${i}" style="background:none;border:none;font-size:22px;padding:0 2px;cursor:pointer;color:${i<=myR?'#F5B301':'#D9DCE5'}">★</button>`).join('')}</div></div></div>
+    <div>${j.entries.map((e,i)=>`<div class="post-card card" style="position:relative">
+      <span style="position:absolute;top:16px;right:18px;font-size:11px;font-weight:800;color:var(--pri);background:var(--soft);border-radius:8px;padding:3px 9px">#${i+1}</span>
+      <div class="post-top">${avatarHTML({name:e.by},40)}
+      <div style="flex:1"><div class="who">${esc(e.by)}</div><div class="meta">${e.date}</div></div></div>
+      <h3>${esc(e.title)}</h3><div class="body">${esc(e.body)}</div></div>`).join('')||'<div class="empty">아직 기록이 없습니다. 첫 기록의 주인공이 되어보세요! ✍️</div>'}</div>`;
+  m.querySelector('#jbBack').onclick=()=>go('jokbo');
+  m.querySelectorAll('#myStars button').forEach(b=>b.onclick=()=>{j.ratings[S.user.sid]=+b.dataset.v;save();viewJokbo(m,id);toast('만족도 '+b.dataset.v+'점을 남겼습니다 ⭐');});
+  m.querySelector('#jbAdd').onclick=()=>openModal(j.course+' — 기록 이어서 적기',
+    `<div class="fld"><label>제목 <span class="req">*</span></label><input id="je-t" placeholder="예: 중간고사 범위 정리"></div>
+     <div class="fld"><label>내용</label><textarea id="je-b" placeholder="시험 범위·기출 유형·과제 팁 등을 적어주세요"></textarea></div>`,
+    ()=>{const t=val('je-t');if(!t){toast('제목을 입력하세요');return false;}
+      j.entries.push({by:S.user.name,date:today(),title:t,body:val('je-b')});
+      save();viewJokbo(m,id);toast('기록 #'+j.entries.length+' 추가! 꼬리를 이었습니다 📝');});
+}
 function postHTML(p){
   return `<div class="post-card card" data-id="${p.id}">
     <div class="post-top">${avatarHTML({name:p.who},40)}
       <div style="flex:1"><div class="who">${esc(p.who)}</div><div class="meta">${esc(p.co)} · ${p.date}</div></div>
       <span class="cat-tag ${p.cat}">${catName(p.cat)}</span></div>
-    <h3>${esc(p.title)}</h3>
-    ${p.cat==='jokbo'&&(p.course||p.prof)?`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">${p.course?`<span class="club-chip">${ico('book',12)} ${esc(p.course)}</span>`:''}${p.prof?`<span class="club-chip">${ico('user',12)} ${esc(p.prof)} 교수님</span>`:''}</div>`:''}
-    <div class="body">${esc(p.body)}</div>
+    <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div>
     <div class="post-actions">
       <button class="like ${p.liked?'on':''}" data-id="${p.id}">${ico('heart',15)} <span>${p.likes}</span></button>
       <button class="cbtn" data-id="${p.id}">${ico('comment',15)} 댓글 ${p.comments.length}</button></div>
@@ -743,24 +797,17 @@ function bindPost(m){
   m.querySelectorAll('.cadd').forEach(b=>b.addEventListener('click',()=>{const inp=m.querySelector('.cmt-form input[data-id="'+b.dataset.id+'"]');const t=inp.value.trim();if(!t)return;const p=S.posts.find(x=>x.id===b.dataset.id);p.comments.push({by:S.user.name,txt:t});save();viewBoard(m);}));
 }
 function newPost(){
-  openModal('게시글 쓰기',`
-    <div class="fld"><label>카테고리</label><select id="np-cat"><option value="deal">사업제휴</option><option value="invest">투자</option><option value="hire">채용</option><option value="info">정보공유</option><option value="jokbo">족보 (수업 정보)</option></select></div>
-    <div id="np-jokbo" class="hidden">
-      <div class="fld"><label>수업명 <span class="req">*</span></label><input id="np-course" placeholder="예: 재무관리"></div>
-      <div class="fld"><label>교수님</label><input id="np-prof" placeholder="예: 홍길동"></div>
-    </div>
+  const fixed=(boardCat!=='all');/* 선택된 카테고리 탭에서 글쓰기 → 그 카테고리로 바로 작성 */
+  openModal(fixed?catName(boardCat)+' 글쓰기':'글쓰기',`
+    ${fixed?`<div class="fld"><label>카테고리</label><div><span class="cat-tag ${boardCat}">${catName(boardCat)}</span> <span style="font-size:12px;color:var(--sub)">현재 게시판에 등록됩니다</span></div></div>`
+      :`<div class="fld"><label>카테고리</label><select id="np-cat"><option value="deal">사업제휴</option><option value="invest">투자</option><option value="hire">채용</option><option value="info">정보공유</option></select></div>`}
     <div class="fld"><label>제목</label><input id="np-title" placeholder="제목을 입력하세요"></div>
-    <div class="fld"><label>내용</label><textarea id="np-body" placeholder="원우들과 나누고 싶은 이야기를 적어보세요 (족보는 시험 범위·과제·수업 팁 등)"></textarea></div>`,
+    <div class="fld"><label>내용</label><textarea id="np-body" placeholder="원우들과 나누고 싶은 이야기를 적어보세요"></textarea></div>`,
     ()=>{const t=document.getElementById('np-title').value.trim();if(!t){toast('제목을 입력하세요');return false;}
-      const cat=document.getElementById('np-cat').value;
-      const course=document.getElementById('np-course').value.trim(),prof=document.getElementById('np-prof').value.trim();
-      if(cat==='jokbo'&&!course){toast('수업명을 입력하세요');return false;}
+      const cat=fixed?boardCat:document.getElementById('np-cat').value;
       S.posts.unshift({id:'p'+Date.now(),cat:cat,who:S.user.name,
-        co:(S.user.company+(S.user.title?' · '+S.user.title:'')),date:today(),title:t,body:document.getElementById('np-body').value.trim(),
-        course:cat==='jokbo'?course:'',prof:cat==='jokbo'?prof:'',likes:0,liked:false,comments:[]});
-      save();go('board');toast('게시글이 등록되었습니다');});
-  const sel=document.getElementById('np-cat'),jk=document.getElementById('np-jokbo');
-  sel.addEventListener('change',()=>{jk.classList.toggle('hidden',sel.value!=='jokbo');});
+        co:(S.user.company+(S.user.title?' · '+S.user.title:'')),date:today(),title:t,body:document.getElementById('np-body').value.trim(),likes:0,liked:false,comments:[]});
+      save();go('board');toast(catName(cat)+' 게시판에 등록되었습니다');});
 }
 
 /* ---------- MEET ---------- */
@@ -864,7 +911,7 @@ function viewClub(m){
       <button class="chip ${clubScope==='all'?'on':''}" data-s="all">전체 MBA</button></div>
     ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
     <div class="dir-grid">${list.map(c=>{const j=mine.includes(c.name);return `
-      <div class="club-card card">${clubIcHTML(c)}<div class="club-nm">${esc(c.name)}</div>
+      <div class="club-card card"><div class="crOpen" data-c="${esc(c.name)}" style="cursor:pointer" title="${j?'동아리방 입장':'가입 후 이용 가능'}">${clubIcHTML(c)}</div><div class="club-nm">${esc(c.name)}</div>
         <div class="club-cat">${clubScopeLabel(c)} · ${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명</div><div class="club-desc">${esc(c.desc)}</div>
         ${j?`<button class="btn sm room" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${ico('comment',14)} 동아리방 입장</button>`:''}
         <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:${j?'8px':'14px'};width:100%">${j?ico('check',13)+' 가입됨 · 탈퇴하기':ico('plus',15)+' 가입하기'}</button>
@@ -872,6 +919,9 @@ function viewClub(m){
     <input type="file" id="clubIconInput" accept="image/*" hidden>`;
   m.querySelectorAll('.chip-row .chip').forEach(c=>c.addEventListener('click',()=>{clubScope=c.dataset.s;viewClub(m);}));
   m.querySelectorAll('.room').forEach(b=>b.addEventListener('click',()=>viewClubRoom(m,b.dataset.c)));
+  m.querySelectorAll('.crOpen').forEach(b=>b.addEventListener('click',()=>{
+    if((S.user.clubs||[]).includes(b.dataset.c))viewClubRoom(m,b.dataset.c);
+    else toast('가입하면 동아리방을 이용할 수 있어요');}));
   m.querySelectorAll('.join').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.c;const arr=S.user.clubs||[];
     const i=arr.indexOf(n);if(i>=0){arr.splice(i,1);toast(n+' 탈퇴했습니다');}else{arr.push(n);toast(n+' 가입 완료');}S.user.clubs=arr;save();viewClub(m);}));
   let targetClub=null;const fi=m.querySelector('#clubIconInput');
@@ -879,29 +929,94 @@ function viewClub(m){
   fi.addEventListener('change',e=>{const f=e.target.files[0];if(!f||!targetClub)return;const rd=new FileReader();rd.onload=()=>{const c=S.clubs.find(x=>x.name===targetClub);if(c)c.icon=rd.result;save();viewClub(m);toast(targetClub+' 아이콘이 등록되었습니다');};rd.readAsDataURL(f);});
   m.querySelector('#newClub').addEventListener('click',newClub);
 }
-/* 동아리방 — 가입한 동아리의 소식·게시판 */
-function viewClubRoom(m,name){
+/* 동아리방 — 공지사항 · 게시판 · 사진첩 · 회원 목록 · 회계 현황 */
+function clubRoom(name){
+  if(!S.clubRooms)S.clubRooms={};
+  if(!S.clubRooms[name])S.clubRooms[name]={notices:[],posts:(S.clubPosts&&S.clubPosts[name])||[],photos:[],ledger:[]};
+  const r=S.clubRooms[name];
+  ['notices','posts','photos','ledger'].forEach(k=>{if(!r[k])r[k]=[];});
+  return r;
+}
+function won(n){return (n<0?'-':'')+Math.abs(n).toLocaleString('ko-KR')+'원';}
+let crTab='notice';
+function viewClubRoom(m,name,tab){
   const c=S.clubs.find(x=>x.name===name);if(!c){go('club');return;}
   const joined=(S.user.clubs||[]).includes(name);
-  if(!S.clubPosts)S.clubPosts={};
-  const posts=S.clubPosts[name]||[];
+  if(tab)crTab=tab;
+  const r=clubRoom(name);
+  const T=[['notice','공지사항','bell'],['post','게시판','comment'],['photo','사진첩','camera'],['member','회원 목록','users'],['ledger','회계 현황','trend']];
+  let body='';
+  if(crTab==='notice'){
+    body=`${joined?`<button class="btn sm" id="crAddNotice" style="margin-bottom:14px">${ico('plus',14)} 공지 올리기</button>`:''}
+      ${r.notices.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
+        <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">${ico('bell',11)} 공지</span></div><div class="meta">${p.date}</div></div></div>
+        <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}`;
+  }else if(crTab==='post'){
+    body=`${joined?`<button class="btn sm" id="crAddPost" style="margin-bottom:14px">${ico('plus',14)} 글쓰기</button>`:''}
+      ${r.posts.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
+        <div style="flex:1"><div class="who">${esc(p.by)}</div><div class="meta">${p.date}</div></div></div>
+        <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 게시글이 없습니다. 첫 글을 남겨보세요!</div>'}`;
+  }else if(crTab==='photo'){
+    body=`${joined?`<button class="btn sm" id="crAddPhoto" style="margin-bottom:14px">${ico('camera',14)} 사진 올리기</button><input type="file" id="crPhotoFile" accept="image/*" hidden>`:''}
+      ${r.photos.length?`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px">
+        ${r.photos.map(p=>`<div class="card" style="overflow:hidden"><div style="height:140px;background-image:url('${p.src}');background-size:cover;background-position:center"></div>
+          <div style="padding:8px 10px;font-size:11.5px;color:var(--sub)">${esc(p.by)} · ${p.date}</div></div>`).join('')}</div>`
+        :'<div class="empty">아직 사진이 없습니다. 모임 사진을 올려보세요! 📷</div>'}`;
+  }else if(crTab==='member'){
+    const mem=realMembers().filter(x=>(x.clubs||[]).includes(name));
+    body=`<div class="card" style="padding:6px 20px">
+      ${mem.map(x=>`<div class="mini-row">${avatarHTML(x,40)}
+        <div style="flex:1"><div class="mt">${esc(x.name)} ${x.officer?`<span class="badge-off">${ico('star',11)} ${esc(x.officer)}</span>`:''}</div>
+          <div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div>
+        <span class="ms">${(schoolByName(x.school)||{}).short||''} ${x.gisu}기</span></div>`).join('')||'<div class="empty">아직 회원이 없습니다.</div>'}</div>`;
+  }else if(crTab==='ledger'){
+    const inc=r.ledger.filter(l=>l.type==='in').reduce((a,b)=>a+b.amount,0);
+    const out=r.ledger.filter(l=>l.type==='out').reduce((a,b)=>a+b.amount,0);
+    const bal=inc-out;
+    body=`
+      <div class="kpis" style="margin-top:0">
+        <div class="kpi card"><div class="k-ic">${ico('trend',22)}</div><div class="k-n" style="color:var(--green)">+${won(inc)}</div><div class="k-l">총 수입</div></div>
+        <div class="kpi card"><div class="k-ic">${ico('tag',22)}</div><div class="k-n" style="color:#C0392B">-${won(out)}</div><div class="k-l">총 지출</div></div>
+        <div class="kpi card"><div class="k-ic">${ico('award',22)}</div><div class="k-n">${won(bal)}</div><div class="k-l">현재 잔액</div></div></div>
+      ${joined?`<button class="btn sm" id="crAddLedger" style="margin:14px 0">${ico('plus',14)} 내역 추가</button>`:''}
+      <div class="card" style="padding:6px 20px">
+        ${r.ledger.map(l=>`<div class="mini-row">
+          <span class="date-chip" style="${l.type==='out'?'background:#FBEAEA;color:#C0392B':'background:var(--green-s);color:#1E9E54'}">${l.type==='in'?'수입':'지출'}</span>
+          <div style="flex:1"><div class="mt">${esc(l.memo)}</div><div class="ms">${l.date} · ${esc(l.by)}</div></div>
+          <b style="font-size:14.5px;color:${l.type==='out'?'#C0392B':'var(--green)'}">${l.type==='out'?'-':'+'}${won(l.amount)}</b></div>`).join('')||'<div class="empty">아직 회계 내역이 없습니다.<br>회비·지출 내역을 기록해 투명하게 운영해 보세요.</div>'}</div>`;
+  }
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:14px">${clubIcHTML(c)}
         <div><div class="eyebrow">Club Room</div><h1>${esc(name)}</h1><p>${clubScopeLabel(c)} · ${esc(c.cat)} · ${esc(c.desc)}</p></div></div>
-      <div style="display:flex;gap:8px"><button class="btn gray sm" id="crBack">← 동아리 목록</button>${joined?`<button class="btn sm" id="crNew">${ico('plus',14)} 글쓰기</button>`:''}</div></div>
-    ${joined?'':`<div class="card" style="padding:18px 20px;margin-bottom:14px;color:var(--sub);font-size:13.5px">${ico('lock',14)} 동아리에 가입하면 글을 쓸 수 있습니다.</div>`}
-    <div>${posts.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
-      <div style="flex:1"><div class="who">${esc(p.by)}</div><div class="meta">${p.date}</div></div></div>
-      <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 게시글이 없습니다. 첫 글을 남겨보세요!</div>'}</div>`;
+      <button class="btn gray sm" id="crBack">← 동아리 목록</button></div>
+    ${joined?'':`<div class="card" style="padding:16px 20px;margin-bottom:14px;color:var(--sub);font-size:13.5px">${ico('lock',14)} 가입하면 공지·게시판·사진첩·회계에 참여할 수 있습니다.</div>`}
+    <div class="chip-row">${T.map(t=>`<button class="chip ${crTab===t[0]?'on':''}" data-t="${t[0]}">${ico(t[2],13)} ${t[1]}</button>`).join('')}</div>
+    <div id="crBody">${body}</div>`;
   m.querySelector('#crBack').onclick=()=>go('club');
-  const nb=m.querySelector('#crNew');
-  if(nb)nb.onclick=()=>openModal(name+' 글쓰기',
+  m.querySelectorAll('.chip-row .chip').forEach(b=>b.onclick=()=>viewClubRoom(m,name,b.dataset.t));
+  const bind=(id,fn)=>{const e=m.querySelector(id);if(e)e.onclick=fn;};
+  bind('#crAddNotice',()=>openModal(name+' 공지 올리기',
+    `<div class="fld"><label>제목</label><input id="cn-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="cn-b" placeholder="동아리 회원들에게 알릴 내용"></textarea></div>`,
+    ()=>{const t=val('cn-t');if(!t){toast('제목을 입력하세요');return false;}
+      r.notices.unshift({by:S.user.name,date:today(),title:t,body:val('cn-b')});save();viewClubRoom(m,name);toast('공지가 등록되었습니다');}));
+  bind('#crAddPost',()=>openModal(name+' 글쓰기',
     `<div class="fld"><label>제목</label><input id="cr-t" placeholder="제목"></div><div class="fld"><label>내용</label><textarea id="cr-b" placeholder="동아리 원우들과 나눌 이야기"></textarea></div>`,
     ()=>{const t=val('cr-t');if(!t){toast('제목을 입력하세요');return false;}
-      if(!S.clubPosts[name])S.clubPosts[name]=[];
-      S.clubPosts[name].unshift({id:'cp'+Date.now(),by:S.user.name,date:today(),title:t,body:val('cr-b')});
-      save();viewClubRoom(m,name);toast('글이 등록되었습니다');});
+      r.posts.unshift({by:S.user.name,date:today(),title:t,body:val('cr-b')});save();viewClubRoom(m,name);toast('글이 등록되었습니다');}));
+  const pf=m.querySelector('#crPhotoFile');
+  bind('#crAddPhoto',()=>{if(pf){pf.value='';pf.click();}});
+  if(pf)pf.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();
+    rd.onload=()=>{r.photos.unshift({src:rd.result,by:S.user.name,date:today()});save();viewClubRoom(m,name);toast('사진이 올라갔습니다 📷');};rd.readAsDataURL(f);});
+  bind('#crAddLedger',()=>openModal(name+' 회계 내역 추가',
+    `<div class="fld"><label>구분</label><select id="cl-type"><option value="in">수입 (회비·후원 등)</option><option value="out">지출 (모임비·경비 등)</option></select></div>
+     <div class="fld"><label>금액 (원) <span class="req">*</span></label><input id="cl-amt" type="number" placeholder="예: 50000"></div>
+     <div class="fld"><label>내용 <span class="req">*</span></label><input id="cl-memo" placeholder="예: 6월 회비 입금 / 라운딩 그린피"></div>`,
+    ()=>{const a=parseInt(document.getElementById('cl-amt').value);const memo=val('cl-memo');
+      if(!a||a<=0){toast('금액을 입력하세요');return false;}
+      if(!memo){toast('내용을 입력하세요');return false;}
+      r.ledger.unshift({type:document.getElementById('cl-type').value,amount:a,memo:memo,by:S.user.name,date:today()});
+      save();viewClubRoom(m,name,'ledger');toast('회계 내역이 기록되었습니다 💰');}));
 }
 function newClub(){
   let iconData='';
