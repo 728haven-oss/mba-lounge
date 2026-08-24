@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>MBA Lounge — 웹앱</title>
 <meta name="theme-color" content="#6C5CE7" />
 <link rel="manifest" href="manifest.json" />
@@ -69,6 +69,12 @@
   .login-go:disabled{opacity:.5;cursor:not-allowed;transform:none}
   .login-note{text-align:center;color:var(--sub);font-size:12px;margin-top:16px;line-height:1.7}
   .login-note code{background:var(--bg);padding:2px 6px;border-radius:5px;color:var(--pri-dark);font-weight:700}
+  .login-schools{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:20px auto 4px;max-width:660px}
+  .sch-chip{display:flex;align-items:center;gap:7px;border:1.5px solid var(--line);background:#fff;border-radius:22px;
+    padding:6px 14px 6px 8px;font-size:13px;font-weight:700;color:var(--ink);cursor:pointer;transition:.15s}
+  .sch-chip:hover{border-color:var(--pri);transform:translateY(-1px)}
+  .sch-chip.sel{border-color:var(--pri);background:var(--soft);color:var(--pri)}
+  .login-hint{text-align:center;color:var(--sub);font-size:12px;margin-top:2px}
 
   /* ---------- App shell ---------- */
   .topbar{position:sticky;top:0;z-index:40;height:64px;background:#fff;border-bottom:1px solid var(--line);
@@ -242,6 +248,31 @@
 
   #toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:13px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:120;opacity:0;transition:.25s;pointer-events:none}
   #toast.show{opacity:1}
+
+  /* ===================== Mobile (phone) ===================== */
+  @media(max-width:860px){
+    .topbar{position:sticky;top:0;height:auto;min-height:56px;
+      padding-top:calc(env(safe-area-inset-top,0px) + 6px);padding-bottom:6px;gap:10px;z-index:70}
+    .topbar .brand{font-size:17px}
+    .school-chip{font-size:12.5px;padding:5px 12px 5px 7px}
+    #login{padding-top:calc(24px + env(safe-area-inset-top,0px));padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+    .shell{display:block;max-width:none}
+    /* 하단 고정 탭바 (요즘 모바일 앱 스타일) */
+    .sidebar{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;height:auto;
+      display:flex;flex-direction:row;gap:2px;justify-content:flex-start;align-items:stretch;
+      overflow-x:auto;-webkit-overflow-scrolling:touch;
+      padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));
+      background:#fff;border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(20,25,40,.09);z-index:65}
+    .sidebar::-webkit-scrollbar{display:none}
+    #navMain,#navMine{display:contents}
+    .nav-item{flex:0 0 auto;width:auto;flex-direction:column;gap:3px;min-width:64px;padding:7px 6px;border-radius:12px;
+      font-size:11px;font-weight:700;white-space:nowrap;text-align:center;justify-content:center;color:#565b6b}
+    .nav-item .ni{font-size:22px;width:auto}
+    .nav-item:hover{background:none;color:#565b6b}
+    .nav-item.active{background:var(--soft);color:var(--pri);box-shadow:none}
+    .main{padding:18px 16px calc(94px + env(safe-area-inset-bottom,0px));min-height:auto}
+    #toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  }
 </style>
 </head>
 <body>
@@ -250,28 +281,29 @@
 <div id="login">
   <div class="login-card">
     <div class="login-brand"><span id="login-mark"></span>MBA <b>Lounge</b></div>
-    <div class="login-sub">라운지, 만남이 쉬워지는 공간 · 데스크톱 웹앱</div>
+    <div class="login-sub" id="login-sub">라운지, 만남이 쉬워지는 공간 · 데스크톱 웹앱</div>
+
+    <div class="login-schools" id="loginSchools"></div>
+    <div class="login-hint">학교를 선택하면 화면이 그 학교 테마로 바뀝니다</div>
 
     <div class="tabs"><button id="tab-login" class="on">로그인</button><button id="tab-signup">회원가입</button></div>
 
     <!-- LOGIN PANE -->
     <div id="pane-login">
       <div class="fields">
-        <div class="fld full"><label>학번 (아이디) <span class="req">*</span></label><input id="lg-sid" placeholder="예: 2021-1201" /></div>
-        <div class="fld full"><label>비밀번호 <span class="req">*</span></label><input id="lg-pw" type="password" value="1234" placeholder="비밀번호" /></div>
+        <div class="fld full"><label>학번 (아이디) <span class="req">*</span></label><input id="lg-sid" placeholder="예: 2024-1234 (학교 발급 학번)" /></div>
+        <div class="fld full"><label>비밀번호 <span class="req">*</span></label><input id="lg-pw" type="password" placeholder="비밀번호" /></div>
       </div>
       <label class="remember"><input type="checkbox" id="lg-remember" checked />자동 로그인 (다음에 자동으로 입장)</label>
       <button class="login-go" id="loginBtn">로그인</button>
-      <div class="login-note">데모 계정 — 학번 <code>2021-1201</code> / 비번 <code>1234</code> (윤수정 · 회장)<br>학교 관리자 <code>admin-yonsei</code> · 테스트 <code>test-yonsei</code> / 비번 <code>1234</code></div>
+      <div class="login-note">학교에서 발급받은 학번과 비밀번호로 로그인하세요.<br>계정이 없다면 <b>회원가입</b> 후 관리자 승인을 받으면 이용할 수 있어요.</div>
     </div>
 
     <!-- SIGNUP PANE -->
     <div id="pane-signup" class="hidden">
-      <div class="login-step"><span class="st-n">1</span>학교를 선택하세요</div>
-      <div class="school-grid" id="schoolGrid"></div>
-      <div class="login-step"><span class="st-n">2</span>프로필 정보를 입력하세요</div>
+      <div class="login-step"><span class="st-n">1</span>프로필 정보를 입력하세요 <span style="font-weight:600;color:var(--sub);font-size:12px">· 위에서 학교를 먼저 선택하세요</span></div>
       <div class="fields">
-        <div class="fld"><label>학번 (아이디) <span class="req">*</span></label><input id="su-sid" placeholder="예: 2024-12345" /></div>
+        <div class="fld"><label>학번 (아이디) <span class="req">*</span></label><input id="su-sid" placeholder="예: 2024-1234 (학교 발급 학번)" /></div>
         <div class="fld"><label>비밀번호 <span class="req">*</span></label><input id="su-pw" value="1234" placeholder="기본 1234" /></div>
         <div class="fld"><label>이름 <span class="req">*</span></label><input id="su-name" placeholder="예: 김재성" /></div>
         <div class="fld"><label>기수 <span class="req">*</span></label><input id="su-gisu" placeholder="예: 12" /></div>
@@ -438,6 +470,27 @@ async function fbGet(sid){const d=await DB.collection(MEMBERS).doc(sid).get();re
 async function fbCreatePending(acc){await DB.collection(MEMBERS).doc(acc.sid).set(Object.assign({},acc,{status:'pending',createdAt:Date.now()}));}
 async function fbListByStatus(st){const q=await DB.collection(MEMBERS).where('status','==',st).get();return q.docs.map(d=>d.data());}
 async function fbSetStatus(sid,st){await DB.collection(MEMBERS).doc(sid).update({status:st});}
+/* ---- 오류 로그 (Firestore errorLogs 컬렉션에 기록) ---- */
+const ERRLOGS='errorLogs';
+async function logError(kind,message,detail){
+  if(!FB_ON||!DB)return;
+  try{
+    await DB.collection(ERRLOGS).add({
+      kind:kind||'error',
+      message:(''+(message||'')).slice(0,1000),
+      detail:(''+(detail||'')).slice(0,3000),
+      sid:(S.user&&S.user.sid)||S.session||'anon',
+      name:(S.user&&S.user.name)||'',
+      school:(S.user&&S.user.school)||'',
+      url:location.href,
+      ua:navigator.userAgent,
+      ts:Date.now(),
+      at:new Date().toISOString()
+    });
+  }catch(e){/* 로깅 실패는 무시 */}
+}
+async function fbRecentLogs(n){const q=await DB.collection(ERRLOGS).orderBy('ts','desc').limit(n||50).get();return q.docs.map(d=>({id:d.id,...d.data()}));}
+async function fbClearLogs(){const q=await DB.collection(ERRLOGS).limit(400).get();const b=DB.batch();q.docs.forEach(d=>b.delete(d.ref));await b.commit();return q.size;}
 
 /* ===================== THEME ===================== */
 function applyTheme(s){const r=document.documentElement.style;
@@ -447,13 +500,14 @@ function applyTheme(s){const r=document.documentElement.style;
 let pickedSchool=null;
 function buildLogin(){
   document.getElementById('login-mark').innerHTML=schoolMark(schools[0],32);
-  const grid=document.getElementById('schoolGrid');
-  grid.innerHTML=schools.map(s=>`<button class="school-btn" data-id="${s.id}">${schoolMark(s,32)}<span class="snm">${s.short}</span></button>`).join('');
-  grid.querySelectorAll('.school-btn').forEach(b=>b.addEventListener('click',()=>{
+  const wrap=document.getElementById('loginSchools');
+  wrap.innerHTML=schools.map(s=>`<button class="sch-chip" data-id="${s.id}">${schoolMark(s,22)}<span>${s.short}</span></button>`).join('');
+  wrap.querySelectorAll('.sch-chip').forEach(b=>b.addEventListener('click',()=>{
     pickedSchool=schools.find(s=>s.id===b.dataset.id);
-    grid.querySelectorAll('.school-btn').forEach(x=>x.classList.remove('sel'));
+    wrap.querySelectorAll('.sch-chip').forEach(x=>x.classList.remove('sel'));
     b.classList.add('sel');applyTheme(pickedSchool);
     document.getElementById('login-mark').innerHTML=schoolMark(pickedSchool,32);
+    document.getElementById('login-sub').textContent=pickedSchool.name+' MBA · '+(slogans[pickedSchool.name]||'라운지, 만남이 쉬워지는 공간');
   }));
   document.getElementById('tab-login').addEventListener('click',()=>switchTab('login'));
   document.getElementById('tab-signup').addEventListener('click',()=>switchTab('signup'));
@@ -524,7 +578,7 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
-  const NAVM=[['home','홈','home'],['board','비즈니스 게시판','briefcase'],['meet','만남 · 미팅','users'],['dir','원우수첩','idcard'],['club','동아리','ticket'],['notice','공지','bell'],['officer','임원 공지','award'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin']];
+  const NAVM=[['home','홈','home'],['board','비즈니스 게시판','briefcase'],['meet','만남 · 미팅','users'],['dir','원우수첩','idcard'],['club','동아리','ticket'],['notice','공지','bell'],['officer','임원 공지','award'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
   document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item${x[3]==='admin'?' nav-admin-only':''}" data-view="${x[0]}"><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
   document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>`;
   document.querySelectorAll('.nav-admin-only').forEach(el=>{el.style.display=(u.role==='admin')?'':'none';});
@@ -545,7 +599,7 @@ let currentView='home';
 function go(v){currentView=v;
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
   const m=document.getElementById('main');window.scrollTo(0,0);
-  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,signups:viewSignups,officeradmin:viewOfficerAdmin,me:viewMe}[v]||viewHome)(m);
+  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,signups:viewSignups,officeradmin:viewOfficerAdmin,logs:viewLogs,me:viewMe}[v]||viewHome)(m);
 }
 
 /* ---------- HOME ---------- */
@@ -752,6 +806,28 @@ function viewOfficer(m){
       S.officerPosts.unshift({id:'of'+Date.now(),by:S.user.name,role:S.user.officer||'관리자',date:today(),title:t,body:val('of-b')});
       save();go('officer');toast('임원 공지가 등록되었습니다');}));
 }
+async function viewLogs(m){
+  if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
+  m.innerHTML=`<div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
+      <div><div class="eyebrow">Admin</div><h1>오류 로그</h1><p>앱에서 발생한 오류가 최신순으로 기록됩니다. (최근 50건)</p></div>
+      <div><button class="btn gray sm" id="logReload">${ico('search',13)} 새로고침</button> <button class="btn gray sm" id="logClear">전체 삭제</button></div></div>
+    <div id="logWrap" class="card" style="padding:20px"><div class="ms" style="color:var(--sub)">불러오는 중…</div></div>`;
+  const w=document.getElementById('logWrap');
+  document.getElementById('logReload').onclick=()=>viewLogs(m);
+  document.getElementById('logClear').onclick=async()=>{if(!confirm('오류 로그를 모두 삭제할까요?'))return;try{await fbClearLogs();toast('로그를 삭제했습니다');viewLogs(m);}catch(e){toast('삭제 중 오류가 발생했습니다');}};
+  if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">백엔드(Firebase)가 연결되지 않아 로그를 기록/조회할 수 없습니다.</div>';return;}
+  let logs=[];
+  try{logs=await fbRecentLogs(50);}catch(e){w.innerHTML='<div class="ms" style="color:var(--sub)">로그를 불러오지 못했습니다.</div>';return;}
+  if(!logs.length){w.innerHTML='<div class="ms" style="color:var(--sub)">기록된 오류가 없습니다. 👍</div>';return;}
+  w.innerHTML=logs.map(l=>{const d=new Date(l.ts||Date.parse(l.at)||Date.now());const ds=d.toLocaleString('ko-KR');
+    return `<div style="border-bottom:1px solid var(--line);padding:12px 0">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span class="badge-off" style="background:#FEECEC;color:#D14343">${esc(l.kind||'error')}</span>
+        <span style="font-weight:700;font-size:13.5px">${esc(l.message||'(메시지 없음)')}</span></div>
+      <div class="ms" style="color:var(--sub);margin-top:4px">${ds} · ${esc(l.name||'')} ${esc(l.sid||'')} · ${esc(l.school||'')}</div>
+      ${l.detail?`<pre style="white-space:pre-wrap;word-break:break-all;background:#F7F8FB;border-radius:8px;padding:8px 10px;margin-top:6px;font-size:11.5px;color:#4a4f5b;max-height:120px;overflow:auto">${esc(l.detail)}</pre>`:''}
+      <div class="ms" style="color:#b8bcc6;font-size:11px;margin-top:2px">${esc(l.ua||'')}</div></div>`;}).join('');
+}
 async function viewSignups(m){
   if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
   m.innerHTML=`<div class="page-head"><div class="eyebrow">Admin</div><h1>가입 승인</h1><p>새 가입 신청을 검토하고 <b>승인</b>해야 로그인할 수 있습니다.</p></div>
@@ -911,6 +987,9 @@ buildLogin();
 if(S.session && S.remember && acctBySid(S.session)){enterApp();}
 /* PWA: 서비스워커 등록 (설치·오프라인 지원) */
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+/* 전역 오류 자동 기록 → Firestore errorLogs */
+window.addEventListener('error',function(e){try{logError('js',e.message,(e.filename||'')+':'+(e.lineno||'')+':'+(e.colno||'')+'\n'+((e.error&&e.error.stack)||''));}catch(_){}});
+window.addEventListener('unhandledrejection',function(e){try{var r=e.reason;logError('promise',(r&&r.message)||(''+r),(r&&r.stack)||'');}catch(_){}});
 </script>
 </body>
 </html>
