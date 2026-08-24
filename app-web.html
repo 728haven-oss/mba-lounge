@@ -658,7 +658,7 @@ function openMenuDrawer(){
 }
 function closeMenuDrawer(){['drawerBg','drawer'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});}
 let currentView='home';
-const BOARD_FAMILY=['board','meet','notice','officer'];
+const BOARD_FAMILY=['board','meet','notice'];
 function go(v){currentView=v;
   const isMob=window.matchMedia('(max-width:860px)').matches;
   document.querySelectorAll('.nav-item').forEach(b=>{
@@ -671,7 +671,7 @@ function go(v){currentView=v;
   /* 모바일: 게시판 계열 화면 상단에 서브탭(게시판·만남·공지·임원) 노출 */
   if(BOARD_FAMILY.includes(v)){
     const bar=document.createElement('div');bar.className='mob-subtabs';
-    const names={board:'BZ 게시판',meet:'만남 · 미팅',notice:'공지',officer:'임원방'};
+    const names={board:'BZ 게시판',meet:'만남 · 미팅',notice:'공지'};
     bar.innerHTML=BOARD_FAMILY.map(x=>`<button class="chip${x===v?' on':''}" data-view="${x}">${names[x]}</button>`).join('');
     bar.querySelectorAll('.chip').forEach(c=>c.onclick=()=>go(c.dataset.view));
     m.prepend(bar);
