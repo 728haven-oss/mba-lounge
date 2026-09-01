@@ -203,20 +203,16 @@ jobs:
           # 알파 채널 제거 + 1024x1024 변환 (App Store 필수 조건)
           sips -z 1024 1024 /tmp/icon.png --out "$ICONSET/AppIcon1024.png" >/dev/null
 
-          # 알파 채널 제거 (App Store 아이콘은 투명도 불가)
-          python3 -m pip install --quiet --disable-pip-version-check pillow || true
-          python3 - <<'PY'
-          from PIL import Image
-          p = "Resources/Assets.xcassets/AppIcon.appiconset/AppIcon1024.png"
-          im = Image.open(p)
-          if im.mode != "RGB":
-              bg = Image.new("RGB", im.size, (255, 255, 255))
-              rgba = im.convert("RGBA")
-              bg.paste(rgba, mask=rgba.split()[-1])
-              im = bg
-          im.save(p, "PNG")
-          print("icon ok", im.size, im.mode)
-          PY
+          # 알파 채널이 있으면 제거 (App Store 아이콘은 투명도 불가)
+          # 원본은 알파가 없지만, 만약을 대비해 JPEG 왕복으로 평탄화
+          HAS_ALPHA=$(sips -g hasAlpha "$ICONSET/AppIcon1024.png" | awk '/hasAlpha/{print $2}')
+          echo "hasAlpha=$HAS_ALPHA"
+          if [ "$HAS_ALPHA" = "yes" ]; then
+            sips -s format jpeg -s formatOptions best "$ICONSET/AppIcon1024.png" --out /tmp/flat.jpg >/dev/null
+            sips -s format png /tmp/flat.jpg --out "$ICONSET/AppIcon1024.png" >/dev/null
+            echo "알파 제거 완료"
+          fi
+          sips -g pixelWidth -g pixelHeight -g hasAlpha "$ICONSET/AppIcon1024.png"
 
           cat > "$ICONSET/Contents.json" <<'JSON'
           {
