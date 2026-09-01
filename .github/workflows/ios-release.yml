@@ -234,7 +234,25 @@ jobs:
       - name: XcodeGen 설치 및 프로젝트 생성
         run: |
           set -e
-          brew install xcodegen
+          export HOMEBREW_NO_REQUIRE_TAP_TRUST=1
+          export HOMEBREW_NO_AUTO_UPDATE=1
+          export HOMEBREW_NO_INSTALL_CLEANUP=1
+
+          if brew install xcodegen; then
+            echo "brew 설치 성공"
+          else
+            echo "brew 실패 → 공식 릴리스 바이너리로 설치"
+            curl -fsSL -o /tmp/xcodegen.zip \
+              https://github.com/yonaskolb/XcodeGen/releases/latest/download/xcodegen.zip
+            rm -rf /tmp/xg && mkdir -p /tmp/xg
+            unzip -q -o /tmp/xcodegen.zip -d /tmp/xg
+            BIN=$(find /tmp/xg -type f -name xcodegen -perm -u+x | head -n 1)
+            chmod +x "$BIN"
+            export PATH="$(dirname "$BIN"):$PATH"
+            echo "$(dirname "$BIN")" >> $GITHUB_PATH
+          fi
+
+          xcodegen --version
           cd build-ios
           xcodegen generate
           ls -la MBALounge.xcodeproj
