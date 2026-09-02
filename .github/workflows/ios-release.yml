@@ -141,6 +141,13 @@ jobs:
             <key>UISupportedInterfaceOrientations</key>
             <array>
               <string>UIInterfaceOrientationPortrait</string>
+              <string>UIInterfaceOrientationPortraitUpsideDown</string>
+              <string>UIInterfaceOrientationLandscapeLeft</string>
+              <string>UIInterfaceOrientationLandscapeRight</string>
+            </array>
+            <key>UISupportedInterfaceOrientations~iphone</key>
+            <array>
+              <string>UIInterfaceOrientationPortrait</string>
             </array>
             <key>UISupportedInterfaceOrientations~ipad</key>
             <array>
@@ -149,7 +156,6 @@ jobs:
               <string>UIInterfaceOrientationLandscapeLeft</string>
               <string>UIInterfaceOrientationLandscapeRight</string>
             </array>
-            <key>UIRequiresFullScreen</key><false/>
             <key>NSCameraUsageDescription</key>
             <string>프로필 사진 촬영을 위해 카메라를 사용합니다.</string>
             <key>NSPhotoLibraryUsageDescription</key>
@@ -180,10 +186,9 @@ jobs:
               sources:
                 - Sources
                 - Resources
-              info:
-                path: Info.plist
               settings:
                 base:
+                  INFOPLIST_FILE: Info.plist
                   PRODUCT_BUNDLE_IDENTIFIER: "${BUNDLE_ID}"
                   PRODUCT_NAME: "MBALounge"
                   INFOPLIST_KEY_CFBundleDisplayName: "MBA Lounge"
