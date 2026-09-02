@@ -494,6 +494,36 @@ function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
 function schoolByName(n){return schools.find(s=>s.name===n);}
 function acctBySid(sid){return S.accounts.find(a=>a.sid===sid);}
 
+/* ===================== 신고 / 차단 (Apple Guideline 1.2) ===================== */
+function blockedList(){if(!S.blocked)S.blocked=[];return S.blocked;}
+function isBlocked(w){return !!w&&blockedList().indexOf(w)>=0;}
+function blockUser(w){if(!w||(S.user&&w===S.user.name))return false;if(!isBlocked(w))blockedList().push(w);save();return true;}
+function unblockUser(w){const a=blockedList(),i=a.indexOf(w);if(i>=0)a.splice(i,1);save();}
+const REPORT_REASONS=['스팸 또는 광고','괴롭힘 또는 혐오 발언','음란하거나 부적절한 콘텐츠','허위 정보 또는 사기','저작권 침해','기타'];
+function reportContent(kind,who,text,after){
+  openModal('신고하기',
+    '<p style="font-size:13.5px;color:var(--sub);margin:0 0 14px;line-height:1.6">'+esc(who)+'님의 '+esc(kind)+'을(를) 신고합니다.<br>접수된 신고는 운영진이 <b>24시간 이내</b>에 검토하며, 정책 위반이 확인되면 해당 콘텐츠를 삭제하고 작성자의 이용을 제한합니다.</p>'+
+    '<div class="fld"><label>신고 사유 <span class="req">*</span></label><select id="rp-r" style="width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px">'+REPORT_REASONS.map(function(r){return '<option>'+r+'</option>';}).join('')+'</select></div>'+
+    '<div class="fld"><label>상세 내용 (선택)</label><textarea id="rp-d" placeholder="어떤 점이 문제인지 알려주세요"></textarea></div>'+
+    '<label style="display:flex;gap:9px;align-items:center;font-size:13.5px;margin-top:6px;cursor:pointer"><input type="checkbox" id="rp-b" checked> 이 사용자의 글을 앞으로 보지 않기 (차단)</label>',
+    function(){
+      if(!S.reports)S.reports=[];
+      const rec={id:'r'+Date.now(),kind:kind,who:who,text:(text||'').slice(0,300),reason:document.getElementById('rp-r').value,detail:val('rp-d'),by:(S.user&&S.user.sid)||'',byName:(S.user&&S.user.name)||'',at:new Date().toISOString(),status:'received'};
+      S.reports.push(rec);
+      const blk=document.getElementById('rp-b').checked;
+      if(blk)blockUser(who);
+      save();fbReport(rec);
+      toast(blk?'신고 접수 후 차단했습니다':'신고가 접수되었습니다 (24시간 이내 검토)');
+      if(after)after();
+    });
+}
+function confirmBlock(who,after){
+  if(!who||(S.user&&who===S.user.name)){toast('본인은 차단할 수 없습니다');return;}
+  if(confirm(who+'님을 차단할까요?\n차단하면 이 사용자가 올린 게시글·댓글·모임·족보 기록이 보이지 않습니다.\n(내 프로필 > 차단 관리에서 해제할 수 있습니다)')){
+    blockUser(who);toast(who+'님을 차단했습니다');if(after)after();
+  }
+}
+
 /* ===================== FIREBASE (계정·가입승인 백엔드) ===================== */
 /* Firebase 콘솔에서 발급받은 값을 아래에 채우면 백엔드가 켜집니다.
    비워두면 기존 로컬 데모 모드로 동작(라이브 앱 안전). */
@@ -505,6 +535,8 @@ async function fbGet(sid){const d=await DB.collection(MEMBERS).doc(sid).get();re
 async function fbCreatePending(acc){await DB.collection(MEMBERS).doc(acc.sid).set(Object.assign({},acc,{status:'pending',createdAt:Date.now()}));}
 async function fbListByStatus(st){const q=await DB.collection(MEMBERS).where('status','==',st).get();return q.docs.map(d=>d.data());}
 async function fbSetStatus(sid,st){await DB.collection(MEMBERS).doc(sid).update({status:st});}
+async function fbDeleteMember(sid){await DB.collection(MEMBERS).doc(sid).delete();}
+async function fbReport(r){if(!FB_ON||!DB)return;try{await DB.collection('reports').add(r);}catch(e){}}
 /* ---- 오류 로그 (Firestore errorLogs 컬렉션에 기록) ---- */
 const ERRLOGS='errorLogs';
 async function logError(kind,message,detail){
@@ -715,7 +747,7 @@ let boardCat='all';
 function catName(c){return {deal:'사업제휴',invest:'투자',hire:'채용',info:'정보공유',jokbo:'족보'}[c]||c;}
 function viewBoard(m){
   const cats=[['all','전체'],['deal','사업제휴'],['invest','투자'],['hire','채용'],['info','정보공유']];
-  const list=S.posts.filter(p=>boardCat==='all'||p.cat===boardCat);
+  const list=S.posts.filter(p=>(boardCat==='all'||p.cat===boardCat)&&!isBlocked(p.who));
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Business</div><h1>BZ 게시판</h1><p>원우들과 사업 제휴·투자·채용·정보를 나누세요.</p></div>
@@ -765,12 +797,15 @@ function viewJokbo(m,id){
         <div>${starHTML(avg.v)} <b style="font-size:15px">${avg.n?avg.v.toFixed(1):'-'}</b> <span style="font-size:12px;color:var(--sub)">${avg.n}명 참여</span></div></div>
       <div style="margin-left:auto;text-align:right"><div style="font-size:12px;font-weight:800;color:var(--sub)">내 별점 ${myR?'('+myR+'점)':'— 눌러서 남기기'}</div>
         <div id="myStars">${[1,2,3,4,5].map(i=>`<button data-v="${i}" style="background:none;border:none;font-size:22px;padding:0 2px;cursor:pointer;color:${i<=myR?'#F5B301':'#D9DCE5'}">★</button>`).join('')}</div></div></div>
-    <div>${j.entries.map((e,i)=>`<div class="post-card card" style="position:relative">
+    <div>${j.entries.map((e,i)=>isBlocked(e.by)?'':`<div class="post-card card" style="position:relative">
       <span style="position:absolute;top:16px;right:18px;font-size:11px;font-weight:800;color:var(--pri);background:var(--soft);border-radius:8px;padding:3px 9px">#${i+1}</span>
       <div class="post-top">${avatarHTML({name:e.by},40)}
       <div style="flex:1"><div class="who">${esc(e.by)}</div><div class="meta">${e.date}</div></div></div>
-      <h3>${esc(e.title)}</h3><div class="body">${esc(e.body)}</div></div>`).join('')||'<div class="empty">아직 기록이 없습니다. 첫 기록의 주인공이 되어보세요! ✍️</div>'}</div>`;
+      <h3>${esc(e.title)}</h3><div class="body">${esc(e.body)}</div>
+      ${e.by===S.user.name?'':`<div class="post-actions"><button class="cbtn rep-j" data-i="${i}" style="margin-left:auto">신고</button><button class="cbtn blk-j" data-w="${esc(e.by)}">차단</button></div>`}</div>`).join('')||'<div class="empty">아직 기록이 없습니다. 첫 기록의 주인공이 되어보세요!</div>'}</div>`;
   m.querySelector('#jbBack').onclick=()=>go('jokbo');
+  m.querySelectorAll('.rep-j').forEach(b=>b.onclick=()=>{const e=j.entries[+b.dataset.i];reportContent('족보 기록',e.by,e.title+' / '+e.body,()=>viewJokbo(m,id));});
+  m.querySelectorAll('.blk-j').forEach(b=>b.onclick=()=>confirmBlock(b.dataset.w,()=>viewJokbo(m,id)));
   m.querySelectorAll('#myStars button').forEach(b=>b.onclick=()=>{j.ratings[S.user.sid]=+b.dataset.v;save();viewJokbo(m,id);toast('만족도 '+b.dataset.v+'점을 남겼습니다 ⭐');});
   m.querySelector('#jbAdd').onclick=()=>openModal(j.course+' — 기록 이어서 적기',
     `<div class="fld"><label>제목 <span class="req">*</span></label><input id="je-t" placeholder="예: 중간고사 범위 정리"></div>
@@ -787,15 +822,20 @@ function postHTML(p){
     <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div>
     <div class="post-actions">
       <button class="like ${p.liked?'on':''}" data-id="${p.id}">${ico('heart',15)} <span>${p.likes}</span></button>
-      <button class="cbtn" data-id="${p.id}">${ico('comment',15)} 댓글 ${p.comments.length}</button></div>
+      <button class="cbtn" data-id="${p.id}">${ico('comment',15)} 댓글 ${p.comments.filter(c=>!isBlocked(c.by)).length}</button>
+      <button class="cbtn rep-p" data-id="${p.id}" style="margin-left:auto">신고</button>
+      ${p.who===S.user.name?'':`<button class="cbtn blk-p" data-w="${esc(p.who)}">차단</button>`}</div>
     <div class="comments">
-      ${p.comments.map(c=>`<div class="cmt"><b>${esc(c.by)}</b><span>${esc(c.txt)}</span></div>`).join('')}
+      ${p.comments.map((c,ci)=>isBlocked(c.by)?'':`<div class="cmt"><b>${esc(c.by)}</b><span>${esc(c.txt)}</span>${c.by===S.user.name?'':`<button class="cbtn rep-c" data-id="${p.id}" data-ci="${ci}" style="margin-left:8px;font-size:11px;padding:2px 8px">신고</button>`}</div>`).join('')}
       <div class="cmt-form"><input placeholder="댓글 달기..." data-id="${p.id}"><button class="btn sm cadd" data-id="${p.id}">등록</button></div>
     </div></div>`;
 }
 function bindPost(m){
   m.querySelectorAll('.like').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);p.liked=!p.liked;p.likes+=p.liked?1:-1;save();b.classList.toggle('on',p.liked);b.querySelector('span').textContent=p.likes;}));
   m.querySelectorAll('.cadd').forEach(b=>b.addEventListener('click',()=>{const inp=m.querySelector('.cmt-form input[data-id="'+b.dataset.id+'"]');const t=inp.value.trim();if(!t)return;const p=S.posts.find(x=>x.id===b.dataset.id);p.comments.push({by:S.user.name,txt:t});save();viewBoard(m);}));
+  m.querySelectorAll('.rep-p').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);reportContent('게시글',p.who,p.title+' / '+p.body,()=>viewBoard(m));}));
+  m.querySelectorAll('.blk-p').forEach(b=>b.addEventListener('click',()=>confirmBlock(b.dataset.w,()=>viewBoard(m))));
+  m.querySelectorAll('.rep-c').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);const c=p.comments[+b.dataset.ci];reportContent('댓글',c.by,c.txt,()=>viewBoard(m));}));
 }
 function newPost(){
   const fixed=(boardCat!=='all');/* 선택된 카테고리 탭에서 글쓰기 → 그 카테고리로 바로 작성 */
@@ -817,10 +857,12 @@ function viewMeet(m){
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Meet</div><h1>만남 · 미팅</h1><p>원우들과의 모임과 네트워킹 행사에 참여하세요.</p></div>
       <button class="btn" id="newMeet">${ico('plus',15)} 모임 만들기</button></div>
-    <div class="meet-grid">${S.meets.map(meetHTML).join('')}</div>`;
+    <div class="meet-grid">${S.meets.filter(x=>!isBlocked(x.by)).map(meetHTML).join('')}</div>`;
   m.querySelector('#newMeet').addEventListener('click',newMeet);
   m.querySelectorAll('.attend').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);
     x.attend=!x.attend;x.going+=x.attend?1:-1;save();viewMeet(m);toast(x.attend?'참여 신청 완료':'참여를 취소했습니다');}));
+  m.querySelectorAll('.rep-m').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);reportContent('모임 게시물',x.by,x.title+' / '+x.desc,()=>viewMeet(m));}));
+  m.querySelectorAll('.blk-m').forEach(b=>b.addEventListener('click',()=>confirmBlock(b.dataset.w,()=>viewMeet(m))));
 }
 function meetHTML(x){const pct=Math.min(100,Math.round(x.going/x.cap*100));
   return `<div class="meet-card card">
@@ -829,7 +871,8 @@ function meetHTML(x){const pct=Math.min(100,Math.round(x.going/x.cap*100));
     <div class="m-info"><span>${ico('pin',14)} ${esc(x.place)}</span><span>${ico('tag',14)} ${esc(x.org)}</span><span>${ico('user',14)} 주최 ${esc(x.by)}</span></div>
     <div style="color:#464c59;font-size:13.5px;margin-top:10px;flex:1">${esc(x.desc)}</div>
     <div class="meet-foot"><div class="cap-bar"><i style="width:${pct}%"></i></div><span class="cap-txt">${x.going}/${x.cap}</span>
-      <button class="attend ${x.attend?'going':''}" data-id="${x.id}">${x.attend?ico('check',13)+' 참여중':'참여하기'}</button></div></div>`;
+      <button class="attend ${x.attend?'going':''}" data-id="${x.id}">${x.attend?ico('check',13)+' 참여중':'참여하기'}</button></div>
+    ${x.by===S.user.name?'':`<div style="margin-top:8px;text-align:right"><button class="cbtn rep-m" data-id="${x.id}" style="font-size:11.5px;padding:3px 9px">신고</button> <button class="cbtn blk-m" data-w="${esc(x.by)}" style="font-size:11.5px;padding:3px 9px">차단</button></div>`}</div>`;
 }
 function newMeet(){
   let imgData='';
@@ -861,7 +904,7 @@ function isProtected(exp,f){return (EXP[exp]||EXP.basic).protect.includes(f);}
 function realMembers(){return S.accounts.filter(a=>!a.system);}
 function viewDir(m){
   const mine=S.user.school;
-  const list=realMembers().filter(x=>x.sid!==S.user.sid&&(dirScope==='all'||x.school===mine));
+  const list=realMembers().filter(x=>x.sid!==S.user.sid&&!isBlocked(x.name)&&(dirScope==='all'||x.school===mine));
   m.innerHTML=`
     <div class="page-head"><div class="eyebrow">Directory</div><h1>원우수첩</h1><p>원우와 연락처를 교환하고 사업·커리어로 연결되세요. 각 원우가 설정한 공개 범위에 따라 보이는 정보가 달라집니다.</p></div>
     <div class="chip-row">
@@ -1241,8 +1284,19 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
       <p style="color:var(--sub);font-size:13.5px;margin-top:4px;margin-bottom:16px">학번·이름·회사·직책·이메일은 항상 공개됩니다. 아래에서 <b>연락처·생년월일·이력</b>의 공개 정도를 선택하세요.</p>
       <div class="exp-seg">${['full','basic','minimal'].map(e=>`<button class="exp-opt ${(u.exposure||'basic')===e?'on':''}" data-e="${e}"><b>${expTitle(e)}</b><span>${expDesc(e)}</span></button>`).join('')}</div>
       <div style="margin-top:20px"><div style="font-weight:700;font-size:13px;color:var(--sub);margin-bottom:10px">${ico('eye',15)} 다른 원우에게 보이는 내 카드 미리보기</div><div id="prevBox">${myPreviewCard()}</div></div>
+    </div>
+    <div class="card" style="padding:28px;max-width:620px;margin-top:16px">
+      <div style="font-weight:800;font-size:16px">차단한 사용자</div>
+      <p style="color:var(--sub);font-size:13.5px;margin-top:4px;margin-bottom:14px">차단한 사용자의 게시글·댓글·모임·족보 기록은 앱에서 보이지 않습니다. 언제든 해제할 수 있습니다.</p>
+      <div id="blkList"></div>
+    </div>
+    <div class="card" style="padding:28px;max-width:620px;margin-top:16px;border:1px solid #F0C9C9">
+      <div style="font-weight:800;font-size:16px;color:#C0392B">계정 삭제</div>
+      <p style="color:var(--sub);font-size:13.5px;margin-top:6px;margin-bottom:16px;line-height:1.65">계정을 삭제하면 프로필, 작성한 게시글·댓글·족보 기록, 모임 정보, 연락처 교환 내역이 <b>모두 영구 삭제</b>되며 되돌릴 수 없습니다. 서버(Firebase)에 저장된 회원 정보도 함께 삭제됩니다.</p>
+      <button class="btn" id="me-del" style="background:#C0392B;border-color:#C0392B">계정 삭제하기</button>
     </div>`;
-  renderMeAvatar(m);renderCareerEditor(m);
+  renderMeAvatar(m);renderCareerEditor(m);renderBlocked(m);
+  m.querySelector('#me-del').addEventListener('click',deleteAccount);
   m.querySelector('#btn-photo').addEventListener('click',()=>m.querySelector('#me-photo').click());
   m.querySelector('#me-photo').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{u.photo=rd.result;save();renderMeAvatar(m);document.getElementById('meAv').style.backgroundImage=`url('${u.photo}')`;document.getElementById('meAv').style.color='transparent';document.getElementById('meAv').textContent='';m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('프로필 사진이 변경되었습니다');};rd.readAsDataURL(f);});
   m.querySelector('#btn-photo-del').addEventListener('click',()=>{u.photo='';save();renderMeAvatar(m);const a=document.getElementById('meAv');a.style.backgroundImage='';a.style.color='';a.textContent=u.name.slice(0,1);m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('사진을 삭제했습니다');});
@@ -1253,6 +1307,34 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
   m.querySelectorAll('.exp-opt').forEach(b=>b.addEventListener('click',()=>{u.exposure=b.dataset.e;save();
     m.querySelectorAll('.exp-opt').forEach(o=>o.classList.toggle('on',o.dataset.e===u.exposure));
     m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('공개 범위: '+expTitle(u.exposure));}));
+}
+function renderBlocked(m){
+  const box=m.querySelector('#blkList');if(!box)return;
+  const a=blockedList();
+  box.innerHTML=a.length?a.map(w=>`<div class="mini-row"><div style="flex:1"><div class="mt">${esc(w)}</div><div class="ms">차단됨 — 이 사용자의 콘텐츠가 숨겨집니다</div></div><button class="btn sm gray unblk" data-w="${esc(w)}">차단 해제</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">차단한 사용자가 없습니다.</div>';
+  box.querySelectorAll('.unblk').forEach(b=>b.addEventListener('click',()=>{unblockUser(b.dataset.w);renderBlocked(m);toast(b.dataset.w+'님의 차단을 해제했습니다');}));
+}
+function deleteAccount(){
+  const u=S.user;if(!u)return;
+  openModal('계정 삭제',
+    '<p style="font-size:13.5px;color:#C0392B;font-weight:700;margin:0 0 10px">이 작업은 되돌릴 수 없습니다.</p>'+
+    '<p style="font-size:13.5px;color:var(--sub);line-height:1.7;margin:0 0 14px">'+esc(u.name)+'('+esc(u.sid)+') 계정과 아래 데이터가 영구 삭제됩니다.<br>· 프로필 및 이력, 프로필 사진<br>· 작성한 게시글 / 댓글 / 족보 기록 / 개설한 모임<br>· 연락처 교환 내역 및 동아리 가입 정보<br>· 서버에 저장된 회원 정보</p>'+
+    '<div class="fld"><label>확인을 위해 <b>삭제</b> 를 입력하세요 <span class="req">*</span></label><input id="da-c" placeholder="삭제"></div>',
+    function(){
+      if(val('da-c')!=='삭제'){toast('"삭제" 두 글자를 정확히 입력하세요');return false;}
+      const sid=u.sid,nm=u.name;
+      S.accounts=(S.accounts||[]).filter(a=>a.sid!==sid);
+      S.posts=(S.posts||[]).filter(x=>x.who!==nm);
+      (S.posts||[]).forEach(x=>{x.comments=(x.comments||[]).filter(c=>c.by!==nm);});
+      S.meets=(S.meets||[]).filter(x=>x.by!==nm);
+      (S.jokbo||[]).forEach(j=>{j.entries=(j.entries||[]).filter(e=>e.by!==nm);if(j.ratings)delete j.ratings[sid];});
+      (S.clubs||[]).forEach(c=>{if(c.leaderSid===sid){c.leaderSid='';c.leader='';}});
+      S.exchanged=(S.exchanged||[]).filter(x=>x!==sid);
+      S.session=null;S.user=null;save();
+      if(FB_ON&&DB){try{fbDeleteMember(sid);}catch(e){}}
+      alert('계정이 삭제되었습니다. 그동안 이용해 주셔서 감사합니다.');
+      location.reload();
+    });
 }
 function renderMeAvatar(m){const u=S.user;const a=m.querySelector('#me-av');a.style.cssText='width:76px;height:76px;font-size:28px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');a.textContent=u.photo?'':u.name.slice(0,1);}
 function renderCareerEditor(m){
