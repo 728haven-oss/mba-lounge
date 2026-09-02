@@ -134,6 +134,13 @@ jobs:
           <dict>
             <key>CFBundleDevelopmentRegion</key><string>ko_KR</string>
             <key>CFBundleDisplayName</key><string>MBA Lounge</string>
+            <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+            <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+            <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+            <key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
+            <key>CFBundlePackageType</key><string>APPL</string>
+            <key>CFBundleSignature</key><string>????</string>
+            <key>LSRequiresIPhoneOS</key><true/>
             <key>CFBundleShortVersionString</key><string>$(MARKETING_VERSION)</string>
             <key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
             <key>UILaunchScreen</key>
