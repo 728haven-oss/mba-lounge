@@ -519,9 +519,9 @@ function reportContent(kind,who,text,after){
 }
 function confirmBlock(who,after){
   if(!who||(S.user&&who===S.user.name)){toast('본인은 차단할 수 없습니다');return;}
-  if(confirm(who+'님을 차단할까요?\n차단하면 이 사용자가 올린 게시글·댓글·모임·족보 기록이 보이지 않습니다.\n(내 프로필 > 차단 관리에서 해제할 수 있습니다)')){
+  ask(who+'님을 차단할까요?\n차단하면 이 사용자가 올린 게시글·댓글·모임·족보 기록이 보이지 않습니다.\n(내 프로필 > 차단 관리에서 해제할 수 있습니다)',function(){
     blockUser(who);toast(who+'님을 차단했습니다');if(after)after();
-  }
+  });
 }
 
 /* ===================== FIREBASE (계정·가입승인 백엔드) ===================== */
@@ -690,7 +690,7 @@ function openMenuDrawer(){
   document.body.appendChild(bg);document.body.appendChild(dr);
   bg.onclick=closeMenuDrawer;
   dr.querySelector('#drawerX').onclick=closeMenuDrawer;
-  dr.querySelector('#drawerOut').onclick=()=>{if(confirm('로그아웃하시겠어요?')){S.session=null;save();location.reload();}};
+  dr.querySelector('#drawerOut').onclick=()=>{closeMenuDrawer();ask('로그아웃하시겠어요?',()=>{S.session=null;save();location.reload();});};
   dr.querySelectorAll('.d-item').forEach(b=>b.onclick=()=>{closeMenuDrawer();go(b.dataset.view);});
 }
 function closeMenuDrawer(){['drawerBg','drawer'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});}
@@ -1051,15 +1051,15 @@ function viewClubRoom(m,name,tab){
   m.querySelectorAll('.chip-row .chip').forEach(b=>b.onclick=()=>viewClubRoom(m,name,b.dataset.t));
   const bind=(id,fn)=>{const e=m.querySelector(id);if(e)e.onclick=fn;};
   m.querySelectorAll('.mKick').forEach(b=>b.onclick=()=>{
-    if(!confirm('이 회원을 동아리에서 내보낼까요?'))return;
-    const a=S.accounts.find(x=>x.sid===b.dataset.s);
-    if(a&&a.clubs)a.clubs=a.clubs.filter(n=>n!==name);
-    save();viewClubRoom(m,name,'member');toast('동아리에서 내보냈습니다');});
+    ask('이 회원을 동아리에서 내보낼까요?',()=>{
+      const a=S.accounts.find(x=>x.sid===b.dataset.s);
+      if(a&&a.clubs)a.clubs=a.clubs.filter(n=>n!==name);
+      save();viewClubRoom(m,name,'member');toast('동아리에서 내보냈습니다');});});
   m.querySelectorAll('.mLead').forEach(b=>b.onclick=()=>{
     const a=S.accounts.find(x=>x.sid===b.dataset.s);if(!a)return;
-    if(!confirm(a.name+'님을 새 회장으로 지정할까요?'))return;
-    c.leader=a.name;c.leaderSid=a.sid;
-    save();viewClubRoom(m,name,'member');toast(a.name+'님이 새 회장이 되었습니다 👑');});
+    ask(a.name+'님을 새 회장으로 지정할까요?',()=>{
+      c.leader=a.name;c.leaderSid=a.sid;
+      save();viewClubRoom(m,name,'member');toast(a.name+'님이 새 회장이 되었습니다');});});
   bind('#crAddNotice',()=>openModal(name+' 공지 올리기',
     `<div class="fld"><label>제목</label><input id="cn-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="cn-b" placeholder="동아리 회원들에게 알릴 내용"></textarea></div>`,
     ()=>{const t=val('cn-t');if(!t){toast('제목을 입력하세요');return false;}
@@ -1183,7 +1183,7 @@ async function viewLogs(m){
     <div id="logWrap" class="card" style="padding:20px"><div class="ms" style="color:var(--sub)">불러오는 중…</div></div>`;
   const w=document.getElementById('logWrap');
   document.getElementById('logReload').onclick=()=>viewLogs(m);
-  document.getElementById('logClear').onclick=async()=>{if(!confirm('오류 로그를 모두 삭제할까요?'))return;try{await fbClearLogs();toast('로그를 삭제했습니다');viewLogs(m);}catch(e){toast('삭제 중 오류가 발생했습니다');}};
+  document.getElementById('logClear').onclick=()=>ask('오류 로그를 모두 삭제할까요?',async()=>{try{await fbClearLogs();toast('로그를 삭제했습니다');viewLogs(m);}catch(e){toast('삭제 중 오류가 발생했습니다');}});
   if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">백엔드(Firebase)가 연결되지 않아 로그를 기록/조회할 수 없습니다.</div>';return;}
   let logs=[];
   try{logs=await fbRecentLogs(50);}catch(e){w.innerHTML='<div class="ms" style="color:var(--sub)">로그를 불러오지 못했습니다.</div>';return;}
@@ -1310,7 +1310,7 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
   m.querySelector('#addCareer').addEventListener('click',()=>{editCareer.push({c:'',r:'',p:''});renderCareerEditor(m);});
   m.querySelector('#saveCareer').addEventListener('click',()=>{u.career=editCareer.filter(c=>c.c.trim()||c.r.trim());save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('이력이 저장되었습니다');});
   m.querySelector('#me-save').addEventListener('click',()=>{u.company=val('me-co');u.title=val('me-ti');u.head=val('me-head');u.email=val('me-em');u.phone=val('me-ph');u.birth=val('me-bd');u.pw=val('me-pw')||'1234';save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('저장되었습니다');});
-  m.querySelector('#me-out').addEventListener('click',()=>{if(confirm('로그아웃하시겠어요?')){S.session=null;save();location.reload();}});
+  m.querySelector('#me-out').addEventListener('click',()=>ask('로그아웃하시겠어요?',()=>{S.session=null;save();location.reload();}));
   m.querySelectorAll('.exp-opt').forEach(b=>b.addEventListener('click',()=>{u.exposure=b.dataset.e;save();
     m.querySelectorAll('.exp-opt').forEach(o=>o.classList.toggle('on',o.dataset.e===u.exposure));
     m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('공개 범위: '+expTitle(u.exposure));}));
@@ -1339,8 +1339,8 @@ function deleteAccount(){
       S.exchanged=(S.exchanged||[]).filter(x=>x!==sid);
       S.session=null;S.user=null;save();
       if(FB_ON&&DB){try{fbDeleteMember(sid);}catch(e){}}
-      alert('계정이 삭제되었습니다. 그동안 이용해 주셔서 감사합니다.');
-      location.reload();
+      toast('계정이 삭제되었습니다. 그동안 이용해 주셔서 감사합니다');
+      setTimeout(function(){location.reload();},1600);
     });
 }
 function renderMeAvatar(m){const u=S.user;const a=m.querySelector('#me-av');a.style.cssText='width:76px;height:76px;font-size:28px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');a.textContent=u.photo?'':u.name.slice(0,1);}
@@ -1378,6 +1378,8 @@ function openModal(title,html,onOk,infoOnly){
   window._modal=bg;
 }
 function closeModal(){if(window._modal)window._modal.remove();}
+/* iOS WKWebView는 native confirm/alert 패널을 띄우지 않으므로 앱 내 모달로 대체 */
+function ask(msg,onYes){openModal('확인','<p style="font-size:14px;line-height:1.7;color:var(--ink)">'+esc(msg).replace(/\n/g,'<br>')+'</p>',function(){if(onYes)onYes();});}
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>el.classList.remove('show'),2000);}
 function esc(s){return (s==null?'':''+s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function val(id){return document.getElementById(id).value.trim();}
