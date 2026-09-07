@@ -348,6 +348,11 @@
         <div class="fld"><label>연락처</label><input id="su-phone" placeholder="예: 010-0000-0000" /></div>
         <div class="fld full"><label>한 줄 소개 (헤드라인)</label><input id="su-head" placeholder="예: 제조업 전략기획 · 신사업 개발 관심" /></div>
       </div>
+      <label style="display:flex;gap:10px;align-items:flex-start;margin:6px 0 14px;font-size:13.5px;line-height:1.55;cursor:pointer">
+        <input type="checkbox" id="su-agree" style="margin-top:3px;flex-shrink:0">
+        <span><b>이용약관 및 커뮤니티 규정</b>에 동의합니다 <span class="req">*</span><br>
+        <span style="color:var(--sub)">불쾌감을 주는 콘텐츠와 다른 이용자를 괴롭히는 행위에 대해 <b>무관용 원칙</b>이 적용됩니다.</span>
+        <a href="#" id="su-terms" style="color:var(--pri);font-weight:700;text-decoration:underline">전문 보기</a></span></label>
       <button class="login-go" id="signupBtn">가입하고 시작하기</button>
       <div class="login-note">학번·이름·회사·직책·이메일은 항상 공개됩니다. 연락처·생년월일·이력은 가입 후 프로필에서 공개 범위를 조절할 수 있어요.</div>
     </div>
@@ -586,6 +591,8 @@ function buildLogin(){
   document.getElementById('loginBtn').addEventListener('click',doLogin);
   document.getElementById('signupBtn').addEventListener('click',doSignup);
   document.getElementById('lg-pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+  const st=document.getElementById('su-terms');
+  if(st)st.addEventListener('click',e=>{e.preventDefault();openTerms();});
 }
 function switchTab(t){
   document.getElementById('tab-login').classList.toggle('on',t==='login');
@@ -614,6 +621,8 @@ async function doLogin(){
 }
 async function doSignup(){
   if(!pickedSchool){toast('학교를 선택하세요');return;}
+  const ag=document.getElementById('su-agree');
+  if(ag&&!ag.checked){toast('이용약관 및 커뮤니티 규정에 동의해주세요');return;}
   const sid=gv('su-sid');
   const need=['su-sid','su-name','su-gisu','su-company','su-title','su-email'];
   if(!need.every(id=>gv(id))){toast('필수 항목(*)을 모두 입력하세요');return;}
@@ -1277,7 +1286,7 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
         <div class="fld"><label>생년월일</label><input id="me-bd" value="${esc(u.birth)}" placeholder="예: 1985-03-12"></div>
         <div class="fld"><label>비밀번호 변경</label><input id="me-pw" value="${esc(u.pw)}"></div>
       </div>
-      <div style="margin-top:18px;display:flex;gap:10px"><button class="btn" id="me-save">기본 정보 저장</button><button class="btn gray" id="me-out">로그아웃</button></div>
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="me-save">기본 정보 저장</button><button class="btn ghost" id="me-terms">이용약관 보기</button><button class="btn gray" id="me-out">로그아웃</button></div>
     </div>
     <div class="card" style="padding:28px;max-width:620px;margin-top:16px">
       <div style="font-weight:800;font-size:16px">이력 (경력)</div>
@@ -1310,6 +1319,7 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
   m.querySelector('#addCareer').addEventListener('click',()=>{editCareer.push({c:'',r:'',p:''});renderCareerEditor(m);});
   m.querySelector('#saveCareer').addEventListener('click',()=>{u.career=editCareer.filter(c=>c.c.trim()||c.r.trim());save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('이력이 저장되었습니다');});
   m.querySelector('#me-save').addEventListener('click',()=>{u.company=val('me-co');u.title=val('me-ti');u.head=val('me-head');u.email=val('me-em');u.phone=val('me-ph');u.birth=val('me-bd');u.pw=val('me-pw')||'1234';save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('저장되었습니다');});
+  m.querySelector('#me-terms').addEventListener('click',openTerms);
   m.querySelector('#me-out').addEventListener('click',()=>ask('로그아웃하시겠어요?',()=>{S.session=null;save();location.reload();}));
   m.querySelectorAll('.exp-opt').forEach(b=>b.addEventListener('click',()=>{u.exposure=b.dataset.e;save();
     m.querySelectorAll('.exp-opt').forEach(o=>o.classList.toggle('on',o.dataset.e===u.exposure));
@@ -1385,9 +1395,76 @@ function esc(s){return (s==null?'':''+s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':
 function val(id){return document.getElementById(id).value.trim();}
 function today(){const d=new Date();return (d.getMonth()+1)+'/'+d.getDate();}
 
+/* ===================== 이용약관(EULA) · Apple Guideline 1.2 ===================== */
+const EULA_VER='1.0';
+function eulaHTML(){return `
+<div style="font-size:14px;line-height:1.75;color:#2a3040">
+<p style="margin:0 0 14px"><b>MBA Lounge 이용약관 및 커뮤니티 규정</b><br><span style="color:var(--sub);font-size:13px">시행일 2026-09-07 · 버전 ${EULA_VER}</span></p>
+
+<p style="margin:0 0 6px"><b>1. 서비스 개요</b></p>
+<p style="margin:0 0 14px">MBA Lounge는 국내 MBA(경영대학원) 재학생·동문을 위한 학교 단위 폐쇄형 커뮤니티입니다. 원우수첩, BZ 게시판, 동아리방, 수업 족보, 만남·미팅 기능을 제공합니다.</p>
+
+<p style="margin:0 0 6px"><b>2. 이용 자격</b></p>
+<p style="margin:0 0 14px">학교에서 발급한 학번으로 가입 신청해야 하며, <b>학교 관리자의 승인</b>을 받은 후에만 서비스를 이용할 수 있습니다. 본 서비스는 <b>만 18세 이상 성인</b>을 대상으로 합니다.</p>
+
+<p style="margin:0 0 6px;color:#C0392B"><b>3. 금지되는 콘텐츠 및 행위 — 무관용 원칙 (Zero Tolerance)</b></p>
+<p style="margin:0 0 8px">MBA Lounge는 <b>불쾌감을 주는 콘텐츠(objectionable content)와 다른 이용자를 괴롭히는 행위(abusive behavior)에 대해 무관용 원칙을 적용</b>합니다. 아래 행위는 예외 없이 금지되며, 위반 시 해당 콘텐츠는 즉시 삭제되고 작성자의 계정은 이용이 제한되거나 영구 정지됩니다.</p>
+<ul style="margin:0 0 14px;padding-left:20px">
+<li>욕설, 혐오·차별 표현, 특정 집단에 대한 비하</li>
+<li>괴롭힘, 협박, 스토킹, 성희롱</li>
+<li>음란물 및 선정적·노골적 성적 콘텐츠</li>
+<li>폭력적이거나 불법적인 콘텐츠, 불법 행위의 조장</li>
+<li>스팸, 무단 광고, 다단계, 사기 및 기망 행위</li>
+<li>타인 사칭, 허위 정보 유포</li>
+<li>동의 없는 타인의 개인정보·연락처·사진 게시</li>
+<li>저작권 등 타인의 권리 침해</li>
+</ul>
+
+<p style="margin:0 0 6px"><b>4. 신고 · 차단 및 운영진의 조치</b></p>
+<p style="margin:0 0 14px">모든 게시글·댓글·모임·족보 기록에는 <b>[신고]</b> 버튼이 제공됩니다. 접수된 신고는 운영진이 <b>24시간 이내</b>에 검토하며, 위반이 확인되면 콘텐츠를 삭제하고 작성자의 이용을 제한합니다. 또한 <b>[차단]</b> 기능으로 특정 이용자의 모든 콘텐츠를 즉시 숨길 수 있으며, 차단 목록은 <b>내 프로필 &gt; 차단한 사용자</b>에서 관리·해제할 수 있습니다.</p>
+
+<p style="margin:0 0 6px"><b>5. 이용자의 책임</b></p>
+<p style="margin:0 0 14px">이용자는 자신이 게시한 모든 콘텐츠에 대해 책임을 집니다. 본 약관을 위반한 이용자는 사전 통지 없이 서비스 이용이 정지될 수 있습니다.</p>
+
+<p style="margin:0 0 6px"><b>6. 계정 삭제</b></p>
+<p style="margin:0 0 14px"><b>내 프로필 &gt; 계정 삭제</b>에서 언제든지 계정을 직접 삭제할 수 있으며, 삭제 시 프로필·게시글·댓글·족보 기록·모임·연락처 교환 내역이 기기와 서버에서 모두 영구 삭제됩니다.</p>
+
+<p style="margin:0 0 6px"><b>7. 개인정보</b></p>
+<p style="margin:0 0 14px">개인정보의 수집·이용에 관한 사항은 <a href="https://728haven-oss.github.io/mba-lounge/privacy.html" target="_blank" style="color:var(--pri);font-weight:700">개인정보처리방침</a>을 따릅니다.</p>
+
+<p style="margin:0 0 6px"><b>8. 약관의 변경</b></p>
+<p style="margin:0">약관이 변경되는 경우 앱 내 공지 후 재동의를 요청할 수 있습니다. 문의: 728haven@gmail.com</p>
+</div>`;}
+
+function openTerms(){openModal('이용약관 및 커뮤니티 규정','<div style="max-height:52vh;overflow:auto;padding-right:6px">'+eulaHTML()+'</div>',null,true);}
+
+function showEulaGate(onAgree){
+  const bg=document.createElement('div');
+  bg.id='eulaGate';
+  bg.style.cssText='position:fixed;inset:0;z-index:9000;background:rgba(16,22,34,.62);display:flex;align-items:center;justify-content:center;padding:18px';
+  bg.innerHTML='<div style="background:#fff;border-radius:20px;max-width:640px;width:100%;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 18px 60px rgba(0,0,0,.28)">'
+   +'<div style="padding:22px 26px 14px;border-bottom:1px solid var(--line)"><div style="font-size:19px;font-weight:800">이용약관 동의</div>'
+   +'<div style="font-size:13.5px;color:var(--sub);margin-top:6px">MBA Lounge를 이용하려면 아래 약관과 커뮤니티 규정에 동의해야 합니다.</div></div>'
+   +'<div id="eulaBody" style="padding:20px 26px;overflow:auto;flex:1">'+eulaHTML()+'</div>'
+   +'<div style="padding:16px 26px 22px;border-top:1px solid var(--line)">'
+   +'<label style="display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer;margin-bottom:14px">'
+   +'<input type="checkbox" id="eulaChk" style="margin-top:3px;flex-shrink:0">'
+   +'<span>위 <b>이용약관 및 커뮤니티 규정</b>을 읽고 동의합니다. 불쾌감을 주는 콘텐츠와 괴롭힘 행위에 <b>무관용 원칙</b>이 적용된다는 점을 이해했습니다.</span></label>'
+   +'<button class="btn" id="eulaGo" style="width:100%;opacity:.5;pointer-events:none">동의하고 시작하기</button>'
+   +'<div style="text-align:center;margin-top:10px"><a href="#" id="eulaNo" style="font-size:13px;color:var(--sub)">동의하지 않음</a></div>'
+   +'</div></div>';
+  document.body.appendChild(bg);
+  const chk=bg.querySelector('#eulaChk'),go=bg.querySelector('#eulaGo');
+  chk.addEventListener('change',()=>{go.style.opacity=chk.checked?'1':'.5';go.style.pointerEvents=chk.checked?'auto':'none';});
+  go.addEventListener('click',()=>{S.eula=EULA_VER;S.eulaAt=new Date().toISOString();save();bg.remove();if(onAgree)onAgree();});
+  bg.querySelector('#eulaNo').addEventListener('click',e=>{e.preventDefault();
+    bg.querySelector('#eulaBody').innerHTML='<div style="padding:30px 0;text-align:center;font-size:14.5px;line-height:1.8;color:#2a3040">약관에 동의하지 않으면 MBA Lounge를 이용할 수 없습니다.<br>앱을 종료하거나, 동의 후 이용해 주세요.</div>';});
+}
+
 /* ---------- boot ---------- */
 buildLogin();
-if(S.session && S.remember && acctBySid(S.session)){enterApp();}
+function bootAfterEula(){ if(S.session && S.remember && acctBySid(S.session)){enterApp();} }
+if(S.eula!==EULA_VER){ showEulaGate(bootAfterEula); } else { bootAfterEula(); }
 /* PWA: 서비스워커 등록 (설치·오프라인 지원) */
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 /* 전역 오류 자동 기록 → Firestore errorLogs */
