@@ -12,9 +12,8 @@
 <meta name="apple-mobile-web-app-title" content="MBA Lounge" />
 <link rel="apple-touch-icon" href="icon-192.png" />
 <link rel="icon" type="image/png" href="icon-192.png" />
-<!-- Firebase (계정·가입승인 백엔드) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<!-- Supabase (계정·가입승인 백엔드) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
   :root{
     --pri:#6C5CE7; --pri2:#8B7CF7; --soft:#EFEBFF;
@@ -338,7 +337,7 @@
       <div class="login-step"><span class="st-n">1</span>프로필 정보를 입력하세요 <span style="font-weight:600;color:var(--sub);font-size:12px">· 위에서 학교를 먼저 선택하세요</span></div>
       <div class="fields">
         <div class="fld"><label>학번 (아이디) <span class="req">*</span></label><input id="su-sid" placeholder="예: 2024-1234 (학교 발급 학번)" /></div>
-        <div class="fld"><label>비밀번호 <span class="req">*</span></label><input id="su-pw" value="1234" placeholder="기본 1234" /></div>
+        <div class="fld"><label>비밀번호 <span class="req">*</span></label><input id="su-pw" type="password" value="" placeholder="6자 이상" autocomplete="new-password" /></div>
         <div class="fld"><label>이름 <span class="req">*</span></label><input id="su-name" placeholder="예: 김재성" /></div>
         <div class="fld"><label>기수 <span class="req">*</span></label><input id="su-gisu" placeholder="예: 12" /></div>
         <div class="fld"><label>생년월일</label><input id="su-birth" placeholder="예: 1985-03-12" /></div>
@@ -529,45 +528,101 @@ function confirmBlock(who,after){
   });
 }
 
-/* ===================== FIREBASE (계정·가입승인 백엔드) ===================== */
-/* Firebase 콘솔에서 발급받은 값을 아래에 채우면 백엔드가 켜집니다.
-   비워두면 기존 로컬 데모 모드로 동작(라이브 앱 안전). */
-const FB_CONFIG={apiKey:"AIzaSyAIntjO670PutdCbHioPKIFjsBe8BvLmjQ",authDomain:"mba-lounge.firebaseapp.com",projectId:"mba-lounge",storageBucket:"mba-lounge.firebasestorage.app",messagingSenderId:"67240152331",appId:"1:67240152331:web:9f79729169eb9f1fa2a60e"};
-let DB=null,FB_ON=false;
-try{ if(FB_CONFIG.projectId && window.firebase){ firebase.initializeApp(FB_CONFIG); DB=firebase.firestore();
-  /* WKWebView(iOS 앱)에서 WebChannel이 막혀 요청이 멈추는 문제 대응 */
-  try{ DB.settings({experimentalAutoDetectLongPolling:true, useFetchStreams:false, merge:true}); }catch(e){}
-  FB_ON=true; } }catch(e){ FB_ON=false; }
-/* 네트워크가 응답 없이 멈추는 것을 막는 공용 타임아웃 */
-function fbTimeout(p,ms,label){return Promise.race([p,new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout:'+(label||''))),ms||12000))]);}
-const MEMBERS='members';
-async function fbGet(sid){const d=await DB.collection(MEMBERS).doc(sid).get();return d.exists?d.data():null;}
-async function fbCreatePending(acc){await DB.collection(MEMBERS).doc(acc.sid).set(Object.assign({},acc,{status:'pending',createdAt:Date.now()}));}
-async function fbListByStatus(st){const q=await DB.collection(MEMBERS).where('status','==',st).get();return q.docs.map(d=>d.data());}
-async function fbSetStatus(sid,st){await DB.collection(MEMBERS).doc(sid).update({status:st});}
-async function fbDeleteMember(sid){await DB.collection(MEMBERS).doc(sid).delete();}
-async function fbReport(r){if(!FB_ON||!DB)return;try{await DB.collection('reports').add(r);}catch(e){}}
-/* ---- 오류 로그 (Firestore errorLogs 컬렉션에 기록) ---- */
-const ERRLOGS='errorLogs';
-async function logError(kind,message,detail){
-  if(!FB_ON||!DB)return;
-  try{
-    await DB.collection(ERRLOGS).add({
-      kind:kind||'error',
-      message:(''+(message||'')).slice(0,1000),
-      detail:(''+(detail||'')).slice(0,3000),
-      sid:(S.user&&S.user.sid)||S.session||'anon',
-      name:(S.user&&S.user.name)||'',
-      school:(S.user&&S.user.school)||'',
-      url:location.href,
-      ua:navigator.userAgent,
-      ts:Date.now(),
-      at:new Date().toISOString()
+/* ===================== SUPABASE (계정·가입승인 백엔드) ===================== */
+/* Postgres + Row Level Security. anon(publishable) 키는 브라우저 공개용입니다. */
+const SB_URL='https://jvzkruingckrsdnvvekz.supabase.co';
+const SB_KEY='sb_publishable_M2KZd5PeoHEwwpTFxVwsCg_8tjYRkfB';
+let SB=null,FB_ON=false;
+try{
+  if(window.supabase&&window.supabase.createClient){
+    SB=window.supabase.createClient(SB_URL,SB_KEY,{
+      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false,storageKey:'mba_sb_auth'},
+      global:{headers:{'x-client-info':'mba-lounge-web'}}
     });
+    FB_ON=true;
+  }
+}catch(e){FB_ON=false;}
+/* 네트워크가 응답 없이 멈추는 것을 막는 공용 타임아웃 (WKWebView 대응) */
+function fbTimeout(p,ms,label){return Promise.race([p,new Promise((_,rj)=>setTimeout(()=>rj(new Error('timeout:'+(label||''))),ms||12000))]);}
+function sbThrow(r){if(r&&r.error)throw new Error(r.error.message||'supabase');return r?r.data:null;}
+/* 학번 → 로그인 이메일 (학교 스코프 내부에서 합성) */
+function sbEmail(sid,schoolId){
+  return String(sid).trim().toLowerCase().replace(/[^a-z0-9._-]/g,'_')+'@'+schoolId+'.mbalounge.app';
+}
+/* DB row → 앱 내부 계정 객체 */
+function sbToAcct(r){
+  if(!r)return null;
+  return {sid:r.sid,pw:'',name:r.name,school:r.school,schoolId:r.school_id,gisu:r.gisu||'',course:r.course||'MBA',
+    company:r.company||'',title:r.title||'',head:r.head||'',email:r.email||'',phone:r.phone||'',birth:r.birth||'',
+    photo:r.photo||'',career:r.career||[],clubs:r.clubs||[],officer:r.officer||'',role:r.role||'member',
+    exposure:r.exposure||'basic',status:r.status,uid:r.id};
+}
+function acctToRow(a){
+  return {sid:a.sid,name:a.name,school:a.school,school_id:a.schoolId,gisu:''+(a.gisu||''),course:a.course||'MBA',
+    company:a.company||'',title:a.title||'',head:a.head||'',email:a.email||'',phone:a.phone||'',birth:a.birth||'',
+    photo:a.photo||'',career:a.career||[],clubs:a.clubs||[],officer:a.officer||'',role:a.role||'member',
+    exposure:a.exposure||'basic'};
+}
+const MEMBERS='members';
+async function sbSession(){if(!FB_ON)return null;try{const r=await SB.auth.getSession();return (r.data&&r.data.session)||null;}catch(e){return null;}}
+async function sbMe(){
+  const s=await sbSession();if(!s)return null;
+  const r=await SB.from(MEMBERS).select('*').eq('id',s.user.id).maybeSingle();
+  if(r.error)throw new Error(r.error.message);
+  return r.data;
+}
+async function fbGet(sid){
+  const r=await SB.from(MEMBERS).select('*').eq('sid',sid).maybeSingle();
+  if(r.error)throw new Error(r.error.message);
+  return r.data;
+}
+async function fbListByStatus(st){
+  const r=await SB.from(MEMBERS).select('*').eq('status',st).order('created_at',{ascending:true});
+  if(r.error)throw new Error(r.error.message);
+  return (r.data||[]).map(sbToAcct);
+}
+async function fbSetStatus(sid,st){
+  const r=await SB.from(MEMBERS).update({status:st}).eq('sid',sid);
+  if(r.error)throw new Error(r.error.message);
+}
+async function fbDeleteMember(){
+  const r=await SB.rpc('delete_own_account');
+  if(r.error)throw new Error(r.error.message);
+}
+async function fbSaveProfile(a){
+  if(!FB_ON)return;
+  const s=await sbSession();if(!s)return;
+  try{await SB.from(MEMBERS).update(acctToRow(a)).eq('id',s.user.id);}catch(e){}
+}
+async function fbReport(r){
+  if(!FB_ON)return;
+  try{
+    const s=await sbSession();if(!s)return;
+    await SB.from('reports').insert({reporter:s.user.id,kind:r.kind||'post',target_who:r.who||'',
+      target_txt:(''+(r.text||'')).slice(0,2000),reason:r.reason||'',detail:(''+(r.detail||'')).slice(0,2000)});
+  }catch(e){}
+}
+/* ---- 오류 로그 ---- */
+async function logError(kind,message,detail){
+  if(!FB_ON)return;
+  try{
+    const s=await sbSession();if(!s)return;
+    await SB.from('error_logs').insert({member:s.user.id,
+      msg:('['+(kind||'error')+'] '+(message||'')).slice(0,1000),
+      stack:(''+(detail||'')).slice(0,3000),
+      ua:(navigator.userAgent||'').slice(0,400)});
   }catch(e){/* 로깅 실패는 무시 */}
 }
-async function fbRecentLogs(n){const q=await DB.collection(ERRLOGS).orderBy('ts','desc').limit(n||50).get();return q.docs.map(d=>({id:d.id,...d.data()}));}
-async function fbClearLogs(){const q=await DB.collection(ERRLOGS).limit(400).get();const b=DB.batch();q.docs.forEach(d=>b.delete(d.ref));await b.commit();return q.size;}
+async function fbRecentLogs(n){
+  const r=await SB.from('error_logs').select('*').order('created_at',{ascending:false}).limit(n||50);
+  if(r.error)throw new Error(r.error.message);
+  return (r.data||[]).map(l=>({kind:'error',message:l.msg,detail:l.stack,ua:l.ua,at:l.created_at,ts:Date.parse(l.created_at),sid:'',name:'',school:''}));
+}
+async function fbClearLogs(){
+  const r=await SB.from('error_logs').delete().neq('id','00000000-0000-0000-0000-000000000000');
+  if(r.error)throw new Error(r.error.message);
+  return 1;
+}
 
 /* ===================== THEME ===================== */
 function applyTheme(s){const r=document.documentElement.style;
@@ -600,23 +655,45 @@ function switchTab(t){
   document.getElementById('pane-login').classList.toggle('hidden',t!=='login');
   document.getElementById('pane-signup').classList.toggle('hidden',t!=='signup');
 }
+/* 로그아웃: 서버 세션까지 종료 (실패해도 화면은 반드시 초기화) */
+function doSignOut(){
+  const done=()=>{try{localStorage.removeItem('mba_sb_auth');}catch(e){}location.reload();};
+  if(!FB_ON){done();return;}
+  let fired=false;const once=()=>{if(!fired){fired=true;done();}};
+  setTimeout(once,3000);
+  try{SB.auth.signOut().then(once,once);}catch(e){once();}
+}
+/* 서버 회원 정보를 로컬 계정 목록에 반영 */
+function applyRemoteMember(row){
+  const a=sbToAcct(row);if(!a)return null;
+  const i=(S.accounts||[]).findIndex(x=>x.sid===a.sid);
+  if(i>=0)S.accounts[i]=Object.assign({},S.accounts[i],a); else S.accounts.push(a);
+  return a;
+}
 async function doLogin(){
   const sid=gv('lg-sid'),pw=document.getElementById('lg-pw').value;
   if(!sid){toast('학번을 입력하세요');return;}
-  const local=acctBySid(sid);            // 데모·관리자·이미 로그인한 계정은 로컬 우선
-  if(local){
-    if(local.pw!==pw){toast('비밀번호가 올바르지 않습니다');return;}
-    S.session=sid;S.remember=document.getElementById('lg-remember').checked;save();enterApp();return;
+  if(!pw){toast('비밀번호를 입력하세요');return;}
+  const btn=document.getElementById('loginBtn');
+  if(FB_ON){
+    if(btn){btn.disabled=true;btn.textContent='확인 중…';}
+    try{
+      const em=sbThrow(await fbTimeout(SB.rpc('login_email',{p_sid:sid}),12000,'lookup'));
+      if(!em){toast('등록되지 않은 학번입니다. 회원가입을 이용하세요');return;}
+      const r=await fbTimeout(SB.auth.signInWithPassword({email:em,password:pw}),15000,'signin');
+      if(r.error){toast('비밀번호가 올바르지 않습니다');return;}
+      const me=await fbTimeout(sbMe(),12000,'me');
+      if(!me){await SB.auth.signOut();toast('회원 정보를 찾을 수 없습니다');return;}
+      if(me.status==='pending'){await SB.auth.signOut();toast('아직 승인 대기 중입니다. 관리자 승인 후 이용해주세요');return;}
+      if(me.status==='rejected'){await SB.auth.signOut();toast('가입이 거절된 계정입니다. 관리자에게 문의하세요');return;}
+      applyRemoteMember(me);
+      S.session=me.sid;S.remember=document.getElementById('lg-remember').checked;save();enterApp();return;
+    }catch(e){
+      toast('로그인 확인 중 오류가 발생했습니다. 네트워크를 확인하고 다시 시도해주세요');return;
+    }finally{ if(btn){btn.disabled=false;btn.textContent='로그인';} }
   }
-  if(FB_ON){                              // 백엔드에 등록된 실제 가입자 확인
-    let m=null;
-    try{m=await fbTimeout(fbGet(sid),12000,'login');}catch(e){toast('로그인 확인 중 오류가 발생했습니다. 네트워크를 확인하고 다시 시도해주세요');return;}
-    if(!m){toast('등록되지 않은 학번입니다. 회원가입을 이용하세요');return;}
-    if(m.status==='pending'){toast('아직 승인 대기 중입니다. 관리자 승인 후 이용해주세요');return;}
-    if(m.status==='rejected'){toast('가입이 거절된 계정입니다. 관리자에게 문의하세요');return;}
-    if(m.pw!==pw){toast('비밀번호가 올바르지 않습니다');return;}
-    S.accounts.push(m);S.session=sid;S.remember=document.getElementById('lg-remember').checked;save();enterApp();return;
-  }
+  const local=acctBySid(sid);            // 오프라인 폴백
+  if(local&&local.pw===pw){S.session=sid;S.remember=document.getElementById('lg-remember').checked;save();enterApp();return;}
   toast('등록되지 않은 학번입니다. 회원가입을 이용하세요');
 }
 async function doSignup(){
@@ -626,23 +703,36 @@ async function doSignup(){
   const sid=gv('su-sid');
   const need=['su-sid','su-name','su-gisu','su-company','su-title','su-email'];
   if(!need.every(id=>gv(id))){toast('필수 항목(*)을 모두 입력하세요');return;}
-  const acc={sid:sid,pw:gv('su-pw')||'1234',name:gv('su-name'),school:pickedSchool.name,gisu:gv('su-gisu'),course:'MBA',
+  const pw=gv('su-pw');
+  if(pw.length<6){toast('비밀번호는 6자 이상으로 입력해주세요');return;}
+  const acc={sid:sid,name:gv('su-name'),school:pickedSchool.name,schoolId:pickedSchool.id,gisu:gv('su-gisu'),course:'MBA',
     birth:gv('su-birth'),company:gv('su-company'),title:gv('su-title'),head:gv('su-head'),email:gv('su-email'),phone:gv('su-phone'),
     photo:'',career:[],clubs:[],officer:'',role:'member',exposure:'basic'};
-  if(FB_ON){                              // 백엔드: 가입 신청 → 관리자 승인 대기
-    if(acctBySid(sid)){toast('이미 등록된 학번입니다');return;}
-    try{
-      const ex=await fbGet(sid);
-      if(ex){toast(ex.status==='pending'?'이미 승인 대기 중인 학번입니다':'이미 등록된 학번입니다');return;}
-      await fbCreatePending(acc);
-      toast('가입 신청이 접수되었습니다 — 관리자 승인 후 로그인할 수 있어요');
-      switchTab('login');
-    }catch(e){toast('가입 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요');}
-    return;
-  }
-  // 백엔드 미연결(데모): 즉시 가입·입장
-  if(acctBySid(sid)){toast('이미 등록된 학번입니다');return;}
-  S.accounts.push(acc);S.session=sid;S.remember=true;save();enterApp();
+  if(!FB_ON){toast('네트워크에 연결되어 있지 않습니다. 잠시 후 다시 시도해주세요');return;}
+  const btn=document.getElementById('signupBtn');
+  if(btn){btn.disabled=true;btn.textContent='신청 중…';}
+  try{
+    const st=sbThrow(await fbTimeout(SB.rpc('sid_status',{p_school:pickedSchool.id,p_sid:sid}),12000,'dup'));
+    if(st){toast(st==='pending'?'이미 승인 대기 중인 학번입니다':'이미 등록된 학번입니다');return;}
+    const em=sbEmail(sid,pickedSchool.id);
+    const su=await fbTimeout(SB.auth.signUp({email:em,password:pw}),15000,'signup');
+    if(su.error){
+      toast(/already/i.test(su.error.message||'')?'이미 등록된 학번입니다':'가입 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요');
+      return;
+    }
+    const uid=su.data&&su.data.user&&su.data.user.id;
+    if(!uid){toast('가입 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요');return;}
+    const ins=await SB.from(MEMBERS).insert(Object.assign({id:uid,status:'pending'},acctToRow(acc)));
+    await SB.auth.signOut();
+    if(ins.error){
+      toast(/duplicate|unique/i.test(ins.error.message||'')?'이미 등록된 학번입니다':'가입 신청 중 오류가 발생했습니다');
+      return;
+    }
+    toast('가입 신청이 접수되었습니다 — 관리자 승인 후 로그인할 수 있어요');
+    switchTab('login');
+  }catch(e){
+    toast('가입 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요');
+  }finally{ if(btn){btn.disabled=false;btn.textContent='가입하고 시작하기';} }
 }
 function gv(id){return document.getElementById(id).value.trim();}
 
@@ -699,7 +789,7 @@ function openMenuDrawer(){
   document.body.appendChild(bg);document.body.appendChild(dr);
   bg.onclick=closeMenuDrawer;
   dr.querySelector('#drawerX').onclick=closeMenuDrawer;
-  dr.querySelector('#drawerOut').onclick=()=>{closeMenuDrawer();ask('로그아웃하시겠어요?',()=>{S.session=null;save();location.reload();});};
+  dr.querySelector('#drawerOut').onclick=()=>{closeMenuDrawer();ask('로그아웃하시겠어요?',()=>{S.session=null;S.user=null;save();doSignOut();});};
   dr.querySelectorAll('.d-item').forEach(b=>b.onclick=()=>{closeMenuDrawer();go(b.dataset.view);});
 }
 function closeMenuDrawer(){['drawerBg','drawer'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});}
@@ -1174,7 +1264,7 @@ function viewOfficer(m,tab){
 }
 /* 가입 승인 큐 — 임원방·관리자 화면 공용 */
 async function renderSignupQueue(w,refresh){
-  if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">백엔드(Firebase)가 아직 연결되지 않았습니다.</div>';return;}
+  if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">서버에 연결할 수 없습니다. 네트워크를 확인해주세요.</div>';return;}
   let pend=[];
   try{pend=await fbTimeout(fbListByStatus('pending'),12000,'signups');}
   catch(e){w.innerHTML='<div class="ms" style="color:var(--sub)">목록을 불러오지 못했습니다. ('+esc(e.message||'network')+')</div><button class="btn sm ghost" id="suRetry" style="margin-top:10px">다시 시도</button>';
@@ -1193,7 +1283,7 @@ async function viewLogs(m){
   const w=document.getElementById('logWrap');
   document.getElementById('logReload').onclick=()=>viewLogs(m);
   document.getElementById('logClear').onclick=()=>ask('오류 로그를 모두 삭제할까요?',async()=>{try{await fbClearLogs();toast('로그를 삭제했습니다');viewLogs(m);}catch(e){toast('삭제 중 오류가 발생했습니다');}});
-  if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">백엔드(Firebase)가 연결되지 않아 로그를 기록/조회할 수 없습니다.</div>';return;}
+  if(!FB_ON){w.innerHTML='<div class="ms" style="color:var(--sub)">서버에 연결할 수 없어 로그를 조회할 수 없습니다.</div>';return;}
   let logs=[];
   try{logs=await fbRecentLogs(50);}catch(e){w.innerHTML='<div class="ms" style="color:var(--sub)">로그를 불러오지 못했습니다.</div>';return;}
   if(!logs.length){w.innerHTML='<div class="ms" style="color:var(--sub)">기록된 오류가 없습니다. 👍</div>';return;}
@@ -1284,7 +1374,7 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
         <div class="fld"><label>이메일 <span class="req">*</span></label><input id="me-em" value="${esc(u.email)}"></div>
         <div class="fld"><label>연락처</label><input id="me-ph" value="${esc(u.phone)}"></div>
         <div class="fld"><label>생년월일</label><input id="me-bd" value="${esc(u.birth)}" placeholder="예: 1985-03-12"></div>
-        <div class="fld"><label>비밀번호 변경</label><input id="me-pw" value="${esc(u.pw)}"></div>
+        <div class="fld"><label>비밀번호 변경</label><input id="me-pw" type="password" value="" placeholder="변경할 때만 입력 (6자 이상)" autocomplete="new-password"></div>
       </div>
       <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="me-save">기본 정보 저장</button><button class="btn ghost" id="me-terms">이용약관 보기</button><button class="btn gray" id="me-out">로그아웃</button></div>
     </div>
@@ -1308,7 +1398,7 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
     </div>
     <div class="card" style="padding:28px;max-width:620px;margin-top:16px;border:1px solid #F0C9C9">
       <div style="font-weight:800;font-size:16px;color:#C0392B">계정 삭제</div>
-      <p style="color:var(--sub);font-size:13.5px;margin-top:6px;margin-bottom:16px;line-height:1.65">계정을 삭제하면 프로필, 작성한 게시글·댓글·족보 기록, 모임 정보, 연락처 교환 내역이 <b>모두 영구 삭제</b>되며 되돌릴 수 없습니다. 서버(Firebase)에 저장된 회원 정보도 함께 삭제됩니다.</p>
+      <p style="color:var(--sub);font-size:13.5px;margin-top:6px;margin-bottom:16px;line-height:1.65">계정을 삭제하면 프로필, 작성한 게시글·댓글·족보 기록, 모임 정보, 연락처 교환 내역이 <b>모두 영구 삭제</b>되며 되돌릴 수 없습니다. 서버에 저장된 회원 정보와 로그인 계정도 함께 삭제됩니다.</p>
       <button class="btn" id="me-del" style="background:#C0392B;border-color:#C0392B">계정 삭제하기</button>
     </div>`;
   renderMeAvatar(m);renderCareerEditor(m);renderBlocked(m);
@@ -1318,12 +1408,23 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
   m.querySelector('#btn-photo-del').addEventListener('click',()=>{u.photo='';save();renderMeAvatar(m);const a=document.getElementById('meAv');a.style.backgroundImage='';a.style.color='';a.textContent=u.name.slice(0,1);m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('사진을 삭제했습니다');});
   m.querySelector('#addCareer').addEventListener('click',()=>{editCareer.push({c:'',r:'',p:''});renderCareerEditor(m);});
   m.querySelector('#saveCareer').addEventListener('click',()=>{u.career=editCareer.filter(c=>c.c.trim()||c.r.trim());save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('이력이 저장되었습니다');});
-  m.querySelector('#me-save').addEventListener('click',()=>{u.company=val('me-co');u.title=val('me-ti');u.head=val('me-head');u.email=val('me-em');u.phone=val('me-ph');u.birth=val('me-bd');u.pw=val('me-pw')||'1234';save();m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('저장되었습니다');});
+  m.querySelector('#me-save').addEventListener('click',async()=>{
+    u.company=val('me-co');u.title=val('me-ti');u.head=val('me-head');u.email=val('me-em');u.phone=val('me-ph');u.birth=val('me-bd');
+    save();m.querySelector('#prevBox').innerHTML=myPreviewCard();
+    const npw=val('me-pw');
+    if(npw){
+      if(npw.length<6){toast('비밀번호는 6자 이상으로 입력해주세요');return;}
+      if(FB_ON){try{const r=await SB.auth.updateUser({password:npw});if(r.error){toast('비밀번호 변경에 실패했습니다');return;}}catch(e){toast('비밀번호 변경에 실패했습니다');return;}}
+      document.getElementById('me-pw').value='';
+    }
+    await fbSaveProfile(u);
+    toast('저장되었습니다');
+  });
   m.querySelector('#me-terms').addEventListener('click',openTerms);
-  m.querySelector('#me-out').addEventListener('click',()=>ask('로그아웃하시겠어요?',()=>{S.session=null;save();location.reload();}));
+  m.querySelector('#me-out').addEventListener('click',()=>ask('로그아웃하시겠어요?',()=>{S.session=null;S.user=null;save();doSignOut();}));
   m.querySelectorAll('.exp-opt').forEach(b=>b.addEventListener('click',()=>{u.exposure=b.dataset.e;save();
     m.querySelectorAll('.exp-opt').forEach(o=>o.classList.toggle('on',o.dataset.e===u.exposure));
-    m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('공개 범위: '+expTitle(u.exposure));}));
+    m.querySelector('#prevBox').innerHTML=myPreviewCard();fbSaveProfile(u);toast('공개 범위: '+expTitle(u.exposure));}));
 }
 function renderBlocked(m){
   const box=m.querySelector('#blkList');if(!box)return;
@@ -1337,9 +1438,13 @@ function deleteAccount(){
     '<p style="font-size:13.5px;color:#C0392B;font-weight:700;margin:0 0 10px">이 작업은 되돌릴 수 없습니다.</p>'+
     '<p style="font-size:13.5px;color:var(--sub);line-height:1.7;margin:0 0 14px">'+esc(u.name)+'('+esc(u.sid)+') 계정과 아래 데이터가 영구 삭제됩니다.<br>· 프로필 및 이력, 프로필 사진<br>· 작성한 게시글 / 댓글 / 족보 기록 / 개설한 모임<br>· 연락처 교환 내역 및 동아리 가입 정보<br>· 서버에 저장된 회원 정보</p>'+
     '<div class="fld"><label>확인을 위해 <b>삭제</b> 를 입력하세요 <span class="req">*</span></label><input id="da-c" placeholder="삭제"></div>',
-    function(){
+    async function(){
       if(val('da-c')!=='삭제'){toast('"삭제" 두 글자를 정확히 입력하세요');return false;}
       const sid=u.sid,nm=u.name;
+      if(FB_ON){
+        try{ await fbTimeout(fbDeleteMember(),12000,'delete'); }
+        catch(e){ toast('계정 삭제 중 오류가 발생했습니다. 네트워크를 확인해주세요'); return false; }
+      }
       S.accounts=(S.accounts||[]).filter(a=>a.sid!==sid);
       S.posts=(S.posts||[]).filter(x=>x.who!==nm);
       (S.posts||[]).forEach(x=>{x.comments=(x.comments||[]).filter(c=>c.by!==nm);});
@@ -1348,7 +1453,7 @@ function deleteAccount(){
       (S.clubs||[]).forEach(c=>{if(c.leaderSid===sid){c.leaderSid='';c.leader='';}});
       S.exchanged=(S.exchanged||[]).filter(x=>x!==sid);
       S.session=null;S.user=null;save();
-      if(FB_ON&&DB){try{fbDeleteMember(sid);}catch(e){}}
+      try{localStorage.removeItem('mba_sb_auth');}catch(e){}
       toast('계정이 삭제되었습니다. 그동안 이용해 주셔서 감사합니다');
       setTimeout(function(){location.reload();},1600);
     });
@@ -1384,7 +1489,15 @@ function openModal(title,html,onOk,infoOnly){
   document.body.appendChild(bg);
   bg.addEventListener('click',e=>{if(e.target===bg)bg.remove();});
   bg.querySelector('[data-x]').addEventListener('click',()=>bg.remove());
-  const ok=bg.querySelector('[data-ok]');if(ok)ok.addEventListener('click',()=>{if(onOk&&onOk()===false)return;bg.remove();});
+  const ok=bg.querySelector('[data-ok]');
+  if(ok)ok.addEventListener('click',async()=>{
+    if(!onOk){bg.remove();return;}
+    ok.disabled=true;
+    let r;try{r=onOk();if(r&&typeof r.then==='function')r=await r;}catch(e){r=false;}
+    ok.disabled=false;
+    if(r===false)return;
+    bg.remove();
+  });
   window._modal=bg;
 }
 function closeModal(){if(window._modal)window._modal.remove();}
@@ -1463,11 +1576,22 @@ function showEulaGate(onAgree){
 
 /* ---------- boot ---------- */
 buildLogin();
-function bootAfterEula(){ if(S.session && S.remember && acctBySid(S.session)){enterApp();} }
+async function bootAfterEula(){
+  if(!(S.session && S.remember))return;
+  if(FB_ON){
+    /* 서버 세션이 살아있으면 최신 회원 정보로 자동 로그인 */
+    try{
+      const me=await fbTimeout(sbMe(),10000,'boot');
+      if(me && me.status==='approved'){ applyRemoteMember(me); S.session=me.sid; save(); enterApp(); return; }
+      if(me){ S.session=null; save(); return; }   /* 승인 취소/거절됨 */
+    }catch(e){ /* 오프라인 → 로컬 캐시로 진입 */ }
+  }
+  if(acctBySid(S.session))enterApp();
+}
 if(S.eula!==EULA_VER){ showEulaGate(bootAfterEula); } else { bootAfterEula(); }
 /* PWA: 서비스워커 등록 (설치·오프라인 지원) */
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
-/* 전역 오류 자동 기록 → Firestore errorLogs */
+/* 전역 오류 자동 기록 → Supabase error_logs */
 window.addEventListener('error',function(e){try{logError('js',e.message,(e.filename||'')+':'+(e.lineno||'')+':'+(e.colno||'')+'\n'+((e.error&&e.error.stack)||''));}catch(_){}});
 window.addEventListener('unhandledrejection',function(e){try{var r=e.reason;logError('promise',(r&&r.message)||(''+r),(r&&r.stack)||'');}catch(_){}});
 </script>
