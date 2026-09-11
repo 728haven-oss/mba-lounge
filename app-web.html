@@ -764,6 +764,105 @@ async function cloudExchange(sid){
   const r=await SB.from('exchanges').upsert({member:myUid(),peer_sid:sid});
   if(r.error)cloudFail(r.error);
 }
+/* ---------- 동아리 (목록·가입·개설신청) ---------- */
+function clubByName(n){return (S.clubs||[]).find(c=>c.name===n);}
+function clubMemberUids(n){return (S.clubMembers&&S.clubMembers[n])||[];}
+async function cloudPullClubs(){
+  if(!FB_ON||!myUid())return false;
+  const sc=mySchoolId(),uid=myUid();
+  let cl,cm,cr,mb;
+  try{
+    [cl,cm,cr,mb]=await fbTimeout(Promise.all([
+      SB.from('clubs').select('*').or('school_id.eq.'+sc+',school_id.eq.all').order('created_at',{ascending:true}),
+      SB.from('club_members').select('*'),
+      SB.from('club_requests').select('*').eq('status','pending'),
+      SB.from(MEMBERS).select('*').eq('status','approved')
+    ]),20000,'clubs');
+  }catch(e){return false;}
+  if(cl.error)return false;
+  /* 서버 원우를 로컬 계정 목록에 병합 (원우수첩·동아리 회원 목록용) */
+  if(!mb.error)(mb.data||[]).forEach(applyRemoteMember);
+  const byClub=grp(cm.data,'club_id');
+  S.clubMembers={};
+  S.clubs=(cl.data||[]).map(r=>{
+    const mt=r.meta||{};
+    S.clubMembers[r.name]=(byClub[r.id]||[]).map(x=>x.member);
+    return {id:r.id,name:r.name,cat:mt.cat||'취미',desc:r.desc_txt||'',members:(byClub[r.id]||[]).length,
+      icon:r.icon||'',scope:mt.scope||'school',school:mt.school||'',leader:mt.leader||'',
+      leaderSid:mt.leaderSid||'',ownerUid:r.owner};
+  });
+  if(S.user)S.user.clubs=S.clubs.filter(c=>clubMemberUids(c.name).indexOf(uid)>=0).map(c=>c.name);
+  S.clubRequests=(cr.error?[]:(cr.data||[])).map(r=>({id:r.id,name:r.name,cat:r.cat,desc:r.desc_txt,
+    icon:r.icon,scope:r.scope,school:r.school,by:r.by_name,bySid:r.by_sid||'',byUid:r.requester,
+    date:r.date_txt,status:r.status}));
+  save();return true;
+}
+async function cloudAddClub(c){
+  const r=await SB.from('clubs').insert({id:c.id,school_id:c.scope==='all'?'all':mySchoolId(),name:c.name,
+    desc_txt:c.desc,icon:c.icon||'',owner:myUid(),approved:true,
+    meta:{cat:c.cat,scope:c.scope,school:c.school,leader:c.leader,leaderSid:c.leaderSid}});
+  if(r.error){cloudFail(r.error);return false;}
+  await SB.from('club_members').upsert({club_id:c.id,member:myUid(),club_role:'lead'});
+  return true;
+}
+async function cloudClubJoin(clubId,on,uid){
+  const who=uid||myUid();
+  const r=on?await SB.from('club_members').upsert({club_id:clubId,member:who})
+            :await SB.from('club_members').delete().eq('club_id',clubId).eq('member',who);
+  if(r.error)cloudFail(r.error);
+}
+async function cloudClubMeta(clubId,patch){
+  const c=(S.clubs||[]).find(x=>x.id===clubId);if(!c)return;
+  const meta={cat:c.cat,scope:c.scope,school:c.school,leader:c.leader,leaderSid:c.leaderSid};
+  const body=Object.assign({},patch.icon!==undefined?{icon:patch.icon}:{},{meta:Object.assign(meta,patch.meta||{})});
+  const r=await SB.from('clubs').update(body).eq('id',clubId);
+  if(r.error)cloudFail(r.error);
+}
+async function cloudAddClubRequest(q){
+  const r=await SB.from('club_requests').insert({id:q.id,school_id:mySchoolId(),requester:myUid(),
+    name:q.name,cat:q.cat,desc_txt:q.desc,icon:q.icon||'',scope:q.scope,school:q.school,
+    by_name:q.by,date_txt:q.date,status:'pending'});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudSetClubRequest(id,st){
+  const r=await SB.from('club_requests').update({status:st}).eq('id',id);
+  if(r.error)cloudFail(r.error);
+}
+/* ---------- 동아리방 (공지·게시판·사진첩·회계) ---------- */
+async function cloudPullRoom(name){
+  const c=clubByName(name);if(!c||!FB_ON)return false;
+  let nt,lg;
+  try{
+    [nt,lg]=await fbTimeout(Promise.all([
+      SB.from('club_notices').select('*').eq('club_id',c.id).order('created_at',{ascending:false}),
+      SB.from('club_ledger').select('*').eq('club_id',c.id).order('created_at',{ascending:false})
+    ]),15000,'room');
+  }catch(e){return false;}
+  if(nt.error||lg.error)return false;
+  const r={notices:[],posts:[],photos:[],ledger:[]};
+  (nt.data||[]).forEach(x=>{
+    const base={id:x.id,by:x.by_name||'',date:x.date_txt||dstr(x.created_at)};
+    if(x.kind==='photo')r.photos.push(Object.assign({src:x.image||''},base));
+    else if(x.kind==='post')r.posts.push(Object.assign({title:x.title||'',body:x.body||''},base));
+    else r.notices.push(Object.assign({title:x.title||'',body:x.body||''},base));
+  });
+  r.ledger=(lg.data||[]).map(x=>({id:x.id,type:x.amount<0?'out':'in',amount:Math.abs(x.amount),
+    memo:x.item||'',by:x.by_name||'',date:x.date_txt||dstr(x.created_at)}));
+  if(!S.clubRooms)S.clubRooms={};
+  S.clubRooms[name]=r;save();return true;
+}
+async function cloudAddRoomItem(name,kind,item){
+  const c=clubByName(name);if(!c)return;
+  const r=await SB.from('club_notices').insert({id:item.id,club_id:c.id,author:myUid(),kind:kind,
+    title:item.title||'',body:item.body||'',image:item.src||'',by_name:item.by,date_txt:item.date});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudAddLedger(name,l){
+  const c=clubByName(name);if(!c)return;
+  const r=await SB.from('club_ledger').insert({id:l.id,club_id:c.id,author:myUid(),item:l.memo,
+    amount:(l.type==='out'?-1:1)*l.amount,by_name:l.by,date_txt:l.date});
+  if(r.error)cloudFail(r.error);
+}
 /* 로그아웃: 서버 세션까지 종료 (실패해도 화면은 반드시 초기화) */
 function doSignOut(){
   const done=()=>{try{localStorage.removeItem('mba_sb_auth');}catch(e){}location.reload();};
@@ -878,7 +977,7 @@ function enterApp(){
   document.getElementById('globalSearch').onkeydown=e=>{if(e.key==='Enter')doSearch(e.target.value);};
   go('home');
   /* 서버의 공유 콘텐츠를 내려받아 화면 갱신 */
-  cloudPull().then(function(ok){ if(ok)go(currentView); });
+  cloudPull().then(function(ok){ return cloudPullClubs().then(function(ok2){ if(ok||ok2)go(currentView); }); });
 }
 /* 전체메뉴 드로어 (삼단바) — 모든 메뉴를 한눈에 */
 function openMenuDrawer(){
@@ -1171,11 +1270,11 @@ function viewClub(m){
     <div class="chip-row">
       <button class="chip ${clubScope==='school'?'on':''}" data-s="school">우리 학교</button>
       <button class="chip ${clubScope==='all'?'on':''}" data-s="all">전체 MBA</button></div>
-    ${(S.clubRequests||[]).filter(r=>r.bySid===S.user.sid&&r.status==='pending').map(r=>`<div class="card" style="padding:12px 18px;margin-bottom:12px;font-size:13px;color:var(--sub)">${ico('lock',13)} 「${esc(r.name)}」 개설 신청이 관리자 승인 대기 중입니다.</div>`).join('')}
+    ${(S.clubRequests||[]).filter(r=>(r.byUid?r.byUid===myUid():r.bySid===S.user.sid)&&r.status==='pending').map(r=>`<div class="card" style="padding:12px 18px;margin-bottom:12px;font-size:13px;color:var(--sub)">${ico('lock',13)} 「${esc(r.name)}」 개설 신청이 관리자 승인 대기 중입니다.</div>`).join('')}
     ${mine.length?`<div style="margin-bottom:18px"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:8px">내 소속 동아리</div><div class="club-tags">${mine.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div></div>`:''}
     <div class="dir-grid">${list.map(c=>{const j=mine.includes(c.name);return `
       <div class="club-card card"><div class="crOpen" data-c="${esc(c.name)}" style="cursor:pointer" title="${j?'동아리방 입장':'가입 후 이용 가능'}">${clubIcHTML(c)}</div><div class="club-nm">${esc(c.name)}</div>
-        <div class="club-cat">${clubScopeLabel(c)} · ${esc(c.cat)} · 멤버 ${c.members+(j?1:0)}명${c.leader?' · 회장 '+esc(c.leader):''}</div><div class="club-desc">${esc(c.desc)}</div>
+        <div class="club-cat">${clubScopeLabel(c)} · ${esc(c.cat)} · 멤버 ${c.members}명${c.leader?' · 회장 '+esc(c.leader):''}</div><div class="club-desc">${esc(c.desc)}</div>
         ${j?`<button class="btn sm room" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${ico('comment',14)} 동아리방 입장</button>`:''}
         <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:${j?'8px':'14px'};width:100%">${j?ico('check',13)+' 가입됨 · 탈퇴하기':ico('plus',15)+' 가입하기'}</button>
         <button class="ic-change" data-c="${esc(c.name)}" style="margin-top:8px;background:none;border:none;color:var(--sub);font-size:12px;font-weight:600;width:100%;cursor:pointer">${ico('camera',13)} 아이콘 변경</button></div>`;}).join('')||`<div class="empty">아직 ${clubScope==='school'?'우리 학교':'전체 MBA'} 동아리가 없습니다.<br>첫 동아리를 만들어보세요!</div>`}</div>
@@ -1185,11 +1284,17 @@ function viewClub(m){
   m.querySelectorAll('.crOpen').forEach(b=>b.addEventListener('click',()=>{
     if((S.user.clubs||[]).includes(b.dataset.c))viewClubRoom(m,b.dataset.c);
     else toast('가입하면 동아리방을 이용할 수 있어요');}));
-  m.querySelectorAll('.join').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.c;const arr=S.user.clubs||[];
-    const i=arr.indexOf(n);if(i>=0){arr.splice(i,1);toast(n+' 탈퇴했습니다');}else{arr.push(n);toast(n+' 가입 완료');}S.user.clubs=arr;save();viewClub(m);}));
+  m.querySelectorAll('.join').forEach(b=>b.addEventListener('click',async()=>{const n=b.dataset.c;const arr=S.user.clubs||[];
+    const c=clubByName(n);if(!c)return;
+    const i=arr.indexOf(n);const joining=i<0;
+    if(joining){arr.push(n);c.members++;}else{arr.splice(i,1);c.members=Math.max(0,c.members-1);}
+    S.user.clubs=arr;save();viewClub(m);toast(joining?n+' 가입 완료':n+' 탈퇴했습니다');
+    await cloudClubJoin(c.id,joining);
+    fbSaveProfile(S.user);
+    await cloudPullClubs();if(currentView==='club')viewClub(m);}));
   let targetClub=null;const fi=m.querySelector('#clubIconInput');
   m.querySelectorAll('.ic-change').forEach(b=>b.addEventListener('click',()=>{targetClub=b.dataset.c;fi.value='';fi.click();}));
-  fi.addEventListener('change',e=>{const f=e.target.files[0];if(!f||!targetClub)return;const rd=new FileReader();rd.onload=()=>{const c=S.clubs.find(x=>x.name===targetClub);if(c)c.icon=rd.result;save();viewClub(m);toast(targetClub+' 아이콘이 등록되었습니다');};rd.readAsDataURL(f);});
+  fi.addEventListener('change',e=>{const f=e.target.files[0];if(!f||!targetClub)return;const rd=new FileReader();rd.onload=()=>{const c=S.clubs.find(x=>x.name===targetClub);if(c){c.icon=rd.result;cloudClubMeta(c.id,{icon:rd.result});}save();viewClub(m);toast(targetClub+' 아이콘이 등록되었습니다');};rd.readAsDataURL(f);});
   m.querySelector('#newClub').addEventListener('click',newClub);
 }
 /* 동아리방 — 공지사항 · 게시판 · 사진첩 · 회원 목록 · 회계 현황 */
@@ -1202,12 +1307,13 @@ function clubRoom(name){
 }
 function won(n){return (n<0?'-':'')+Math.abs(n).toLocaleString('ko-KR')+'원';}
 let crTab='notice';
-function viewClubRoom(m,name,tab){
+function viewClubRoom(m,name,tab,skipPull){
   const c=S.clubs.find(x=>x.name===name);if(!c){go('club');return;}
   const joined=(S.user.clubs||[]).includes(name);
   if(tab)crTab=tab;
   const r=clubRoom(name);
-  const isLeader=(c.leaderSid===S.user.sid)||S.user.role==='admin';
+  const isLeader=(c.ownerUid?c.ownerUid===myUid():c.leaderSid===S.user.sid)||S.user.role==='admin';
+  if(FB_ON&&joined&&!skipPull){cloudPullRoom(name).then(function(ok){if(ok)viewClubRoom(m,name,crTab,true);});}
   const T=[['notice','공지사항','bell'],['post','게시판','comment'],['photo','사진첩','camera'],['member','회원 목록','users'],['ledger','회계 현황','trend']];
   let body='';
   if(crTab==='notice'){
@@ -1228,7 +1334,9 @@ function viewClubRoom(m,name,tab){
           <div style="padding:8px 10px;font-size:11.5px;color:var(--sub)">${esc(p.by)} · ${p.date}</div></div>`).join('')}</div>`
         :'<div class="empty">아직 사진이 없습니다. 모임 사진을 올려보세요! 📷</div>'}`;
   }else if(crTab==='member'){
-    const mem=realMembers().filter(x=>(x.clubs||[]).includes(name));
+    const uids=clubMemberUids(name);
+    const mem=uids.length?realMembers().filter(x=>x.uid&&uids.indexOf(x.uid)>=0)
+                         :realMembers().filter(x=>(x.clubs||[]).includes(name));
     body=`${isLeader?`<div class="card" style="padding:12px 18px;margin-bottom:14px;font-size:12.5px;color:var(--sub)">${ico('star',13)} 회장 권한: 회원 내보내기와 회장 지정이 가능합니다.</div>`:''}
       <div class="card" style="padding:6px 20px">
       ${mem.map(x=>{const isL=c.leaderSid===x.sid;return `<div class="mini-row">${avatarHTML(x,40)}
@@ -1264,27 +1372,33 @@ function viewClubRoom(m,name,tab){
   m.querySelectorAll('.chip-row .chip').forEach(b=>b.onclick=()=>viewClubRoom(m,name,b.dataset.t));
   const bind=(id,fn)=>{const e=m.querySelector(id);if(e)e.onclick=fn;};
   m.querySelectorAll('.mKick').forEach(b=>b.onclick=()=>{
-    ask('이 회원을 동아리에서 내보낼까요?',()=>{
+    ask('이 회원을 동아리에서 내보낼까요?',async()=>{
       const a=S.accounts.find(x=>x.sid===b.dataset.s);
       if(a&&a.clubs)a.clubs=a.clubs.filter(n=>n!==name);
+      if(a&&a.uid)await cloudClubJoin(c.id,false,a.uid);
+      await cloudPullClubs();
       save();viewClubRoom(m,name,'member');toast('동아리에서 내보냈습니다');});});
   m.querySelectorAll('.mLead').forEach(b=>b.onclick=()=>{
     const a=S.accounts.find(x=>x.sid===b.dataset.s);if(!a)return;
-    ask(a.name+'님을 새 회장으로 지정할까요?',()=>{
+    ask(a.name+'님을 새 회장으로 지정할까요?',async()=>{
       c.leader=a.name;c.leaderSid=a.sid;
+      if(a.uid){const r=await SB.from('clubs').update({owner:a.uid,meta:{cat:c.cat,scope:c.scope,school:c.school,leader:a.name,leaderSid:a.sid}}).eq('id',c.id);if(r.error)cloudFail(r.error);}
       save();viewClubRoom(m,name,'member');toast(a.name+'님이 새 회장이 되었습니다');});});
   bind('#crAddNotice',()=>openModal(name+' 공지 올리기',
     `<div class="fld"><label>제목</label><input id="cn-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="cn-b" placeholder="동아리 회원들에게 알릴 내용"></textarea></div>`,
     ()=>{const t=val('cn-t');if(!t){toast('제목을 입력하세요');return false;}
-      r.notices.unshift({by:S.user.name,date:today(),title:t,body:val('cn-b')});save();viewClubRoom(m,name);toast('공지가 등록되었습니다');}));
+      const it={id:uuid(),by:S.user.name,date:today(),title:t,body:val('cn-b')};
+      r.notices.unshift(it);save();cloudAddRoomItem(name,'notice',it);viewClubRoom(m,name,null,true);toast('공지가 등록되었습니다');}));
   bind('#crAddPost',()=>openModal(name+' 글쓰기',
     `<div class="fld"><label>제목</label><input id="cr-t" placeholder="제목"></div><div class="fld"><label>내용</label><textarea id="cr-b" placeholder="동아리 원우들과 나눌 이야기"></textarea></div>`,
     ()=>{const t=val('cr-t');if(!t){toast('제목을 입력하세요');return false;}
-      r.posts.unshift({by:S.user.name,date:today(),title:t,body:val('cr-b')});save();viewClubRoom(m,name);toast('글이 등록되었습니다');}));
+      const it={id:uuid(),by:S.user.name,date:today(),title:t,body:val('cr-b')};
+      r.posts.unshift(it);save();cloudAddRoomItem(name,'post',it);viewClubRoom(m,name,null,true);toast('글이 등록되었습니다');}));
   const pf=m.querySelector('#crPhotoFile');
   bind('#crAddPhoto',()=>{if(pf){pf.value='';pf.click();}});
   if(pf)pf.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();
-    rd.onload=()=>{r.photos.unshift({src:rd.result,by:S.user.name,date:today()});save();viewClubRoom(m,name);toast('사진이 올라갔습니다 📷');};rd.readAsDataURL(f);});
+    rd.onload=()=>{const it={id:uuid(),src:rd.result,by:S.user.name,date:today()};
+      r.photos.unshift(it);save();cloudAddRoomItem(name,'photo',it);viewClubRoom(m,name,null,true);toast('사진이 올라갔습니다 📷');};rd.readAsDataURL(f);});
   bind('#crAddLedger',()=>openModal(name+' 회계 내역 추가',
     `<div class="fld"><label>구분</label><select id="cl-type"><option value="in">수입 (회비·후원 등)</option><option value="out">지출 (모임비·경비 등)</option></select></div>
      <div class="fld"><label>금액 (원) <span class="req">*</span></label><input id="cl-amt" type="number" placeholder="예: 50000"></div>
@@ -1292,8 +1406,9 @@ function viewClubRoom(m,name,tab){
     ()=>{const a=parseInt(document.getElementById('cl-amt').value);const memo=val('cl-memo');
       if(!a||a<=0){toast('금액을 입력하세요');return false;}
       if(!memo){toast('내용을 입력하세요');return false;}
-      r.ledger.unshift({type:document.getElementById('cl-type').value,amount:a,memo:memo,by:S.user.name,date:today()});
-      save();viewClubRoom(m,name,'ledger');toast('회계 내역이 기록되었습니다 💰');}));
+      const it={id:uuid(),type:document.getElementById('cl-type').value,amount:a,memo:memo,by:S.user.name,date:today()};
+      r.ledger.unshift(it);
+      save();cloudAddLedger(name,it);viewClubRoom(m,name,'ledger',true);toast('회계 내역이 기록되었습니다 💰');}));
 }
 function newClub(){
   let iconData='';
@@ -1310,11 +1425,14 @@ function newClub(){
       if(S.clubRequests.find(r=>r.name===name&&r.status==='pending')){toast('이미 승인 대기 중인 동아리명입니다');return false;}
       const sc=document.getElementById('nc-scope').value;
       if(S.user.role==='admin'){/* 관리자는 즉시 개설 */
-        S.clubs.push({id:'c'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',members:1,icon:iconData,scope:sc,school:sc==='school'?S.user.school:'',leader:S.user.name,leaderSid:S.user.sid});
-        clubScope=sc;save();go('club');toast('동아리가 생성되었습니다');return;}
+        const nc={id:uuid(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',members:1,icon:iconData,scope:sc,school:sc==='school'?S.user.school:'',leader:S.user.name,leaderSid:S.user.sid,ownerUid:myUid()};
+        S.clubs.push(nc);clubScope=sc;save();
+        cloudAddClub(nc).then(()=>cloudPullClubs()).then(()=>{if(currentView==='club')go('club');});
+        go('club');toast('동아리가 생성되었습니다');return;}
       /* 일반 원우는 관리자(임원방) 승인 후 개설 */
-      S.clubRequests.push({id:'cr'+Date.now(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',icon:iconData,scope:sc,school:sc==='school'?S.user.school:S.user.school,by:S.user.name,bySid:S.user.sid,date:today(),status:'pending'});
-      save();go('club');toast('개설 신청 완료! 관리자 승인 후 목록에 공개됩니다 ✅');});
+      const q={id:uuid(),name:name,cat:val('nc-cat'),desc:val('nc-desc')||'새로 만든 동아리',icon:iconData,scope:sc,school:S.user.school,by:S.user.name,bySid:S.user.sid,byUid:myUid(),date:today(),status:'pending'};
+      S.clubRequests.push(q);
+      save();cloudAddClubRequest(q);go('club');toast('개설 신청 완료! 관리자 승인 후 목록에 공개됩니다 ✅');});
   const pic=document.getElementById('nc-pic'),file=document.getElementById('nc-file'),prev=document.getElementById('nc-prev');
   pic.addEventListener('click',()=>file.click());
   file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{iconData=rd.result;prev.style.cssText='width:46px;height:46px;border-radius:12px;background-image:url(\''+iconData+'\');background-size:cover;background-position:center';prev.innerHTML='';};rd.readAsDataURL(f);});
@@ -1369,12 +1487,22 @@ function viewOfficer(m,tab){
       const nn={id:uuid(),src:ss?ss.short:'공지',title:t,body:val('nn-b'),date:today()};
       S.notices.unshift(nn);cloudAddNotice(nn);
       save();viewOfficer(m,'notice');toast('전체 공지가 등록되었습니다');}));
-  m.querySelectorAll('.cok').forEach(b=>b.onclick=()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
+  m.querySelectorAll('.cok').forEach(b=>b.onclick=async()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
     r.status='approved';
-    S.clubs.push({id:'c'+Date.now(),name:r.name,cat:r.cat,desc:r.desc,members:1,icon:r.icon||'',scope:r.scope,school:r.school,leader:r.by,leaderSid:r.bySid});
-    save();viewOfficer(m,'clubok');toast('「'+r.name+'」 개설을 승인했습니다. 회장: '+r.by+' 🎉');});
-  m.querySelectorAll('.crej').forEach(b=>b.onclick=()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
-    r.status='rejected';save();viewOfficer(m,'clubok');toast('신청을 거절했습니다');});
+    const nc={id:uuid(),name:r.name,cat:r.cat,desc:r.desc,members:1,icon:r.icon||'',scope:r.scope,school:r.school,leader:r.by,leaderSid:r.bySid,ownerUid:r.byUid||myUid()};
+    S.clubs.push(nc);save();
+    if(FB_ON){
+      const ins=await SB.from('clubs').insert({id:nc.id,school_id:nc.scope==='all'?'all':mySchoolId(),name:nc.name,
+        desc_txt:nc.desc,icon:nc.icon,owner:nc.ownerUid,approved:true,
+        meta:{cat:nc.cat,scope:nc.scope,school:nc.school,leader:nc.leader,leaderSid:nc.leaderSid}});
+      if(ins.error)cloudFail(ins.error);
+      else{ await SB.from('club_members').upsert({club_id:nc.id,member:nc.ownerUid,club_role:'lead'});
+            await cloudSetClubRequest(r.id,'approved'); await cloudPullClubs(); }
+    }
+    viewOfficer(m,'clubok');toast('「'+r.name+'」 개설을 승인했습니다. 회장: '+r.by+' 🎉');});
+  m.querySelectorAll('.crej').forEach(b=>b.onclick=async()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
+    r.status='rejected';save();await cloudSetClubRequest(r.id,'rejected');await cloudPullClubs();
+    viewOfficer(m,'clubok');toast('신청을 거절했습니다');});
   if(offTab==='signup')renderSignupQueue(m.querySelector('#suWrap'),()=>viewOfficer(m,'signup'));
 }
 /* 가입 승인 큐 — 임원방·관리자 화면 공용 */
@@ -1705,7 +1833,7 @@ async function bootAfterEula(){
 }
 if(S.eula!==EULA_VER){ showEulaGate(bootAfterEula); } else { bootAfterEula(); }
 /* 공유 콘텐츠 주기적 새로고침 — 입력 중이거나 모달이 열려 있으면 건너뜀 */
-const LIVE_VIEWS=['home','board','meet','notice','officer'];
+const LIVE_VIEWS=['home','board','meet','notice','officer','club','dir'];
 function canRefresh(){
   if(!S.user||!CLOUD_OK)return false;
   if(document.visibilityState!=='visible')return false;
@@ -1714,7 +1842,8 @@ function canRefresh(){
   if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return false;
   return LIVE_VIEWS.indexOf(currentView)>=0;
 }
-function softRefresh(){ if(!canRefresh())return; cloudPull().then(function(ok){ if(ok&&canRefresh())go(currentView); }); }
+function softRefresh(){ if(!canRefresh())return;
+  Promise.all([cloudPull(),cloudPullClubs()]).then(function(r){ if((r[0]||r[1])&&canRefresh())go(currentView); }); }
 setInterval(softRefresh,60000);
 document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible')setTimeout(softRefresh,300); });
 /* PWA: 서비스워커 등록 (설치·오프라인 지원) */
