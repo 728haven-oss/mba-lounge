@@ -501,8 +501,8 @@ function acctBySid(sid){return S.accounts.find(a=>a.sid===sid);}
 /* ===================== 신고 / 차단 (Apple Guideline 1.2) ===================== */
 function blockedList(){if(!S.blocked)S.blocked=[];return S.blocked;}
 function isBlocked(w){return !!w&&blockedList().indexOf(w)>=0;}
-function blockUser(w){if(!w||(S.user&&w===S.user.name))return false;if(!isBlocked(w))blockedList().push(w);save();return true;}
-function unblockUser(w){const a=blockedList(),i=a.indexOf(w);if(i>=0)a.splice(i,1);save();}
+function blockUser(w){if(!w||(S.user&&w===S.user.name))return false;if(!isBlocked(w)){blockedList().push(w);try{cloudBlock(w,true);}catch(e){}}save();return true;}
+function unblockUser(w){const a=blockedList(),i=a.indexOf(w);if(i>=0)a.splice(i,1);try{cloudBlock(w,false);}catch(e){}save();}
 const REPORT_REASONS=['스팸 또는 광고','괴롭힘 또는 혐오 발언','음란하거나 부적절한 콘텐츠','허위 정보 또는 사기','저작권 침해','기타'];
 function reportContent(kind,who,text,after){
   openModal('신고하기',
@@ -655,6 +655,115 @@ function switchTab(t){
   document.getElementById('pane-login').classList.toggle('hidden',t!=='login');
   document.getElementById('pane-signup').classList.toggle('hidden',t!=='signup');
 }
+/* ============ 공유 콘텐츠 동기화 (게시글·모임·공지·족보) ============ */
+function uuid(){
+  if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){
+    const r=Math.random()*16|0;return (c==='x'?r:(r&3|8)).toString(16);});
+}
+function mySchoolId(){const s=schoolByName(S.user&&S.user.school);return (S.user&&S.user.schoolId)||(s&&s.id)||'';}
+function myUid(){return (S.user&&S.user.uid)||null;}
+function dstr(iso){const d=new Date(iso);return (''+d.getFullYear()).slice(2)+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');}
+function grp(rows,key){const m={};(rows||[]).forEach(r=>{(m[r[key]]=m[r[key]]||[]).push(r);});return m;}
+let CLOUD_OK=false;
+async function cloudPull(){
+  if(!FB_ON||!S.user||!myUid())return false;
+  const sc=mySchoolId();if(!sc)return false;
+  const g=t=>SB.from(t).select('*');
+  let res;
+  try{
+    res=await fbTimeout(Promise.all([
+      g('posts').eq('school_id',sc).order('created_at',{ascending:false}),
+      g('comments').order('created_at',{ascending:true}),
+      g('post_likes'),
+      g('meets').eq('school_id',sc).order('created_at',{ascending:false}),
+      g('meet_joins'),
+      g('notices').eq('school_id',sc).order('created_at',{ascending:false}),
+      g('jokbo').eq('school_id',sc).order('created_at',{ascending:false}),
+      g('jokbo_entries').order('created_at',{ascending:true}),
+      g('ratings'),
+      g('blocks'),
+      g('exchanges')
+    ]),20000,'pull');
+  }catch(e){return false;}
+  const [po,co,li,me,mj,no,jk,je,ra,bl,ex]=res;
+  if(po.error||me.error||no.error||jk.error)return false;
+  const uid=myUid();
+  const cby=grp(co.data,'post_id'), lby=grp(li.data,'post_id'), jby=grp(mj.data,'meet_id'),
+        eby=grp(je.data,'jokbo_id'), rby=grp(ra.data,'jokbo_id');
+  S.posts=(po.data||[]).map(r=>({id:r.id,cat:r.cat,who:r.who,co:r.co,date:r.date_txt||dstr(r.created_at),
+    title:r.title,body:r.body,likes:(lby[r.id]||[]).length,liked:(lby[r.id]||[]).some(x=>x.member===uid),
+    comments:(cby[r.id]||[]).map(c=>({id:c.id,by:c.by_name,txt:c.txt}))}));
+  S.meets=(me.data||[]).map(r=>({id:r.id,date:r.when_at||dstr(r.created_at),title:r.title,org:r.org||'',
+    place:r.place||'',by:r.by_name||'',cap:r.cap||20,going:(jby[r.id]||[]).length,
+    attend:(jby[r.id]||[]).some(x=>x.member===uid),desc:r.body||'',img:r.img||''}));
+  S.notices=(no.data||[]).map(r=>({id:r.id,src:r.src||'공지',title:r.title,body:r.body||'',date:r.date_txt||dstr(r.created_at)}));
+  S.jokbo=(jk.data||[]).map(r=>{
+    const rt={};(rby[r.id]||[]).forEach(x=>{rt[x.member]=x.score;});
+    return {id:r.id,course:r.course,prof:r.prof||'',by:r.by_name||'',
+      entries:(eby[r.id]||[]).map(e=>({id:e.id,by:e.by_name,date:e.date_txt||dstr(e.created_at),title:e.title||'',body:e.txt||''})),
+      ratings:rt};
+  });
+  if(!bl.error)S.blocked=(bl.data||[]).map(x=>x.blocked_name);
+  if(!ex.error)S.exchanged=(ex.data||[]).map(x=>x.peer_sid);
+  CLOUD_OK=true;save();return true;
+}
+function cloudFail(e){try{logError('cloud',(e&&e.message)||''+e,'');}catch(_){ }toast('서버 저장에 실패했습니다. 네트워크를 확인해주세요');}
+async function cloudAddPost(p){
+  const r=await SB.from('posts').insert({id:p.id,school_id:mySchoolId(),author:myUid(),cat:p.cat,
+    title:p.title,body:p.body,who:p.who,co:p.co,date_txt:p.date});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudAddComment(postId,c){
+  const r=await SB.from('comments').insert({id:c.id,post_id:postId,author:myUid(),by_name:c.by,txt:c.txt});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudLike(postId,on){
+  const r=on?await SB.from('post_likes').upsert({post_id:postId,member:myUid()})
+            :await SB.from('post_likes').delete().eq('post_id',postId).eq('member',myUid());
+  if(r.error)cloudFail(r.error);
+}
+async function cloudAddMeet(x){
+  const r=await SB.from('meets').insert({id:x.id,school_id:mySchoolId(),author:myUid(),title:x.title,
+    body:x.desc,place:x.place,when_at:x.date,cap:x.cap,org:x.org,img:x.img||'',by_name:x.by});
+  if(r.error){cloudFail(r.error);return;}
+  await SB.from('meet_joins').upsert({meet_id:x.id,member:myUid()});
+}
+async function cloudJoin(meetId,on){
+  const r=on?await SB.from('meet_joins').upsert({meet_id:meetId,member:myUid()})
+            :await SB.from('meet_joins').delete().eq('meet_id',meetId).eq('member',myUid());
+  if(r.error)cloudFail(r.error);
+}
+async function cloudAddNotice(n){
+  const r=await SB.from('notices').insert({id:n.id,school_id:mySchoolId(),author:myUid(),
+    title:n.title,body:n.body,src:n.src,date_txt:n.date});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudAddJokbo(j){
+  const r=await SB.from('jokbo').insert({id:j.id,school_id:mySchoolId(),author:myUid(),
+    course:j.course,prof:j.prof,by_name:j.by});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudAddEntry(jokboId,e){
+  const r=await SB.from('jokbo_entries').insert({id:e.id,jokbo_id:jokboId,author:myUid(),
+    by_name:e.by,title:e.title,txt:e.body,date_txt:e.date});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudRate(jokboId,score){
+  const r=await SB.from('ratings').upsert({jokbo_id:jokboId,member:myUid(),score:score});
+  if(r.error)cloudFail(r.error);
+}
+async function cloudBlock(name,on){
+  if(!FB_ON||!myUid())return;
+  const r=on?await SB.from('blocks').upsert({member:myUid(),blocked_name:name})
+            :await SB.from('blocks').delete().eq('member',myUid()).eq('blocked_name',name);
+  if(r.error)cloudFail(r.error);
+}
+async function cloudExchange(sid){
+  if(!FB_ON||!myUid())return;
+  const r=await SB.from('exchanges').upsert({member:myUid(),peer_sid:sid});
+  if(r.error)cloudFail(r.error);
+}
 /* 로그아웃: 서버 세션까지 종료 (실패해도 화면은 반드시 초기화) */
 function doSignOut(){
   const done=()=>{try{localStorage.removeItem('mba_sb_auth');}catch(e){}location.reload();};
@@ -768,6 +877,8 @@ function enterApp(){
   document.getElementById('meBtn').onclick=()=>go('me');
   document.getElementById('globalSearch').onkeydown=e=>{if(e.key==='Enter')doSearch(e.target.value);};
   go('home');
+  /* 서버의 공유 콘텐츠를 내려받아 화면 갱신 */
+  cloudPull().then(function(ok){ if(ok)go(currentView); });
 }
 /* 전체메뉴 드로어 (삼단바) — 모든 메뉴를 한눈에 */
 function openMenuDrawer(){
@@ -883,14 +994,14 @@ function viewJokboHome(m){
      <div class="fld"><label>교수님</label><input id="jb-prof" placeholder="예: 홍길동"></div>`,
     ()=>{const c=val('jb-course');if(!c){toast('수업명을 입력하세요');return false;}
       if(S.jokbo.find(x=>x.course===c&&x.prof===val('jb-prof'))){toast('이미 등록된 수업입니다');return false;}
-      const j={id:'j'+Date.now(),course:c,prof:val('jb-prof'),by:S.user.name,entries:[],ratings:{}};
-      S.jokbo.unshift(j);save();viewJokbo(m,j.id);toast('수업이 등록되었습니다. 기록을 이어서 적어보세요!');}));
+      const j={id:uuid(),course:c,prof:val('jb-prof'),by:S.user.name,entries:[],ratings:{}};
+      S.jokbo.unshift(j);save();cloudAddJokbo(j);viewJokbo(m,j.id);toast('수업이 등록되었습니다. 기록을 이어서 적어보세요!');}));
 }
 function viewJokbo(m,id){
   if(!S.jokbo)S.jokbo=[];
   const j=S.jokbo.find(x=>x.id===id);if(!j){go('jokbo');return;}
   if(!j.ratings)j.ratings={};
-  const avg=jokboAvg(j);const myR=j.ratings[S.user.sid]||0;
+  const avg=jokboAvg(j);const myR=j.ratings[myUid()||S.user.sid]||0;
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap">
       <div><div class="eyebrow">Jokbo</div><h1>${ico('book',22)} ${esc(j.course)}</h1>
@@ -910,13 +1021,14 @@ function viewJokbo(m,id){
   m.querySelector('#jbBack').onclick=()=>go('jokbo');
   m.querySelectorAll('.rep-j').forEach(b=>b.onclick=()=>{const e=j.entries[+b.dataset.i];reportContent('족보 기록',e.by,e.title+' / '+e.body,()=>viewJokbo(m,id));});
   m.querySelectorAll('.blk-j').forEach(b=>b.onclick=()=>confirmBlock(b.dataset.w,()=>viewJokbo(m,id)));
-  m.querySelectorAll('#myStars button').forEach(b=>b.onclick=()=>{j.ratings[S.user.sid]=+b.dataset.v;save();viewJokbo(m,id);toast('만족도 '+b.dataset.v+'점을 남겼습니다 ⭐');});
+  m.querySelectorAll('#myStars button').forEach(b=>b.onclick=()=>{j.ratings[myUid()||S.user.sid]=+b.dataset.v;save();cloudRate(j.id,+b.dataset.v);viewJokbo(m,id);toast('만족도 '+b.dataset.v+'점을 남겼습니다 ⭐');});
   m.querySelector('#jbAdd').onclick=()=>openModal(j.course+' — 기록 이어서 적기',
     `<div class="fld"><label>제목 <span class="req">*</span></label><input id="je-t" placeholder="예: 중간고사 범위 정리"></div>
      <div class="fld"><label>내용</label><textarea id="je-b" placeholder="시험 범위·기출 유형·과제 팁 등을 적어주세요"></textarea></div>`,
     ()=>{const t=val('je-t');if(!t){toast('제목을 입력하세요');return false;}
-      j.entries.push({by:S.user.name,date:today(),title:t,body:val('je-b')});
-      save();viewJokbo(m,id);toast('기록 #'+j.entries.length+' 추가! 꼬리를 이었습니다 📝');});
+      const ne={id:uuid(),by:S.user.name,date:today(),title:t,body:val('je-b')};
+      j.entries.push(ne);
+      save();cloudAddEntry(j.id,ne);viewJokbo(m,id);toast('기록 #'+j.entries.length+' 추가! 꼬리를 이었습니다 📝');});
 }
 function postHTML(p){
   return `<div class="post-card card" data-id="${p.id}">
@@ -935,8 +1047,8 @@ function postHTML(p){
     </div></div>`;
 }
 function bindPost(m){
-  m.querySelectorAll('.like').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);p.liked=!p.liked;p.likes+=p.liked?1:-1;save();b.classList.toggle('on',p.liked);b.querySelector('span').textContent=p.likes;}));
-  m.querySelectorAll('.cadd').forEach(b=>b.addEventListener('click',()=>{const inp=m.querySelector('.cmt-form input[data-id="'+b.dataset.id+'"]');const t=inp.value.trim();if(!t)return;const p=S.posts.find(x=>x.id===b.dataset.id);p.comments.push({by:S.user.name,txt:t});save();viewBoard(m);}));
+  m.querySelectorAll('.like').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);p.liked=!p.liked;p.likes+=p.liked?1:-1;save();cloudLike(p.id,p.liked);b.classList.toggle('on',p.liked);b.querySelector('span').textContent=p.likes;}));
+  m.querySelectorAll('.cadd').forEach(b=>b.addEventListener('click',()=>{const inp=m.querySelector('.cmt-form input[data-id="'+b.dataset.id+'"]');const t=inp.value.trim();if(!t)return;const p=S.posts.find(x=>x.id===b.dataset.id);const nc={id:uuid(),by:S.user.name,txt:t};p.comments.push(nc);save();cloudAddComment(p.id,nc);viewBoard(m);}));
   m.querySelectorAll('.rep-p').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);reportContent('게시글',p.who,p.title+' / '+p.body,()=>viewBoard(m));}));
   m.querySelectorAll('.blk-p').forEach(b=>b.addEventListener('click',()=>confirmBlock(b.dataset.w,()=>viewBoard(m))));
   m.querySelectorAll('.rep-c').forEach(b=>b.addEventListener('click',()=>{const p=S.posts.find(x=>x.id===b.dataset.id);const c=p.comments[+b.dataset.ci];reportContent('댓글',c.by,c.txt,()=>viewBoard(m));}));
@@ -950,9 +1062,10 @@ function newPost(){
     <div class="fld"><label>내용</label><textarea id="np-body" placeholder="원우들과 나누고 싶은 이야기를 적어보세요"></textarea></div>`,
     ()=>{const t=document.getElementById('np-title').value.trim();if(!t){toast('제목을 입력하세요');return false;}
       const cat=fixed?boardCat:document.getElementById('np-cat').value;
-      S.posts.unshift({id:'p'+Date.now(),cat:cat,who:S.user.name,
-        co:(S.user.company+(S.user.title?' · '+S.user.title:'')),date:today(),title:t,body:document.getElementById('np-body').value.trim(),likes:0,liked:false,comments:[]});
-      save();go('board');toast(catName(cat)+' 게시판에 등록되었습니다');});
+      const np={id:uuid(),cat:cat,who:S.user.name,
+        co:(S.user.company+(S.user.title?' · '+S.user.title:'')),date:today(),title:t,body:document.getElementById('np-body').value.trim(),likes:0,liked:false,comments:[]};
+      S.posts.unshift(np);
+      save();cloudAddPost(np);go('board');toast(catName(cat)+' 게시판에 등록되었습니다');});
 }
 
 /* ---------- MEET ---------- */
@@ -964,7 +1077,7 @@ function viewMeet(m){
     <div class="meet-grid">${S.meets.filter(x=>!isBlocked(x.by)).map(meetHTML).join('')}</div>`;
   m.querySelector('#newMeet').addEventListener('click',newMeet);
   m.querySelectorAll('.attend').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);
-    x.attend=!x.attend;x.going+=x.attend?1:-1;save();viewMeet(m);toast(x.attend?'참여 신청 완료':'참여를 취소했습니다');}));
+    x.attend=!x.attend;x.going+=x.attend?1:-1;save();cloudJoin(x.id,x.attend);viewMeet(m);toast(x.attend?'참여 신청 완료':'참여를 취소했습니다');}));
   m.querySelectorAll('.rep-m').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);reportContent('모임 게시물',x.by,x.title+' / '+x.desc,()=>viewMeet(m));}));
   m.querySelectorAll('.blk-m').forEach(b=>b.addEventListener('click',()=>confirmBlock(b.dataset.w,()=>viewMeet(m))));
 }
@@ -991,10 +1104,11 @@ function newMeet(){
       <button type="button" class="btn sm ghost" id="nm-pic">${ico('camera',14)} 이미지 업로드</button></div>
       <input type="file" id="nm-file" accept="image/*" hidden></div>`,
     ()=>{const t=document.getElementById('nm-title').value.trim();if(!t){toast('모임명을 입력하세요');return false;}
-      S.meets.unshift({id:'m'+Date.now(),date:document.getElementById('nm-date').value.trim()||today(),
+      const nm={id:uuid(),date:document.getElementById('nm-date').value.trim()||today(),
         title:t,org:S.user.school+' MBA',place:document.getElementById('nm-place').value.trim()||'미정',by:S.user.name,
-        cap:parseInt(document.getElementById('nm-cap').value)||20,going:1,attend:true,desc:document.getElementById('nm-desc').value.trim(),img:imgData});
-      save();go('meet');toast('모임이 생성되었습니다');});
+        cap:parseInt(document.getElementById('nm-cap').value)||20,going:1,attend:true,desc:document.getElementById('nm-desc').value.trim(),img:imgData};
+      S.meets.unshift(nm);
+      save();cloudAddMeet(nm);go('meet');toast('모임이 생성되었습니다');});
   const pic=document.getElementById('nm-pic'),file=document.getElementById('nm-file'),prev=document.getElementById('nm-prev');
   pic.addEventListener('click',()=>file.click());
   file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();
@@ -1017,7 +1131,7 @@ function viewDir(m){
     <div class="dir-grid">${list.map(memHTML).join('')||'<div class="empty">표시할 원우가 없습니다.</div>'}</div>`;
   m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{dirScope=c.dataset.s;viewDir(m);}));
   m.querySelectorAll('.exch').forEach(b=>b.addEventListener('click',()=>{const key=b.dataset.k;
-    if(!S.exchanged.includes(key)){S.exchanged.push(key);save();}viewDir(m);toast('연락처를 교환했습니다');}));
+    if(!S.exchanged.includes(key)){S.exchanged.push(key);save();cloudExchange(key);}viewDir(m);toast('연락처를 교환했습니다');}));
 }
 function memHTML(x){
   const key=x.sid,done=S.exchanged.includes(key),ss=schoolByName(x.school),exp=x.exposure||'basic';
@@ -1252,7 +1366,8 @@ function viewOfficer(m,tab){
      <div class="fld"><label>내용</label><textarea id="nn-b" placeholder="전체 원우에게 알릴 내용"></textarea></div>`,
     ()=>{const t=val('nn-t');if(!t){toast('제목을 입력하세요');return false;}
       const ss=schoolByName(S.user.school);
-      S.notices.unshift({id:'n'+Date.now(),src:ss?ss.short:'공지',title:t,body:val('nn-b'),date:today()});
+      const nn={id:uuid(),src:ss?ss.short:'공지',title:t,body:val('nn-b'),date:today()};
+      S.notices.unshift(nn);cloudAddNotice(nn);
       save();viewOfficer(m,'notice');toast('전체 공지가 등록되었습니다');}));
   m.querySelectorAll('.cok').forEach(b=>b.onclick=()=>{const r=S.clubRequests.find(x=>x.id===b.dataset.id);if(!r)return;
     r.status='approved';
@@ -1589,6 +1704,19 @@ async function bootAfterEula(){
   if(acctBySid(S.session))enterApp();
 }
 if(S.eula!==EULA_VER){ showEulaGate(bootAfterEula); } else { bootAfterEula(); }
+/* 공유 콘텐츠 주기적 새로고침 — 입력 중이거나 모달이 열려 있으면 건너뜀 */
+const LIVE_VIEWS=['home','board','meet','notice','officer'];
+function canRefresh(){
+  if(!S.user||!CLOUD_OK)return false;
+  if(document.visibilityState!=='visible')return false;
+  if(document.querySelector('.modal-bg'))return false;
+  const a=document.activeElement;
+  if(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))return false;
+  return LIVE_VIEWS.indexOf(currentView)>=0;
+}
+function softRefresh(){ if(!canRefresh())return; cloudPull().then(function(ok){ if(ok&&canRefresh())go(currentView); }); }
+setInterval(softRefresh,60000);
+document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible')setTimeout(softRefresh,300); });
 /* PWA: 서비스워커 등록 (설치·오프라인 지원) */
 if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 /* 전역 오류 자동 기록 → Supabase error_logs */
