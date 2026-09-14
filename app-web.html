@@ -566,11 +566,22 @@ function acctToRow(a){
 const MEMBERS='members';
 async function sbSession(){if(!FB_ON)return null;try{const r=await SB.auth.getSession();return (r.data&&r.data.session)||null;}catch(e){return null;}}
 async function sbMe(){
-  const s=await sbSession();if(!s)return null;
+  const s=await sbSession();
+  if(!s)throw new Error('nosession');       /* 세션 만료 — 네트워크 오류와 구분 */
   const r=await SB.from(MEMBERS).select('*').eq('id',s.user.id).maybeSingle();
   if(r.error)throw new Error(r.error.message);
   return r.data;
 }
+/* 로그인이 풀린 상태로 앱을 쓰다가 저장이 조용히 실패하는 것을 막는다 */
+let SESSION_LOST=false;
+function sessionExpired(){
+  if(SESSION_LOST)return;SESSION_LOST=true;
+  toast('로그인이 만료되었습니다. 다시 로그인해주세요');
+  S.session=null;S.user=null;save();
+  setTimeout(function(){try{localStorage.removeItem('mba_sb_auth');}catch(e){}location.reload();},1800);
+}
+/* 세션이 끊긴 경우(=anon 권한)만 판별한다. RLS 위반은 권한 문제이지 세션 문제가 아니다 */
+function isAuthError(msg){return /permission denied|JWT|jwt expired|not authenticated|invalid claim/i.test(''+(msg||''));}
 async function fbGet(sid){
   const r=await SB.from(MEMBERS).select('*').eq('sid',sid).maybeSingle();
   if(r.error)throw new Error(r.error.message);
@@ -708,7 +719,14 @@ async function cloudPull(){
   if(!ex.error)S.exchanged=(ex.data||[]).map(x=>x.peer_sid);
   CLOUD_OK=true;save();return true;
 }
-function cloudFail(e){try{logError('cloud',(e&&e.message)||''+e,'');}catch(_){ }toast('서버 저장에 실패했습니다. 네트워크를 확인해주세요');}
+function cloudFail(e){
+  const msg=(e&&e.message)||''+e;
+  try{logError('cloud',msg,'');}catch(_){ }
+  if(isAuthError(msg)){ sessionExpired(); return; }
+  if(/row-level security/i.test(msg)){ toast('권한이 없습니다. 화면을 새로고침한 뒤 다시 시도해주세요'); return; }
+  if(/duplicate key|unique constraint/i.test(msg)){ toast('이미 같은 이름이 등록되어 있습니다'); return; }
+  toast('서버 저장에 실패했습니다. 네트워크를 확인해주세요');
+}
 async function cloudAddPost(p){
   const r=await SB.from('posts').insert({id:p.id,school_id:mySchoolId(),author:myUid(),cat:p.cat,
     title:p.title,body:p.body,who:p.who,co:p.co,date_txt:p.date});
@@ -815,8 +833,10 @@ async function cloudClubMeta(clubId,patch){
   const c=(S.clubs||[]).find(x=>x.id===clubId);if(!c)return;
   const meta={cat:c.cat,scope:c.scope,school:c.school,leader:c.leader,leaderSid:c.leaderSid};
   const body=Object.assign({},patch.icon!==undefined?{icon:patch.icon}:{},{meta:Object.assign(meta,patch.meta||{})});
-  const r=await SB.from('clubs').update(body).eq('id',clubId);
-  if(r.error)cloudFail(r.error);
+  const r=await SB.from('clubs').update(body).eq('id',clubId).select('id');
+  if(r.error){cloudFail(r.error);return false;}
+  if(!r.data||!r.data.length){toast('동아리 회장 또는 관리자만 변경할 수 있습니다');return false;}
+  return true;
 }
 async function cloudAddClubRequest(q){
   const r=await SB.from('club_requests').insert({id:q.id,school_id:mySchoolId(),requester:myUid(),
@@ -1277,7 +1297,7 @@ function viewClub(m){
         <div class="club-cat">${clubScopeLabel(c)} · ${esc(c.cat)} · 멤버 ${c.members}명${c.leader?' · 회장 '+esc(c.leader):''}</div><div class="club-desc">${esc(c.desc)}</div>
         ${j?`<button class="btn sm room" data-c="${esc(c.name)}" style="margin-top:14px;width:100%">${ico('comment',14)} 동아리방 입장</button>`:''}
         <button class="btn ${j?'gray':''} sm join" data-c="${esc(c.name)}" style="margin-top:${j?'8px':'14px'};width:100%">${j?ico('check',13)+' 가입됨 · 탈퇴하기':ico('plus',15)+' 가입하기'}</button>
-        <button class="ic-change" data-c="${esc(c.name)}" style="margin-top:8px;background:none;border:none;color:var(--sub);font-size:12px;font-weight:600;width:100%;cursor:pointer">${ico('camera',13)} 아이콘 변경</button></div>`;}).join('')||`<div class="empty">아직 ${clubScope==='school'?'우리 학교':'전체 MBA'} 동아리가 없습니다.<br>첫 동아리를 만들어보세요!</div>`}</div>
+        ${((c.ownerUid&&c.ownerUid===myUid())||S.user.role==='admin')?`<button class="ic-change" data-c="${esc(c.name)}" style="margin-top:8px;background:none;border:none;color:var(--sub);font-size:12px;font-weight:600;width:100%;cursor:pointer">${ico('camera',13)} 아이콘 변경</button>`:''}</div>`;}).join('')||`<div class="empty">아직 ${clubScope==='school'?'우리 학교':'전체 MBA'} 동아리가 없습니다.<br>첫 동아리를 만들어보세요!</div>`}</div>
     <input type="file" id="clubIconInput" accept="image/*" hidden>`;
   m.querySelectorAll('.chip-row .chip').forEach(c=>c.addEventListener('click',()=>{clubScope=c.dataset.s;viewClub(m);}));
   m.querySelectorAll('.room').forEach(b=>b.addEventListener('click',()=>viewClubRoom(m,b.dataset.c)));
@@ -1826,8 +1846,20 @@ async function bootAfterEula(){
     try{
       const me=await fbTimeout(sbMe(),10000,'boot');
       if(me && me.status==='approved'){ applyRemoteMember(me); S.session=me.sid; save(); enterApp(); return; }
-      if(me){ S.session=null; save(); return; }   /* 승인 취소/거절됨 */
-    }catch(e){ /* 오프라인 → 로컬 캐시로 진입 */ }
+      S.session=null; save(); return;            /* 승인 취소/거절 또는 회원 정보 없음 */
+    }catch(e){
+      const msg=(e&&e.message)||'';
+      /* 세션 만료·권한 상실이면 캐시로 들여보내지 않는다 (저장이 전부 실패하게 됨) */
+      if(msg==='nosession'||isAuthError(msg)){
+        S.session=null;S.user=null;save();
+        try{localStorage.removeItem('mba_sb_auth');}catch(_){}
+        toast('로그인이 만료되었습니다. 다시 로그인해주세요');
+        return;
+      }
+      /* 그 외(네트워크 오류)는 오프라인으로 보고 캐시 열람 허용 */
+      if(acctBySid(S.session)){ enterApp(); setTimeout(function(){toast('오프라인 상태입니다 — 작성한 내용이 저장되지 않을 수 있어요');},900); }
+      return;
+    }
   }
   if(acctBySid(S.session))enterApp();
 }
