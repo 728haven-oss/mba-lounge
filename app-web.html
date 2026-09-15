@@ -152,6 +152,20 @@
   .cat-tag.hire{background:#E8EEFF;color:#3B5BDB}
   .cat-tag.info{background:#F0EEFB;color:#6C5CE7}
   .cat-tag.jokbo{background:#EAF6F0;color:#1E7F5C}
+  .cat-tag.story{background:#FDECEF;color:#B3243B}
+  /* 원우 인터뷰(연세 헌터) 매거진 카드 */
+  .mag-card{overflow:hidden;padding:0;cursor:pointer}
+  .mag-cover{height:210px;background-size:cover;background-position:center 22%;background-color:var(--soft);position:relative}
+  .mag-issue{position:absolute;left:16px;top:14px;background:rgba(17,20,28,.72);color:#fff;font-size:11px;font-weight:800;letter-spacing:.08em;padding:5px 11px;border-radius:20px}
+  .mag-body{padding:18px 22px 20px}
+  .mag-kicker{font-size:11.5px;font-weight:800;letter-spacing:.12em;color:var(--pri);margin-bottom:7px}
+  .mag-title{font-size:20px;font-weight:800;line-height:1.35;letter-spacing:-.02em}
+  .mag-lead{color:#5a6170;font-size:13.5px;line-height:1.65;margin-top:9px}
+  .mag-meta{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12.5px;color:var(--sub)}
+  .mag-go{margin-left:auto;font-weight:800;color:var(--pri)}
+  .rd-cover{width:100%;border-radius:12px;margin-bottom:16px}
+  .rd-body{font-size:14.5px;line-height:1.85;color:#2a3040;white-space:pre-wrap}
+  .rd-body b{color:var(--pri)}
   .post-card h3{font-size:17px;font-weight:800}
   .post-card .body{color:#464c59;margin-top:8px;font-size:14.5px;white-space:pre-wrap}
   .post-actions{display:flex;gap:18px;margin-top:14px;color:var(--sub);font-size:13px;font-weight:700}
@@ -703,7 +717,8 @@ async function cloudPull(){
   const cby=grp(co.data,'post_id'), lby=grp(li.data,'post_id'), jby=grp(mj.data,'meet_id'),
         eby=grp(je.data,'jokbo_id'), rby=grp(ra.data,'jokbo_id');
   S.posts=(po.data||[]).map(r=>({id:r.id,cat:r.cat,who:r.who,co:r.co,date:r.date_txt||dstr(r.created_at),
-    title:r.title,body:r.body,likes:(lby[r.id]||[]).length,liked:(lby[r.id]||[]).some(x=>x.member===uid),
+    title:r.title,body:r.body,img:r.img||'',lead:r.lead||'',
+    likes:(lby[r.id]||[]).length,liked:(lby[r.id]||[]).some(x=>x.member===uid),
     comments:(cby[r.id]||[]).map(c=>({id:c.id,by:c.by_name,txt:c.txt}))}));
   S.meets=(me.data||[]).map(r=>({id:r.id,date:r.when_at||dstr(r.created_at),title:r.title,org:r.org||'',
     place:r.place||'',by:r.by_name||'',cap:r.cap||20,going:(jby[r.id]||[]).length,
@@ -729,7 +744,7 @@ function cloudFail(e){
 }
 async function cloudAddPost(p){
   const r=await SB.from('posts').insert({id:p.id,school_id:mySchoolId(),author:myUid(),cat:p.cat,
-    title:p.title,body:p.body,who:p.who,co:p.co,date_txt:p.date});
+    title:p.title,body:p.body,who:p.who,co:p.co,date_txt:p.date,img:p.img||'',lead:p.lead||''});
   if(r.error)cloudFail(r.error);
 }
 async function cloudAddComment(postId,c){
@@ -1078,18 +1093,44 @@ function viewHome(m){
 
 /* ---------- BOARD ---------- */
 let boardCat='all';
-function catName(c){return {deal:'사업제휴',invest:'투자',hire:'채용',info:'정보공유',jokbo:'족보'}[c]||c;}
+function catName(c){return {deal:'사업제휴',invest:'투자',hire:'채용',info:'정보공유',jokbo:'족보',story:'원우 인터뷰'}[c]||c;}
+/* ---- 원우 인터뷰(연세 헌터) : 표지 + 전문 읽기 ---- */
+function magCardHTML(p){
+  const cover=p.img?`<div class="mag-cover" style="background-image:url('${p.img}')"><span class="mag-issue">연세 헌터</span></div>`:'';
+  return `<div class="post-card card mag-card openMag" data-id="${p.id}">
+    ${cover}
+    <div class="mag-body">
+      <div class="mag-kicker">INTERVIEW · ${esc(p.date)}</div>
+      <div class="mag-title">${esc(p.title)}</div>
+      ${p.lead?`<div class="mag-lead">${esc(p.lead)}</div>`:''}
+      <div class="mag-meta">${ico('user',13)} ${esc(p.who)}<span class="mag-go">전문 읽기 ›</span></div>
+    </div></div>`;
+}
+function openMagazine(id){
+  const p=S.posts.find(x=>x.id===id);if(!p)return;
+  const html=`${p.img?`<img class="rd-cover" src="${p.img}" alt="">`:''}
+    <div class="mag-kicker">INTERVIEW · ${esc(p.date)} · ${esc(p.who)}</div>
+    ${p.lead?`<p class="mag-lead" style="margin:0 0 16px">${esc(p.lead)}</p>`:''}
+    <div class="rd-body">${esc(p.body)}</div>`;
+  openModal(esc(p.title),'<div style="max-height:64vh;overflow:auto;padding-right:6px">'+html+'</div>',null,true);
+}
 function viewBoard(m){
-  const cats=[['all','전체'],['deal','사업제휴'],['invest','투자'],['hire','채용'],['info','정보공유']];
+  const cats=[['all','전체'],['deal','사업제휴'],['invest','투자'],['hire','채용'],['info','정보공유'],['story','원우 인터뷰']];
   const list=S.posts.filter(p=>(boardCat==='all'||p.cat===boardCat)&&!isBlocked(p.who));
+  const isStory=boardCat==='story';
+  const canWrite=!isStory||isOfficer();
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
-      <div><div class="eyebrow">Business</div><h1>BZ 게시판</h1><p>원우들과 사업 제휴·투자·채용·정보를 나누세요.</p></div>
-      <button class="btn" id="newPost">${ico('plus',15)} 글쓰기</button></div>
+      <div><div class="eyebrow">${isStory?'Yonsei Hunter':'Business'}</div><h1>${isStory?'원우 인터뷰':'BZ 게시판'}</h1>
+        <p>${isStory?'졸업, 그 후 10년 — 원우 한 사람의 선택과 고민을 기록합니다.':'원우들과 사업 제휴·투자·채용·정보를 나누세요.'}</p></div>
+      ${canWrite?`<button class="btn" id="newPost">${ico('plus',15)} ${isStory?'인터뷰 등록':'글쓰기'}</button>`:''}</div>
     <div class="chip-row">${cats.map(c=>`<button class="chip ${boardCat===c[0]?'on':''}" data-c="${c[0]}">${c[1]}</button>`).join('')}</div>
-    <div id="postList">${list.map(postHTML).join('')||'<div class="empty">아직 게시글이 없습니다. 첫 글을 남겨보세요.</div>'}</div>`;
+    <div id="postList">${list.map(p=>p.cat==='story'?magCardHTML(p):postHTML(p)).join('')
+      ||`<div class="empty">${isStory?'아직 등록된 인터뷰가 없습니다.':'아직 게시글이 없습니다. 첫 글을 남겨보세요.'}</div>`}</div>`;
   m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{boardCat=c.dataset.c;viewBoard(m);}));
-  m.querySelector('#newPost').addEventListener('click',newPost);bindPost(m);
+  m.querySelectorAll('.openMag').forEach(b=>b.addEventListener('click',()=>openMagazine(b.dataset.id)));
+  const nb=m.querySelector('#newPost');if(nb)nb.addEventListener('click',newPost);
+  bindPost(m);
 }
 /* ---- 족보: 수업(클래스)별로 여러 원우가 꼬리에 꼬리를 물고 기록 + 수업 만족도 ---- */
 function starHTML(v){let s='';for(let i=1;i<=5;i++){s+=`<span style="color:${i<=Math.round(v)?'#F5B301':'#D9DCE5'};font-size:14px">★</span>`;}return `<span>${s}</span>`;}
@@ -1174,17 +1215,54 @@ function bindPost(m){
 }
 function newPost(){
   const fixed=(boardCat!=='all');/* 선택된 카테고리 탭에서 글쓰기 → 그 카테고리로 바로 작성 */
-  openModal(fixed?catName(boardCat)+' 글쓰기':'글쓰기',`
+  const story=(boardCat==='story');
+  if(story&&!isOfficer()){toast('원우 인터뷰는 임원·관리자만 등록할 수 있습니다');return;}
+  let coverData='';
+  openModal(story?'원우 인터뷰 등록':(fixed?catName(boardCat)+' 글쓰기':'글쓰기'),`
     ${fixed?`<div class="fld"><label>카테고리</label><div><span class="cat-tag ${boardCat}">${catName(boardCat)}</span> <span style="font-size:12px;color:var(--sub)">현재 게시판에 등록됩니다</span></div></div>`
       :`<div class="fld"><label>카테고리</label><select id="np-cat"><option value="deal">사업제휴</option><option value="invest">투자</option><option value="hire">채용</option><option value="info">정보공유</option></select></div>`}
-    <div class="fld"><label>제목</label><input id="np-title" placeholder="제목을 입력하세요"></div>
-    <div class="fld"><label>내용</label><textarea id="np-body" placeholder="원우들과 나누고 싶은 이야기를 적어보세요"></textarea></div>`,
+    <div class="fld"><label>제목</label><input id="np-title" placeholder="${story?'예: “나는 옆길로 가겠다”':'제목을 입력하세요'}"></div>
+    ${story?`<div class="fld"><label>부제 (한 줄 요약)</label><input id="np-lead" placeholder="예: 건축가가 되려던 학생이 설계 사무소에서 일주일을 일했다"></div>
+    <div class="fld"><label>인터뷰이</label><input id="np-who" placeholder="예: 김성집 · 연세 MBA 96기"></div>
+    <div class="fld"><label>표지 사진</label><div style="display:flex;align-items:center;gap:12px">
+      <span id="np-prev" style="width:72px;height:48px;border-radius:10px;background:var(--soft);color:var(--pri);display:flex;align-items:center;justify-content:center">${ico('camera',18)}</span>
+      <button type="button" class="btn sm ghost" id="np-pic">${ico('camera',14)} 사진 선택</button></div>
+      <input type="file" id="np-file" accept="image/*" hidden></div>`:''}
+    <div class="fld"><label>내용</label><textarea id="np-body" ${story?'style="min-height:200px"':''} placeholder="${story?'인터뷰 전문을 붙여넣으세요. 줄바꿈이 그대로 반영됩니다.':'원우들과 나누고 싶은 이야기를 적어보세요'}"></textarea></div>`,
     ()=>{const t=document.getElementById('np-title').value.trim();if(!t){toast('제목을 입력하세요');return false;}
       const cat=fixed?boardCat:document.getElementById('np-cat').value;
-      const np={id:uuid(),cat:cat,who:S.user.name,
-        co:(S.user.company+(S.user.title?' · '+S.user.title:'')),date:today(),title:t,body:document.getElementById('np-body').value.trim(),likes:0,liked:false,comments:[]};
+      const who=story?(val('np-who')||S.user.name):S.user.name;
+      const np={id:uuid(),cat:cat,who:who,
+        co:story?('글 · '+S.user.name):(S.user.company+(S.user.title?' · '+S.user.title:'')),
+        date:today(),title:t,body:document.getElementById('np-body').value.trim(),
+        img:story?coverData:'',lead:story?val('np-lead'):'',
+        likes:0,liked:false,comments:[]};
       S.posts.unshift(np);
-      save();cloudAddPost(np);go('board');toast(catName(cat)+' 게시판에 등록되었습니다');});
+      save();cloudAddPost(np);go('board');toast(story?'인터뷰가 등록되었습니다':catName(cat)+' 게시판에 등록되었습니다');});
+  if(story){
+    const pic=document.getElementById('np-pic'),file=document.getElementById('np-file'),prev=document.getElementById('np-prev');
+    pic.addEventListener('click',()=>file.click());
+    file.addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;
+      shrinkImage(f,1200,function(d){coverData=d;
+        prev.style.cssText='width:72px;height:48px;border-radius:10px;background-image:url(\''+d+'\');background-size:cover;background-position:center';prev.innerHTML='';});});
+  }
+}
+/* 사진을 가로 max px로 줄여 base64로 — 원본 그대로 저장하면 용량이 커진다 */
+function shrinkImage(file,max,cb){
+  const rd=new FileReader();
+  rd.onload=function(){
+    const im=new Image();
+    im.onload=function(){
+      const sc=Math.min(1,max/im.width);
+      const cv=document.createElement('canvas');
+      cv.width=Math.round(im.width*sc);cv.height=Math.round(im.height*sc);
+      cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);
+      try{cb(cv.toDataURL('image/jpeg',0.82));}catch(e){cb(rd.result);}
+    };
+    im.onerror=function(){cb(rd.result);};
+    im.src=rd.result;
+  };
+  rd.readAsDataURL(file);
 }
 
 /* ---------- MEET ---------- */
