@@ -166,6 +166,14 @@
   .rd-cover{width:100%;border-radius:12px;margin-bottom:16px}
   .rd-body{font-size:14.5px;line-height:1.85;color:#2a3040;white-space:pre-wrap}
   .rd-body b{color:var(--pri)}
+  /* 지면 뷰어 — PDF 원본 레이아웃을 이미지로 */
+  .pv-bg{position:fixed;inset:0;background:#20222b;z-index:9500;display:flex;flex-direction:column}
+  .pv-top{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#171922;color:#fff;flex-shrink:0}
+  .pv-top .t{font-size:14px;font-weight:800;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pv-top button,.pv-top a{background:rgba(255,255,255,.14);color:#fff;border:none;font-size:12.5px;font-weight:700;padding:8px 13px;border-radius:9px;cursor:pointer;white-space:nowrap}
+  .pv-scroll{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;padding:14px 12px 30px;text-align:center}
+  .pv-scroll img{width:100%;max-width:820px;margin:0 auto 14px;border-radius:6px;background:#fff;box-shadow:0 6px 22px rgba(0,0,0,.35);display:block}
+  .pv-num{color:#8f96a8;font-size:12px;margin:-6px 0 18px}
   .post-card h3{font-size:17px;font-weight:800}
   .post-card .body{color:#464c59;margin-top:8px;font-size:14.5px;white-space:pre-wrap}
   .post-actions{display:flex;gap:18px;margin-top:14px;color:var(--sub);font-size:13px;font-weight:700}
@@ -717,7 +725,7 @@ async function cloudPull(){
   const cby=grp(co.data,'post_id'), lby=grp(li.data,'post_id'), jby=grp(mj.data,'meet_id'),
         eby=grp(je.data,'jokbo_id'), rby=grp(ra.data,'jokbo_id');
   S.posts=(po.data||[]).map(r=>({id:r.id,cat:r.cat,who:r.who,co:r.co,date:r.date_txt||dstr(r.created_at),
-    title:r.title,body:r.body,img:r.img||'',lead:r.lead||'',
+    title:r.title,body:r.body,img:r.img||'',lead:r.lead||'',assets:r.assets||{},
     likes:(lby[r.id]||[]).length,liked:(lby[r.id]||[]).some(x=>x.member===uid),
     comments:(cby[r.id]||[]).map(c=>({id:c.id,by:c.by_name,txt:c.txt}))}));
   S.meets=(me.data||[]).map(r=>({id:r.id,date:r.when_at||dstr(r.created_at),title:r.title,org:r.org||'',
@@ -744,7 +752,7 @@ function cloudFail(e){
 }
 async function cloudAddPost(p){
   const r=await SB.from('posts').insert({id:p.id,school_id:mySchoolId(),author:myUid(),cat:p.cat,
-    title:p.title,body:p.body,who:p.who,co:p.co,date_txt:p.date,img:p.img||'',lead:p.lead||''});
+    title:p.title,body:p.body,who:p.who,co:p.co,date_txt:p.date,img:p.img||'',lead:p.lead||'',assets:p.assets||{}});
   if(r.error)cloudFail(r.error);
 }
 async function cloudAddComment(postId,c){
@@ -1103,16 +1111,38 @@ function magCardHTML(p){
       <div class="mag-kicker">INTERVIEW · ${esc(p.date)}</div>
       <div class="mag-title">${esc(p.title)}</div>
       ${p.lead?`<div class="mag-lead">${esc(p.lead)}</div>`:''}
-      <div class="mag-meta">${ico('user',13)} ${esc(p.who)}<span class="mag-go">전문 읽기 ›</span></div>
+      <div class="mag-meta">${ico('user',13)} ${esc(p.who)}<span class="mag-go">${magPages(p).length?'지면 보기 ›':'전문 읽기 ›'}</span></div>
     </div></div>`;
+}
+function magPages(p){const a=p.assets||{};return Array.isArray(a.pages)?a.pages:[];}
+/* 지면 뷰어 : PDF를 그대로 옮긴 페이지 이미지를 세로로 넘겨 봄 */
+function openPageView(id){
+  const p=S.posts.find(x=>x.id===id);if(!p)return;
+  const pages=magPages(p);if(!pages.length)return;
+  const pdf=(p.assets||{}).pdf||'';
+  const bg=document.createElement('div');bg.className='pv-bg';bg.id='pvBg';
+  bg.innerHTML=`<div class="pv-top">
+      <span class="t">${esc(p.title)}</span>
+      ${pdf?`<a href="${esc(pdf)}" target="_blank" rel="noopener">${ico('book',13)} PDF 원문</a>`:''}
+      <button id="pvTxt">본문 텍스트</button>
+      <button id="pvX">닫기</button></div>
+    <div class="pv-scroll">${pages.map((u,i)=>
+      `<img src="${esc(u)}" alt="${i+1}쪽" loading="${i<2?'eager':'lazy'}" decoding="async">
+       <div class="pv-num">${i+1} / ${pages.length}</div>`).join('')}</div>`;
+  document.body.appendChild(bg);
+  bg.querySelector('#pvX').onclick=()=>bg.remove();
+  bg.querySelector('#pvTxt').onclick=()=>{bg.remove();openMagazine(id);};
 }
 function openMagazine(id){
   const p=S.posts.find(x=>x.id===id);if(!p)return;
   const html=`${p.img?`<img class="rd-cover" src="${p.img}" alt="">`:''}
+    ${magPages(p).length?`<div style="margin-bottom:14px"><button class="btn sm" id="rdPage">${ico('book',14)} 지면으로 보기</button></div>`:''}
     <div class="mag-kicker">INTERVIEW · ${esc(p.date)} · ${esc(p.who)}</div>
     ${p.lead?`<p class="mag-lead" style="margin:0 0 16px">${esc(p.lead)}</p>`:''}
     <div class="rd-body">${esc(p.body)}</div>`;
   openModal(esc(p.title),'<div style="max-height:64vh;overflow:auto;padding-right:6px">'+html+'</div>',null,true);
+  const rp=document.getElementById('rdPage');
+  if(rp)rp.onclick=function(){closeModal();openPageView(id);};
 }
 function viewBoard(m){
   const cats=[['all','전체'],['deal','사업제휴'],['invest','투자'],['hire','채용'],['info','정보공유'],['story','원우 인터뷰']];
@@ -1128,7 +1158,9 @@ function viewBoard(m){
     <div id="postList">${list.map(p=>p.cat==='story'?magCardHTML(p):postHTML(p)).join('')
       ||`<div class="empty">${isStory?'아직 등록된 인터뷰가 없습니다.':'아직 게시글이 없습니다. 첫 글을 남겨보세요.'}</div>`}</div>`;
   m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{boardCat=c.dataset.c;viewBoard(m);}));
-  m.querySelectorAll('.openMag').forEach(b=>b.addEventListener('click',()=>openMagazine(b.dataset.id)));
+  m.querySelectorAll('.openMag').forEach(b=>b.addEventListener('click',()=>{
+    const p=S.posts.find(x=>x.id===b.dataset.id);
+    if(p&&magPages(p).length)openPageView(b.dataset.id); else openMagazine(b.dataset.id);}));
   const nb=m.querySelector('#newPost');if(nb)nb.addEventListener('click',newPost);
   bindPost(m);
 }
