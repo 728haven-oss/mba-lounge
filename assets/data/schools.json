@@ -1,0 +1,5566 @@
+{
+ "checked": "2026-10-15",
+ "schools": [
+  {
+   "id": "yonsei",
+   "name": "연세대학교",
+   "short": "연세",
+   "color": "#003876",
+   "soft": "#E7EEF7",
+   "official_name": "연세대학교 경영전문대학원 (Yonsei University Graduate School of Business)",
+   "mba_site_url": "https://mba.yonsei.ac.kr/",
+   "admissions_url": "https://applymba.yonsei.ac.kr",
+   "programs": [
+    {
+     "name": "Corporate MBA",
+     "name_en": "Corporate MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "일반 경영 (마케팅·매니지먼트·재무 심화과정 Concentration 선택 가능)",
+     "language": "한국어 (영어과목 1.5학점 이상 이수 필요)",
+     "duration": "2년 (모듈형 학기제, 45학점, 졸업논문 없음)",
+     "schedule": "야간: 봄·가을 주 3일(월·화·목 19:00-22:00), 여름·겨울 집중세션 주 6일(평일 야간 + 토 09:00-19:00)",
+     "target": "만 2년 이상 직장 경력의 현직 중간관리자 (2026 입학생 평균 39세, 평균 경력 10.9년)",
+     "intake": "전기(3월) 연 1회, 약 160명 내외 (FAQ 기준). 정원 외 외국인 전형 별도",
+     "tuition": "학기당 11,866,000원 + 첫 학기 입학금 1,211,000원 (2026학년도 기준; 2027학년도 등록금은 2027년 1월경 확정 예정)",
+     "source_url": "https://ysb.yonsei.ac.kr/_attach/yonsei_ysb/file/2026/09/fuxeRUVlNeBOQDEuJiSxGjPbXB.pdf",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "Finance MBA",
+     "name_en": "Finance MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "금융 (금융공학, 자산운용/투자은행 Concentration)",
+     "language": "한국어 (영어과목 1.5학점 이상 이수 필요)",
+     "duration": "2년 (45학점, 전공필수 33학점, 졸업논문 없음)",
+     "schedule": "야간: Corporate MBA와 동일 (월·화·목 19:00-22:00, 여름·겨울 집중세션)",
+     "target": "금융 CEO를 지향하는 중간관리자, 만 2년 이상 경력 현직자 (2026 입학생 약 80%가 금융권, 평균 경력 10.5년)",
+     "intake": "전기(3월) 연 1회, 약 35명 내외 (FAQ 기준)",
+     "tuition": "학기당 11,866,000원 + 첫 학기 입학금 1,211,000원 (2026학년도 기준)",
+     "source_url": "https://ysb.yonsei.ac.kr/_attach/yonsei_ysb/file/2026/09/fuxeRUVlNeBOQDEuJiSxGjPbXB.pdf",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "Executive MBA",
+     "name_en": "Yonsei Executive MBA",
+     "type": "Executive",
+     "focus": "일반 경영·리더십 (테마별 통합 교육과정, Action Learning, 경영전략서 출간 과정)",
+     "language": "한국어",
+     "duration": "2년 (4학기제, 45학점 이상, 해외연수 최대 3회 포함)",
+     "schedule": "격주 주말: 금 13:00-22:00, 토 09:30-18:35",
+     "target": "기업 CEO·임원 및 임원 승진을 앞둔 경력 10년차 이상 관리자 (2026 입학생 CEO·임원 58%, 평균 경력 17.9년, 평균 46세)",
+     "intake": "전기(3월) 연 1회, 약 60명 내외 (FAQ 기준)",
+     "tuition": "학기당 22,702,000원 + 첫 학기 입학금 1,211,000원 (2026학년도 기준)",
+     "source_url": "https://ysb.yonsei.ac.kr/_attach/yonsei_ysb/file/2026/09/oOZxixPwzwdgKGicCaNUczPKaG.pdf",
+     "type_ko": "Executive"
+    },
+    {
+     "name": "Global MBA",
+     "name_en": "Yonsei Global MBA",
+     "type": "Global/English",
+     "focus": "일반 경영 + 아시아 비즈니스 (선택 인턴십)",
+     "language": "영어",
+     "duration": "18개월 (3학기, 45학점, 졸업논문 없음; 9월 개강~이듬해 12월 수업, 2월 졸업)",
+     "schedule": "주간 과정",
+     "target": "국내외 글로벌 인재 (명시적 경력 요건은 공식 페이지에서 확인되지 않음)",
+     "intake": "가을(9월) 입학 연 1회, 최대 50명",
+     "tuition": null,
+     "source_url": "https://mba.yonsei.ac.kr/mba/program/global-mba.do",
+     "type_ko": "영어 과정"
+    },
+    {
+     "name": "Advanced MBA",
+     "name_en": "Advanced MBA",
+     "type": "Specialized",
+     "focus": "기술·산업 기반 경영 (디지털 혁신, 생성형 AI, 신흥시장 등 선택 트랙); 협약기업 대상 계약학과",
+     "language": null,
+     "duration": "2년 (4학기, 45학점)",
+     "schedule": "토요일 09:30-18:50 (학기당 16주)",
+     "target": "협약기업 재직자 (현 직장 10개월 이상, 회사 등록금 50% 이상 지원 등 요건)",
+     "intake": "매년 3월 입학, 총 100명 이내",
+     "tuition": "총 50,110,000원 (학기당 12,520,000원) + 입학금 별도 (2026년 기준)",
+     "source_url": "https://mba.yonsei.ac.kr/mba/program/advanced-mba.do",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "GBI MBA",
+     "name_en": "Global Business Innovation MBA",
+     "type": "Specialized",
+     "focus": "해외사업·신사업·신에너지/기술 혁신 (국내 전력 관련 기업 대상 맞춤형 계약학과)",
+     "language": "한국어 (일부 영어과목)",
+     "duration": "1년 6개월 (3학기, 45학점)",
+     "schedule": "평일 주간 (2학년은 현업 병행)",
+     "target": "협약 전력 관련 기업 임직원",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://mba.yonsei.ac.kr/mba/program/gbi-mba.do",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "Police MBA",
+     "name_en": "Police MBA",
+     "type": "Specialized",
+     "focus": "금융·경제 범죄 수사 역량 (경찰청 협약 계약학과)",
+     "language": "한국어",
+     "duration": "2년 (22개월, 45학점)",
+     "schedule": "수요일 저녁 온라인(19:00-22:00) + 토요일 주간 대면(09:00-19:00)",
+     "target": "재직 10개월 이상 경찰공무원",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://mba.yonsei.ac.kr/mba/program/police-mba.do",
+     "type_ko": "특화 과정"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Corporate MBA / Finance MBA",
+     "cycle": "2027학년도 전기",
+     "application_period": "온라인 원서 2026-09-15 10:00 ~ 2026-10-16 17:00 (입학설명회 2026-09-09); 면접대상자 발표 2026-11-18, 면접 2026-11-28(토), 최종발표 2026-12-15",
+     "stages": "1차 서류심사 → 2차 대면 면접",
+     "eligibility": "학사학위 소지(또는 2027년 2월 취득 예정) + 만 2년 이상 직장 경력의 현직자. Corporate MBA는 정원 외 외국인 전형(유학활동 가능 체류자격 필요, D-2 비자 필요자 불가) 별도",
+     "documents": [
+      "자기소개서(본원 양식)",
+      "추천서 1부(본원 양식)",
+      "학사 졸업(예정)증명서",
+      "학사 성적증명서",
+      "재직증명서(접수 시작일 이후 발급)",
+      "경력증명서(이전 직장 있는 경우)",
+      "(선택) 공인영어성적표",
+      "외국인 전형: 여권·외국인등록증·비자 사본 및 자격 입증서류"
+     ],
+     "tests": "공인영어성적 선택 제출(TOEFL/TOEIC/TEPS/IELTS, 2년 이내), 제출 시 일부 가점. 영어권 대학(원) 졸업자는 제출 불필요. GMAT/GRE 요구 없음",
+     "interview_format": "대면 면접 (토요일, 면접자별 시간 상이)",
+     "special_tracks": "Corporate MBA 정원 외 외국인 전형",
+     "source_url": "https://ysb.yonsei.ac.kr/_attach/yonsei_ysb/file/2026/09/fuxeRUVlNeBOQDEuJiSxGjPbXB.pdf"
+    },
+    {
+     "program": "Executive MBA",
+     "cycle": "2027학년도 전기",
+     "application_period": "온라인 원서 2026-09-15 10:00 ~ 2026-10-16 17:00; 면접대상자 발표 2026-11-04, 면접 2026-11-14(토), 최종발표 2026-12-01",
+     "stages": "1차 서류심사 → 2차 대면 면접",
+     "eligibility": "학사학위 소지(또는 2027년 2월 취득 예정) + 만 10년 내외 직장 경력의 현직자",
+     "documents": [
+      "자기소개서(본원 양식)",
+      "추천서 1부(본원 양식)",
+      "학사 졸업(예정)증명서",
+      "학사 성적증명서",
+      "재직증명서",
+      "경력증명서(해당자)",
+      "(선택) 공인영어성적표",
+      "등록금지원확인서(해당자)"
+     ],
+     "tests": "영어성적 불필요(수업 전부 한국어), 제출 시 일부 가점. GMAT/GRE 요구 없음",
+     "interview_format": "대면 면접",
+     "special_tracks": "회사 등록금 지원자는 등록금지원확인서 제출",
+     "source_url": "https://ysb.yonsei.ac.kr/_attach/yonsei_ysb/file/2026/09/oOZxixPwzwdgKGicCaNUczPKaG.pdf"
+    },
+    {
+     "program": "Global MBA",
+     "cycle": "2026 (2026년 9월 입학) — 2027 입학 요강은 확인되지 않음",
+     "application_period": "온라인 2026-03-17 ~ 03-28; 서류 우편/방문 ~04-28; Zoom 면접 05-18~05-22; 결과 06-18",
+     "stages": "서류심사 → 입학위원회 면접",
+     "eligibility": "공식 페이지에 별도 지원자격 기재 없음",
+     "documents": [
+      "온라인 지원서",
+      "에세이(지정 양식)",
+      "추천서(영문 양식, 내용은 한국어 가능)",
+      "성적·영어성적·GMAT/GRE(해당 시) 등 서류"
+     ],
+     "tests": "영어 최저점수 TOEFL iBT 91 / TOEIC 800 / IELTS 6.0 (TOEFL 선호, 다음 cycle 변경 가능). GMAT 필수 아님(제출 시 우선 고려, 장학 지원 시 권장)",
+     "interview_format": "영어 면접, 대면 또는 Zoom",
+     "special_tracks": "입학 시 장학금·조교 장학(주 10-15시간 근무), 우수자는 전액 장학+월 생활비 가능. 전형료 USD 100 / KRW 120,000",
+     "source_url": "https://mba.yonsei.ac.kr/mba/admissions/full-time-mba.do"
+    }
+   ],
+   "analysis": [
+    "야간(Corporate·Finance), 주말 EMBA, 영어 Global MBA에 기업·기관 맞춤 계약학과(Advanced·GBI·Police)까지 갖춰 선택지가 가장 넓은 편이다.",
+    "Corporate·Finance MBA는 경력 2년 이상이면 지원 가능하고 영어성적은 선택이라, 30대 실무자가 직장을 유지하며 진학하기에 진입 장벽이 낮다.",
+    "Finance MBA는 정원 약 35명에 재학생 대부분이 금융권이라, 금융 커리어를 깊게 가져가려는 사람에게 맞는 소규모 과정이다.",
+    "EMBA는 격주 금·토 수업에 CEO·임원 비중이 높고 해외연수와 개인 경영전략서 출간 과정이 있어, 임원급 네트워킹을 원하는 리더에게 적합하다.",
+    "AACSB·EQUIS·AMBA 3대 국제인증을 모두 보유하고 FT 2026 EMBA 랭킹 국내 1위(세계 56위)를 공식 발표했다."
+   ],
+   "news_sources": [
+    {
+     "name": "YSB Now",
+     "publisher": "연세대학교 경영대학·경영전문대학원",
+     "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "MBA 사이트 YSB 뉴스",
+     "publisher": "연세대학교 경영전문대학원",
+     "url": "https://mba.yonsei.ac.kr/mba/intro/ysb-news.do",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "연세대학교 경영대학/경영전문대학원 뉴스레터",
+     "publisher": "연세대학교 경영대학·경영전문대학원",
+     "url": "https://ysb.yonsei.ac.kr/newsletter",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "언론 속 YSB",
+     "publisher": "연세대학교 경영대학 (외부 언론 보도 모음)",
+     "url": "https://ysb.yonsei.ac.kr/ysb/news/media.do",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "동문 소식",
+     "publisher": "연세대학교 경영대학",
+     "url": "https://ysb.yonsei.ac.kr/ysb/alumni/proud-alumni.do",
+     "kind": "alumni newsletter",
+     "rss_url": null
+    },
+    {
+     "name": "연세동문회보",
+     "publisher": "연세대학교 총동문회",
+     "url": null,
+     "kind": "alumni newsletter",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "연세대학교 Executive MBA, FT 2026 EMBA 평가 국내 1위·세계 56위",
+     "date": "2026-10-13",
+     "source_name": "YSB Now",
+     "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do?mode=view&articleNo=55265",
+     "summary_ko": "파이낸셜타임스의 2026년 EMBA 순위에서 연세 EMBA가 국내 프로그램 가운데 가장 높은 순위(세계 56위)를 기록했다는 학교 발표다."
+    },
+    {
+     "title": "경영전문대학원, James Rhee 초청 Global Leadership Forum 개최",
+     "date": "2026-10-13",
+     "source_name": "YSB Now",
+     "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do?mode=view&articleNo=55267",
+     "summary_ko": "MIT Sloan 강사이자 전 Ashley Stewart CEO인 James Rhee가 AI 시대 리더십을 주제로 학생들과 사례 기반 문답 세션을 진행했다."
+    },
+    {
+     "title": "글로벌 경영교육 인증기관 AACSB(국제경영대학발전협의회) 방문",
+     "date": "2026-09-29",
+     "source_name": "YSB Now",
+     "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do?mode=view&articleNo=55160",
+     "summary_ko": "AACSB 회장단이 경영대학을 찾아 학장단·경영전문대학원 부원장 등과 경영교육의 방향과 협력 방안을 논의했다."
+    },
+    {
+     "title": "경영대학·경영전문대학원·경영연구소 홈페이지 새롭게 개편",
+     "date": "2026-09-29",
+     "source_name": "YSB Now",
+     "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do?mode=view&articleNo=55147",
+     "summary_ko": "세 기관의 웹사이트를 모바일 중심으로 통합 개편했고, MBA 입학 관련 온라인 서비스도 함께 손봤다는 소식이다."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "Corporate·Finance·Executive MBA",
+     "start": "2026-09-15",
+     "end": "2026-10-16"
+    }
+   ],
+   "notes": "2027학년도 Corporate/Finance MBA·EMBA 요강은 공식 브로슈어 PDF(2026년 9월 게시)로 확인함. Global MBA는 2026년 9월 입학 cycle(2026년 3-6월 전형)이 최신 공개분이며 2027 요강은 확인 못 함. 등록금은 모두 FAQ의 2026학년도 기준(2027 금액은 2027년 1월경 확정 예정); Global MBA·GBI·Police MBA 등록금은 공식 페이지에서 확인 불가. 모집인원(약 160/35/60명)은 FAQ의 '내외' 수치. Advanced MBA 강의 언어 미기재. 연세대학교 총동문회 및 연세동문회보 공식 사이트는 이번 환경에서 접속/검증이 안 되어 url을 null로 둠(robots 차단·프록시 차단). RSS 피드는 어느 공식 사이트에서도 확인되지 않음. 4개 뉴스 모두 YSB Now 출처이며, 동문회보 기사는 포함하지 못함.",
+   "guide": {
+    "tagline": "야간·주말·영어·기업 맞춤까지 과정이 가장 다양하다. EMBA는 FT 2026 평가 국내 1위.",
+    "intake": [
+     {
+      "program": "Corporate · Finance MBA",
+      "start": "매년 3월",
+      "apply": "9월 중순 ~ 10월 중순"
+     },
+     {
+      "program": "Executive MBA",
+      "start": "매년 3월",
+      "apply": "9월 중순 ~ 10월 중순"
+     },
+     {
+      "program": "Global MBA (영어)",
+      "start": "매년 9월",
+      "apply": "3월 (2026년 기준)"
+     },
+     {
+      "program": "Advanced · GBI · Police MBA",
+      "start": "매년 3월",
+      "apply": "협약 기업·기관 추천"
+     }
+    ],
+    "process": [
+     {
+      "title": "Corporate · Finance MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.9.15 – 10.16"
+       },
+       {
+        "label": "면접 대상 발표",
+        "when": "11.18"
+       },
+       {
+        "label": "대면 면접",
+        "when": "11.28 (토)"
+       },
+       {
+        "label": "최종 발표",
+        "when": "12.15"
+       }
+      ]
+     },
+     {
+      "title": "Executive MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.9.15 – 10.16"
+       },
+       {
+        "label": "면접 대상 발표",
+        "when": "11.4"
+       },
+       {
+        "label": "대면 면접",
+        "when": "11.14 (토)"
+       },
+       {
+        "label": "최종 발표",
+        "when": "12.1"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위 (2027년 2월 취득 예정 포함)"
+     },
+     {
+      "k": "경력",
+      "v": "Corporate·Finance: 만 2년 이상 재직 중 / EMBA: 10년 내외 재직 중"
+     },
+     {
+      "k": "영어",
+      "v": "국내 과정은 선택 제출(가점). Global MBA는 TOEFL 91 · TOEIC 800 · IELTS 6.0 이상"
+     },
+     {
+      "k": "GMAT",
+      "v": "요구하지 않음 (Global MBA는 제출 시 우대)"
+     },
+     {
+      "k": "선발",
+      "v": "서류 심사 → 대면 면접"
+     },
+     {
+      "k": "제출 서류",
+      "v": "자기소개서, 추천서 1부, 졸업·성적증명서, 재직·경력증명서"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Corporate MBA",
+      "per_semester": 11866000,
+      "semesters": 4,
+      "admission": 1211000,
+      "total": 47464000,
+      "all_in": 48675000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Finance MBA",
+      "per_semester": 11866000,
+      "semesters": 4,
+      "admission": 1211000,
+      "total": 47464000,
+      "all_in": 48675000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Executive MBA",
+      "per_semester": 22702000,
+      "semesters": 4,
+      "admission": 1211000,
+      "total": 90808000,
+      "all_in": 92019000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Global MBA",
+      "per_semester": 16933000,
+      "semesters": 3,
+      "admission": 1211000,
+      "total": 50799000,
+      "all_in": 52010000,
+      "year": "2026",
+      "note": "외국인 등록금표 '22~'25 기수 기준"
+     },
+     {
+      "program": "Advanced MBA",
+      "per_semester": 12520000,
+      "semesters": 4,
+      "admission": null,
+      "total": 50110000,
+      "all_in": 50110000,
+      "year": "2026",
+      "note": "입학금 별도"
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do",
+    "count": 62,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "매니지먼트(조직·인사·전략)",
+      "count": 14
+     },
+     {
+      "area": "마케팅",
+      "count": 10
+     },
+     {
+      "area": "재무",
+      "count": 10
+     },
+     {
+      "area": "회계",
+      "count": 6
+     },
+     {
+      "area": "경영과학 (ODI-MS)",
+      "count": 6
+     },
+     {
+      "area": "정보시스템 (ODI-IS)",
+      "count": 6
+     },
+     {
+      "area": "오퍼레이션 (ODI-OM)",
+      "count": 6
+     },
+     {
+      "area": "국제경영",
+      "count": 5
+     }
+    ],
+    "strengths": [
+     "정보시스템 분야가 두드러져 MIS Quarterly·Information Systems Research·Management Science 게재 실적이 많고, MIS Quarterly 부편집장(AE)을 맡은 교수가 있습니다.",
+     "ODI(경영과학·정보시스템·운영관리) 분야가 18명으로 크고, 학장도 공급망관리 전공이라 운영·공급망·AI/데이터 역량이 강합니다.",
+     "자본시장연구원장, 한국증권학회장, 한국거래소·금융위원회 관련 위원 등 금융 정책·시장 실무 경력을 가진 재무·회계 교수진이 많습니다.",
+     "CMBA·FMBA·EMBA·GMBA·Advanced MBA 등 과정별로 운영(주임)교수를 따로 두고, 우수강의교수상을 여러 차례 받은 교수가 많습니다."
+    ],
+    "notable": [
+     {
+      "name": "허대식",
+      "name_en": "Hur, Daesik",
+      "role": "경영대학장 · 경영전문대학원장 (2025.2~)",
+      "area": "오퍼레이션 (ODI-OM)",
+      "phd": "Indiana University, Kelley School of Business (Ph.D., Operations Management & Decision Sciences)",
+      "highlights": [
+       "2025년 2월부터 경영대학장 겸 경영전문대학원장을 맡고 있으며, 이전에 교학부학장(2017-2019)을 지냄",
+       "Journal of Operations Management, Production and Operations Management, Journal of Supply Chain Management 등에 공급망·구매 관련 논문 게재",
+       "연세대 우수강의교수상을 10회 넘게 수상했고, 2015년 Journal of Supply Chain Management Harold E. Fearon Best Paper Award 최종 후보",
+       "매일경제에 경영혁신 칼럼을 연재 중(2021~)이며 동반성장위원회·산업통상자원부 자문 경력"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=21995"
+     },
+     {
+      "name": "곽주영",
+      "name_en": "Kwak, Jooyoung",
+      "role": "경영전문대학원 부원장 (2025~)",
+      "area": "국제경영",
+      "phd": "MIT (Ph.D., Technology Economics and Policy)",
+      "highlights": [
+       "2025년 Strategic Management Journal에 지정학적 긴장 아래 다국적기업의 ESG를 비시장 전략으로 분석한 논문(교신저자) 게재",
+       "Research Policy, International Business Review 등에 디지털 중국·기술표준·신흥시장 연구 게재",
+       "산업통상자원부 통상교섭민간자문위원(2018~), 2025년부터 Financial Times 칼럼니스트, 한국경제신문 칼럼니스트로 활동"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22033"
+     },
+     {
+      "name": "임일",
+      "name_en": "Im, Il",
+      "role": "Executive MBA 운영교수",
+      "area": "정보시스템 (ODI-IS)",
+      "phd": "University of Southern California (Ph.D.)",
+      "highlights": [
+       "MIS Quarterly(2023) 등에 AI·추천시스템·스마트스피커 관련 논문 게재",
+       "한국과학기술한림원 정회원(2019~), 연세 경영대학 BK21 FOUR 사업단장(2020~)",
+       "한국지능정보시스템학회 회장 역임, 연세대 2026학년도 공헌교수상 수상"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22010"
+     },
+     {
+      "name": "한재훈",
+      "name_en": "Hahn, Jaehoon",
+      "role": "Finance MBA 운영교수 · 재무 분야 주임교수",
+      "area": "재무",
+      "phd": "Columbia University (Ph.D., Finance)",
+      "highlights": [
+       "Journal of Finance(재무제약과 주식수익률), Journal of Financial and Quantitative Analysis에 자산가격 논문 게재",
+       "재무연구 편집위원장(2022-2023), Asia-Pacific Journal of Financial Studies 부편집장(2009-2017) 역임",
+       "연세 부임 전 University of Washington 조교수"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22024"
+     },
+     {
+      "name": "서승범",
+      "name_en": "Soh, Seung Bum",
+      "role": "Corporate MBA 운영교수",
+      "area": "경영과학 (ODI-MS)",
+      "phd": "Northwestern University, Kellogg School of Management (Ph.D., Operations Management)",
+      "highlights": [
+       "Operations Research에 대기행렬·콜센터 인력운영 관련 논문 게재(2017, 2025)",
+       "홍콩과기대 박사후연구원, 세종대 조교수를 거쳐 2017년 연세 부임"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22054"
+     },
+     {
+      "name": "정승환",
+      "name_en": "Jung, Seung Hwan",
+      "role": "Global MBA 주임교수 (2025.9~)",
+      "area": "오퍼레이션 (ODI-OM)",
+      "phd": "Washington University in St. Louis, Olin School of Business (Ph.D., Operations and Manufacturing Management)",
+      "highlights": [
+       "Production and Operations Management, Manufacturing & Service Operations Management에 공급망·소싱 논문 게재",
+       "2025년 경영대학 Outstanding Research Faculty Award, 2023년 초헌학술상 수상",
+       "LG디스플레이 공장자동화 기술팀 출신으로 Texas A&M-Kingsville 조교수 역임"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22087"
+     },
+     {
+      "name": "방영석",
+      "name_en": "Bang, Youngsok",
+      "role": "Advanced MBA 주임교수 (2023~)",
+      "area": "정보시스템 (ODI-IS)",
+      "phd": "McGill University (Ph.D., Information Systems); KAIST (경영공학 박사)",
+      "highlights": [
+       "Asia Pacific Journal of Information Systems 편집위원장(2026~)",
+       "IT서비스 우수연구인상(2025), 경영과학대상 차동완젊은경영과학자상(2022), 유민 이상문 신진학자상(2022) 수상",
+       "『AI 비즈니스 애널리틱스』(2026) 등 저서, 공저 『디지털 비즈니스 전략』은 2026 세종도서 학술부문 선정"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22070"
+     },
+     {
+      "name": "김승현",
+      "name_en": "Kim, Seung Hyun",
+      "role": "YSB Distinguished Research Chair Professor (2024~)",
+      "area": "정보시스템 (ODI-IS)",
+      "phd": "Carnegie Mellon University (Ph.D., Information Systems)",
+      "highlights": [
+       "MIS Quarterly Associate Editor(2025~), Asia Pacific Journal of Information Systems 편집장(2024-2025) 역임",
+       "프로필에 MIS Quarterly, Information Systems Research, Management Science 논문이 다수 정리되어 있음",
+       "경영전문대학원 부원장(2024-2025), 사이버보안·프라이버시 전략 연구센터장(2025~)"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22048"
+     },
+     {
+      "name": "이무원",
+      "name_en": "Rhee, Mooweon",
+      "role": "현대자동차/YSB 석좌교수 (2013~)",
+      "area": "매니지먼트",
+      "phd": "Stanford University (Ph.D., Business Administration)",
+      "highlights": [
+       "연세 부임 전 University of Hawaii Shidler College에서 Distinguished Professor 역임",
+       "연구 분야는 조직학습, 평판·지위, 사회연결망, 아시아 기반 조직이론(세부 논문 목록은 공식 프로필에 개인 사이트로 연결)"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22047"
+     },
+     {
+      "name": "윤대희",
+      "name_en": "Yoon, Dae-Hee",
+      "role": "경영연구소장 (2025.3~)",
+      "area": "회계",
+      "phd": "Yale University (Ph.D.)",
+      "highlights": [
+       "The Accounting Review, Management Science, Journal of Marketing Research 등에 논문 게재",
+       "한국회계학회 삼일회계법인 저명교수(2020-2023), YSB Research Chair Professor(2020-2025) 선정",
+       "KB국민은행 사외이사(2025~), 한국거래소 코스닥시장 상장위원회 심의위원(2024~), 국민연금 외부평가위원"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22039"
+     },
+     {
+      "name": "신진영",
+      "name_en": "Shin, Jhin Young",
+      "role": "교수",
+      "area": "재무",
+      "phd": "Carnegie Mellon University (Ph.D.)",
+      "highlights": [
+       "자본시장연구원 원장(2021-2024), 한국ESG기준원(Korea Institute of Corporate Governance and Sustainability) 원장(2019-2021) 역임",
+       "한국증권학회 회장(2019) 역임",
+       "연세 부임 전 홍콩과기대 조교수(1993-1999)"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22000"
+     },
+     {
+      "name": "박승재",
+      "name_en": "Park, Seung Jae",
+      "role": "언더우드 특훈교수 (2025학년도 임용)",
+      "area": "오퍼레이션 (ODI-OM)",
+      "phd": "University of Texas at Austin, McCombs School of Business (Ph.D., Supply Chain and Operations Management)",
+      "highlights": [
+       "2025학년도 연세대 언더우드 특훈교수로 임용(임기 2025.9-2028.8, 전교 10명 선정)",
+       "Production and Operations Management, Management Science, Operations Research, M&SOM 등 최고권위지 논문 게재",
+       "연세대 우수업적교수상(교육부문, 2020), 우수강의교수상 다수; 현재 교학부학장"
+      ],
+      "source_url": "https://ysb.yonsei.ac.kr/ysb/faculty/full-time-professors.do?mode=view&articleNo=22061"
+     }
+    ],
+    "news": [
+     {
+      "title": "박승재 교수, 2025학년도 언더우드 특훈교수 임명",
+      "date": "2026-04-01",
+      "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do?mode=view&articleNo=52556",
+      "summary_ko": "박승재 교수가 연구·교육·봉사 성과를 인정받아 3년 임기의 언더우드 특훈교수(전교 10명)로 임용됐다."
+     },
+     {
+      "title": "임일 교수, 2026학년도 공헌교수상 수상",
+      "date": "2026-04-01",
+      "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do?mode=view&articleNo=52557",
+      "summary_ko": "임일 교수가 교육·연구·봉사가 탁월한 정교수에게 주는 연세대 공헌교수상(2단계) 대상자로 선정됐다."
+     },
+     {
+      "title": "박창희 교수, 최고 권위 학술지 『Production and Operations Management』 논문 게재",
+      "date": "2026-06-30",
+      "url": "https://ysb.yonsei.ac.kr/ysb/news/now-ysb.do?mode=view&articleNo=54659",
+      "summary_ko": "박창희 교수가 미국·중국 소비자의 평점-리뷰 감성 불일치 반응을 분석한 논문을 POM 2026년 35권 5호에 게재했다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "snu",
+   "name": "서울대학교",
+   "short": "서울",
+   "color": "#16348C",
+   "soft": "#E9ECF7",
+   "official_name": "서울대학교 경영전문대학원 (Seoul National University Graduate School of Business)",
+   "mba_site_url": "https://gsb.snu.ac.kr/",
+   "admissions_url": "https://gsb.snu.ac.kr/admissions/application",
+   "programs": [
+    {
+     "name": "Full-time MBA (주간 MBA)",
+     "name_en": "SNU Full-time MBA",
+     "type": "Full-time",
+     "focus": "일반 경영 (복수학위·교환학생 옵션, 커리어 서비스 중심)",
+     "language": "한국어, 영어",
+     "duration": "12개월 (4학기제; 복수학위 취득 시 2년, 교환학생 시 1.5년)",
+     "schedule": "평일 주간 (09:00-13:00, 14:00-18:00), 직장 병행 사실상 불가",
+     "target": "커리어 전환·도약을 원하는 학사 이상 지원자 (평균 연령 31세, 평균 경력 6년)",
+     "intake": "연 1회, 7월 말~8월 초 입학; 정원 100명 (글로벌인재특별전형은 정원 외)",
+     "tuition": "총 43,130,000원 (학기당 10,782,500원) + 입학금 169,000원",
+     "source_url": "https://gsb.snu.ac.kr/adminssions/overview",
+     "type_ko": "주간 풀타임"
+    },
+    {
+     "name": "Executive MBA (경영학과(Executive MBA))",
+     "name_en": "SNU Executive MBA",
+     "type": "Executive",
+     "focus": "일반경영트랙(80명) / 기술경영트랙(40명), 디지털 경영 특화 과목; 기업 위탁교육 계약학과",
+     "language": "한국어",
+     "duration": "2년 (4학기제, 48학점, 실적심사로 졸업논문 대체)",
+     "schedule": "주말: 금 15:00-19:00, 토 09:00-13:00·14:00-18:00",
+     "target": "위탁교육 협약기업(기관) 임직원으로 실무경력 7년 이상(박사·임원은 3년 이상), 회사 추천 및 학비 50% 이상 지원 필수 (평균 연령 42세, 평균 경력 14년)",
+     "intake": "연 1회, 3월 입학; 정원 120명",
+     "tuition": "학기당 2,200만원",
+     "source_url": "https://gsb.snu.ac.kr/program/executive-mba/overview",
+     "type_ko": "Executive"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Executive MBA",
+     "cycle": "2027학년도 (2027년 3월 입학)",
+     "application_period": "인터넷 접수·서류 제출 2026-09-07 ~ 2026-10-08 18:00; TEPS 특별시험 2026-10-14; 1단계 발표 2026-10-30; 면접 2026-11-04; 합격 발표 2026-11-23",
+     "stages": "1단계 서류심사(100점, 정원 1.5배수) → 2단계 면접 및 구술고사(100점) 합산 선발",
+     "eligibility": "학사학위(2027년 2월 취득예정 포함); 위탁교육 협약기업 임직원으로 기업 추천; 현 직장 6개월 이상 재직 및 실무경력 7년 이상(박사·임원은 3년)",
+     "documents": [
+      "입학지원서",
+      "성적증명서",
+      "학위(졸업)증명서",
+      "재직·경력증명서(건강보험 자격득실확인서로 갈음)",
+      "4대보험 가입내역 확인서",
+      "건강·장기요양보험료 납부확인서",
+      "영어성적 증빙",
+      "협약기관 관련서류(소속기관장 추천서·등록금 지원 약정, 해당 시 원거리 파견동의서)",
+      "추천서 1부(온라인)",
+      "자기소개 및 경력계획서"
+     ],
+     "tests": "TOEFL/TEPS/TOEIC/IELTS 성적 필수(최저점 없음, 2년 이내); 없으면 TEPS 특별시험 응시 조건으로 지원 가능. 영어권 학위 또는 영어권·영어공용 기관 근무 3년 이상이면 면제. GMAT/GRE는 참고서류",
+     "interview_format": "면접 및 구술고사(영어 인터뷰 포함), LG경영관; 해외 거주 등 특수 사정 시 화상면접 사전 협의",
+     "special_tracks": "계약학과 전형(기업 위탁교육 협약 필수); 경기도 공무원(도지사 추천), 금융투자협회·대한상의 회원사 추천 경로. 전형료 100,000원",
+     "source_url": "https://gsb.snu.ac.kr/download/192z82ez838zabez625zaf0zd9czb40z77czd2bz4e"
+    },
+    {
+     "program": "Full-time MBA",
+     "cycle": "2026학년도 (2026년 여름 입학) — 2027학년도 요강은 아직 미게시",
+     "application_period": "인터넷 접수 2026-02-26 ~ 03-13 17:00; 서류 제출 ~03-16; 1차 발표 04-10; 면접 05-01; 합격 발표 05-22",
+     "stages": "1차 서류심사(30% 이내 우선선발 가능, 나머지 2배수 면접 대상) → 2차 면접 및 구술고사 → 최종선발; 글로벌인재특별전형은 서류만",
+     "eligibility": "학사학위(2026년 8월, 해외대학 9월까지 취득예정 포함) + 영어 기준점수. 공식 요강에 최소 경력 요건은 명시되어 있지 않음",
+     "documents": [
+      "입학지원서(온라인)",
+      "졸업(예정)·학위증명서",
+      "전 학년 성적증명서",
+      "추천서 2부(온라인)",
+      "자기소개 및 경력계획서",
+      "영어능력 증빙",
+      "이력서",
+      "(해당자) GMAT/GRE·TOPIK 성적표",
+      "(해당자) 재직/경력증명서 + 건강보험 자격득실확인서",
+      "(해당자) 회사지원 확인서",
+      "(해당자) 장학금신청서"
+     ],
+     "tests": "TEPS 322 / TOEFL iBT 94(2026-01-21 이후 응시는 4.5) / TOEIC 825 / IELTS 6.5 이상; 영어권 대학 졸업자 면제; 미소지자는 TEPS 특별시험 조건부 지원. GMAT/GRE 제출 권장(선택)",
+     "interview_format": "질문지를 받고 준비시간 후 답하는 면접 및 구술고사; 해외 거주 등은 화상면접 사전 협의",
+     "special_tracks": "글로벌인재특별전형(정원 외: 외국국적자 또는 전 교육과정 해외 이수자); 장학금(신청서 제출자 대상 등록금 일부 면제). 전형료 100,000원",
+     "source_url": "https://gsb.snu.ac.kr/download/ec9z63az1afz679z4e3z5fez0a4z473z8faz6bbz3c"
+    }
+   ],
+   "analysis": [
+    "프로그램이 1년제 주간 Full-time MBA와 2년제 주말 EMBA 두 개뿐이라 구조가 단순하고, 두 과정의 대상이 분명하게 갈린다.",
+    "Full-time MBA는 12개월 집중 과정이라 휴직·퇴사 후 빠르게 커리어를 전환하려는 30대 초반에게 맞고, 영어 기준점수가 지원 자격에 포함된다.",
+    "EMBA는 기업 위탁교육 계약학과라 회사 추천과 학비 50% 이상 지원이 있어야 지원할 수 있어, 회사가 파견하는 핵심 인재용 과정에 가깝다.",
+    "EMBA는 정원 120명에 일반경영·기술경영 트랙을 두고 있고 1·2학년 합반으로 운영해 동기 네트워크 규모가 크다.",
+    "GNAM 회원교로서 해외 단기연수·현장학습 기회가 많고, Yale·ESSEC 등과 복수학위를 운영한다."
+   ],
+   "news_sources": [
+    {
+     "name": "MBA 뉴스",
+     "publisher": "서울대학교 경영전문대학원",
+     "url": "https://gsb.snu.ac.kr/snu-gsb/mba-news",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "경영대학 뉴스",
+     "publisher": "서울대학교 경영대학",
+     "url": "https://cba.snu.ac.kr/newsroom/news",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "서울대총동창신문",
+     "publisher": "서울대학교총동창회",
+     "url": "https://www.snua.or.kr/magazine",
+     "kind": "alumni newsletter",
+     "rss_url": null
+    },
+    {
+     "name": "SNU NOW (서울대 뉴스레터)",
+     "publisher": "서울대학교",
+     "url": "https://now.snu.ac.kr/",
+     "kind": "school news",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "상대 125년 역사 집대성…출발점 1899년으로",
+     "date": "2026-08-01",
+     "date_precision": "month (581호, 2026년 8월호)",
+     "source_name": "서울대총동창신문",
+     "url": "https://www.snua.or.kr/magazine?md=v&seqidx=13336",
+     "summary_ko": "상과대학동창회가 경영대학·경제학부로 이어진 상대 역사를 담은 125년사를 펴내고, 학교의 기원을 1899년으로 잡았다."
+    },
+    {
+     "title": "경영전문대학원동창회 정기총회 및 신입동문 환영회 엄은숙 동창회장 취임…동문 전용 앱 추진",
+     "date": "2026-04-01",
+     "date_precision": "month (577호, 2026년 4월호)",
+     "source_name": "서울대총동창신문",
+     "url": "https://www.snua.or.kr/magazine?md=v&seqidx=13108",
+     "summary_ko": "EMBA 동창회가 3월 정기총회에서 16기 신입 동문 약 120명을 맞았고, 새 회장 체제에서 동문 전용 앱 개발 계획을 밝혔다."
+    },
+    {
+     "title": "경영전문대학원총동문회 ‘투자와 재무’ 학술대회…전문가 4명 강연",
+     "date": "2025-10-01",
+     "date_precision": "month (571호, 2025년 10월호)",
+     "source_name": "서울대총동창신문",
+     "url": "https://www.snua.or.kr/magazine?md=v&seqidx=12764",
+     "summary_ko": "EMBA 총동문회가 9월 경영대학에서 투자·재무를 주제로 추계 학술대회를 열고 운용업계 전문가 강연을 마련했다."
+    },
+    {
+     "title": "2025 EMBA 패밀리데이(Family Day) 성황리 개최",
+     "date": "2025-06-16",
+     "source_name": "MBA 뉴스",
+     "url": "https://gsb.snu.ac.kr/snu-gsb/mba-news?md=v&bbsidx=11325",
+     "summary_ko": "EMBA 재학생과 가족이 함께하는 2025년 패밀리데이 행사 소식을 전하는 학교 기사다."
+    },
+    {
+     "title": "글로벌 리더십 무대에 선 오수정 학생, 생갈렌 심포지엄 초청",
+     "date": "2025-06-16",
+     "source_name": "MBA 뉴스",
+     "url": "https://gsb.snu.ac.kr/snu-gsb/mba-news?md=v&bbsidx=11326",
+     "summary_ko": "Full-time MBA 재학생이 스위스 생갈렌 심포지엄에 초청받은 소식을 다룬 학교 기사다."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "Executive MBA",
+     "start": "2026-09-07",
+     "end": "2026-10-08"
+    }
+   ],
+   "notes": "EMBA는 2027학년도 요강(2026년 9-10월 접수)을 확인함. Full-time MBA는 2026학년도(2026년 2-3월 접수, 여름 입학)가 최신 공개분이며 2027학년도 요강은 보통 12월경 게시되어 아직 없음. 학교 페이지 표기가 '12개월'과 '1년(4학기제)'로 혼용됨. Full-time MBA 지원 자격에 최소 경력 요건은 명시되지 않음(평균 경력 6년은 클래스 프로필 수치). Full-time MBA 장학금 금액은 공개되지 않음. 총동창신문 기사는 호수 단위(월)로만 날짜가 표시되어 date는 해당 월 1일로 두고 date_precision에 표기함. GSB MBA 뉴스 게시판은 2025-06-16 이후 새 글이 없어 2026년 MBA 소식은 총동창신문 위주. MBA 뉴스 2건의 요약은 본문을 추출하지 못해 제목 수준 정보만 반영함. RSS 피드는 어느 공식 사이트에서도 확인되지 않음.",
+   "guide": {
+    "tagline": "1년 만에 끝나는 주간 풀타임 MBA와, 협약 기업이 보내는 주말 EMBA 두 과정에 집중한다.",
+    "intake": [
+     {
+      "program": "Full-time MBA (주간)",
+      "start": "매년 7월 말 ~ 8월 초",
+      "apply": "2월 말 ~ 3월 중순 (2027 요강은 12월경 게시)"
+     },
+     {
+      "program": "Executive MBA (주말)",
+      "start": "매년 3월",
+      "apply": "9월 초 ~ 10월 초"
+     }
+    ],
+    "process": [
+     {
+      "title": "Executive MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.9.7 – 10.8"
+       },
+       {
+        "label": "TEPS 특별시험",
+        "when": "10.14"
+       },
+       {
+        "label": "1단계 발표",
+        "when": "10.30"
+       },
+       {
+        "label": "면접·구술고사",
+        "when": "11.4"
+       },
+       {
+        "label": "합격 발표",
+        "when": "11.23"
+       }
+      ]
+     },
+     {
+      "title": "Full-time MBA (2026년 입학 일정, 참고)",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.2.26 – 3.13"
+       },
+       {
+        "label": "1차 발표",
+        "when": "4.10"
+       },
+       {
+        "label": "면접·구술고사",
+        "when": "5.1"
+       },
+       {
+        "label": "합격 발표",
+        "when": "5.22"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위"
+     },
+     {
+      "k": "경력",
+      "v": "Full-time: 요건 없음 (입학생 평균 6년) / EMBA: 7년 이상 + 협약 기업 추천, 회사가 학비 50% 이상 지원"
+     },
+     {
+      "k": "영어",
+      "v": "Full-time: TEPS 322 · TOEFL 94 · TOEIC 825 · IELTS 6.5 이상 / EMBA: 성적 필수(최저점 없음)"
+     },
+     {
+      "k": "GMAT",
+      "v": "선택 (Full-time은 제출 권장)"
+     },
+     {
+      "k": "선발",
+      "v": "서류 심사 → 면접 및 구술고사"
+     },
+     {
+      "k": "전형료",
+      "v": "100,000원"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Full-time MBA",
+      "per_semester": 10782500,
+      "semesters": 4,
+      "admission": 169000,
+      "total": 43130000,
+      "all_in": 43299000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Executive MBA",
+      "per_semester": 22000000,
+      "semesters": 4,
+      "admission": 169000,
+      "total": 88000000,
+      "all_in": 88169000,
+      "year": "2026",
+      "note": "입학금은 대학원 공통 기준"
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://cba.snu.ac.kr/research/faculty/professor",
+    "count": 60,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "재무금융",
+      "count": 13
+     },
+     {
+      "area": "마케팅",
+      "count": 9
+     },
+     {
+      "area": "인사조직",
+      "count": 9
+     },
+     {
+      "area": "회계학",
+      "count": 9
+     },
+     {
+      "area": "전략/국제경영",
+      "count": 8
+     },
+     {
+      "area": "생산서비스운영",
+      "count": 7
+     },
+     {
+      "area": "경영정보",
+      "count": 5
+     }
+    ],
+    "strengths": [
+     "재무금융이 13명으로 가장 크고, Journal of Finance·JFE·RFS 게재와 Brattle Group 논문상 수상자가 포함된 재무 연구 역량이 강합니다.",
+     "기업 후원 석학교수 제도가 활발해 아모레퍼시픽·KT·하나은행·삼익악기·트러스톤자산운용 등 이름을 단 석학교수와 주니어 석학교수가 10명 이상입니다.",
+     "Journal of International Business Studies 에디터, 전미경영학회 분과 회장, Management Science·POM 편집진 등 국제 학계 리더십 경력이 두드러집니다.",
+     "금융위원회 감리위원·증권선물위원회 위원, 규제개혁위원회 위원 등 정책·감독 분야에서 활동한 교수들이 많습니다."
+    ],
+    "notable": [
+     {
+      "name": "양홍석",
+      "name_en": "Yang, Hongsuk",
+      "role": "경영대학장 · 경영전문대학원장",
+      "area": "생산서비스운영",
+      "phd": "The University of Chicago (PhD in Business)",
+      "highlights": [
+       "현재 경영대학장 겸 경영전문대학원장(조직도·인사말 기준)",
+       "European Journal of Operational Research, International Journal of Production Research 등에 재고·공급망 연구 게재",
+       "서울대 학술연구교육상 교육부문(2025), 경영대학 우수강의상 9회 수상",
+       "크라운제과·롯데이노베이트·광동제약 사외이사 경력"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=4&idx=1320"
+     },
+     {
+      "name": "유병준",
+      "name_en": "Yoo, Byungjoon",
+      "role": "MBA부학장",
+      "area": "경영정보",
+      "phd": "Carnegie Mellon University, Tepper School of Business (Ph.D.)",
+      "highlights": [
+       "Management Science, Journal of Marketing, Journal of Management Information Systems 등에 플랫폼·전자상거래 연구 게재",
+       "Electronic Commerce Research and Applications Senior Editor(2015-2019), ICIS 2018 트랙 체어 역임",
+       "서울대 AI위원회 위원, 한국벤처투자 사외이사 등 활동(프로필 기준)"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=1&idx=1271"
+     },
+     {
+      "name": "김준범",
+      "name_en": "Kim, Jun Beom",
+      "role": "교무부학장",
+      "area": "마케팅",
+      "phd": "UCLA (경영학 박사); MIT (기계공학 박사)",
+      "highlights": [
+       "Marketing Science, Journal of Marketing Research, Management Science, Journal of Marketing에 논문 게재",
+       "INFORMS 마케팅 분야 Frank Bass Award(2011), John Little Award(2016), Long Term Impact Award(2020) 수상",
+       "실리콘밸리 기업용 소프트웨어 회사 선임 엔지니어 출신, HKUST 종신 부교수 역임"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=3&idx=2765"
+     },
+     {
+      "name": "박성호",
+      "name_en": "Park, Sungho",
+      "role": "학생부학장 (2026~) · 코빗 석학교수, 前 EMBA 주임교수(2024-2026)",
+      "area": "마케팅",
+      "phd": "Cornell University, Johnson Graduate School of Management (마케팅 박사)",
+      "highlights": [
+       "2025학년도 서울대 학술연구교육상(연구부문) 수상",
+       "유한 ESG 학술상 대상(2025), 현우 곽수일 학술상(2024), 한국유통학회 학술공로상(2025, 2026)",
+       "MSI Young Scholar(2017), Journal of Marketing Research William F. O'Dell Award 최종 후보(2014)",
+       "애리조나주립대 W. P. Carey 경영대학 종신부교수 역임"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=3&idx=2903"
+     },
+     {
+      "name": "송재용",
+      "name_en": "Song, Jaeyong",
+      "role": "아모레퍼시픽 석학교수",
+      "area": "전략/국제경영",
+      "phd": "University of Pennsylvania, Wharton School (Ph.D.)",
+      "highlights": [
+       "전미경영학회(AOM) 국제경영분과 회장(2020-2021), Journal of International Business Studies 에디터(2013-2016) 역임",
+       "AIB 석학종신회원(Fellow), 한국과학기술한림원 정회원; 2019년 JIBS 7편 게재로 Silver Medal 수여",
+       "Management Science, Strategic Management Journal, Organization Science 등 FT50 저널 논문 20편(2024년 기준)",
+       "저서 『삼성 웨이』, 『스마트경영』, 『패러다임 대전환』"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=2&idx=1257"
+     },
+     {
+      "name": "김상훈",
+      "name_en": "Kim, Sang-hoon",
+      "role": "KT 석학교수, 前 학장(2022-2024)",
+      "area": "마케팅",
+      "phd": "Stanford University (Ph.D.)",
+      "highlights": [
+       "2022-2024 경영대학장 겸 경영전문대학원장, SNU MBA 주임교수(2009-2011) 역임",
+       "한국소비자학회 공동회장(2018-2019), 한국예술경영학회 수석부회장(2024~)",
+       "정진기언론문화상 대상(2005), 한국경영학회 K-Management 혁신논문상(2022)"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=3&idx=1265"
+     },
+     {
+      "name": "김우진",
+      "name_en": "Kim, Woojin",
+      "role": "삼익악기 석학교수 · 경영연구소장(2024~)",
+      "area": "재무금융",
+      "phd": "University of Illinois at Urbana-Champaign (Ph.D., Finance)",
+      "highlights": [
+       "Journal of Financial Economics, Review of Financial Studies 등에 기업지배구조·기업집단 연구 게재",
+       "매경 이코노미스트상(2023), 한국기업거버넌스 대상(2023), AJFS Best Paper Award(2023)",
+       "행정고시 출신으로 산업자원부 사무관 경력"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=6&idx=1359"
+     },
+     {
+      "name": "이관휘",
+      "name_en": "Lee, Kuan-hui",
+      "role": "트러스톤자산운용 석학교수",
+      "area": "재무금융",
+      "phd": "Ohio State University, Fisher College of Business (Ph.D., Finance)",
+      "highlights": [
+       "Review of Financial Studies, Journal of Finance, Journal of Financial Economics에 논문 게재",
+       "서울대 연구상(2018), 매경 이코노미스트상(2010), 재미한인재무학회 Best Paper Award(2011)"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=6&idx=1323"
+     },
+     {
+      "name": "한정석",
+      "name_en": "Han, Jungsuk",
+      "role": "류종규 주니어 석학교수, 前 MBA 주임교수(2024-2025)",
+      "area": "재무금융",
+      "phd": "London Business School (Ph.D.)",
+      "highlights": [
+       "Journal of Finance, JFE, Review of Financial Studies, Management Science 등에 논문 게재",
+       "2018년 Journal of Finance Brattle Group Distinguished Paper Prize 수상",
+       "2024-2025 MBA 주임교수, 2026년부터 AMP 부주임교수; 경영대학 우수강의상(2022, 2024)"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=6&idx=3021"
+     },
+     {
+      "name": "김송희",
+      "name_en": "Kim, Song-hee",
+      "role": "CS Wind 주니어 석학교수 (2023-2026)",
+      "area": "생산서비스운영",
+      "phd": "Columbia University (Ph.D., Operations Research)",
+      "highlights": [
+       "Management Science, Operations Research, M&SOM, POM, Organization Science 등에 의료·서비스 운영 연구 게재",
+       "Production and Operations Management Senior Editor, Management Science·Operations Research·M&SOM Associate Editor",
+       "MSOM Society Best AE in Management Science Award(2025), POM Best Senior Editor Award(2026); 2026년 서울대 특별연구년 교수(전체 3인) 선정"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=4&idx=3001"
+     },
+     {
+      "name": "이우종",
+      "name_en": "Lee, Woo-jong",
+      "role": "하나은행 석학교수",
+      "area": "회계학",
+      "phd": "서울대학교 (경영학 박사)",
+      "highlights": [
+       "Journal of Accounting and Economics, Management Science, Contemporary Accounting Research, Review of Accounting Studies에 게재",
+       "금융위원회 감리위원, 한국회계학회 부회장, 삼일회계법인 저명교수 역임",
+       "회계학연구·Seoul Journal of Business 편집위원장 역임"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=7&idx=2063"
+     },
+     {
+      "name": "조승아",
+      "name_en": "Cho, Theresa Seung Ah",
+      "role": "아모레퍼시픽 석학교수",
+      "area": "전략/국제경영",
+      "phd": "Columbia Business School (박사, 경영전략)",
+      "highlights": [
+       "Jürgen Hauschildt Prize(2025) 수상, 2019 EURAM Best Paper Award",
+       "서울대 국제처장(2022-2024), 학생부학장(2020-2021) 역임",
+       "현대제철 사외이사(2024~), 삼성SDS 사외이사(2020-2024) 경력; Rutgers University 종신교수 역임"
+      ],
+      "source_url": "https://cba.snu.ac.kr/research/faculty/professor?major=2&idx=1329"
+     }
+    ],
+    "news": [
+     {
+      "title": "박성호 교수, 2025학년도 서울대학교 학술연구교육상(연구부문) 수상",
+      "date": "2025-12-17",
+      "url": "https://cba.snu.ac.kr/newsroom/news?md=v&bbsidx=25342",
+      "summary_ko": "데이터 기반 계량마케팅 연구 성과를 인정받아 박성호 교수가 서울대 학술연구교육상 연구부문을 받았다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "kaist",
+   "name": "카이스트",
+   "short": "KAIST",
+   "color": "#004191",
+   "soft": "#E6EFF9",
+   "official_name": "KAIST 경영대학 (KAIST College of Business, 서울 홍릉캠퍼스 / 디지털금융MBA는 여의도)",
+   "mba_site_url": "https://www.business.kaist.ac.kr/",
+   "admissions_url": "https://www.business.kaist.ac.kr/html/kr/sub03/sub03_0303.html",
+   "programs": [
+    {
+     "name": "KAIST MBA (KMBA)",
+     "name_en": "KAIST MBA",
+     "type": "Full-time",
+     "focus": "기술·경영 융합, 비즈니스 애널리틱스(일반 분야 / 글로벌 비즈니스 애널리틱스 분야)",
+     "language": null,
+     "duration": "2년(봄학기 입학 Full-time 과정 공통 안내 기준)",
+     "schedule": "주간 전일제",
+     "target": "디지털 전환기 기술·경영 융합형 인재 지망자",
+     "intake": "봄학기(연 1회); 정원 비공개",
+     "tuition": null,
+     "source_url": "https://www.business.kaist.ac.kr/programs/02041001",
+     "type_ko": "주간 풀타임"
+    },
+    {
+     "name": "임팩트MBA (IMBA)",
+     "name_en": "Impact MBA",
+     "type": "Specialized",
+     "focus": "소셜·지속가능 벤처 창업, ESG, 임팩트 투자",
+     "language": null,
+     "duration": "2년 (2025 입학생부터 39학점)",
+     "schedule": "주간 전일제",
+     "target": "소셜벤처 창업(예정)자·경영자",
+     "intake": "봄학기(10월 초 모집, 3월 개강); 정원 비공개",
+     "tuition": "창업 준비·운영 학생 전액 장학(2학기부터 성과에 따라 조정 가능) — 등록금 금액은 미공개",
+     "source_url": "https://www.business.kaist.ac.kr/programs/02041101",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "금융MBA (FMBA)",
+     "name_en": "Finance MBA",
+     "type": "Specialized",
+     "focus": "금융(투자금융, 자산운용, 디지털금융)",
+     "language": "전공필수 전 과목 영어",
+     "duration": "2년",
+     "schedule": "주간 전일제, 2학년 1학기 해외연수 필수",
+     "target": "금융산업 진출 희망자(IB, 기업금융, 자산운용, 애널리스트 등)",
+     "intake": "봄학기; 정원 비공개",
+     "tuition": null,
+     "source_url": "https://www.business.kaist.ac.kr/programs/02040101",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "금융공학프로그램 (MFE)",
+     "name_en": "Master of Financial Engineering",
+     "type": "Specialized",
+     "focus": "금융공학, 퀀트 자산운용, 파생·리스크관리",
+     "language": null,
+     "duration": "2년(54학점, 논문 필수)",
+     "schedule": "주간 전일제, 2학년 1학기 Global Study Program 필수",
+     "target": "수학·계량 배경의 퀀트 지망자",
+     "intake": "봄학기; 정원 비공개",
+     "tuition": null,
+     "source_url": "https://www.business.kaist.ac.kr/programs/02040201",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "Executive MBA",
+     "name_en": "Executive MBA",
+     "type": "Executive",
+     "focus": "일반(기술·경영 융합, 사내기업가정신)",
+     "language": "한국어 (영문 KGSB 페이지 기준)",
+     "duration": "22개월",
+     "schedule": "주말(금요일 오후·토요일)",
+     "target": "임원급 및 핵심 중견관리자",
+     "intake": "봄학기; 코호트제, 정원 비공개",
+     "tuition": null,
+     "source_url": "https://www.business.kaist.ac.kr/programs/02030301",
+     "type_ko": "Executive"
+    },
+    {
+     "name": "Professional MBA",
+     "name_en": "Professional MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "일반(전략·마케팅·재무 중 전공 선택)",
+     "language": null,
+     "duration": "3년 표준(조기 2.5년 가능), 48학점",
+     "schedule": "주 2회 야간",
+     "target": "경력 개발을 원하는 직장인",
+     "intake": "봄학기; 정원 비공개",
+     "tuition": null,
+     "source_url": "https://www.business.kaist.ac.kr/programs/02030401",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "디지털금융MBA (DFMBA)",
+     "name_en": "Digital Finance MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "디지털금융(AI·데이터사이언스, 핀테크 창업, 금융투자·자산운용 집중)",
+     "language": null,
+     "duration": "2년",
+     "schedule": "야간·주말, 여의도 캠퍼스",
+     "target": "디지털금융 전문가 지망 직장인",
+     "intake": "봄학기; 정원 비공개",
+     "tuition": null,
+     "source_url": "https://www.business.kaist.ac.kr/programs/02030601",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "정보경영프로그램 (IMMS)",
+     "name_en": null,
+     "type": "Part-time(야간/주말)",
+     "focus": "디지털·IT 경영, 비즈니스 애널리틱스·AI 활용",
+     "language": null,
+     "duration": "2년 파트타임 전문석사",
+     "schedule": null,
+     "target": "IT 및 관련 분야 재직자",
+     "intake": "가을학기(2026년 3~4월 접수 사이클)",
+     "tuition": null,
+     "source_url": "https://www.business.kaist.ac.kr/programs/02030501",
+     "type_ko": "야간·주말"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "봄학기 MBA/Master 공통 (KMBA, IMBA, FMBA, MFE, Executive MBA, Professional MBA, DFMBA)",
+     "cycle": "2027학년도 봄학기",
+     "application_period": "2026-09-29 ~ 2026-10-08 17:30 (온라인)",
+     "stages": [
+      "서류전형 (발표 2026-11-12 14:00)",
+      "면접 (2026-11-14 ~ 11-22)",
+      "최종 발표 2026-12-10 14:00"
+     ],
+     "eligibility": null,
+     "documents": null,
+     "tests": null,
+     "interview_format": null,
+     "special_tracks": null,
+     "source_url": "http://www.business.kaist.ac.kr/_prog/_board/?mode=V&no=84278&code=admissionNotice&site_dvs_cd=kr&menu_dvs_cd=030101"
+    },
+    {
+     "program": "Executive MBA",
+     "cycle": "상시 안내(영문 KGSB 페이지)",
+     "application_period": null,
+     "stages": null,
+     "eligibility": "직장 경력 10년 이상 (영문 페이지 기준)",
+     "documents": null,
+     "tests": "입학 시 요건 미기재; 졸업 전 OPI AS 등급 또는 영어 몰입 프로그램 이수 (영문 페이지 기준)",
+     "interview_format": null,
+     "special_tracks": null,
+     "source_url": "https://business.kaist.ac.kr/kgsb/en/sub030201"
+    },
+    {
+     "program": "정보경영프로그램 (IMMS)",
+     "cycle": "2026학년도 가을학기",
+     "application_period": "2026-03-27 ~ 2026-04-07 17:30 (추천서 04-09 18:00)",
+     "stages": [
+      "서류 발표 05-14",
+      "면접 05-16 ~ 05-26",
+      "최종 발표 06-25"
+     ],
+     "eligibility": null,
+     "documents": null,
+     "tests": null,
+     "interview_format": null,
+     "special_tracks": null,
+     "source_url": "https://www.business.kaist.ac.kr/html/kr/sub03/sub03_0303.html"
+    }
+   ],
+   "analysis": [
+    "MBA를 전공별로 잘게 나눈 구조: 일반(KMBA)·소셜창업(IMBA)·금융(FMBA)·퀀트(MFE)를 모두 주간 전일제로 운영해 '경력 전환형' 지원자에게 선택지가 넓다.",
+    "금융 라인업이 두텁다 — 주간 FMBA/MFE(학생투자펀드 KSIF 실습)와 여의도 야간·주말 DFMBA로 재직 여부에 따라 고를 수 있다.",
+    "임팩트MBA는 창업(예정)자 전액 장학 등 소셜벤처 창업자에게 특화된 국내에서 드문 과정이다.",
+    "Executive MBA(22개월 금·토)는 10년+ 경력 임원급, Professional MBA(주2회 야간, 2.5~3년)는 실무 중간관리자에게 맞는다.",
+    "모든 봄학기 과정이 하나의 일정(9말~10초 접수, 12월 발표)으로 진행되어 과정 간 비교 후 지원이 쉽다."
+   ],
+   "news_sources": [
+    {
+     "name": "KAIST 경영대학 언론보도(KCB News)",
+     "publisher": "KAIST 경영대학",
+     "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNews&site_dvs_cd=kr&menu_dvs_cd=0504",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "KAIST 경영대학 공지사항",
+     "publisher": "KAIST 경영대학",
+     "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNotice&site_dvs_cd=kr&menu_dvs_cd=050201",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "KAIST 뉴스",
+     "publisher": "KAIST 홍보실",
+     "url": "https://news.kaist.ac.kr/",
+     "kind": "school news",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "2027학년도 봄학기 입학 MBA/Master 모집안내",
+     "date": "2026-08-22",
+     "source_name": "KAIST 경영대학 입학공지",
+     "url": "http://www.business.kaist.ac.kr/_prog/_board/?mode=V&no=84278&code=admissionNotice&site_dvs_cd=kr&menu_dvs_cd=030101",
+     "summary_ko": "주간 4개·파트타임 3개 MBA/Master 과정의 2027 봄학기 신입생 모집 일정을 공지했다. 원서는 9월 29일~10월 8일 온라인으로 받는다."
+    },
+    {
+     "title": "KAIST 경영대학, 금융 동문 컨퍼런스 6일 개최",
+     "date": "2026-07-03",
+     "source_name": "KAIST 경영대학 언론보도",
+     "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNews&site_dvs_cd=kr&menu_dvs_cd=0504",
+     "summary_ko": "금융 분야 동문들이 모이는 컨퍼런스 개최 소식으로, 경영대학 언론보도 게시판에 중앙일보 기사로 소개됐다."
+    },
+    {
+     "title": "[동문] 김규태 동문 디지털금융MBA 21’...데이터 고속도로 시대…비큐AI, 'RDP 라인'으로 국내외 시장 공략",
+     "date": "2026-06-01",
+     "source_name": "KAIST 경영대학 언론보도",
+     "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNews&site_dvs_cd=kr&menu_dvs_cd=0504",
+     "summary_ko": "디지털금융MBA 동문이 이끄는 데이터 기업이 신규 제품 라인으로 시장 확대에 나섰다는 소식이다."
+    },
+    {
+     "title": "10대 한국회계기준원장 곽병진 KAIST 교수 취임",
+     "date": "2026-03-03",
+     "source_name": "KAIST 경영대학 언론보도",
+     "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNews&site_dvs_cd=kr&menu_dvs_cd=0504",
+     "summary_ko": "경영대학 곽병진 교수가 한국회계기준원 제10대 원장에 취임했다는 교수 소식이다."
+    },
+    {
+     "title": "[동문] 사회적기업가MBA 21' 송완 대표...“AI로 언어 진단 골든타임 확보” 송앤스타크코아퍼레이션, 착한 기술 기업 꿈꾼다",
+     "date": "2026-02-09",
+     "source_name": "KAIST 경영대학 언론보도",
+     "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNews&site_dvs_cd=kr&menu_dvs_cd=0504",
+     "summary_ko": "사회적기업가MBA 출신 동문이 AI 기반 언어 발달 진단 스타트업을 이끌고 있다는 동문 소식이다."
+    },
+    {
+     "title": "경영대학 MBA 학생팀, 대한민국 MBA 경영사례분석대회 대상·우수상 석권",
+     "date": "2026-01-15",
+     "source_name": "KAIST 뉴스",
+     "url": "https://news.kaist.ac.kr/news/html/news/?mode=V&mng_no=57330",
+     "summary_ko": "KAIST MBA 3개 팀이 본선에 올라 현대자동차 SDV 전략 분석으로 대상(교육부장관상)과 우수상 2개를 받았다."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "봄학기 MBA 공통 (KMBA·FMBA·EMBA·PMBA 등)",
+     "start": "2026-09-29",
+     "end": "2026-10-08"
+    }
+   ],
+   "notes": [
+    "현행 과정명 확인: 과거의 Techno-MBA(테크노경영), 정보미디어MBA, Green MBA, 사회적기업가MBA는 현재 프로그램 목록에 없음. 현행 봄학기 과정은 KMBA(2023 신설), Impact MBA, 금융MBA, 금융공학프로그램, Executive MBA, Professional MBA, 디지털금융MBA; 가을학기는 정보경영프로그램(IMMS). 사회적기업가MBA→Impact MBA 승계 여부는 공식 확인 못 함.",
+    "지원자격·제출서류·공인영어/GMAT 요건·면접 방식은 admission.kaist.ac.kr 모집요강에만 있으며 해당 사이트는 robots 차단/인증서 문제로 열람 불가 → null 처리. 경영대학 FAQ의 영어점수(TOEIC 720 등) 기준은 MS/Ph.D. 대상이라 MBA에 적용하지 않음.",
+    "Executive MBA 10년 경력 요건과 한국어 수업은 영문 KGSB 페이지(구 사이트 가능성) 기준이라 최신성 확인 필요.",
+    "등록금·정원은 공식 페이지에 공개되지 않아 null.",
+    "kcbNews 게시판 항목은 외부 언론 기사로 링크됨; 여기서는 공식 게시판 URL을 출처로 기재. KAIST 총동문회 소식지는 확인하지 못함.",
+    "news.kaist.ac.kr RSS 제공 여부 미확인."
+   ],
+   "guide": {
+    "tagline": "금융·디지털·소셜벤처 등 분야별 전문 MBA가 여럿이다. 디지털금융MBA는 여의도에서 수업한다.",
+    "intake": [
+     {
+      "program": "KMBA · Impact · 금융MBA · MFE (주간)",
+      "start": "매년 3월",
+      "apply": "9월 말 ~ 10월 초"
+     },
+     {
+      "program": "Executive · Professional · 디지털금융 MBA",
+      "start": "매년 3월",
+      "apply": "9월 말 ~ 10월 초"
+     },
+     {
+      "program": "정보경영프로그램 (IMMS)",
+      "start": "매년 9월",
+      "apply": "3월 말 ~ 4월 초"
+     }
+    ],
+    "process": [
+     {
+      "title": "봄학기 7개 과정 공통 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.9.29 – 10.8"
+       },
+       {
+        "label": "서류 합격 발표",
+        "when": "11.12"
+       },
+       {
+        "label": "면접",
+        "when": "11.14 – 11.22"
+       },
+       {
+        "label": "최종 발표",
+        "when": "12.10"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위 (입학 전 취득 예정 포함)"
+     },
+     {
+      "k": "경력",
+      "v": "KMBA 2년 이상 우대 / 금융MBA·MFE·디지털금융 필수 아님 / PMBA 재직자 5년 이상 우대 / EMBA 10년 이상"
+     },
+     {
+      "k": "영어",
+      "v": "KMBA·PMBA·디지털금융: TOEFL iBT 4.5(구 83) · TOEIC 720 · TEPS 326 · IELTS 6.5 / 금융MBA·MFE 필수 / Impact MBA 없음"
+     },
+     {
+      "k": "GMAT",
+      "v": "요구하지 않음 (금융MBA·MFE·디지털금융은 우수성 자료로 제출 가능)"
+     },
+     {
+      "k": "선발",
+      "v": "서류 심사 → 면접 (필기 없음)"
+     }
+    ],
+    "cost": [
+     {
+      "program": "KAIST MBA (KMBA)",
+      "per_semester": 13200000,
+      "semesters": 4,
+      "admission": null,
+      "total": 52800000,
+      "all_in": 52800000,
+      "year": "2025",
+      "note": "총액징수제: 입학 연도 금액이 재학 중 고정"
+     },
+     {
+      "program": "Impact MBA",
+      "per_semester": 13200000,
+      "semesters": 4,
+      "admission": null,
+      "total": 52800000,
+      "all_in": 52800000,
+      "year": "2025",
+      "note": "창업 학생 전액 장학 가능"
+     },
+     {
+      "program": "금융MBA",
+      "per_semester": 15910000,
+      "semesters": 4,
+      "admission": null,
+      "total": 63640000,
+      "all_in": 63640000,
+      "year": "2025",
+      "note": ""
+     },
+     {
+      "program": "금융공학 (MFE)",
+      "per_semester": 15910000,
+      "semesters": 4,
+      "admission": null,
+      "total": 63640000,
+      "all_in": 63640000,
+      "year": "2025",
+      "note": ""
+     },
+     {
+      "program": "Executive MBA",
+      "per_semester": 22000000,
+      "semesters": 4,
+      "admission": null,
+      "total": 88000000,
+      "all_in": 88000000,
+      "year": "2025",
+      "note": ""
+     },
+     {
+      "program": "Professional MBA",
+      "per_semester": 8300000,
+      "semesters": 6,
+      "admission": null,
+      "total": 49800000,
+      "all_in": 49800000,
+      "year": "2025",
+      "note": ""
+     },
+     {
+      "program": "디지털금융MBA",
+      "per_semester": 12000000,
+      "semesters": 4,
+      "admission": null,
+      "total": 48000000,
+      "all_in": 48000000,
+      "year": "2025",
+      "note": ""
+     },
+     {
+      "program": "정보경영 (IMMS)",
+      "per_semester": 10500000,
+      "semesters": 4,
+      "admission": null,
+      "total": 42000000,
+      "all_in": 42000000,
+      "year": "2025",
+      "note": ""
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://www.business.kaist.ac.kr/_prog/prof/index.php?site_dvs_cd=kr&menu_dvs_cd=040101",
+    "count": 41,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "금융",
+      "count": 12
+     },
+     {
+      "area": "기술/조직/전략",
+      "count": 7
+     },
+     {
+      "area": "IT경영",
+      "count": 6
+     },
+     {
+      "area": "경제(경영경제)",
+      "count": 5
+     },
+     {
+      "area": "마케팅",
+      "count": 4
+     },
+     {
+      "area": "생산전략 및 경영과학",
+      "count": 4
+     },
+     {
+      "area": "회계",
+      "count": 3
+     }
+    ],
+    "strengths": [
+     "금융 분야 전임교수가 12명으로 가장 두터우며, Journal of Finance·Review of Financial Studies 게재 경력자와 금융당국·증권학회 활동 교수가 포진해 있다.",
+     "IT경영·AI 분야에서 MIS Quarterly·Information Systems Research·Management Science 편집진 출신 교수와 아마존 ML 과학자 출신 교수 등 데이터·AI 경영 연구가 강하다.",
+     "산업통상자원부 장관, 대통령직속 국가인공지능위원회 위원, 한국회계기준원장 등 정책·제도 현장과 직접 연결된 교수진이 많다.",
+     "다수 교수가 미국·싱가포르 주요 경영대 교수 경력을 거쳐 합류했고, 금융전문대학원·경영전문대학원 등 전문대학원 체제로 MBA 교육을 운영한다."
+    ],
+    "notable": [
+     {
+      "name": "황성하",
+      "name_en": "Sung-Ha Hwang",
+      "role": "경영대학장, 교수",
+      "area": "경제",
+      "phd": "University of Massachusetts Amherst (Economics; Mathematics 박사도 취득)",
+      "highlights": [
+       "Metroeconomica 편집장(Editor, 2022~) 및 Korean Economic Review 공동편집인",
+       "American Economic Review(P&P), Theoretical Economics, Games and Economic Behavior, Journal of Public Economics 등에 진화게임이론·행동경제학 논문 게재",
+       "2017 다산 젊은 경제학자상(한국경제신문), KAIST 지정 석좌교수(2021~2024)"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/sungha"
+     },
+     {
+      "name": "박상찬",
+      "name_en": "Sangchan Park",
+      "role": "KAIST 경영전문대학원장, KAIST MBA 책임교수, 부교수",
+      "area": "기술/조직/전략",
+      "phd": "Cornell University (Organizational Behavior, 2008)",
+      "highlights": [
+       "Organization Science(2022, 2024), Academy of Management Journal, Strategic Organization 등에 조직이론·지속가능성 연구 게재",
+       "2016 Academy of Management ONE Division Best Paper Award 수상",
+       "인사조직연구 편집위원장, 한국전략경영학회 부회장; 임팩트MBA·사회적기업가MBA 책임교수 역임",
+       "MBA 강의: Organization Design and Strategy Implementation, Capstone Project Study 등"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/sp"
+     },
+     {
+      "name": "김민기",
+      "name_en": "Minki Kim",
+      "role": "교수 (KAIST 경영전문대학원장·MBA 책임교수 2023~2026 역임)",
+      "area": "마케팅",
+      "phd": "University of Chicago (Economics)",
+      "highlights": [
+       "대통령직속 국가인공지능위원회 위원(2024~2025), 금융위원회 금융산업 경쟁도평가위원회 위원",
+       "Journal of Marketing Research(2012) 등 계량마케팅 논문; Journal of Business Research 부편집장",
+       "2023 한국경영학회 신진경영학자상, 2025 SW산업인의 날 국무총리 표창, 2025 KAIST 교육혁신상"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/pcmingki"
+     },
+     {
+      "name": "강장구",
+      "name_en": "",
+      "role": "금융전문대학원장, 교수(디렉터리 '주임' 표기)",
+      "area": "금융",
+      "phd": "University of Rochester (Finance)",
+      "highlights": [
+       "Journal of Banking and Finance, Journal of Financial Markets, Journal of Futures Markets 등에 한국 주식·파생시장 실증연구 다수 게재",
+       "Journal of Futures Markets 편집위원(2018~), 금융연구 수석 편집위원장(2019~2020) 역임",
+       "KAIST 금융공학연구센터장 역임"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/jkkang"
+     },
+     {
+      "name": "오원석",
+      "name_en": "Wonseok Oh",
+      "role": "K.C.B. 석좌교수",
+      "area": "IT경영",
+      "phd": "New York University, Stern School of Business (Information Systems)",
+      "highlights": [
+       "Information Systems Research Senior Editor(2019~), Management Science Associate Editor(2024~)",
+       "MIS Quarterly·Information Systems Research·Management Science 등에 디지털 플랫폼·AI 경제학 논문 게재",
+       "2024 현우 KAIST 학술상 수상; 경영공학부장(2024~2025) 역임, McGill University 종신 부교수 출신"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/ohws"
+     },
+     {
+      "name": "박광우",
+      "name_en": "Kwangwoo Park",
+      "role": "교수",
+      "area": "금융",
+      "phd": "University of Illinois at Urbana-Champaign (Finance, 2003)",
+      "highlights": [
+       "Journal of Finance, Review of Financial Studies 등 금융 톱저널 게재",
+       "제38대 한국증권학회장(2021~2022), Journal of Financial Stability Associate Editor",
+       "2022 금융의 날 국무총리 표창(혁신금융), KAIST 금융전문대학원장(2018~2022) 역임, 매일유업 사외이사"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/kwanpark3"
+     },
+     {
+      "name": "이창양",
+      "name_en": "Chang-Yang Lee",
+      "role": "교수",
+      "area": "경제",
+      "phd": "Harvard University (Public Policy, Economics of Innovation, 1999)",
+      "highlights": [
+       "제62대 산업통상자원부 장관(2022~2023), 제20대 대통령직인수위원회 경제2분과 간사",
+       "금융위원회 신성장위원회 위원장(2017~2018) 등 산업·혁신정책 자문",
+       "KAIST EMBA 책임교수(2009~2011) 역임; 2003 매경 이코노미스트상, 2024 KAIST 공적대상"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/drcylee"
+     },
+     {
+      "name": "이인무",
+      "name_en": "Inmoo Lee",
+      "role": "교수",
+      "area": "금융",
+      "phd": "University of Illinois at Urbana-Champaign (Finance)",
+      "highlights": [
+       "Journal of Finance(1997, 2006), Review of Financial Studies(2001, 2007) 등 게재",
+       "KAIST 경영대학장(2021~2022), 경영공학부장, 금융전문대학원장 역임",
+       "미국 자산운용사 Dimensional Fund Advisors 리서치 부사장(2007~2010) 경력"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/inmool"
+     },
+     {
+      "name": "윤여선",
+      "name_en": "",
+      "role": "교수 (경영대학장 2022~2026 역임)",
+      "area": "마케팅",
+      "phd": "University of Michigan, Ross School of Business",
+      "highlights": [
+       "Journal of Consumer Psychology 선정 '20년간 가장 영향력 있는 논문 20편'에 포함(2012), 2007 JCP Young Contributor Award",
+       "2026 KAIST 개교 55주년 비전리더십상, 2022 KAIST 교육혁신의 날 교육자상",
+       "MBA 강의: 마케팅관리, 마케팅전략, 브랜드관리 등"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/yyoon"
+     },
+     {
+      "name": "곽병진",
+      "name_en": "",
+      "role": "부교수",
+      "area": "회계",
+      "phd": "Purdue University (2004)",
+      "highlights": [
+       "제10대 한국회계기준원장 취임(2026.3, KAIST 경영대학 Faculty News 게재)",
+       "Journal of Accounting and Economics(2012), Journal of Business Ethics 등 게재",
+       "삼성전자 근무, 연세대 조교수 경력"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/bjkwak"
+     },
+     {
+      "name": "백용욱",
+      "name_en": "Yongwook Paik",
+      "role": "부교수",
+      "area": "기술/조직/전략",
+      "phd": "University of California, Berkeley (Economics)",
+      "highlights": [
+       "Strategic Management Journal, Organization Science, Strategic Entrepreneurship Journal 등에 창업·혁신 연구 게재",
+       "공저 『한국의 스타트업 생태계 과거, 현재, 미래』 2025 대한민국학술원 우수학술도서 선정",
+       "USC Marshall·WashU Olin 조교수, 김앤장 변리사 출신"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/ywpaik"
+     },
+     {
+      "name": "윤태중",
+      "name_en": "Tae Jung Yoon",
+      "role": "부교수(디렉터리 '주임' 표기)",
+      "area": "마케팅",
+      "phd": "Northwestern University, Kellogg School of Management (Marketing, 2015)",
+      "highlights": [
+       "Journal of Marketing(2024), Marketing Science(2020) 등 헬스케어 마케팅 연구 게재",
+       "2023 KAIST 개교 52주년 강의대상, KAIST 경영대학 교육우수상",
+       "MBA 강의: Marketing Management, Data Driven Marketing·AI 마케팅 응용; 의사(M.D.) 출신"
+      ],
+      "source_url": "https://www.business.kaist.ac.kr/faculty/tjyoon"
+     }
+    ],
+    "news": [
+     {
+      "title": "10대 한국회계기준원장 곽병진 KAIST 교수 취임",
+      "date": "2026-03-03",
+      "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNews&site_dvs_cd=kr&menu_dvs_cd=0504",
+      "summary_ko": "회계 전공 곽병진 교수가 한국회계기준원 제10대 원장으로 취임했다는 소식으로, KAIST 경영대학 e홍보실 Faculty News로 게재되었다(원문은 매일경제 기사 링크).",
+      "external_article": "https://www.mk.co.kr/news/stock/11977553"
+     },
+     {
+      "title": "신동혁 교수 연구팀...비브이씨-카이스트, 외식 매장용 AI 스마트 오더링 고도화 맞손",
+      "date": "2026-02-10",
+      "url": "https://www.business.kaist.ac.kr/_prog/_board/?code=kcbNews&site_dvs_cd=kr&menu_dvs_cd=0504",
+      "summary_ko": "IT경영 신동혁 교수 연구팀이 외식업체와 AI 스마트 오더링 고도화를 위한 산학협력에 나섰다는 소식이다(e홍보실 School News, 원문은 머니투데이 링크).",
+      "external_article": "https://www.mt.co.kr/future/2026/02/10/2026021016490636019"
+     }
+    ]
+   }
+  },
+  {
+   "id": "korea",
+   "name": "고려대학교",
+   "short": "고려",
+   "color": "#8E0E1F",
+   "soft": "#F7E9EB",
+   "official_name": "고려대학교 경영전문대학원 (Korea University Business School, KUBS)",
+   "mba_site_url": "https://biz.korea.ac.kr/mba/",
+   "admissions_url": "https://biz.korea.ac.kr/mba/koreaMBA/admission.html",
+   "programs": [
+    {
+     "name": "Korea MBA (K-MBA)",
+     "name_en": "Korea MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "일반(8개 전문분야 선택)",
+     "language": "한국어(명시 없음; 면접에 영어 포함)",
+     "duration": "2년(4학기, 45학점)",
+     "schedule": "평일 야간 19:00–21:45 + 일부 토요일",
+     "target": "재직자(3년 이상 경력 권장)",
+     "intake": "전기(3월), 약 200명",
+     "tuition": "학기당 약 12,200,000원(2026 봄학기) + 입학금 1,234,000원",
+     "source_url": "https://biz.korea.ac.kr/mba/koreaMBA/faq.html",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "Executive MBA",
+     "name_en": "Executive MBA",
+     "type": "Executive",
+     "focus": "최고경영진 양성",
+     "language": "한국어 중심, 강의 약 30% 영어",
+     "duration": "2년(4학기+여름)",
+     "schedule": "금 15:00–19:00, 토 09:00–18:00 (2주 모듈)",
+     "target": "10년 이상 경력의 중견간부 이상·개인사업자",
+     "intake": "전기(3월), 55명 내외",
+     "tuition": "학기당 약 22,200,000원(2026) + 입학금 1,234,000원",
+     "source_url": "https://biz.korea.ac.kr/mba/executiveMBA/faq.html",
+     "type_ko": "Executive"
+    },
+    {
+     "name": "Finance MBA",
+     "name_en": "Finance MBA",
+     "type": "Specialized",
+     "focus": "금융·재무",
+     "language": "한국어",
+     "duration": "2년(4학기+여름), 45학점",
+     "schedule": "평일 야간 19:00~ + 토요일",
+     "target": "금융·재무 분야 종사자·관심자(학사 직후 지원 가능)",
+     "intake": "전기(3월), 약 45명",
+     "tuition": "학기당 12,200,000원(2026) + 입학금 1,234,000원",
+     "source_url": "https://biz.korea.ac.kr/mba/financeMBA/faq.html",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "Global MBA",
+     "name_en": "Global MBA",
+     "type": "Global/English",
+     "focus": "일반(글로벌)",
+     "language": "영어",
+     "duration": "1년 / 1.5년(교환) / 2년(복수학위)",
+     "schedule": "평일 주간 전일제",
+     "target": "전공 무관, 커리어 초기~재직자(2년 이상 경력 권장)",
+     "intake": "후기(9월), 약 45명",
+     "tuition": "학기당 약 23,210,000원(2024 기준 공시)",
+     "source_url": "https://biz.korea.ac.kr/mba/globalMBA/faq.html",
+     "type_ko": "영어 과정"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Korea MBA",
+     "cycle": "2027학년도 전기",
+     "application_period": "2026-09-07 10:00 ~ 2026-10-16 15:00",
+     "stages": [
+      "서류심사 (발표 2026-11-06)",
+      "구술면접 (2026-11-15, 영어면접 포함)",
+      "최종 발표 2026-11-25"
+     ],
+     "eligibility": "국내외 4년제 대학 졸업(예정)자로 현재 재직 중인 자",
+     "documents": [
+      "입학원서",
+      "졸업(예정)증명서",
+      "성적증명서",
+      "추천서(봉인 원본)",
+      "재직·경력증명서",
+      "회사소개서(A4 1매)",
+      "사업자 추가서류(해당자)"
+     ],
+     "tests": "공인영어 선택 제출(최저점 없음)",
+     "interview_format": "구술면접(영어 포함), 시간 개별 통보",
+     "special_tracks": "정원외 외국인 전형",
+     "source_url": "https://biz.korea.ac.kr/mba/koreaMBA/admission.html"
+    },
+    {
+     "program": "Executive MBA",
+     "cycle": "2027학년도 전기",
+     "application_period": "2026-09-07 10:00 ~ 2026-10-16 15:00",
+     "stages": [
+      "서류심사 (발표 2026-10-30)",
+      "구술면접 (2026-11-07)",
+      "최종 발표 2026-11-13"
+     ],
+     "eligibility": "4년제 대학 졸업 + 중견간부 이상 또는 개인사업자 (10년 이상 경력 우대)",
+     "documents": [
+      "입학원서",
+      "졸업·성적증명서",
+      "재직·경력증명서",
+      "추천서 및 학업동의서",
+      "회사소개서"
+     ],
+     "tests": "영어성적 선택 제출",
+     "interview_format": "구술면접",
+     "special_tracks": "외국인 전형",
+     "source_url": "https://biz.korea.ac.kr/mba/executiveMBA/admission.html"
+    },
+    {
+     "program": "Finance MBA",
+     "cycle": "2027학년도 전기",
+     "application_period": "2026-09-07 10:00 ~ 2026-10-16 15:00",
+     "stages": [
+      "서류심사 (발표 2026-11-06)",
+      "구술면접 (2026-11-14)",
+      "최종 발표 2026-11-25"
+     ],
+     "eligibility": "국내외 4년제 대학 졸업(예정)자, 경력 필수 아님(우대)",
+     "documents": [
+      "입학원서",
+      "졸업·성적증명서",
+      "추천서",
+      "재직·경력증명서(해당자)",
+      "회사소개서",
+      "사업자 서류(해당자)"
+     ],
+     "tests": "공인영어 선택 제출, 면접에 영어 질문 없음(FAQ)",
+     "interview_format": "구술면접(한국어)",
+     "special_tracks": "정원외 외국인 전형",
+     "source_url": "https://biz.korea.ac.kr/mba/financeMBA/admission.html"
+    },
+    {
+     "program": "Global MBA",
+     "cycle": "2026년 가을 입학(후기) — 2027 사이클 미공시",
+     "application_period": "1차 01-21~02-11, 2차 02-27~03-20, 3차 03-31~04-17 (2026)",
+     "stages": [
+      "서류심사",
+      "온라인 영어 면접",
+      "최종 발표"
+     ],
+     "eligibility": "학사학위 소지(예정)자, 해외출국 결격 없음",
+     "documents": [
+      "입학원서",
+      "졸업·성적증명서(영문)",
+      "추천서",
+      "여권 사본",
+      "공인영어성적",
+      "기업 후원자는 재직·후원 확인서"
+     ],
+     "tests": "공인영어(TOEIC/TOEFL/IELTS/TEPS/OPIc) 필수, 최저점 없음; 영어권 학위·국적자 면제; GMAT/GRE 선택",
+     "interview_format": "온라인 영어 면접",
+     "special_tracks": "정원외(외국인·해외 전 교육과정 이수자)",
+     "source_url": "https://biz.korea.ac.kr/mba/globalMBA/admission.html"
+    }
+   ],
+   "analysis": [
+    "Korea MBA는 연 200명 규모의 대형 야간 MBA로, 동기·교우 네트워크를 가장 큰 자산으로 내세운다.",
+    "Executive MBA는 금·토 2주 모듈 집중식에 10년+ 경력 요구, QS EMBA 국내 1위로 고위 관리자에게 적합하다.",
+    "Finance MBA는 경력 없이도 지원 가능하고 영어면접이 없어 금융 커리어 전환·심화를 원하는 국내파에게 진입장벽이 낮다.",
+    "Global MBA는 1년 영어 전일제(교환·복수학위 옵션)로 QS 글로벌 MBA 국내 1위; 휴직·퇴직 후 국제 커리어를 노리는 지원자 대상.",
+    "파트타임 3개 과정은 같은 일정(9~10월 접수, 11월 발표)이며 영어성적은 선택 제출이다."
+   ],
+   "news_sources": [
+    {
+     "name": "KUBS 소식",
+     "publisher": "고려대학교 경영대학",
+     "url": "https://biz.korea.ac.kr/news/news.html",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "고려대학교 교우회",
+     "publisher": "고려대학교 교우회",
+     "url": "https://www.kuaa.or.kr/",
+     "kind": "alumni newsletter",
+     "rss_url": null
+    },
+    {
+     "name": "고려대 경영대학 교우회",
+     "publisher": "고려대학교 경영대학 교우회",
+     "url": "http://www.kubsa.or.kr",
+     "kind": "alumni newsletter",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "[유승원 경영대학장 인터뷰] \"학생이 가능성을 마음껏 시험할 수 있는 경영대학을 만들고 싶습니다\"",
+     "date": "2026-10-22",
+     "source_name": "KUBS 소식",
+     "url": "https://biz.korea.ac.kr/news/news_view.html?no=4536",
+     "summary_ko": "2026년 9월 취임한 유승원 학장이 AI 시대 전공 깊이와 학생·교우가 함께 만드는 학교를 비전으로 제시했다."
+    },
+    {
+     "title": "Goodbye 23기, Welcome 25기! KUBE 23기 해단식 및 25기 발대식 개최",
+     "date": "2026-10-13",
+     "source_name": "KUBS 소식",
+     "url": "https://biz.korea.ac.kr/news/news_view.html?no=4553",
+     "summary_ko": "경영대학 학생 홍보대사 KUBE가 기수 교체 행사를 열고 신규 단원 임명과 장학증서 수여를 진행했다."
+    },
+    {
+     "title": "고려대 경영대학, QS 평가서 MBA 및 대학원 과정 전반 국내 1위",
+     "date": "2026-09-18",
+     "source_name": "KUBS 소식",
+     "url": "https://biz.korea.ac.kr/news/news_view.html?no=4545",
+     "summary_ko": "QS 2027 글로벌 MBA 순위에서 Global MBA가 세계 75위·국내 1위, Executive MBA도 2026 EMBA 순위 국내 1위를 기록했다. 경영 석사 5개 분야도 모두 국내 최고였다."
+    },
+    {
+     "title": "KUBS 120 MARCH 캠페인, 목표 달성률 70% 돌파",
+     "date": "2026-09-18",
+     "source_name": "KUBS 소식",
+     "url": "https://biz.korea.ac.kr/news/news_view.html?no=157&g=d",
+     "summary_ko": "경영대학 120억 원 모금 캠페인 약정액이 약 84억 원(참여 471명)에 이르렀다. 교우와 MBA·최고경영자과정 원우들이 폭넓게 참여했다."
+    },
+    {
+     "title": "[고려대학교 경영대학] 최고의 프로그램과 네트워크 속 미래 리더 양성 - 2027학년도 Korea MBA 입학설명회",
+     "date": "2026-09-16",
+     "source_name": "KUBS 소식",
+     "url": "https://biz.korea.ac.kr/news/news_view.html?no=4535",
+     "summary_ko": "9월 3일 열린 Korea MBA 입학설명회 소식으로, 2027년 약 200명 선발 계획과 커리큘럼·네트워크 강점을 소개했다."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "Korea·Executive·Finance MBA",
+     "start": "2026-09-07",
+     "end": "2026-10-16"
+    }
+   ],
+   "notes": [
+    "Korea MBA 정원(약 200명)·일정은 공식 페이지 기준. 정원은 Executive 55명 내외, Finance 약 45명, Global 약 45명.",
+    "Global MBA는 2027 가을입학 모집이 아직 미공시(보통 1월 시작)라 2026 가을입학 사이클 기재. 등록금 23,210,000원은 2024년 기준(페이지 표기 오타 '23,210,00원').",
+    "Korea MBA 면접 언어: 모집요강상 '영어면접 포함' — 비중은 미공개.",
+    "유승원 학장 인터뷰 게시일이 사이트에 2026.10.22로 표시(오늘 10-14 기준 미래 날짜) — 사이트 표기 그대로 기재, 확인 필요.",
+    "CEMS Global MIM과 KUBS-DBA는 MBA가 아니어서 programs에서 제외.",
+    "고대교우회보(kuaa.or.kr) 페이지 내용을 가져오지 못해 기사 미수집; KMBA 교우회·EMBA 교우회는 별도 웹사이트 없음(이메일만 공개). RSS 미확인."
+   ],
+   "guide": {
+    "tagline": "정원 약 200명의 대형 야간 MBA와 경력 없이 지원 가능한 Finance MBA, QS 국내 1위 Global MBA.",
+    "intake": [
+     {
+      "program": "Korea MBA · Finance MBA",
+      "start": "매년 3월",
+      "apply": "9월 초 ~ 10월 중순"
+     },
+     {
+      "program": "Executive MBA",
+      "start": "매년 3월",
+      "apply": "9월 초 ~ 10월 중순"
+     },
+     {
+      "program": "Global MBA (영어)",
+      "start": "매년 9월",
+      "apply": "1월 ~ 4월, 3차례 (2026년 기준)"
+     }
+    ],
+    "process": [
+     {
+      "title": "Korea MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.9.7 – 10.16"
+       },
+       {
+        "label": "서류 발표",
+        "when": "11.6"
+       },
+       {
+        "label": "구술면접 (영어 포함)",
+        "when": "11.15"
+       },
+       {
+        "label": "최종 발표",
+        "when": "11.25"
+       }
+      ]
+     },
+     {
+      "title": "Executive MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.9.7 – 10.16"
+       },
+       {
+        "label": "서류 발표",
+        "when": "10.30"
+       },
+       {
+        "label": "구술면접",
+        "when": "11.7"
+       },
+       {
+        "label": "최종 발표",
+        "when": "11.13"
+       }
+      ]
+     },
+     {
+      "title": "Finance MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.9.7 – 10.16"
+       },
+       {
+        "label": "서류 발표",
+        "when": "11.6"
+       },
+       {
+        "label": "구술면접 (한국어)",
+        "when": "11.14"
+       },
+       {
+        "label": "최종 발표",
+        "when": "11.25"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "4년제 대학 학사 학위"
+     },
+     {
+      "k": "경력",
+      "v": "Korea MBA: 재직 중 (3년 이상 권장) / EMBA: 중견간부 이상, 10년 이상 우대 / Finance: 경력 없어도 지원 가능"
+     },
+     {
+      "k": "영어",
+      "v": "국내 과정은 선택 제출(최저점 없음) / Global MBA는 성적 필수(최저점 없음)"
+     },
+     {
+      "k": "GMAT",
+      "v": "요구하지 않음 (Global MBA는 선택)"
+     },
+     {
+      "k": "선발",
+      "v": "서류 심사 → 구술면접"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Korea MBA",
+      "per_semester": 12200000,
+      "semesters": 4,
+      "admission": 1234000,
+      "total": 48800000,
+      "all_in": 50034000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Finance MBA",
+      "per_semester": 12200000,
+      "semesters": 4,
+      "admission": 1234000,
+      "total": 48800000,
+      "all_in": 50034000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Executive MBA",
+      "per_semester": 22200000,
+      "semesters": 4,
+      "admission": 1234000,
+      "total": 88800000,
+      "all_in": 90034000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Global MBA",
+      "per_semester": 23210000,
+      "semesters": null,
+      "admission": 1234000,
+      "total": null,
+      "all_in": null,
+      "year": "2026",
+      "note": "학기 수는 1년·1.5년·2년 중 선택에 따라 다름"
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://biz.korea.ac.kr/professor/professor_list1.html",
+    "count": 96,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "재무금융",
+      "count": 16
+     },
+     {
+      "area": "마케팅",
+      "count": 15
+     },
+     {
+      "area": "회계학",
+      "count": 13
+     },
+     {
+      "area": "전략",
+      "count": 13
+     },
+     {
+      "area": "LSOM",
+      "count": 11
+     },
+     {
+      "area": "Information Systems",
+      "count": 10
+     },
+     {
+      "area": "경영관리",
+      "count": 9
+     },
+     {
+      "area": "글로벌비즈니스",
+      "count": 8
+     },
+     {
+      "area": "분야 미표기(Global MBA director)",
+      "count": 1
+     }
+    ],
+    "strengths": [
+     "전임교수 96명 규모로 재무·마케팅·회계·전략·LSOM·IS 등 전 분야에 고르게 두터운 교수진을 갖췄다.",
+     "한국회계기준원장, 한국회계학회장, 코스닥시장위원회 위원장 등 회계·자본시장 제도 분야 리더를 다수 배출했다.",
+     "Accounting Review, American Economic Review, Review of Financial Studies, Organization Science, Operations Research 등 최상위 학술지 게재 실적이 있고, 학내 SK Awards로 톱저널 연구를 지속 포상한다.",
+     "K-MBA·E-MBA·F-MBA·Global MBA 등 프로그램별 강의상(KUBS Teaching Award)을 운영하며 MBA 강의 평가를 공개적으로 관리한다."
+    ],
+    "notable": [
+     {
+      "name": "유승원",
+      "name_en": "Yoo, Seung-Weon",
+      "role": "경영대학장 겸 경영전문대학원장(2026.9~2028.8)",
+      "area": "회계학",
+      "phd": "University of Wisconsin-Madison",
+      "highlights": [
+       "American Economic Review(2001, 'Optimal Incentives for Teams')와 The Accounting Review(2001) 게재",
+       "한국회계학회 회장(2021~2023), 금융위원회 회계제도심의위원회 위원; 2020 회계의 날 기획재정부장관 표창",
+       "Executive MBA 주임교수(2010~2014), 삼성전자 재무 MBA 주임교수(2021~2024) 역임; KUBS Teaching Award(2015 KMBA, 2024 EMBA)",
+       "삼성SDI 사외이사(감사위원장)"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=Xaylb6InpC2IHuvsw6PLPA"
+     },
+     {
+      "name": "김영규",
+      "name_en": "Kim, Young-Kyu",
+      "role": "경영전문대학원 부원장, 교수",
+      "area": "전략",
+      "phd": "University of Chicago (조직이론/전략)",
+      "highlights": [
+       "Organization Science(2009, 2012)에 지위·네트워크 연구 게재",
+       "2024 전략경영연구 최우수논문상, 한국경영학회 60년 기념 논문공모 최우수상(2016)",
+       "Harvard Law School 법직역연구센터 연구협력교수"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=ZosULMxZwREXg_ghUkeAvQ"
+     },
+     {
+      "name": "이종호",
+      "name_en": "Lee, Jong-Ho",
+      "role": "교무부학장 겸 학부 경영학과 학과장",
+      "area": "마케팅",
+      "phd": "University of Cambridge (Strategy and Marketing, 2004)",
+      "highlights": [
+       "Journal of Business Research, International Journal of Advertising, Journal of Product Innovation Management 등에 혁신·ESG 마케팅 연구 게재",
+       "고려대 입학처장·총무처장, 기업경영연구원장(2024~2026) 역임",
+       "영국 Durham University 조교수 출신"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=6kM8gu1j7pBpN4DHJa3rRg"
+     },
+     {
+      "name": "이현석",
+      "name_en": "Lee, Hyun Seok",
+      "role": "연구부학장 겸 대학원 경영학과 학과장, 부교수(LSOM 전공주임 표기)",
+      "area": "LSOM",
+      "phd": "University of North Carolina at Chapel Hill, Kenan-Flagler (Operations)",
+      "highlights": [
+       "2023 한국생산관리학회 신진생산관리학자상, 2022 매경 신진학자 논문상, 고려대 석탑연구상",
+       "INFORMS M&SOM 2025 Meritorious Service Award; Journal of Operations Management·Decision Sciences 편집위원",
+       "KUBS Teaching Award(Global MBA Operations Management, 2024·2026)"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=BEkcJR5dlf3gtXpnevPPig"
+     },
+     {
+      "name": "정재호",
+      "name_en": "Chung, Jaiho",
+      "role": "기획부학장, 교수",
+      "area": "글로벌비즈니스",
+      "phd": "Harvard University (Economics, 2001)",
+      "highlights": [
+       "코스닥 공시위원회 위원장, 한국국제경영학회 부회장",
+       "KUBS Teaching Award 다수(KMBA 기업경제학·거시경제, EMBA 경제학, GMBA Managerial Economics)",
+       "NUS Business School 조교수 출신"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=_Rr3hiOmtXXIyIgFxuz4UA"
+     },
+     {
+      "name": "베티 청",
+      "name_en": "Chung, Betty",
+      "role": "부교수, Global MBA Director",
+      "area": "(분야 미표기)",
+      "phd": "University of San Francisco (EdD, Organizational Leadership)",
+      "highlights": [
+       "아시아태평양경영대학협의회(AAPBS) Executive Director(2004~)",
+       "KAIST 경영대학 초빙교수(1998~2023)로 국제프로그램 운영 경력"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=kImysk2CD3SmME2w1XENmw"
+     },
+     {
+      "name": "이한상",
+      "name_en": "Yi, Han Sang",
+      "role": "교수",
+      "area": "회계학",
+      "phd": "Michigan State University (2006)",
+      "highlights": [
+       "한국회계기준원장(한국회계기준위원회·한국지속가능성기준위원회 위원장, 2023~2026)",
+       "국제 공익감독위원회(PIOB) 위원(2025~2027), IFRS 지속가능성기준자문포럼(SSAF) 위원",
+       "The Accounting Review(2010) 게재; 제20대 대통령직인수위 경제1분과 전문위원(2022)"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=fLUkV0GOnWEIcTCu%2Fslt4A"
+     },
+     {
+      "name": "김우찬",
+      "name_en": "Kim, Woochan",
+      "role": "교수",
+      "area": "재무금융",
+      "phd": null,
+      "highlights": [
+       "2026년 7월 한국거래소 코스닥시장위원회 위원장 선임(경영대학 공식 소식)",
+       "기업지배구조·국제재무 전공(디렉터리 표기)"
+      ],
+      "source_url": "https://biz.korea.ac.kr/news/news_view.html?no=4547"
+     },
+     {
+      "name": "문정빈",
+      "name_en": "Moon, Jon Jungbien",
+      "role": "교수, 고려대 미래교육원장",
+      "area": "전략",
+      "phd": "University of Pennsylvania, Wharton",
+      "highlights": [
+       "한국전략경영학회장(2026), Strategic Management Journal 편집위원(2019~)",
+       "KUBS Teaching Award(2025 KMBA 국제경영·기업의 사회적 책임; GMBA Corporate Strategy 2017·2019)",
+       "IBRE Distinguished Research Award(2022, 2025), 2025학년도 KU 우수연구자"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=HQzjjzb7oZ4Ol1tAu6HJ2A"
+     },
+     {
+      "name": "김배호",
+      "name_en": "Kim, Baeho",
+      "role": "재무금융 전공주임교수",
+      "area": "재무금융(Business Analytics 겸)",
+      "phd": "Stanford University (경영공학)",
+      "highlights": [
+       "Operations Research(2011, 2026)와 Management Science(2011)에 신용위험·포트폴리오 위험 추정 연구 게재",
+       "경영전문대학원 연구부원장(2018~2020), CDTB 센터장 역임"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=R%2F6eTanm0HMFkDKrtK5Kpg"
+     },
+     {
+      "name": "정지웅",
+      "name_en": "Chung, Ji-Woong",
+      "role": "교수",
+      "area": "재무금융",
+      "phd": "Ohio State University (Finance, 2010)",
+      "highlights": [
+       "Review of Financial Studies(2012, 2016)에 사모펀드·헤지펀드 연구 게재",
+       "Finance MBA Academic Director(2017~2018), 재무금융 Area Chair(2023~2026) 역임"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=ayUlPqNqzbeC4G66AZHfbA"
+     },
+     {
+      "name": "박찬수",
+      "name_en": "Park, Chan Su",
+      "role": "교수",
+      "area": "마케팅",
+      "phd": "Stanford University (Business, 1992)",
+      "highlights": [
+       "AMA Donald R. Lehmann Award(1997) 수상, John D.C. Little Best Paper Award 최종후보(2006)",
+       "한국마케팅학회지 편집위원장, 경영대학 부학장 역임"
+      ],
+      "source_url": "https://biz.korea.ac.kr/professor/professor_view.html?pinfo=rruXyRB6qXHbHlKE__BMAQ"
+     }
+    ],
+    "news": [
+     {
+      "title": "[유승원 경영대학장 인터뷰] \"학생이 가능성을 마음껏 시험할 수 있는 경영대학을 만들고 싶습니다\"",
+      "date": "2026-10-22 (게시물 표기 그대로)",
+      "url": "https://biz.korea.ac.kr/news/news_view.html?no=4536",
+      "summary_ko": "회계 전공 유승원 교수가 2026년 9월부터 2년 임기의 경영대학장으로 임명되어 AI 시대 경영교육 방향을 밝힌 인터뷰다."
+     },
+     {
+      "title": "고경학파 소식(2026.06~09)",
+      "date": "2026-09-21",
+      "url": "https://biz.korea.ac.kr/news/news_view.html?no=4547",
+      "summary_ko": "김민정 교수의 매경 신진학자 논문상, 김배호 교수의 Operations Research 게재, 김우찬 교수의 코스닥시장위원회 위원장 선임 등을 전했다."
+     },
+     {
+      "title": "고려대학교 경영대학 2026 SK Awards 수상 교수 연구 요약",
+      "date": "2026-09-17",
+      "url": "https://biz.korea.ac.kr/news/news_view.html?no=4540",
+      "summary_ko": "최우수 국제학술지 게재 논문에 주는 SK Awards를 구민재(회계)·오지열(재무)·정경성(IS) 교수가 받았다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "sogang",
+   "name": "서강대학교",
+   "short": "서강",
+   "color": "#B3242F",
+   "soft": "#FAECED",
+   "official_name": "서강대학교 경영전문대학원 (Sogang Business School)",
+   "mba_site_url": "https://sbs.sogang.ac.kr/sbs/1198/subview.do",
+   "admissions_url": "https://sbs.sogang.ac.kr/sbs/1463/subview.do",
+   "programs": [
+    {
+     "name": "Pro-MBA (야간MBA)",
+     "name_en": "Professional MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "재직자 대상 정통 MBA. 경영 전반 학습과 원우 네트워크 강화(인사이트·레벨업·글로벌 세미나)",
+     "language": "Korean",
+     "duration": "2년 (파트타임)",
+     "schedule": "평일 저녁, 토요일",
+     "target": "재직자 (3년 이상 실무경력 권장)",
+     "intake": "매년 3월, 9월",
+     "tuition": "신입생 수업료 11,075천원 (2027년 기준, 입학 관련 제경비 별도; 학기당 여부는 페이지에 명시 없음)",
+     "source_url": "https://sbs.sogang.ac.kr/sbs/1458/subview.do",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "S-MBA (Sogang MBA, 주간MBA)",
+     "name_en": "Sogang MBA (Full-time Flagship)",
+     "type": "Full-time",
+     "focus": "1년 집중형 주간 Flagship MBA. 일반트랙(재무·벤처·디지털 이노베이션 전공, 최대 2개 복수전공), 미래경영자트랙(기업승계), 복수학위트랙, 산학협력트랙. 공통필수 과목은 영어로 진행",
+     "language": "Korean + English (공통필수 영어)",
+     "duration": "1년 (3학기, 5모듈), 45학점 이상",
+     "schedule": "평일 주중 월~목",
+     "target": "전문경영인 성장 희망자, 기업승계를 준비하는 차세대 경영자, 기업 파견 재직자(산학협력)",
+     "intake": "매년 3월, 9월",
+     "tuition": "신입생 수업료 15,667천원 (2026년 기준, 입학 관련 제경비 별도)",
+     "source_url": "https://sbs.sogang.ac.kr/sbs/1462/subview.do",
+     "type_ko": "주간 풀타임"
+    },
+    {
+     "name": "인공지능 빅데이터 이노베이션 MBA (AI-MBA)",
+     "name_en": "AI Big Data Innovation MBA",
+     "type": "Specialized",
+     "focus": "AI·빅데이터·데이터 애널리틱스·비즈니스 이노베이션 4대 영역, 소규모 조별 교수 코칭, 프랙티컴(팀 프로젝트·경진대회), 계절학기 해외 필드트립",
+     "language": "Korean",
+     "duration": "1년 4개월 (3학기)",
+     "schedule": "매주 토요일 (전일제)",
+     "target": "비즈니스 역량을 갖춘 AI·빅데이터 분석 전문가를 지향하는 사람(비전공자 포함), AI 스타트업 준비자",
+     "intake": "매년 3월",
+     "tuition": "신입생 수업료 11,070천원 (2026년 기준, 입학 관련 제경비 별도)",
+     "source_url": "https://sbs.sogang.ac.kr/sbs/1467/subview.do",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "G-MBA (Global MBA, 全球MBA)",
+     "name_en": "Global MBA",
+     "type": "Global/English",
+     "focus": "외국인(중국어권) 대상 전일제 MBA. 기업경영·재무금융·미디어예술경영 3개 방향, 한국 기업 현장 방문, 한국어교육원 수강 지원",
+     "language": "Chinese (중국어 전면 수업; 한·영 과목 선택 수강 가능)",
+     "duration": "1년 6개월 (전일제), 45학점",
+     "schedule": "Full-time",
+     "target": "본인 및 부모 모두 비한국 국적인 외국인 학사학위 소지자",
+     "intake": "3월, 9월",
+     "tuition": null,
+     "source_url": "https://sbs.sogang.ac.kr/sbs/1473/subview.do",
+     "type_ko": "영어 과정"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Pro-MBA / S-MBA / AI-MBA (공통 일정)",
+     "cycle": "2027학년도 3월 입학 (전기)",
+     "application_period": "1차 2026.10.08(목) 10:00 ~ 10.21(수) 17:00 (면접 10.30, 발표 11.06) / 2차 2026.11.06 ~ 11.19 (면접 11.27, 발표 12.04) / 3차 2026.12.04 ~ 12.17 (면접 12.24, 발표 12.31); 등록 2027년 1월 예정",
+     "stages": [
+      "온라인 원서접수(진학어플라이)",
+      "서류 우편/방문 제출",
+      "면접일정 공지",
+      "면접전형",
+      "최종합격자 발표"
+     ],
+     "eligibility": "국내·외 정규 대학 학사학위 취득자(2027년 2월 취득예정자 포함) 또는 동등 학력 인정자. Pro-MBA는 내국인 중 직장 재직자 또는 경력자",
+     "documents": [
+      "입학지원서(인터넷 접수 후 출력)",
+      "업적 및 경력계획서",
+      "출신대학 성적증명서 원본",
+      "출신대학 졸업(예정)증명서 원본",
+      "경력증명서·재직증명서(Pro-MBA 필수, S-MBA 산학협력트랙 필수)",
+      "영어성적표(S-MBA, 해당자; TOEFL/IELTS/TOEIC/TEPS/GMAT, 2년 이내)",
+      "학비지원확약서(회사 지원자)",
+      "학위조회동의서(해외대학 출신자)",
+      "사업자등록증명원(S-MBA 미래경영자트랙 필수)",
+      "자격증 사본(Pro-MBA, 해당자)"
+     ],
+     "tests": "별도 필기시험 없음. S-MBA 일반트랙은 공인영어성적 우수자 가산점",
+     "interview_format": "면접전형(서류·면접 일괄합산 종합평가). 일시·장소는 홈페이지 공지 또는 개별통보",
+     "special_tracks": "S-MBA: 일반·복수학위·산학협력·미래경영자 트랙. 전형료 100,000원. AI-MBA Zoom 설명회 2026.10.17(토) 11:00",
+     "source_url": "https://sbs.sogang.ac.kr/sbs/1463/subview.do"
+    },
+    {
+     "program": "G-MBA",
+     "cycle": "2027년도 춘계(3월) 입학",
+     "application_period": "1차 2026.09.28~10.09 / 2차 10.26~11.06 / 3차 11.23~12.04 (학기당 1개 차수만 지원 가능)",
+     "stages": [
+      "온·오프라인 서류 동시 제출",
+      "서류심사",
+      "Zoom 화상면접",
+      "합격 통보(11.06 / 12.04 / 12.31)"
+     ],
+     "eligibility": "4년제 학사학위 소지자(2027년 2월 취득예정 포함), 본인 및 부모 모두 외국 국적",
+     "documents": [
+      "입학지원서(한·영 작성)",
+      "자기소개 및 학업계획서(2쪽 이내)",
+      "학력조회동의서",
+      "사진",
+      "여권 사본",
+      "본인·부모 신분증 사본",
+      "호구부 사본",
+      "친족관계 공증서",
+      "예금잔고증명(합격 후, 2,000만원 이상)",
+      "어학성적(해당자; TOPIK 3급 이상 우대)",
+      "전형료 납부 증빙(100,000원)"
+     ],
+     "tests": "어학성적 불요(중국어 수업). TOPIK 소지자 서류평가 우대",
+     "interview_format": "Zoom 온라인 화상면접 (학업 경력, 지원 동기, 경영 관련 지식·자질)",
+     "special_tracks": null,
+     "source_url": "https://sbs.sogang.ac.kr/sbs/1474/subview.do"
+    }
+   ],
+   "analysis": [
+    "S-MBA는 1년 3학기 집중형 주간 과정으로, 짧은 기간에 학위를 마치고 커리어 전환·복귀를 노리는 사람에게 맞다. 공통필수 영어수업과 미국·영국 대학 복수학위가 강점이다.",
+    "미래경영자트랙은 기업승계를 앞둔 2세 경영자를 겨냥한 국내에서 드문 구성으로, 사업자등록증명이 필요한 만큼 대상이 분명하다.",
+    "Pro-MBA는 평일 저녁·토요일 수업의 2년 과정으로, 일을 계속하면서 경영 전반과 원우 네트워크를 쌓고 싶은 3년 이상 경력 직장인에게 적합하다.",
+    "AI-MBA는 토요일 하루만 등교해 AI·빅데이터를 비즈니스와 연결하는 실습형 과정이라 비전공 직장인의 데이터 역량 전환에 어울린다.",
+    "G-MBA는 중국어로 진행되는 외국인 전용 전일제 과정이라 한국인 지원자 대상은 아니지만, 원내 국제적 분위기를 더하는 요소다."
+   ],
+   "news_sources": [
+    {
+     "name": "SBS 뉴스",
+     "publisher": "서강대학교 경영대학·경영전문대학원",
+     "url": "https://sbs.sogang.ac.kr/sbs/1306/subview.do",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "경영대학 공지사항",
+     "publisher": "서강대학교 경영대학·경영전문대학원",
+     "url": "https://sbs.sogang.ac.kr/sbs/2088/subview.do",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "서강대학교 뉴스",
+     "publisher": "서강대학교",
+     "url": "https://www.sogang.ac.kr/ko/news",
+     "kind": "school news",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "김유진 교수, 2026 한국경영학회 융합학술대회 최우수논문상 수상",
+     "date": "2026-09-07",
+     "source_name": "SBS 뉴스",
+     "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/232213/artclView.do",
+     "summary_ko": "경영학과 김유진 교수의 공동연구가 실패 이후 기업의 탐색 방식과 획기적 혁신의 관계를 분석해 학회 최우수논문상을 받았다."
+    },
+    {
+     "title": "[MBA] 2026학년도 8월 경영전문대학원 학위수여식",
+     "date": "2026-08-31",
+     "source_name": "SBS 뉴스",
+     "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/232062/artclView.do",
+     "summary_ko": "8월 20일 이냐시오 강당에서 후기 학위수여식이 열렸고, 원장과 MBA 총동문회장 등 동문회 관계자도 참석해 졸업생을 축하했다."
+    },
+    {
+     "title": "[G-MBA] Global MBA과정 2026학년도 2학기 제 15기 입학식",
+     "date": "2026-08-31",
+     "source_name": "SBS 뉴스",
+     "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/232051/artclView.do",
+     "summary_ko": "8월 27일 G-MBA 15기 입학식에 신입생 약 100명이 참석했으며, 이어 외국인 학생을 위한 학사 제도 설명회가 진행됐다."
+    },
+    {
+     "title": "[S-MBA] S-MBA과정 2026학년도 일본 하계 세미나",
+     "date": "2026-08-05",
+     "source_name": "SBS 뉴스",
+     "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/231274/artclView.do",
+     "summary_ko": "S-MBA 원우들이 도쿄 히토츠바시대에서 일본식 인사관리와 한국 스타트업의 일본 진출 사례 강의를 듣고 현지 문화를 체험했다."
+    },
+    {
+     "title": "[G-MBA] Global MBA과정 2026학년도 제주도 하계 세미나",
+     "date": "2026-07-20",
+     "source_name": "SBS 뉴스",
+     "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/231199/artclView.do",
+     "summary_ko": "G-MBA 과정이 제주도에서 하계 학술 세미나를 열었다는 소식이다(본문 세부 내용은 미확인, 제목 기준 요약)."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "Pro·S·AI-MBA 1차",
+     "start": "2026-10-08",
+     "end": "2026-10-21"
+    },
+    {
+     "label": "Pro·S·AI-MBA 2차",
+     "start": "2026-11-06",
+     "end": "2026-11-19"
+    },
+    {
+     "label": "Pro·S·AI-MBA 3차",
+     "start": "2026-12-04",
+     "end": "2026-12-17"
+    },
+    {
+     "label": "G-MBA 1차",
+     "start": "2026-09-28",
+     "end": "2026-10-09"
+    },
+    {
+     "label": "G-MBA 2차",
+     "start": "2026-10-26",
+     "end": "2026-11-06"
+    },
+    {
+     "label": "G-MBA 3차",
+     "start": "2026-11-23",
+     "end": "2026-12-04"
+    }
+   ],
+   "notes": "2027학년도 전기(3월 입학) 모집요강이 공식 사이트에 게시되어 있어 이를 사용함. 모집인원은 사이트에 '00명 이내'로 표기되어 미확정(null 처리). 수업료는 과정별로 기준연도가 다름(Pro-MBA 2027년, S-MBA·AI-MBA 2026년 기준)이며, 학기당/총액 여부가 명시되지 않음. G-MBA 수업료는 페이지에서 확인 불가. 서강대 MBA 총동문회는 앱스토어에 공식 앱이 있으나 독립 웹사이트·서강동문회보 온라인 페이지는 확인하지 못해 news_sources에서 제외함(이번 학위수여식 기사에 최영권 MBA 총동문회장이 언급됨). 공식 서버 일부(sbs.sogang.ac.kr 루트, 대학 뉴스 페이지)가 동적 로딩이라 대학 본부 뉴스 항목은 수집하지 못함. RSS 제공 여부 미확인. E-Ph.D.(경영학 박사)와 관리자/최고경영자과정은 MBA가 아니므로 제외.",
+   "guide": {
+    "tagline": "1년 주간 S-MBA와 토요일만 다니는 AI-MBA. 3월·9월 두 번 입학하고 원서는 세 차례 받는다.",
+    "intake": [
+     {
+      "program": "Pro-MBA (야간) · S-MBA (주간)",
+      "start": "3월 · 9월",
+      "apply": "3월 입학은 10월 ~ 12월, 3차례"
+     },
+     {
+      "program": "AI-MBA (토요일)",
+      "start": "매년 3월",
+      "apply": "10월 ~ 12월, 3차례"
+     },
+     {
+      "program": "G-MBA (외국인, 중국어)",
+      "start": "3월 · 9월",
+      "apply": "9월 말 ~ 12월 초, 3차례"
+     }
+    ],
+    "process": [
+     {
+      "title": "Pro · S · AI-MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "1차 접수",
+        "when": "2026.10.8 – 10.21 (면접 10.30, 발표 11.6)"
+       },
+       {
+        "label": "2차 접수",
+        "when": "11.6 – 11.19 (면접 11.27, 발표 12.4)"
+       },
+       {
+        "label": "3차 접수",
+        "when": "12.4 – 12.17 (면접 12.24, 발표 12.31)"
+       },
+       {
+        "label": "등록",
+        "when": "2027년 1월"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위 (2027년 2월 취득 예정 포함)"
+     },
+     {
+      "k": "경력",
+      "v": "Pro-MBA: 재직자·경력자 (3년 이상 권장) / S-MBA·AI-MBA: 필수 요건 없음"
+     },
+     {
+      "k": "영어",
+      "v": "필기 시험 없음. S-MBA 일반 트랙은 영어 성적 가산점"
+     },
+     {
+      "k": "GMAT",
+      "v": "요구하지 않음"
+     },
+     {
+      "k": "선발",
+      "v": "서류와 면접을 합산해 평가"
+     },
+     {
+      "k": "전형료",
+      "v": "100,000원"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Pro-MBA",
+      "per_semester": 11075000,
+      "semesters": 4,
+      "admission": 1145000,
+      "total": 44300000,
+      "all_in": 45445000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "S-MBA",
+      "per_semester": 15667000,
+      "semesters": 3,
+      "admission": null,
+      "total": 41778000,
+      "all_in": 41778000,
+      "year": "2026",
+      "note": "정규 2학기 + 여름학기(10,444,000원)"
+     },
+     {
+      "program": "AI-MBA",
+      "per_semester": 11070000,
+      "semesters": 3,
+      "admission": null,
+      "total": 33210000,
+      "all_in": 33210000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "G-MBA",
+      "per_semester": 8564000,
+      "semesters": null,
+      "admission": 1145000,
+      "total": null,
+      "all_in": null,
+      "year": "2026",
+      "note": ""
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://sbs.sogang.ac.kr/sbs/1281/subview.do",
+    "count": 43,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "회계",
+      "count": 7
+     },
+     {
+      "area": "인사조직·전략",
+      "count": 7
+     },
+     {
+      "area": "재무/보험",
+      "count": 6
+     },
+     {
+      "area": "국제경영",
+      "count": 5
+     },
+     {
+      "area": "마케팅",
+      "count": 5
+     },
+     {
+      "area": "Business Analytics",
+      "count": 5
+     },
+     {
+      "area": "LSOM",
+      "count": 5
+     },
+     {
+      "area": "Digital Intelligence",
+      "count": 3
+     }
+    ],
+    "strengths": [
+     "Strategic Management Journal, Academy of Management Journal, Organization Science, Journal of International Business Studies 등 최상위 저널에 국제경영·전략 연구를 꾸준히 발표하는 교수진이 있습니다.",
+     "회계·재무 교수들이 학회장, 금융위원회·감사원 위원, 상장사 사외이사·감사위원장 등을 맡아 학계와 정책·산업 현장을 함께 이끌고 있습니다.",
+     "Business Analytics·Digital Intelligence 전공 교수진이 AI-MBA를 이끌며 AI·데이터 기반 경영 교육을 강화하고 있습니다.",
+     "프로그램별(S-MBA, Pro-MBA, AI-MBA, G-MBA, E-Ph.D.) 주임교수 체제로 MBA 과정마다 전담 교수가 운영을 맡습니다."
+    ],
+    "notable": [
+     {
+      "name": "김도성",
+      "name_en": "Doseong Kim",
+      "role": "경영대학장 겸 경영전문대학원장",
+      "area": "재무/보험",
+      "phd": "Drexel University (2000)",
+      "highlights": [
+       "투자론, 기업재무, 국제금융, M&A, 벤처캐피털을 가르치고 연구함",
+       "한국재무설계학회 회장(2023-2024), 한국중소기업정책학회 회장(2023-2024) 역임",
+       "Financial Planning Review 편집위원장(2019-2022) 역임",
+       "롯데쇼핑 사외이사·감사위원장, 한국거래소 분쟁조정위원 등 산업·공공 분야 위원으로 활동"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=6"
+     },
+     {
+      "name": "강리브가",
+      "name_en": "Rebecca Kang",
+      "role": "S-MBA 주임교수",
+      "area": "국제경영",
+      "phd": "University of Minnesota (2015)",
+      "highlights": [
+       "Strategic Management Journal에 2편(2017, 2018), Organization Science(2024), British Journal of Management(2025) 논문 게재",
+       "기업 간 제휴, 혁신, 네트워크 연구",
+       "서강대 부임 전 홍콩중문대(CUHK) 조교수로 재직(2015-2022)"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=2"
+     },
+     {
+      "name": "최장호",
+      "name_en": "Jang Ho Choi",
+      "role": "Pro-MBA 주임교수",
+      "area": "인사조직·전략",
+      "phd": "University of Wisconsin-Madison (2008)",
+      "highlights": [
+       "조직문화, 성과관리, 리더십을 연구하고 가르침",
+       "2018년부터 서강대 정교수",
+       "한국인사조직학회, 한국중소기업정책학회에서 임원으로 활동"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=45"
+     },
+     {
+      "name": "김명석",
+      "name_en": "Myung Suk Kim",
+      "role": "AI-MBA 주임교수",
+      "area": "Business Analytics",
+      "phd": "Texas A&M University (2005)",
+      "highlights": [
+       "텍스트마이닝, 시계열 예측, AI 활용 과목을 가르치며 AI-MBA를 이끎",
+       "Journal of International Business Studies(2026, 이강표 교수와 공저), European Journal of Operational Research(2013), Energy(2018) 등에 논문 게재",
+       "Rutgers University 풀브라이트 방문학자(2015)"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=7"
+     },
+     {
+      "name": "장영균",
+      "name_en": "Young Kyun Chang",
+      "role": "E-Ph.D. 주임교수",
+      "area": "인사조직·전략",
+      "phd": "University of Kansas (2013)",
+      "highlights": [
+       "기업윤리, CSR/ESG, 기업지배구조, 전략적 인사관리를 연구함",
+       "Journal of Business Ethics 편집위원(Editorial Board)",
+       "2025년 제13회 국민권익의 날 부패방지 부문 대통령 표창 수상"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=39"
+     },
+     {
+      "name": "강평경",
+      "name_en": "Pyung Kyung Kang",
+      "role": "SEP(관리자과정) 주임교수",
+      "area": "회계",
+      "phd": "Rutgers University (2011)",
+      "highlights": [
+       "2025년 한국회계학회 딜로이트 안진 학술상 공로상(Honors Award) 수상",
+       "한국회계학회 부회장(2023-), 한국회계정보학회 부회장(2024-)",
+       "HSAD·현대커머셜 사외이사 겸 감사위원장, 금융감독원 자문교수 등으로 활동",
+       "기업지배구조, 공시, 이익조정, ESG 연구"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=4"
+     },
+     {
+      "name": "송민섭",
+      "name_en": "Minsup Song",
+      "role": "교수 (한국회계학회 제45대 회장 당선인)",
+      "area": "회계",
+      "phd": "Syracuse University (2005)",
+      "highlights": [
+       "The Accounting Review(2017), Management Science(2015)에 논문 게재",
+       "2026년 3월 한국회계학회 제45대 회장으로 선출(임기 2028-2029)",
+       "회계학연구 편집장(2019-2021, 2023-2025) 역임",
+       "금융위원회 회계감사지배구조 평가위원회 위원, 감사원 자문위원 등 정책 분야 활동"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=25"
+     },
+     {
+      "name": "이강표",
+      "name_en": "Kang-Pyo Lee",
+      "role": "교수",
+      "area": "국제경영",
+      "phd": "Peking University (2005)",
+      "highlights": [
+       "Academy of Management Journal(2023), Journal of International Business Studies(2026), Journal of World Business 등에 논문 게재",
+       "국제경영연구 편집위원장(2021-2023) 역임",
+       "한국전략경영학회·한국국제경영학회 부회장",
+       "다문화 경영, 국제 인적자원관리, 중국 경영을 연구"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=30"
+     },
+     {
+      "name": "오혜림",
+      "name_en": "Hyelim Oh",
+      "role": "교수",
+      "area": "Digital Intelligence",
+      "phd": "McGill University (2014)",
+      "highlights": [
+       "Information Systems Research(2023)에 논문 게재",
+       "Decision Support Systems 부편집장(AE), 경영정보학연구(Information Systems Review) 편집위원장(2026-2028)",
+       "한국경영정보학회 연구부회장(2025)",
+       "IT·AI 경제학, 디지털 플랫폼, 핀테크를 연구하며 'AI for Business' 등을 강의"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=28"
+     },
+     {
+      "name": "조봉순",
+      "name_en": "Bongsoon Cho",
+      "role": "교수 (인사조직·전략 계열주임)",
+      "area": "인사조직·전략",
+      "phd": "State University of New York at Buffalo (2004)",
+      "highlights": [
+       "한국윤리경영학회 회장(2026), 한국인사조직학회 회장(2023), 한국리더십학회 회장(2018-2019) 역임",
+       "인사조직연구 편집위원장(2018-2020) 역임",
+       "크라운제과 사외이사, 우체국시설관리단 비상임이사로 활동"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=43"
+     },
+     {
+      "name": "정재학",
+      "name_en": "Jaihak Chung",
+      "role": "교수 (마케팅 계열주임)",
+      "area": "마케팅",
+      "phd": "Cornell University (2001)",
+      "highlights": [
+       "한국마케팅학회 회장(2024.04-) 재임",
+       "Asia Marketing Journal 편집장(2014-2017) 역임",
+       "신제품 수요예측과 시장성 평가를 연구하며 삼성전자·KT 등을 대상으로 컨설팅 수행"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=42"
+     },
+     {
+      "name": "김유진",
+      "name_en": "Yujin Kim",
+      "role": "교수 (국제경영 계열주임)",
+      "area": "국제경영",
+      "phd": "University of California, Berkeley (2016)",
+      "highlights": [
+       "혁신, 기업가정신, 벤처캐피털, 혁신경제학을 연구",
+       "2026년 한국경영학회 융합학술대회 최우수논문상 수상(실패 이후의 탐색 행동과 획기적 혁신에 관한 논문)"
+      ],
+      "source_url": "https://sbs.fiart.net/html/fulltime_view.html?no=13"
+     }
+    ],
+    "news": [
+     {
+      "title": "김유진 교수, 2026 한국경영학회 융합학술대회 최우수논문상 수상",
+      "date": "2026-09-07",
+      "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/232213/artclView.do",
+      "summary_ko": "제약산업 데이터로 실패 후 탐색 방식과 획기적 혁신의 관계를 분석한 공동연구 논문이 한국경영학회 최우수논문상을 받았습니다."
+     },
+     {
+      "title": "서강대학교 경영대학 송민섭 교수, 한국회계학회 차차기(제45대) 회장 선출",
+      "date": "2026-03-02",
+      "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/227995/artclView.do",
+      "summary_ko": "송민섭 교수가 회원 투표에서 최다 득표를 얻어 2028-2029년 임기의 한국회계학회 제45대 회장으로 당선됐습니다."
+     },
+     {
+      "title": "서강대학교 경영대학 장영균 교수, '제13회 국민권익의 날' 부패방지 부문 대통령 표창 수상",
+      "date": "2025-11-17",
+      "url": "https://sbs.sogang.ac.kr/bbs/sbs/657/224313/artclView.do",
+      "summary_ko": "장영균 교수가 부패방지와 국민권익 보호에 기여한 공로로 국민권익의 날 기념식에서 대통령 표창을 받았습니다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "hanyang",
+   "name": "한양대학교",
+   "short": "한양",
+   "color": "#1A6FAF",
+   "soft": "#E8F2F9",
+   "official_name": "한양대학교 경영전문대학원 (Hanyang University Graduate School of Business, HUBS)",
+   "mba_site_url": "https://mba.hanyang.ac.kr/",
+   "admissions_url": "https://mba.hanyang.ac.kr/front/admission/recruitment",
+   "programs": [
+    {
+     "name": "Hanyang MBA",
+     "name_en": "Hanyang MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "경영 분야별 9개 트랙(조직인사·회계·재무금융·글로벌비즈니스·경영전략&벤처·경영정보·마케팅·OSM·기업경영). 기업경영트랙은 셀프디자인형",
+     "language": "Korean",
+     "duration": "2년 (4학기), 45학점, 졸업논문·시험 없음",
+     "schedule": "야간/주말 (평일 야간 월·화·수 19:00~22:00, 토요일 09:00~19:00 중 시간대)",
+     "target": "산업·직무 무관하게 경영 전문지식과 실무역량을 강화하려는 사람, 예비 리더·관리자, 창업·경력전환 준비자",
+     "intake": "전기(3월), 후기(9월)",
+     "tuition": "입학금 1,030,000원(첫 학기만), 등록금 학기당 10,634,000원 (2026학년도 기준)",
+     "source_url": "https://mba.hanyang.ac.kr/front/introduce/program",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "Professional MBA",
+     "name_en": "Professional MBA",
+     "type": "Specialized",
+     "focus": "산업 특화 8개 트랙: 의료경영, 금융투자, 럭셔리브랜드경영(LBM), 디지털비즈니스, 문화예술경영, ESG, 글로벌YES(가업승계·창업 차세대), 자금세탁방지(AML)",
+     "language": "Korean",
+     "duration": "2년 (4학기), 45학점",
+     "schedule": "대부분 야간/주말; ESG는 야간/주말(온라인 병행); 문화예술경영은 주간",
+     "target": "의료·금융·디지털·문화예술·ESG·AML 등 특정 산업 분야 전문가 및 진출 희망자, 차세대 경영자",
+     "intake": "전기(3월), 후기(9월) (트랙별 모집 여부 상이)",
+     "tuition": "입학금 1,030,000원(첫 학기만), 등록금 학기당 10,634,000원 (2026학년도 기준)",
+     "source_url": "https://mba.hanyang.ac.kr/front/introduce/program",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "International MBA",
+     "name_en": "International MBA",
+     "type": "Global/English",
+     "focus": "3개 트랙: KABS(Korea & Asia Business Studies, 영어 전용), GBM(Global Business Management), GEM(Global Enterprise Management)",
+     "language": "English (KABS)",
+     "duration": "2년 (4학기)",
+     "schedule": "주간 (KABS)",
+     "target": "아시아 비즈니스를 배우려는 해외 학생 중심의 미래 경영자",
+     "intake": "전기/후기",
+     "tuition": "입학금 1,030,000원(첫 학기만), 등록금 학기당 10,634,000원 (2026학년도 기준, 모집요강 공통 표기)",
+     "source_url": "https://mba.hanyang.ac.kr/front/introduce/program",
+     "type_ko": "영어 과정"
+    },
+    {
+     "name": "China MBA",
+     "name_en": "China MBA",
+     "type": "Global/English",
+     "focus": "중국어권 학생 대상, 글로벌디지털혁신트랙·문화콘텐츠경영트랙. 국내 기업 필드스터디 운영",
+     "language": "Chinese",
+     "duration": "1.5년 (3학기)",
+     "schedule": null,
+     "target": "중국어권 외국인 학생",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://mba.hanyang.ac.kr/front/introduce/program",
+     "type_ko": "영어 과정"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Hanyang MBA / Professional MBA / International MBA(KABS) - 내국인 모집",
+     "cycle": "2027학년도 전기",
+     "application_period": "인터넷 원서접수 2026.10.15(목) ~ 10.29(목) 17:00 (진학어플라이), 서류 제출 같은 기간(10.29 소인 등기우편 또는 방문)",
+     "stages": [
+      "인터넷 원서접수",
+      "서류 제출",
+      "면접전형 2026.11.14(토), 대면",
+      "합격자 발표 2026.11.20(금) 예정"
+     ],
+     "eligibility": "국내·외 정규대학 학사학위 취득자(2027년 2월 취득예정자 포함) 또는 법령상 동등 학력 인정자",
+     "documents": [
+      "입학지원서",
+      "학업계획서",
+      "학부(및 대학원) 졸업증명서·성적증명서",
+      "기타 증빙(사업자등록증, 경력증명서+건강보험자격득실확인서, 공인어학성적·자격증 등; 선택)",
+      "학비지원확인서(회사 지원 기재 시)"
+     ],
+     "tests": "별도 필기시험 없음. 서류전형 40% + 면접전형 60% 합산",
+     "interview_format": "대면 면접 (수험표·신분증 지참)",
+     "special_tracks": "2027 전기 모집 트랙: Hanyang MBA, PMBA(의료경영·금융투자·디지털비즈니스·AML·글로벌YES·ESG·문화예술경영), IMBA KABS. 전형료 80,000원(수수료 별도). 입학설명회 2026.10.15(목) 19:00 경영관 SKT홀. 지정장학금: 한양대 졸업생·교직원·공무원/군인/경찰 등록금 20%, 협약기관 파견 50% 이내",
+     "source_url": "https://mba.hanyang.ac.kr/front/admission/recruitment"
+    }
+   ],
+   "analysis": [
+    "총 22개 안팎의 트랙을 운영해 국내 MBA 중 선택지가 가장 넓은 편이다. 같은 학위 안에서 일반 경영 트랙과 산업 특화 트랙을 고를 수 있다.",
+    "Professional MBA는 의료경영·AML·럭셔리브랜드·글로벌YES처럼 다른 학교에서 보기 드문 산업 특화 트랙이 많아, 특정 업계 경력을 깊게 하려는 직장인에게 맞다.",
+    "Hanyang MBA는 평일 야간·토요일 수업에 논문·졸업시험이 없어 직장 병행 부담이 비교적 작고, 기업경영트랙은 스스로 커리큘럼을 짤 수 있다.",
+    "전형이 서류 40%·면접 60%로 면접 비중이 크므로, 지원 동기와 트랙 적합성을 말로 설득하는 준비가 중요하다.",
+    "International MBA(KABS, 영어)와 China MBA(중국어)는 외국인 중심 과정이라 원내에 국제적 네트워크를 제공하며, 2026년 9월 DBA 신설로 박사 진학 경로도 생겼다."
+   ],
+   "news_sources": [
+    {
+     "name": "Hanyang MBA 소식",
+     "publisher": "한양대학교 경영전문대학원",
+     "url": "https://mba.hanyang.ac.kr/front/hmba/news",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "China MBA 소식",
+     "publisher": "한양대학교 경영전문대학원",
+     "url": "https://mba.hanyang.ac.kr/front/cmba/news",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "HUBS 소식",
+     "publisher": "한양대학교 경영대학",
+     "url": "https://biz.hanyang.ac.kr/-10",
+     "kind": "school news",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "2025학년도 후기(2026년 8월) 학위수여식",
+     "date": "2026-09-17",
+     "source_name": "Hanyang MBA 소식",
+     "url": "https://mba.hanyang.ac.kr/front/hmba/news/read?id=AaDHncfqccit4Pz4ddmu8Q",
+     "summary_ko": "8월 21일 경영관 SKT홀에서 경영전문대학원 후기 학위수여식이 열려 졸업생과 가족이 함께했다."
+    },
+    {
+     "title": "2026학년도 후기 입학식",
+     "date": "2026-09-15",
+     "source_name": "Hanyang MBA 소식",
+     "url": "https://mba.hanyang.ac.kr/front/hmba/news/read?id=AaDHldtie4GWgEKI8QwUMg",
+     "summary_ko": "2026학년도 후기(가을학기) 신입생 입학식 소식으로, 게시물은 사진 위주로 구성돼 있다."
+    },
+    {
+     "title": "2026-1학기 China MBA 필드스터디 기업방문 (CJ ENM)",
+     "date": "2026-05-21",
+     "source_name": "China MBA 소식",
+     "url": "https://mba.hanyang.ac.kr/front/cmba/news/read?id=AZ5IN_UUe7KeZ-hJ9Tl0Ug",
+     "summary_ko": "China MBA의 두 트랙 학생들이 CJ ENM을 방문해 한국 콘텐츠 기업의 현장을 살펴본 필드스터디 프로그램이다."
+    },
+    {
+     "title": "2026학년도 후기 신입학 입학설명회",
+     "date": "2026-04-16",
+     "source_name": "Hanyang MBA 소식",
+     "url": "https://mba.hanyang.ac.kr/front/hmba/news/read?id=AZ2oZk_hdgey0U6SoI_fpA",
+     "summary_ko": "가을학기 입학 희망자를 대상으로 과정·트랙과 전형을 안내하는 입학설명회가 서울캠퍼스에서 열렸다."
+    },
+    {
+     "title": "「2025 한양 경영인의 밤」 행사 성료",
+     "date": "2025-12-22",
+     "source_name": "HUBS 소식",
+     "url": "https://biz.hanyang.ac.kr/-10",
+     "summary_ko": "한양대 경영대학이 동문과 구성원이 함께하는 연말 행사 '한양 경영인의 밤'을 마쳤다는 소식이다(목록 페이지 링크, 본문 세부 미확인)."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "Hanyang·Professional·International MBA",
+     "start": "2026-10-15",
+     "end": "2026-10-29"
+    }
+   ],
+   "notes": "2027학년도 전기 MBA 입학요강 PDF(2026-09-22 작성)가 공식 사이트에 게시돼 이를 사용함. 등록금은 요강에 '2026학년도 기준'으로 표기되어 2027년 금액과 다를 수 있음. 모집인원은 공개 자료에서 확인 불가(null). 2027 전기 내국인 모집 표에는 럭셔리브랜드경영(LBM) 트랙과 IMBA GBM/GEM, China MBA가 없음 — 외국인 모집요강은 별도(Foreigner 탭)로 이번에 확인하지 않음. China MBA의 입학 시기·수업형태는 공식 페이지에서 확인 못해 null. 한양대 총동문회 및 MBA 동문회 공식 사이트는 접속·확인 불가로 news_sources에서 제외. 대학 본부 뉴스(hanyang.ac.kr)에서 MBA 관련 최신 기사를 찾지 못함. '한양 경영인의 밤' 항목은 개별 기사 URL을 추출하지 못해 목록 URL을 사용함. 22개 트랙·DBA 신설(2026년 9월) 정보는 한국경제 기사(학교 제공)에 근거하며, DBA 메뉴는 공식 사이트에 존재함. RSS 미확인.",
+   "guide": {
+    "tagline": "의료·금융·문화예술·ESG 등 산업별 트랙이 가장 많다. 논문·졸업시험 없이 2년.",
+    "intake": [
+     {
+      "program": "Hanyang MBA · Professional MBA",
+      "start": "3월 · 9월",
+      "apply": "3월 입학은 10월 중순 ~ 말"
+     },
+     {
+      "program": "International MBA (영어)",
+      "start": "3월 · 9월",
+      "apply": "내국인은 국내 과정과 같은 일정"
+     },
+     {
+      "program": "China MBA (외국인)",
+      "start": "공식 안내 확인",
+      "apply": "외국인 모집 요강 별도"
+     }
+    ],
+    "process": [
+     {
+      "title": "Hanyang · Professional · International MBA 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "입학설명회",
+        "when": "2026.10.15 (목) 19:00"
+       },
+       {
+        "label": "원서 접수·서류 제출",
+        "when": "10.15 – 10.29"
+       },
+       {
+        "label": "대면 면접",
+        "when": "11.14 (토)"
+       },
+       {
+        "label": "합격 발표",
+        "when": "11.20"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위 (2027년 2월 취득 예정 포함)"
+     },
+     {
+      "k": "경력",
+      "v": "필수 요건 없음"
+     },
+     {
+      "k": "영어",
+      "v": "필기 시험 없음"
+     },
+     {
+      "k": "선발",
+      "v": "서류 40% + 면접 60%"
+     },
+     {
+      "k": "전형료",
+      "v": "80,000원 (수수료 별도)"
+     },
+     {
+      "k": "장학",
+      "v": "한양대 졸업생·공무원·군인·경찰 등록금 20%, 협약 기관 파견 50% 이내"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Hanyang MBA",
+      "per_semester": 10634000,
+      "semesters": 4,
+      "admission": 1030000,
+      "total": 42536000,
+      "all_in": 43566000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Professional MBA",
+      "per_semester": 10634000,
+      "semesters": 4,
+      "admission": 1030000,
+      "total": 42536000,
+      "all_in": 43566000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "International MBA",
+      "per_semester": 10634000,
+      "semesters": 4,
+      "admission": 1030000,
+      "total": 42536000,
+      "all_in": 43566000,
+      "year": "2026",
+      "note": ""
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://mba.hanyang.ac.kr/front/introduce/faculty",
+    "count": 51,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "회계",
+      "count": 8
+     },
+     {
+      "area": "경영정보",
+      "count": 8
+     },
+     {
+      "area": "재무금융",
+      "count": 7
+     },
+     {
+      "area": "조직인사",
+      "count": 7
+     },
+     {
+      "area": "마케팅",
+      "count": 7
+     },
+     {
+      "area": "글로벌비즈니스",
+      "count": 5
+     },
+     {
+      "area": "경영전략&벤처",
+      "count": 5
+     },
+     {
+      "area": "OSM",
+      "count": 4
+     }
+    ],
+    "strengths": [
+     "MBA 트랙마다 주임교수를 두는 체제로 재무금융, 디지털비즈니스, ESG, 의료경영, 럭셔리브랜드, 문화예술경영 등 실무 특화 트랙이 다양합니다.",
+     "임팩트비즈니스연구센터, 지속가능공급망센터 등을 중심으로 ESG·사회혁신·지속가능경영 연구와 산학협력이 활발합니다.",
+     "조직인사 교수진이 Academy of Management Journal, Journal of Applied Psychology, Journal of Management 등 최상위 저널에 꾸준히 논문을 게재합니다.",
+     "회계·세무 교수진이 서현학술상, 딜로이트 안진 학술상 등 주요 학술상을 받았고 국세청·감사원 등 공공기관 위원으로 활동합니다."
+    ],
+    "notable": [
+     {
+      "name": "이상명",
+      "name_en": null,
+      "role": "경영대학장 겸 경영전문대학원장, 경영전략&벤처 트랙주임",
+      "area": "경영전략&벤처",
+      "phd": "University of Oregon",
+      "highlights": [
+       "경영대학과 경영전문대학원의 학장·원장을 함께 맡고 있음(MBA 원장 인사말, 경영대학 사이트 기준)",
+       "인사말에서 AI 시대에 맞는 교육과정 혁신, MBA의 실용 인재 양성, DBA 운영을 핵심 방향으로 제시함"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/greetings"
+     },
+     {
+      "name": "임규건",
+      "name_en": null,
+      "role": "교수 (MBA 교수 명단에는 '경영전문대학원장'으로 표기됨)",
+      "area": "경영정보",
+      "phd": "KAIST 경영공학 (2001)",
+      "highlights": [
+       "Bright Internet Award(2021), IT서비스 우수연구인상(2018), 지식경제부 장관 표창(2009) 수상",
+       "한국IT서비스학회장, 한국지능정보시스템학회장 역임 및 국제전자상거래연구원(ICEC) 원장",
+       "삼성전자·KT 연구원 출신으로 KORNET 상용화 등 IT 혁신 프로젝트에 참여",
+       "UC Berkeley Haas 풀브라이트 방문학자(2012-2013), 저서 '경영을 위한 정보기술', 'e-비즈니스 경영'"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=bOU1m-nRSB26gPYv2O-AFw"
+     },
+     {
+      "name": "박상희",
+      "name_en": "Sanghee Park",
+      "role": "조직인사 트랙주임",
+      "area": "조직인사",
+      "phd": "Cornell University (2014)",
+      "highlights": [
+       "Academy of Management Journal(2023, 그해 AMJ 최다 열람 논문 10편에 선정), Academy of Management Annals(2022), Journal of Applied Psychology(2015) 논문 게재",
+       "성과급 연구로 Harvard Business Review(2024)에 기고",
+       "Human Resource Management Review 부편집장(AE, 2023-), Personnel Psychology 편집위원(2024-)",
+       "한양대 이달의 연구자(2023.6) 선정"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=qgNaq9-GQgCu5bYM5cWzOQ"
+     },
+     {
+      "name": "정희선",
+      "name_en": null,
+      "role": "부교수, 공인회계사반 주임교수",
+      "area": "회계",
+      "phd": "서울대학교 경영학 (2016)",
+      "highlights": [
+       "제2회 서현학술상 최우수상(2025.1), 한국회계학회 회계학연구 논문상(2025.6) 수상",
+       "한국회계학회 학술연구자료위원장(2023-), 국세청 국세심사위원회 민간위원(2023-2025) 역임",
+       "과학기술정보통신부 회계전문위원회, 감사원 적극행정지원 자문위원회 위원 등으로 활동(2026-)",
+       "삼일회계법인, 한국조세재정연구원 근무 경력"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=adU5prImSfKJIMXj0-ow1A"
+     },
+     {
+      "name": "정태진",
+      "name_en": "Taejin Jung",
+      "role": "부교수",
+      "area": "회계",
+      "phd": "서울대학교 경영학(회계학) (2020)",
+      "highlights": [
+       "2025년 한국회계학회-딜로이트안진회계법인 신진학자상, 서현학술재단 논문공모전 최우수상, 한국세무학회 Best Paper Award 수상",
+       "Contemporary Accounting Research, Journal of Corporate Finance, European Accounting Review 등에 논문 게재",
+       "공인회계사·세무사로 딜로이트 안진, 법무법인 율촌에서 국제조세 실무 경험",
+       "기업 조세전략과 AI의 회계·감사 활용을 연구"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=nGwPTUO_Soqi96VQmQeZ3w"
+     },
+     {
+      "name": "신현상",
+      "name_en": "Hyun S. Shin",
+      "role": "교수, 임팩트비즈니스연구센터장",
+      "area": "마케팅",
+      "phd": "UCLA Anderson School of Management",
+      "highlights": [
+       "Management Science 등에 연구 게재",
+       "Stanford Social Innovation Review(SSIR) 한국어판 편집인, Ashoka U Change Leader",
+       "임팩트 측정·컨설팅 소셜벤처 Impact Research Lab 창업(2019)",
+       "삼성·SK·LG·현대차, 빌앤멜린다게이츠재단, KOICA 등과 연구·자문 협업"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=lVs3R6vvQVSIhVDguB5dLg"
+     },
+     {
+      "name": "이창원",
+      "name_en": null,
+      "role": "의료경영 트랙주임, 경영연구소장",
+      "area": "OSM",
+      "phd": "Saint Louis University (Operations Research and Healthcare Administration)",
+      "highlights": [
+       "수리과학세계연맹(IFORS) 총괄부회장, 대한경영학회 회장 역임",
+       "European Journal of Operational Research, Technological Forecasting and Social Change 등에 논문 게재",
+       "2019년 한국경영학회 융합학술대회 매경 최우수논문상 수상",
+       "경영전문대학원 경영학과장, 경영교육원 부원장 역임"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=XEE7P_evT7mQjgJuVnxcCg"
+     },
+     {
+      "name": "최성용",
+      "name_en": null,
+      "role": "교수",
+      "area": "OSM",
+      "phd": "Rutgers Business School (2009)",
+      "highlights": [
+       "Operations Research(2011), European Journal of Operational Research, International Journal of Production Economics 등에 공급사슬 리스크 연구 게재",
+       "Decision Sciences Institute Elwood S. Buffa 박사논문 경진대회 준우승(2010)",
+       "한양대 IC-PBL 강의혁신상(2022), 이달의 연구자(2021)",
+       "한국프로젝트경영학회 편집위원장(2020-)"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=jLrCpdJ4TFqscwCg9iaQQg"
+     },
+     {
+      "name": "신유형",
+      "name_en": null,
+      "role": "교수",
+      "area": "조직인사",
+      "phd": "Columbia University 조직심리학 (2005)",
+      "highlights": [
+       "Journal of Management, Journal of Occupational Health Psychology, Journal of Organizational Behavior 등에 논문 게재",
+       "Group & Organization Management 부편집장(AE) 역임, Journal of Organizational Behavior 편집위원",
+       "한양대 경영전문대학원 강의우수교수상(2021), 한국갤럽학술논문상 우수상(2023)",
+       "한양대 경영학부장(2020-2022) 역임"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=TZJB_6CbSuqjc-Y15IU3vw"
+     },
+     {
+      "name": "박병진",
+      "name_en": "Byung-Jin (Robert) Park",
+      "role": "ESG 트랙주임, HUBS 창업&커리어센터장",
+      "area": "경영전략&벤처",
+      "phd": "Virginia Tech",
+      "highlights": [
+       "코피티션(경쟁과 협력의 동시 추구) 전략 연구를 Research Policy(2011), Industrial Marketing Management(2014) 등에 게재",
+       "전국경제인연합회에서 15년간 경제·산업정책 업무 수행",
+       "MBA에서 경영전략, 혁신전략, 지속가능경영전략, CSR 전략 등을 강의"
+      ],
+      "source_url": "https://mba.hanyang.ac.kr/front/introduce/faculty/professor1/read?id=hBDTdvWFRUaZKdyFhRJv9Q"
+     },
+     {
+      "name": "김보영",
+      "name_en": "Bo Young Renee Kim",
+      "role": "교수",
+      "area": "글로벌비즈니스",
+      "phd": "University of Alberta",
+      "highlights": [
+       "한국국제경영관리학회 제29대 회장(2025) 선출",
+       "AACSB 아시아경영대학 조직위원장, 한국경영교육인증원 대외협력단장",
+       "고려아연 사외이사로 활동, 캐나다 매니토바대 종신교수 출신"
+      ],
+      "source_url": "https://www.newshyu.com/news/articleView.html?idxno=1016504"
+     },
+     {
+      "name": "안지선",
+      "name_en": "Jiseon Ahn",
+      "role": "문화예술경영 트랙주임",
+      "area": "글로벌비즈니스",
+      "phd": "University of Houston (Hospitality Administration)",
+      "highlights": [
+       "2025년 엘스비어(Elsevier) 세계 상위 2% 연구자(단년도 부문) 선정",
+       "소비자 웰빙과 지속가능 소비, 국제 브랜드 관리, CSR을 연구"
+      ],
+      "source_url": "https://www.newshyu.com/news/articleView.html?idxno=1021497"
+     }
+    ],
+    "news": [
+     {
+      "title": "세계 상위 2% 연구자 선정, 소비자의 웰빙과 지속 가능성을 묻는 안지선 교수를 만나다",
+      "date": "2025-12-08",
+      "url": "https://www.newshyu.com/news/articleView.html?idxno=1021497",
+      "summary_ko": "안지선 교수가 최근 1년 연구 성과를 기준으로 엘스비어 세계 상위 2% 연구자 명단에 올랐습니다."
+     },
+     {
+      "title": "임보람 교수, 대한민국마케팅대상 연구 부문 특별상 수상",
+      "date": "2025-03-21",
+      "url": "https://www.newshyu.com/news/articleView.html?idxno=1018047",
+      "summary_ko": "임보람 교수가 한국마케팅협회 등이 주관하는 대한민국마케팅대상에서 연구 부문 특별상을 받았습니다."
+     },
+     {
+      "title": "'서현학술상 최우수상' 정희선 교수, 회계·조세·재무 분야 학술 진흥에 이바지하다",
+      "date": "2025-02-03",
+      "url": "https://www.newshyu.com/news/articleView.html?idxno=1017424",
+      "summary_ko": "정희선 교수가 감사의견 구매와 감사인 독립성 문제를 다룬 공동연구로 제2회 서현학술상 최우수상을 받았습니다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "ewha",
+   "name": "이화여자대학교",
+   "short": "이화",
+   "color": "#00462A",
+   "soft": "#E6F0EC",
+   "official_name": "이화여자대학교 경영전문대학원 (Ewha School of Business, Graduate School of Business)",
+   "mba_site_url": "https://gsb.ewha.ac.kr/",
+   "admissions_url": "https://gsb.ewha.ac.kr/gsb/admission/admission-mba-dba.do",
+   "programs": [
+    {
+     "name": "Global MBA",
+     "name_en": "Global MBA",
+     "type": "Global/English",
+     "focus": "글로벌 여성 리더 양성, 다국적 유학생과 함께하는 주간 전일제 MBA. 마지막 학기 기업 파견자 Field Study 또는 무경력자 인턴십(선택). 8개 전공트랙(MIS, 마케팅, 인사조직전략, 재무, 회계, 경영과학, 비즈니스애널리틱스, 아트비즈니스) 이수 시 세부학위",
+     "language": "영어 100% (브로슈어 기준; 2024학년도부터 일부 중국어 전공선택 과목 개설)",
+     "duration": "3학기 (1년 6개월)",
+     "schedule": "주간 (요일·시간은 공식 페이지에 미기재)",
+     "target": "기업 파견 직원, 경력 전환·자기계발을 원하는 직장인, 실무 경험을 원하는 학부 졸업(예정)자",
+     "intake": "00명 이내 (모집요강에 구체 인원 비공개)",
+     "tuition": "학기당 약 12,200,000원 + 입학금 1,120,000원 (2026학년도 기준, 변동 가능)",
+     "source_url": "https://gsb.ewha.ac.kr/gsb/curriculum/about-global-mba.do",
+     "type_ko": "영어 과정"
+    },
+    {
+     "name": "Frontier MBA",
+     "name_en": "Frontier MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "재직 중 학위 취득. 소속 기업의 실제 과제를 다루는 Field Study, 전공트랙, 멘토-어드바이저 제도",
+     "language": "주로 한국어 (영어 수업 수강 가능)",
+     "duration": "4학기 (2년)",
+     "schedule": "야간 + 전공필수 토요일 집중수업, 온·오프라인 융합·원격수업 확대",
+     "target": "여성 직장인 및 창업자 (유학 비자 발급 불가)",
+     "intake": "00명 이내 (구체 인원 비공개)",
+     "tuition": "학기당 약 10,200,000원 + 입학금 1,120,000원 (2026학년도 기준, 변동 가능)",
+     "source_url": "https://gsb.ewha.ac.kr/gsb/curriculum/about-frontier-mba.do",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "Art&Luxury Business MBA",
+     "name_en": "Art & Luxury Business MBA",
+     "type": "Specialized",
+     "focus": "미술·패션·식음 럭셔리 브랜드 사례, 미술시장·경매·갤러리 운영 등 아트 매니지먼트. 필수 경영일반 18학점 + Art&Luxury 12학점",
+     "language": "주로 한국어 (영어 수업 수강 가능)",
+     "duration": "4학기 (2년)",
+     "schedule": "야간 + 전공필수 토요일 집중수업, 온·오프라인 융합수업",
+     "target": "예술 경영자, 럭셔리 브랜드 임원, MD·마케팅·오퍼레이션 실무자 등 업계 전문인과 관련 분야 진출 희망자",
+     "intake": "00명 이내 (구체 인원 비공개)",
+     "tuition": "학기당 약 10,200,000원 + 입학금 1,120,000원 (2026학년도 기준, 변동 가능)",
+     "source_url": "https://gsb.ewha.ac.kr/gsb/curriculum/about-art-luxury.do",
+     "type_ko": "특화 과정"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Global MBA / Frontier MBA / Art&Luxury Business MBA (공통)",
+     "cycle": "2027학년도 전기 (2027년 3월 입학)",
+     "application_period": "1차: 원서 2026.10.1~10.21(17:00), 서류 ~10.22 / 서류합격 11.3, 면접 11.7(토), 최종 11.23. 2차: 원서 2026.11.25~12.22, 서류 ~12.23 / 서류합격 2027.1.5, 면접 1.9(토), 최종 1.22",
+     "stages": [
+      "서류전형 (학업성취도, 자기소개서, 연구계획, 추천서 등)",
+      "면접(구술)고사 (서류 합격자)",
+      "입시 총점 순 선발"
+     ],
+     "eligibility": "2027년 2월 이전 국내·외 학사학위 취득(예정)자 또는 동등 학력 인정자. Frontier MBA는 유학 비자 발급 불가",
+     "documents": [
+      "입학원서 출력본(서명)",
+      "자기소개서(본교 양식)",
+      "학위증명서 또는 졸업(예정)증명서",
+      "전 학위과정 성적증명서(평점 만점 표기)",
+      "경력/재직증명서(해당자)",
+      "공인어학성적 TOEIC/TOEFL/TEPS/IELTS(소지자, 2년 이내; 외국인 TOPIK 추가 가능)",
+      "해외 학력: 아포스티유/영사확인, 중국 학력은 학신망 인증서"
+     ],
+     "tests": "GMAT/GRE 요구 없음. 어학성적은 소지자만 제출",
+     "interview_format": "구술면접; 세부 방식은 서류합격 발표 시 안내. 수험표·신분증 지참, 결시 시 불합격",
+     "special_tracks": "모집요강상 별도 특별전형·기업추천 전형 없음 (1차/2차 모집으로 운영). 전형료 80,000원",
+     "source_url": "https://gsb.ewha.ac.kr/gsb/admission/admission-mba-dba.do"
+    }
+   ],
+   "analysis": [
+    "국내 유일 여자대학 MBA로, 여성 경영 리더 양성에 초점을 맞춘 커리큘럼과 기업 MOU 네트워크가 강점",
+    "Global MBA는 3학기(1년 반) 영어 전용 주간 과정이라 빠른 학위 취득과 해외·다국적 환경을 원하는 지원자에게 적합",
+    "Frontier MBA는 평일 야간+토요일 집중수업 구조로 재직 여성 직장인·창업자가 일과 병행하기 좋음",
+    "Art&Luxury Business MBA는 아트·럭셔리 산업 특화 과정으로 국내에서 드문 포지셔닝; 갤러리·럭셔리 브랜드 실무자에게 맞춤",
+    "GMAT 없이 서류+면접으로 선발하고 연 2회(1차/2차) 모집해 지원 문턱이 비교적 낮음"
+   ],
+   "news_sources": [
+    {
+     "name": "이화여대 경영전문대학원 공지사항",
+     "publisher": "이화여자대학교 경영전문대학원",
+     "url": "https://gsb.ewha.ac.kr/gsb/board/notice.do",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "GSB in Media",
+     "publisher": "이화여자대학교 경영전문대학원",
+     "url": "https://gsb.ewha.ac.kr/gsb/board/gsb-in-media.do",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "이화뉴스",
+     "publisher": "이화여자대학교",
+     "url": "https://www.ewha.ac.kr/ewha/news/ewha-news.do",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "이화MBA 원우회",
+     "publisher": "이화MBA 원우회 (학교 사이트 내 안내 페이지)",
+     "url": "https://gsb.ewha.ac.kr/gsb/admission/mba-alumni-association.do",
+     "kind": "alumni newsletter",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "[홍보] <아트&럭셔리브랜드사례연구> 위블로 코리아 강민욱 대표 초청 특강(10월 3일(토) 오후 3시 30분)",
+     "date": "2026-09-23",
+     "source_name": "이화여대 경영전문대학원 공지사항",
+     "url": "https://gsb.ewha.ac.kr/gsb/board/notice.do?mode=view&articleNo=798693",
+     "summary_ko": "아트&럭셔리 과정 수업의 일환으로 럭셔리 시계 브랜드 한국 법인 대표를 초청한 특강 공지다."
+    },
+    {
+     "title": "[University of South Carolina 설명회] Omrane Guedhami 교수 워크샵 및 복수학위 설명회",
+     "date": "2026-09-16",
+     "source_name": "이화여대 경영전문대학원 공지사항",
+     "url": "https://gsb.ewha.ac.kr/gsb/board/notice.do?mode=view&articleNo=796850",
+     "summary_ko": "미국 사우스캐롤라이나대 교수를 초청해 9월 21일 연구 논문 작성 특강과 복수학위 프로그램 설명을 진행한다는 안내다."
+    },
+    {
+     "title": "경영대학·경영전문대학원 4회 연속 AACSB 인증 획득",
+     "date": "2025-07-25",
+     "source_name": "이화뉴스",
+     "url": "https://www.ewha.ac.kr/ewha/news/ewha-news.do?mode=view&articleNo=356396",
+     "summary_ko": "경영대학과 경영전문대학원이 국제 경영교육 인증인 AACSB를 4회 연속 유지했다는 소식이다."
+    },
+    {
+     "title": "경영전문대학원, 가나아트센터와 아트&럭셔리 여성 전문 인력 양성 업무협약 체결",
+     "date": "2025-06-18",
+     "source_name": "GSB in Media",
+     "url": "https://gsb.ewha.ac.kr/gsb/board/gsb-in-media.do?mode=view&articleNo=751482",
+     "summary_ko": "가나아트센터와 손잡고 교육 프로그램 공동 개발과 현대미술 현장 수업 등 아트 비즈니스 인재 양성 협력을 약속했다."
+    },
+    {
+     "title": "[중앙일보] [MBA로 가는 길] 특화된 교육으로 여성 비즈니스 리더 양성…일·학업 병행 위해 토요강좌 전일제로 확대",
+     "date": "2025-04-18",
+     "source_name": "GSB in Media",
+     "url": "https://gsb.ewha.ac.kr/gsb/board/gsb-in-media.do?mode=view&articleNo=747596",
+     "summary_ko": "롯데지주와 공동 개발한 여성 경영 리더십 교과 등 이화 MBA의 특화 교육과, 직장인을 위한 토요 수업 확대를 소개한 언론 보도다."
+    },
+    {
+     "title": "경영전문대학원, 삼성화재와 여성경영리더 양성 업무협약 체결",
+     "date": "2025-04-09",
+     "source_name": "GSB in Media",
+     "url": "https://gsb.ewha.ac.kr/gsb/board/gsb-in-media.do?mode=view&articleNo=746980",
+     "summary_ko": "삼성화재와 여성 경영리더 발굴·육성, 우수 직원 파견, 공동 행사 등을 위한 협약을 맺었다."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "전 과정 1차",
+     "start": "2026-10-01",
+     "end": "2026-10-21"
+    },
+    {
+     "label": "전 과정 2차",
+     "start": "2026-11-25",
+     "end": "2026-12-22"
+    }
+   ],
+   "notes": [
+    "모집요강의 과정별 모집인원은 '00명 이내'로만 표기되어 구체 인원 미확인.",
+    "Global MBA 100% 영어 수업 및 야간과정 토요일 집중수업 정보는 학교 공식 브로슈어(GSB Brochure_Korean.pdf, 2025학년도 기준 표기)에서 확인; 2027학년도 변경 여부는 미확인.",
+    "Art&Luxury 과정 웹페이지에는 수업연한 미기재이나 2027 모집요강에 4학기(2년), 야간으로 명시.",
+    "등록금은 각 과정 페이지의 2026학년도 기준 '약' 금액이며 2027학년도 등록금은 미공시.",
+    "지원자격에 성별 제한 문구는 모집요강에 없음; 브로슈어는 여성 대상 과정으로 소개.",
+    "원서접수 대행 페이지(진학어플라이)는 robots 차단으로 직접 확인하지 못함.",
+    "공식 동문회 소식지·RSS는 확인되지 않음; 원우회는 카카오채널/네이버카페/인스타그램(@ewhamba_biz_leaders)으로 운영.",
+    "GSB in Media 게시판 날짜는 게시일 기준이며 일부는 외부 언론 보도 재게시임."
+   ],
+   "guide": {
+    "tagline": "여성 직장인을 위한 야간 Frontier MBA와 예술·럭셔리 산업 특화 Art&Luxury MBA. AACSB 4회 연속 인증.",
+    "intake": [
+     {
+      "program": "Global MBA · Frontier MBA · Art&Luxury MBA",
+      "start": "매년 3월",
+      "apply": "10월 · 11월 ~ 12월, 2차례"
+     }
+    ],
+    "process": [
+     {
+      "title": "전 과정 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "1차 접수",
+        "when": "2026.10.1 – 10.21 (면접 11.7, 발표 11.23)"
+       },
+       {
+        "label": "2차 접수",
+        "when": "11.25 – 12.22 (면접 2027.1.9, 발표 1.22)"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위 (2027년 2월 이전 취득 예정 포함)"
+     },
+     {
+      "k": "경력",
+      "v": "필수 요건 없음"
+     },
+     {
+      "k": "영어",
+      "v": "어학 성적은 소지자만 제출"
+     },
+     {
+      "k": "GMAT",
+      "v": "요구하지 않음"
+     },
+     {
+      "k": "선발",
+      "v": "서류 → 구술 면접, 총점 순"
+     },
+     {
+      "k": "전형료",
+      "v": "80,000원"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Global MBA",
+      "per_semester": 12200000,
+      "semesters": 3,
+      "admission": 1120000,
+      "total": 36600000,
+      "all_in": 37720000,
+      "year": "2026",
+      "note": "약"
+     },
+     {
+      "program": "Frontier MBA",
+      "per_semester": 10200000,
+      "semesters": 4,
+      "admission": 1120000,
+      "total": 40800000,
+      "all_in": 41920000,
+      "year": "2026",
+      "note": "약"
+     },
+     {
+      "program": "Art&Luxury MBA",
+      "per_semester": 10200000,
+      "semesters": 4,
+      "admission": 1120000,
+      "total": 40800000,
+      "all_in": 41920000,
+      "year": "2026",
+      "note": "약"
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://biz.ewha.ac.kr/biz/biz/full-time-professor.do",
+    "count": 33,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "인사조직/전략",
+      "count": 7
+     },
+     {
+      "area": "마케팅",
+      "count": 6
+     },
+     {
+      "area": "재무",
+      "count": 6
+     },
+     {
+      "area": "회계",
+      "count": 6
+     },
+     {
+      "area": "경영과학",
+      "count": 4
+     },
+     {
+      "area": "경영정보시스템",
+      "count": 4
+     }
+    ],
+    "strengths": [
+     "전략·인사조직 교수진이 Strategic Management Journal, Academy of Management Journal·Review, Journal of Marketing 등 해외 최상위 저널 게재 실적을 갖추고 있습니다.",
+     "한국경영학회장(2025), 한국마케팅학회장, 한국인사조직학회장 등 주요 학회장을 배출하며 국내 경영학계에서 리더십을 발휘해 왔습니다.",
+     "빅데이터·AI, ESG·기업지배구조 연구가 활발하며, 교수들이 금융당국 자문, 상장사 사외이사 등 정책·산업 현장에서도 활동합니다.",
+     "학부·일반대학원·MBA 전 과정이 AACSB 인증을 4회 연속 받았고, Global·Frontier·Art&Luxury MBA마다 전담 주임교수를 둡니다."
+    ],
+    "notable": [
+     {
+      "name": "김봉진",
+      "name_en": "Bong-Jin Kim",
+      "role": "경영대학장 겸 경영전문대학원장",
+      "area": "인사조직/전략",
+      "phd": "University of Pittsburgh",
+      "highlights": [
+       "기업지배구조, 이사회, 최고경영진(TMT), 경영자 보상, 다국적기업을 연구함",
+       "전략경영·국제경영을 강의하며 MBA 과정 '경영전략' 과목을 담당",
+       "재임 중 경영대학·경영전문대학원의 AACSB 4회 연속 인증(2025-2030)을 이끎",
+       "CEO 권력과 이사회 독립성이 ESG 성과에 미치는 영향 등에 관한 논문을 「전략경영연구」에 발표(2024)"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=sEFBNOJSfPNbyHzqyVK8Lw%3D%3D"
+     },
+     {
+      "name": "최승호",
+      "name_en": "Seung-Ho Choi",
+      "role": "교수, 경영전문대학원 부원장(학부 교수진 목록 기준)",
+      "area": "인사조직/전략",
+      "phd": "Michigan State University (Strategy)",
+      "highlights": [
+       "Strategic Management Journal(2018), Journal of Management Studies(2012), Strategic Organization(2014), Industrial and Corporate Change(2021)에 논문 게재",
+       "조직학습, 기술 인수합병, 혁신, 기업가정신을 연구함",
+       "전략경영(Strategic Management) 과목 담당"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=MvZzRwr5JnfBfnStiReMgQ%3D%3D"
+     },
+     {
+      "name": "권세원",
+      "name_en": "Sewon Kwon",
+      "role": "부교수, 경영전문대학원 부원장, Art & Luxury Business MBA 전공주임교수",
+      "area": "회계",
+      "phd": "서울대학교",
+      "highlights": [
+       "공인회계사·세무사이며, 경영자 보상, 기업지배구조, 회계감사, ESG를 연구함",
+       "Journal of Management Accounting Research 2편, Journal of Accounting and Public Policy 등 SSCI 논문 다수 발표",
+       "공인회계사 양성체계, 지속가능성 공시·인증 제도 연구·자문 공로로 금융위원회위원장 표창(2025)",
+       "삼정KPMG Scholarship Professor(2018), 기획재정부 공공기관 평가 계량부문 팀장(2020-2022) 역임"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=TXiT%2ByiAYet8w9kbUkzeiw%3D%3D"
+     },
+     {
+      "name": "배재현",
+      "name_en": "Jae-Hyeon Pae",
+      "role": "교수, Frontier MBA 주임교수",
+      "area": "마케팅",
+      "phd": "Columbia University (Marketing)",
+      "highlights": [
+       "마케팅 혁신과 신제품 개발을 연구하며 SSCI급 국제학술지에 20여 편 발표",
+       "Journal of Product Innovation Management(2018)에 한·중·일 신제품 창의성 연구 게재",
+       "마케팅리서치·마케팅조사론 담당"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=jX7SNxjnxfzM19uMN0or4w%3D%3D"
+     },
+     {
+      "name": "박성연",
+      "name_en": "Seong-Yeon Park",
+      "role": "교수, 학사부총장",
+      "area": "마케팅",
+      "phd": "Northwestern University (Kellogg)",
+      "highlights": [
+       "한국마케팅학회장, 한국마케팅과학회 회장 역임",
+       "Journal of Business Research 객원편집위원, Journal of Global Scholars of Marketing Science 편집위원장 역임",
+       "금융위원회 금융발전심의회 위원, 삼성화재·현대해상 등 사외이사로 활동",
+       "저서 『마케팅 신조류』, 번역서 『체험 마케팅』; 마케팅관리·브랜드관리·광고경영 강의"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=oBwMsMqmz%2FrADoe%2F1ff82A%3D%3D"
+     },
+     {
+      "name": "신경식",
+      "name_en": "Kyung-Shik Shin",
+      "role": "교수, 데이터사이언스대학원장",
+      "area": "경영정보시스템",
+      "phd": "KAIST",
+      "highlights": [
+       "빅데이터·AI 응용 분야에서 150여 편 논문, 최우수논문상 16회 수상(학교 보도 기준)",
+       "한국경영학회 '제6회 우수경영학자상'(2020), 코리아 빅데이터 AI 어워드 중기부장관 표창 '빅데이터 구루'(2024) 수상",
+       "한국빅데이터학회장, 한국지능정보시스템학회장, 한국경영학회 수석부회장 역임; 국가 공공데이터전략위원회 위원",
+       "K-MOOC '빅데이터의 세계, 원리와 응용' 강좌가 분야별 인기강좌로 선정"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=2rTDTS7xE16lHSg%2FYflxYA%3D%3D"
+     },
+     {
+      "name": "양희동",
+      "name_en": "Hee-Dong Yang",
+      "role": "교수",
+      "area": "경영정보시스템",
+      "phd": "Case Western Reserve University",
+      "highlights": [
+       "2025년 한국경영학회장(2025.3-2026.2)으로 선출됨",
+       "이화 경영전문대학원장, 한국지식경영학회장, 한국경영정보학회장 역임",
+       "MIS·전자상거래를 강의하며 디지털 비즈니스·AI 활용 경영 사례를 연구"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=x623oLx273bmqoUhQEG6Sw%3D%3D"
+     },
+     {
+      "name": "정명호",
+      "name_en": "Myung-Ho Chung",
+      "role": "교수, 경영연구소장",
+      "area": "인사조직/전략",
+      "phd": "연세대학교 (조직행동)",
+      "highlights": [
+       "Academy of Management Journal, Academy of Management Review 등에 50여 편 논문 발표",
+       "한국인사조직학회 제31대 회장(2021), 「인사조직연구」 편집위원장 역임",
+       "한국인사조직학회 중견연구자 학술상·우수저술상 수상",
+       "저서 『Cultural Complexity in Organizations』(Sage), 『패러독스와 경영』 등"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=7N6%2FItxhy1jEAAe7wIcJ%2BA%3D%3D"
+     },
+     {
+      "name": "이종국",
+      "name_en": "Jong-Kuk Lee",
+      "role": "교수",
+      "area": "마케팅",
+      "phd": "University of Illinois at Urbana-Champaign",
+      "highlights": [
+       "Journal of Marketing(2017), Information Systems Research(2021), Journal of Management 등에 논문 게재",
+       "기업 간 제휴와 신제품 혁신을 연구",
+       "산업재 마케팅·국제마케팅 강의"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=hZYbwEbQLBv%2B1knRabCObA%3D%3D"
+     },
+     {
+      "name": "최문섭",
+      "name_en": "Paul Moon Sub Choi",
+      "role": "교수",
+      "area": "재무",
+      "phd": "Cornell University",
+      "highlights": [
+       "Springer에서 『Finance and Large Language Models』(2025), 『Fintech with Artificial Intelligence, Big Data, and Blockchain』(2021) 출간",
+       "International Review of Economics and Finance, Finance Research Letters 등 SSCI 저널에 70여 편 논문",
+       "경영대학 부학장·경영전문대학원 부원장 역임, Fulbright 교환교수(코넬 Johnson)",
+       "Deutsche Bank, IMF, 씨티그룹에서 자본시장·국제금융 실무 경력"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=RtwqpA1tFQpPLEHVp%2FI51A%3D%3D"
+     },
+     {
+      "name": "박소라",
+      "name_en": "So-rah Park",
+      "role": "교수, 경영대학 부학장 겸 경영학부장",
+      "area": "회계",
+      "phd": "New York University (Stern)",
+      "highlights": [
+       "재무회계, 자본시장, 경영자 보상, 기업지배구조를 연구",
+       "Accounting Forum(2025), Finance Research Letters(2025), Gender in Management(2023) 등에 논문 게재",
+       "2025년 AACSB 재인증 실사 대응에 부학장으로 참여"
+      ],
+      "source_url": "https://www.ewha.ac.kr/ewha/academics/business-administration-prof.do?mode=view&pId=z2urJQuNKjkqt58yNefDfA%3D%3D"
+     }
+    ],
+    "news": [
+     {
+      "title": "경영학부 권세원 교수, 금융위원회위원장 표창",
+      "date": "2026-01-09",
+      "url": "https://www.ewha.ac.kr/ewha/news/organ-news.do?mode=view&articleNo=364753",
+      "summary_ko": "권세원 교수가 공인회계사 제도, 지속가능성 공시·인증, 금융투자 감독 분야의 연구·자문 공로로 금융위원회위원장 표창을 받았습니다."
+     },
+     {
+      "title": "경영대학·경영전문대학원 4회 연속 AACSB 인증 획득",
+      "date": "2025-07-25",
+      "url": "https://www.ewha.ac.kr/ewha/news/ewha-news.do?mode=view&articleNo=356396",
+      "summary_ko": "이화 경영대학과 경영전문대학원이 연구역량·국제화 등에서 좋은 평가를 받아 2025-2030년 AACSB 인증을 4회 연속 획득했습니다."
+     },
+     {
+      "title": "EWHA × K-MOOC 블루리본 4년 연속 최다 선정",
+      "date": "2026-10-12",
+      "url": "https://www.ewha.ac.kr/ewha/news/ewha-news.do?mode=view&articleNo=367356",
+      "summary_ko": "K-MOOC 10년차 분야별 인기강좌에 신경식 교수의 '빅데이터의 세계, 원리와 응용'이 포함되었습니다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "cau",
+   "name": "중앙대학교",
+   "short": "중앙",
+   "color": "#1240AB",
+   "soft": "#E8EDF9",
+   "official_name": "중앙대학교 경영전문대학원 (Chung-Ang University Business School)",
+   "mba_site_url": "https://mba.cau.ac.kr/",
+   "admissions_url": "https://mba.cau.ac.kr/admission/application.php",
+   "programs": [
+    {
+     "name": "Global MBA",
+     "name_en": "Global MBA",
+     "type": "Global/English",
+     "focus": "1년차 경영 전반, 2년차 Accounting & Finance / Management & Organizations / Operations & Information System Management / Strategic Marketing Management 중 심화전공 선택. 중국 FUDAN Univ. 복수학위(중앙대 1년+FUDAN 1년, 인턴십 2개월 필수), IS:Link 교환, KCMC 제휴",
+     "language": "영어 100%",
+     "duration": "2년",
+     "schedule": "주간 전일제, 평일 09:00~18:00",
+     "target": "글로벌 경영자를 목표로 하는 주간 전일제 학생(외국인 유학생 포함)",
+     "intake": "00명 (과정별 비공개; 연간 입학정원 전체 75명, 외국인 등 정원 외 별도)",
+     "tuition": "학기당 11,841,000원 (2026학년도 기준; 외국인 별도 책정)",
+     "source_url": "https://mba.cau.ac.kr/program/global-mba.php",
+     "type_ko": "영어 과정"
+    },
+    {
+     "name": "CAU-Leader MBA",
+     "name_en": "CAU-Leader MBA",
+     "type": "Part-time(야간/주말)",
+     "focus": "대면 수업 중심. 전공심화영역: 인사/조직, 전략/국제경영, ISOM, Strategic Marketing Management, Media & Entertainment Management, Financial Information & Asset Management, Business Analytics & Digital Transformation",
+     "language": "한국어 100%",
+     "duration": "2년",
+     "schedule": "평일 19:00~22:00, 토요일 09:00~22:00 (평일 야간·주말 중 본인이 선택해 시간표 구성)",
+     "target": "직장인 (직장 실무경력 보유자 우대; 외국인 지원 불가)",
+     "intake": "00명 (과정별 비공개)",
+     "tuition": "학기당 10,393,000원 + 입학금 980,000원 (2026학년도 기준)",
+     "source_url": "https://mba.cau.ac.kr/program/cau-leader-mba.php",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "SM MBA (Sustainable Management MBA, 지속가능경영 MBA)",
+     "name_en": "Sustainable Management MBA",
+     "type": "Specialized",
+     "focus": "ESG·탄소중립·친환경 경영, 에너지 산업과 공급망, 기후 리스크 대응. 2024년 9월 1기 입학",
+     "language": "한국어 100%",
+     "duration": "2년",
+     "schedule": "비대면(실시간 ZOOM) 중심, 학기당 4회 대면. 평일 19:00~22:00, 토요일 (FAQ 09:00~16:00 / 학사안내 09:00~12:00로 표기 상이)",
+     "target": "전국의 에너지·산업계 실무자, ESG 관련 경력자 우대 (외국인 지원 불가)",
+     "intake": "00명 (과정별 비공개)",
+     "tuition": "학기당 10,393,000원 + 입학금 980,000원 (2026학년도 기준)",
+     "source_url": "https://mba.cau.ac.kr/program/sm-mba.php",
+     "type_ko": "특화 과정"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Global MBA / CAU-Leader MBA / SM MBA (공통)",
+     "cycle": "2027학년도 전반기 (2027년 3월 입학)",
+     "application_period": "수시전형: 접수 2026.10.19~11.1, 서류업로드 ~11.3, 면접 11.6(금) 또는 11.7(토) 선택, 발표 11.17. 일반전형: 접수 11.25~12.13, 서류 ~12.15, 면접 12.19(토), 발표 12.29. 특별전형: 접수 12.28~2027.1.10, 서류 ~1.12, 면접 1.23(토), 발표 1.29",
+     "stages": [
+      "인터넷 원서접수(유웨이어플라이)",
+      "서류 온라인 업로드",
+      "서류심사 100점 (자기소개서, 직장경력, 학사성적, 어학성적, 전문자격증)",
+      "면접 100점 (전문성 및 수학능력)",
+      "합산 200점; 각 심사 60% 미만 과락"
+     ],
+     "eligibility": "국내외 학사학위 취득자 또는 2027.2.28 이전 취득예정자, 출신 전공 무관. Global MBA는 100% 영어강의 이수 가능자. Leader MBA는 직장 실무경력자, SM MBA는 ESG 경력자 우대. 야간과정(Leader/SM)은 외국인 지원 불가. FUDAN 복수학위는 입학 후 TOEFL iBT 90/IELTS 6.5 이상, MBA 평점 3.2 이상",
+     "documents": [
+      "입학원서 1부",
+      "자기소개서(직장경력/학업계획/지원동기, A4 2매 이내)",
+      "졸업(예정)증명서(대학 및 대학원)",
+      "성적증명서(백분율 기재)",
+      "영어 공인성적 사본(보유자)",
+      "경력 또는 재직증명서(보유자)",
+      "회사(기관) 등록금 지원 확인서(해당자)",
+      "학위조회동의서(해외대학 졸업자)"
+     ],
+     "tests": "GMAT/GRE 요구 없음. 영어성적·경력은 필수 아님(서류심사 가산 요소)",
+     "interview_format": "면접 100점(전문성·수학능력 평가); 해외 거주자는 ZOOM 면접 가능",
+     "special_tracks": "수시/일반/특별전형은 시기 차이일 뿐 요건 동일(후순위 전형일수록 선발인원 감소 가능). Global MBA 입학 후 FUDAN 복수학위 선택 가능. 전형료 80,000원",
+     "source_url": "https://mba.cau.ac.kr/admission/notice.php?p_idx=2935&p_mode=view"
+    }
+   ],
+   "analysis": [
+    "같은 학교 안에 영어 주간(Global), 대면 야간·주말(Leader), 온라인 중심 ESG 특화(SM)의 성격이 뚜렷한 3개 트랙을 갖춰 선택지가 분명함",
+    "SM MBA는 실시간 ZOOM 위주에 학기당 4회만 대면이라 지방·현장 근무가 많은 에너지·산업계 실무자에게 특히 유리",
+    "CAU-Leader MBA의 Media & Entertainment 심화영역은 중앙대의 문화예술·미디어 강점을 살린 차별 포인트",
+    "Global MBA는 중국 FUDAN 복수학위 경로가 있어 중화권 진출이나 이중 학위를 원하는 지원자에게 매력적",
+    "수시·일반·특별 3회 모집, GMAT 없이 서류+면접으로 선발; 경력이 없어도 지원 가능"
+   ],
+   "news_sources": [
+    {
+     "name": "중앙대 경영전문대학원 공지사항·입학공지·갤러리",
+     "publisher": "중앙대학교 경영전문대학원",
+     "url": "https://mba.cau.ac.kr/board/notice.php",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "중앙대학교 경영전문대학원 총동문회 (동문소식·동문회보)",
+     "publisher": "중앙대학교 경영전문대학원 총동문회",
+     "url": "https://www.cau-mba.com/",
+     "kind": "alumni newsletter",
+     "rss_url": "https://www.cau-mba.com/blog-feed.xml"
+    },
+    {
+     "name": "CAU Notice / 중앙대학교 뉴스",
+     "publisher": "중앙대학교",
+     "url": "https://www.cau.ac.kr/cms/FR_CON/index.do?MENU_ID=100",
+     "kind": "school news",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "2027학년도 전반기 경영전문대학원 신입생 모집 안내",
+     "date": "2026-09-23",
+     "source_name": "중앙대 경영전문대학원 입학공지",
+     "url": "https://mba.cau.ac.kr/admission/notice.php?p_idx=2935&p_mode=view",
+     "summary_ko": "Global·CAU Leader·SM MBA 세 과정의 2027년 3월 입학 모집을 수시·일반·특별 3회 일정으로 공지했다."
+    },
+    {
+     "title": "2026 후반기 Global MBA 신입생 입학식 및 오리엔테이션",
+     "date": "2026-08-31",
+     "source_name": "중앙대 경영전문대학원 갤러리",
+     "url": "https://mba.cau.ac.kr/board/gallery.php?p_idx=2922&p_mode=view",
+     "summary_ko": "가을학기 Global MBA 신입생을 맞는 입학식과 오리엔테이션 현장 사진이 게시됐다."
+    },
+    {
+     "title": "2026학년도 하계 SM MBA 과정 Independent Study 프로그램",
+     "date": "2026-07-03",
+     "source_name": "중앙대 경영전문대학원 갤러리",
+     "url": "https://mba.cau.ac.kr/board/gallery.php?p_idx=2904&p_mode=view",
+     "summary_ko": "지속가능경영 MBA 원우들이 여름방학 해외 현장학습(교수 특강·기업 방문 등)을 다녀온 기록이다."
+    },
+    {
+     "title": "Korea Hiring Insider_Alumni Networking",
+     "date": "2026-06-22",
+     "source_name": "중앙대 경영전문대학원 갤러리",
+     "url": "https://mba.cau.ac.kr/board/gallery.php?p_idx=2885&p_mode=view",
+     "summary_ko": "한국 취업 시장을 주제로 동문과 재학생이 교류한 네트워킹 행사 사진이 공개됐다."
+    },
+    {
+     "title": "중앙대학교 MBA 동문회보 제4호(2025년 11월호)",
+     "date": "2025-11-08",
+     "source_name": "중앙대학교 경영전문대학원 총동문회",
+     "url": "https://www.cau-mba.com/post/%EC%A4%91%EC%95%99%EB%8C%80%ED%95%99%EA%B5%90-mba-%EB%8F%99%EB%AC%B8%ED%9A%8C%EB%B3%B4-%EC%A0%9C4%ED%98%B8-2025%EB%85%84-11%EC%9B%94%ED%98%B8-%EB%B0%9C%EA%B0%84-%EC%95%88%EB%82%B4",
+     "summary_ko": "2025년 5월 창간한 총동문회 소식지의 네 번째 호 발간 소식이다."
+    },
+    {
+     "title": "[함께 나누고, 함께 연결되는] MBA ONE TEAM 네트워킹 & 자선경매 데이 개최!",
+     "date": "2025-10-12",
+     "source_name": "중앙대학교 경영전문대학원 총동문회",
+     "url": "https://www.cau-mba.com/post/%EC%A0%9C92%EB%8C%80-%EC%9B%90%EC%9A%B0%ED%9A%8C-%EC%9E%90%EC%84%A0%EA%B2%BD%EB%A7%A4-%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%82%B9-%EB%8D%B0%EC%9D%B4",
+     "summary_ko": "재학생 원우회와 동문이 함께하는 네트워킹 겸 자선경매 행사 개최를 알린 글이다."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "수시전형",
+     "start": "2026-10-19",
+     "end": "2026-11-01"
+    },
+    {
+     "label": "일반전형",
+     "start": "2026-11-25",
+     "end": "2026-12-13"
+    },
+    {
+     "label": "특별전형",
+     "start": "2026-12-28",
+     "end": "2027-01-10"
+    }
+   ],
+   "notes": [
+    "모집요강의 과정별 모집인원은 '00명'으로 비공개; FAQ에 연간 입학정원 75명(정원 외 별도)만 명시.",
+    "등록금은 FAQ의 2026학년도 기준 금액이며 2027학년도 금액은 미공시. Global MBA 입학금은 FAQ에 별도 기재 없음.",
+    "SM MBA 토요일 수업시간이 FAQ(09~16시)와 학사안내(09~12시)에서 서로 다르게 표기됨.",
+    "CAU-Leader MBA 심화영역 명칭이 프로그램 페이지(마케팅 커뮤니케이션 등 6개)와 2027 모집요강(7개)에서 다름; 모집요강 기준으로 기재.",
+    "갤러리 게시물 날짜는 '행사일자' 기준이며 SM MBA 해외 현장학습 국가는 사진 캡션으로만 추정 가능해 요약에서 특정하지 않음.",
+    "총동문회 사이트(cau-mba.com) RSS는 2025-11 이후 신규 글 없음; 2026년 동문회보 발간 여부 미확인.",
+    "중앙대 본교 뉴스(중대신문/news.cau.ac.kr)에서 MBA 관련 2025-2026 기사는 확인하지 못함."
+   ],
+   "guide": {
+    "tagline": "원하는 요일로 시간표를 짜는 야간 Leader MBA와 Zoom 중심의 ESG(SM) MBA. 원서를 세 번 받는다.",
+    "intake": [
+     {
+      "program": "Global MBA · CAU-Leader MBA · SM MBA",
+      "start": "매년 3월",
+      "apply": "10월 ~ 2027년 1월, 3차례"
+     }
+    ],
+    "process": [
+     {
+      "title": "전 과정 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "수시 전형",
+        "when": "2026.10.19 – 11.1 (면접 11.6 또는 11.7, 발표 11.17)"
+       },
+       {
+        "label": "일반 전형",
+        "when": "11.25 – 12.13 (면접 12.19, 발표 12.29)"
+       },
+       {
+        "label": "특별 전형",
+        "when": "12.28 – 2027.1.10 (면접 1.23, 발표 1.29)"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위, 전공 무관"
+     },
+     {
+      "k": "경력",
+      "v": "Leader MBA는 실무 경력자, SM MBA는 ESG 경력자 우대 (필수 아님)"
+     },
+     {
+      "k": "영어",
+      "v": "필수 아님 (가산 요소). Global MBA는 영어 강의 수강 가능해야 함"
+     },
+     {
+      "k": "GMAT",
+      "v": "요구하지 않음"
+     },
+     {
+      "k": "선발",
+      "v": "서류 100점 + 면접 100점, 각각 60% 미만은 탈락"
+     },
+     {
+      "k": "전형료",
+      "v": "80,000원"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Global MBA",
+      "per_semester": 11841000,
+      "semesters": 4,
+      "admission": null,
+      "total": 47364000,
+      "all_in": 47364000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "CAU-Leader MBA",
+      "per_semester": 10393000,
+      "semesters": 4,
+      "admission": 980000,
+      "total": 41572000,
+      "all_in": 42552000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "SM MBA",
+      "per_semester": 10393000,
+      "semesters": 4,
+      "admission": 980000,
+      "total": 41572000,
+      "all_in": 42552000,
+      "year": "2026",
+      "note": ""
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://biz.cau.ac.kr/2016/sub01/sub01_04.php?opentab=1",
+    "count": 64,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "MS-MIS",
+      "count": 15
+     },
+     {
+      "area": "재무",
+      "count": 13
+     },
+     {
+      "area": "마케팅",
+      "count": 11
+     },
+     {
+      "area": "회계",
+      "count": 9
+     },
+     {
+      "area": "인사조직",
+      "count": 7
+     },
+     {
+      "area": "전략/국제경영-무역",
+      "count": 7
+     },
+     {
+      "area": "별정제",
+      "count": 2
+     }
+    ],
+    "strengths": [
+     "재무·금융 교수진에 KDI 연구위원과 금융위원회 금융발전심의회 위원 출신이 많아 금융정책·자본시장 분야에 강합니다.",
+     "MS-MIS가 가장 큰 전공으로, 비즈니스 애널리틱스·AI·공급망관리 교육이 두텁고 Management Science, Marketing Science 등 계량 분야 최상위 저널 실적도 있습니다.",
+     "엔터테인먼트 경영, 미디어·게임 산업 전략 등 문화산업 경영이 학교의 특색 있는 강점이며 MBA 특성화 트랙으로도 운영됩니다.",
+     "회계 교수진이 금융위원회 회계제도심의위원회, 한국거래소 상장위원회, 상장사 사외이사·감사위원장 등으로 활동합니다."
+    ],
+    "notable": [
+     {
+      "name": "신인석",
+      "name_en": "",
+      "role": "교수, 경영전문대학원장(제9대, 2023~)",
+      "area": "재무",
+      "phd": "Stanford University, 경제학 박사(1997)",
+      "highlights": [
+       "한국개발연구원(KDI) 거시금융부 연구위원(1997-2006) 출신으로 금융시장·금융규제를 연구",
+       "금융위원회 금융발전심의위원회 위원, 국민연금 대체투자위원, 자본시장통합법 제정 작업반 자문위원 역임",
+       "ASEAN+3 역내 채권거래 전문가그룹 의장(2008-2010), ADB 컨설턴트로 활동",
+       "Asia-Pacific Journal of Financial Studies 등에 IPO·펀드 관련 논문 발표"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=69&searchPfMajorCode=S06&searchPfTypeCode=S01"
+     },
+     {
+      "name": "강성민",
+      "name_en": "",
+      "role": "교수, 경영경제대학장",
+      "area": "MS-MIS",
+      "phd": "University of Texas at Austin (MIS)",
+      "highlights": [
+       "경영정보시스템, 전자상거래, IT 관리를 연구·강의",
+       "2026년 AACSB 아시아태평양 콘퍼런스에서 AACSB 재인증 실사단원·멘토 역할을 맡은 것으로 학교가 보도",
+       "LG CNS 컨설팅 경력, 산업자원부 자체평가위원회 위원(2006-2012) 역임"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=1&searchPfMajorCode=S01&searchPfTypeCode=S01"
+     },
+     {
+      "name": "김황",
+      "name_en": "",
+      "role": "교수, 경영학부장",
+      "area": "MS-MIS",
+      "phd": "Cornell University",
+      "highlights": [
+       "정보시스템, 데이터 과학, IT 경제를 연구",
+       "홍콩중문대(CUHK) 경영대학 조교수(2015-2022) 출신",
+       "학교 AACSB 운영 책임교수진의 일원"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=113&searchPfMajorCode=S01&searchPfTypeCode=S01"
+     },
+     {
+      "name": "김창봉",
+      "name_en": "",
+      "role": "교수, 행정부총장(2026년 3월 학교 보도 기준)",
+      "area": "전략/국제경영-무역",
+      "phd": "중앙대학교 경영학박사",
+      "highlights": [
+       "글로벌 공급망관리(GSCM)와 무역을 연구; 『글로벌 경쟁시대의 GSCM 전략』 등 저술",
+       "한국기업경영학회장, 한국통상정보학회장 역임; 경영경제대학장 역임",
+       "무역의 날 대통령표창(2009) 수상",
+       "기획재정부 공공기관경영평가단 위원 등 정부 평가위원으로 활동"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=28&searchPfMajorCode=S03&searchPfTypeCode=S01"
+     },
+     {
+      "name": "정준영",
+      "name_en": "Chune Young Chung",
+      "role": "교수",
+      "area": "재무",
+      "phd": "Washington State University (2012)",
+      "highlights": [
+       "Journal of Financial and Quantitative Analysis(2024), Journal of Financial Stability(2022), International Review of Financial Analysis(2024) 등에 논문 게재",
+       "ESG, 기업지배구조, 기관투자자, M&A 연구; Asia-Pacific Journal of Financial Studies 부편집장",
+       "한국재무관리학회 부회장(2025), CAU Distinguished Scholar(2019-2020), Fulbright 방문학자(2021)",
+       "경영전문대학원(MBA) 주임교수·글로벌금융전공 주임교수 역임"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=74&searchPfMajorCode=S06&searchPfTypeCode=S01"
+     },
+     {
+      "name": "임성준",
+      "name_en": "",
+      "role": "교수",
+      "area": "전략/국제경영-무역",
+      "phd": "University of Texas at Austin (전략경영)",
+      "highlights": [
+       "전략경영과 엔터테인먼트 경영을 연구하며 K-POP·OTT·팬덤 플랫폼 관련 논문을 꾸준히 발표",
+       "한국전략경영학회장, 한국경영학회 부회장 역임; 경영경제대학장·경영전문대학원 부원장 역임",
+       "엔터테인먼트 경영전문가 프로그램(EMP)을 창립하고 주임교수 역임",
+       "제1회 중앙대 교육상(2007), 한국경영학회 KBR Best Reviewer Award(2012) 수상"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=34&searchPfMajorCode=S03&searchPfTypeCode=S01"
+     },
+     {
+      "name": "박찬희",
+      "name_en": "",
+      "role": "교수",
+      "area": "전략/국제경영-무역",
+      "phd": "Harvard Business School (2000)",
+      "highlights": [
+       "경영전략·국제경영 담당",
+       "대통령 녹색성장위원회 위원, 국가비전2030 민간위원 역임",
+       "SKC&C 사외이사 등 이사회 경험과 Deloitte Consulting 자문 경력",
+       "경제 방송 프로그램을 다수 기획·진행"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=29&searchPfMajorCode=S03&searchPfTypeCode=S01"
+     },
+     {
+      "name": "위정현",
+      "name_en": "",
+      "role": "교수",
+      "area": "전략/국제경영-무역",
+      "phd": "University of Tokyo (전략경영, 2001)",
+      "highlights": [
+       "온라인게임·디지털 콘텐츠 산업 전략 전문가; 저서 『Innovation and Strategy of Online Games』(Imperial College Press)",
+       "한국게임학회 부회장, 한국전략경영학회 상임이사",
+       "2006년 기술경영경제학회 최우수논문상 수상"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=30&searchPfMajorCode=S03&searchPfTypeCode=S01"
+     },
+     {
+      "name": "현정훈",
+      "name_en": "",
+      "role": "부교수",
+      "area": "회계",
+      "phd": "서울대학교 경영학 박사",
+      "highlights": [
+       "관리회계, 성과평가, ESG 연구",
+       "Contemporary Accounting Research(2025.6)에 다층적 승진 토너먼트 구조에 관한 국제 공동연구 게재",
+       "프랑스 NEOMA Business School 교수(2015-2023) 출신; KICPA·CMA 보유",
+       "지도한 학생팀이 제5회 대학생 회계사례 경진대회 최고상(한국공인회계사회장상, 2025) 수상"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=119&searchPfMajorCode=S05&searchPfTypeCode=S01"
+     },
+     {
+      "name": "김동수",
+      "name_en": "Dong Soo Kim",
+      "role": "부교수",
+      "area": "마케팅",
+      "phd": "KAIST (2012)",
+      "highlights": [
+       "Marketing Science(2017), Management Science(2024), Quantitative Marketing and Economics(2020)에 논문 게재",
+       "마케팅 모델링, 마케팅 애널리틱스 연구",
+       "오하이오주립대 경영대학 조교수(2018-2024) 출신"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=130&searchPfMajorCode=S04&searchPfTypeCode=S01"
+     },
+     {
+      "name": "강선민",
+      "name_en": "",
+      "role": "교수",
+      "area": "회계",
+      "phd": "중앙대학교 경영학박사(회계학)",
+      "highlights": [
+       "Journal of Business Ethics(게재 예정), Journal of International Financial Markets, Institutions & Money(2018) 등 SSCI 논문",
+       "HD현대인프라코어 사외이사(감사위원장·ESG위원장), 한국거래소 코스닥상장위원회 심의위원",
+       "금융위원회 회계제도심의위원회 위원(2019-2022), 한국회계학회 재무회계위원회 위원장(2024~)"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=49&searchPfMajorCode=S05&searchPfTypeCode=S01"
+     },
+     {
+      "name": "여은정",
+      "name_en": "",
+      "role": "교수",
+      "area": "재무",
+      "phd": "University of Michigan, 경제학 박사(2006)",
+      "highlights": [
+       "기업재무, 핀테크, 금융중개, 자본시장 연구",
+       "금융발전심의회 자본시장분과 위원, 한국금융정보학회 부회장, 「금융연구」 편집위원",
+       "경영전문대학원 주임교수(2014-2015)·부원장(2016) 역임; 한국금융연구원 연구위원 출신"
+      ],
+      "source_url": "https://biz.cau.ac.kr/2016/sub01/sub01_04_profile.php?pfNo=70&searchPfMajorCode=S06&searchPfTypeCode=S01"
+     }
+    ],
+    "news": [
+     {
+      "title": "경영학부 현정훈 교수, 회계학 분야 최상위 학술지 논문 게재",
+      "date": "2025-06-30",
+      "url": "https://news.cau.ac.kr/cms/FR_CON/BoardView.do?MENU_ID=10&CONTENTS_NO=&SITE_NO=5&BOARD_SEQ=1&BOARD_CATEGORY_NO=&BBS_SEQ=8811",
+      "summary_ko": "현정훈 교수 등 국제 연구진이 한국 기업 데이터로 승진 토너먼트 구조와 기업 성과의 관계를 분석한 논문을 Contemporary Accounting Research에 게재했습니다."
+     },
+     {
+      "title": "경영경제대학, '제5회 대학생 회계사례 경진대회'서 한국공인회계사회장상 포함 3관왕 쾌거",
+      "date": "2025-12-18",
+      "url": "https://news.cau.ac.kr/cms/FR_CON/BoardView.do?MENU_ID=10&CONTENTS_NO=&SITE_NO=5&BOARD_SEQ=1&BOARD_CATEGORY_NO=&BBS_SEQ=9275",
+      "summary_ko": "현정훈·하원석 교수가 지도한 학생팀들이 전국 회계사례 경진대회에서 최고상을 포함해 최우수상 3개를 받았습니다."
+     },
+     {
+      "title": "경영경제대학, 2026년 AACSB 태국 치앙마이 콘퍼런스 참가",
+      "date": "2026-06-27",
+      "url": "https://news.cau.ac.kr/cms/FR_CON/BoardView.do?MENU_ID=10&CONTENTS_NO=&SITE_NO=5&BOARD_SEQ=1&BOARD_CATEGORY_NO=&BBS_SEQ=9582",
+      "summary_ko": "강성민 학장 등 교수진이 AACSB 아시아태평양 콘퍼런스에 참가했으며, 강 학장은 AACSB 학장 초청 회의에 참석하고 실사단원·멘토로 활동하는 것으로 소개됐습니다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "konkuk",
+   "name": "건국대학교",
+   "short": "건국",
+   "color": "#036B3F",
+   "soft": "#E6F3EC",
+   "official_name": "건국대학교 경영전문대학원 (KU MBA, Konkuk University Graduate School of Business)",
+   "mba_site_url": "https://mba.konkuk.ac.kr/",
+   "admissions_url": "https://mba.konkuk.ac.kr/mba/16614/subview.do",
+   "programs": [
+    {
+     "name": "Konkuk MBA 프로그램 (일반경영)",
+     "name_en": "Konkuk MBA (General Management)",
+     "type": "Part-time(야간/주말)",
+     "focus": "회계·재무·마케팅·전략/국제경영·인사조직·운영관리·정보시스템 등 경영 전 영역, 사례·토론식 수업",
+     "language": "한국어",
+     "duration": "2년 (45학점 이상, 평점 2.4 이상)",
+     "schedule": "주중 야간 + 토요일, 주 1~2회 등교",
+     "target": "임원·최고경영자를 지향하는 재직 직장인",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://mba.konkuk.ac.kr/mba/16623/subview.do",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "AI-DX (AI-Digital eXperience) MBA 프로그램",
+     "name_en": "AI-DX MBA",
+     "type": "Specialized",
+     "focus": "AI 기반 경영·디지털 경험 혁신: 데이터 분석, AI 활용 의사결정, 디지털 마케팅, 고객경험관리",
+     "language": "한국어(명시 없음, 국문 운영으로 추정)",
+     "duration": "2년 (45학점)",
+     "schedule": "주중 야간·주말, 주 1~2회 등교",
+     "target": null,
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://mba.konkuk.ac.kr/mba/16624/subview.do",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "인사조직 • 노사 MBA 프로그램",
+     "name_en": "HR, Organizational Behavior & Labor Relations MBA",
+     "type": "Specialized",
+     "focus": "인사조직, 노사·고용관계 전문 HR 인재 양성 + 일반경영",
+     "language": "한국어(명시 없음)",
+     "duration": "2년 (45학점 이상, 평점 2.4 이상)",
+     "schedule": "주중 야간·주말, 주 1~2회 등교(주말 1일 포함)",
+     "target": "HR 실무자·관리자, 차세대 경영진; 비전공자는 ERMP 멘토링 연계",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://mba.konkuk.ac.kr/mba/16625/subview.do",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "KU공공기관 리더십과정",
+     "name_en": null,
+     "type": "Executive",
+     "focus": "공공기관 경영·공익·정책·혁신경영 전략을 갖춘 융합형 리더 육성",
+     "language": "한국어",
+     "duration": null,
+     "schedule": null,
+     "target": null,
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://mba.konkuk.ac.kr/mba/37709/subview.do",
+     "type_ko": "Executive"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Konkuk MBA / AI-DX MBA / 인사조직·노사 MBA (공통)",
+     "cycle": "2027학년도 전기 요강 미게시(2026-10-15 기준). 최근 공고: 2026학년도 후기 1차(2026.4.14~5.8), 2차, 특별모집(2026.7.6~7.17)",
+     "application_period": "2026학년도 후기 1차: 2026-04-14 ~ 2026-05-08 16:00 (서류합격 5/14, 면접 5/23(토), 최종 5/29 예정) / 후기 특별모집: 2026-07-06 ~ 07-17 16:00 (면접 7/25, 최종 7/31 예정). 전기 모집은 통상 10~1월에 1차·2차·특별모집으로 진행(2026학년도 전기 1차 합격발표 2025-11-25, 2차 2025-12-30, 특별 2026-01-27)",
+     "stages": [
+      "온라인 원서접수 및 서류제출",
+      "서류전형(50%)",
+      "면접전형(50%)",
+      "최종합격 발표 및 등록"
+     ],
+     "eligibility": "국내외 4년제 대학 학사학위 취득(예정)자 또는 법령상 동등 학력 인정자",
+     "documents": [
+      "입학지원서(온라인 작성 후 출력)",
+      "자기소개서(자유양식)",
+      "졸업(예정)증명서 원본",
+      "성적증명서 원본",
+      "재직/경력증명서 원본(해당자)",
+      "공인영어성적 원본(선택; TOEIC·TEPS·TOEFL·IELTS·TOEIC Speaking·OPIc)",
+      "직장상사 또는 교수 추천서(선택)"
+     ],
+     "tests": "필수 시험 없음; 공인영어성적 선택 제출",
+     "interview_format": "면접 50% 반영; 방식(대면/비대면·시간)은 공식 페이지에 미기재",
+     "special_tracks": "학기별 특별모집 운영. 입학장학금 등록금의 15~30%(평균 30%), 재학 중 성적 연동 최대 60%, 재학생 95% 장학 수혜(브로슈어 기재). 전형료 80,000원",
+     "source_url": "https://mba.konkuk.ac.kr/bbs/mba/304/1171779/artclView.do"
+    }
+   ],
+   "analysis": [
+    "주 1~2회 야간·주말 등교로 2년 내 졸업하는 국문 파트타임 구조여서 서울 동부권 직장인이 일과 병행하기 좋다.",
+    "‘인사조직·노사 MBA’는 국내 MBA 중 드물게 노사·고용관계까지 다루는 HR 특화 트랙으로, HR 실무자·노무 담당자에게 적합하다.",
+    "AI-DX MBA는 데이터·AI 의사결정과 디지털 고객경험에 초점을 둬, 디지털 전환 업무를 맡은 기획·마케팅 실무자에게 맞는다.",
+    "서류 50%+면접 50%의 단순한 전형, 시험 부담 없음, 높은 장학 수혜율(입학 15~30%, 최대 60%)로 진입장벽이 낮은 편이다.",
+    "전기·후기 연 2회, 회차별 1·2차와 특별모집까지 열려 지원 시점 선택 폭이 넓다."
+   ],
+   "news_sources": [
+    {
+     "name": "KU MBA 공지사항",
+     "publisher": "건국대학교 경영전문대학원",
+     "url": "https://mba.konkuk.ac.kr/bbs/mba/304/artclList.do",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "KU MBA Story",
+     "publisher": "건국대학교 경영전문대학원",
+     "url": "https://mba.konkuk.ac.kr/mba/16629/subview.do",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "건국대 소식 NEWS",
+     "publisher": "건국대학교",
+     "url": "https://www.konkuk.ac.kr/konkuk/2096/subview.do",
+     "kind": "school news",
+     "rss_url": "https://www.konkuk.ac.kr/bbs/konkuk/257/rssList.do?row=50"
+    }
+   ],
+   "news": [
+    {
+     "title": "총동문회·학교법인·건국대, '원 팀'으로 건국 100년 준비한다",
+     "date": "2026-09-30",
+     "source_name": "건국대 소식 NEWS",
+     "url": "https://www.konkuk.ac.kr/bbs/konkuk/257/1208896/artclView.do",
+     "summary_ko": "총동문회가 학교법인·대학과 간담회를 열고 2031년 창학 100주년을 앞두고 협력 체계를 다지기로 했다. (MBA 전용 소식은 아닌 전체 동문회 소식)"
+    },
+    {
+     "title": "2026학년도 후기 입학식 및 오리엔테이션",
+     "date": "2026-09-12",
+     "source_name": "KU MBA Story",
+     "url": "https://mba.konkuk.ac.kr/bbs/mba/1440/1207484/artclView.do",
+     "summary_ko": "9월 5일 경영관에서 2026학년도 후기 신입 원우를 맞는 입학식과 오리엔테이션이 열렸다."
+    },
+    {
+     "title": "제1회 KU HR 학술포럼",
+     "date": "2026-08-31",
+     "source_name": "KU MBA Story",
+     "url": "https://mba.konkuk.ac.kr/bbs/mba/1440/1204941/artclView.do",
+     "summary_ko": "경영대학과 인사조직·노사 MBA가 8월 29일 처음으로 HR 학술포럼을 공동 개최해 인사 분야 구성원 간 교류의 장을 마련했다."
+    },
+    {
+     "title": "2026년도 5월 KBN MBA 연계 비즈니스 네트워킹 행사",
+     "date": "2026-06-12",
+     "source_name": "KU MBA Story",
+     "url": "https://mba.konkuk.ac.kr/bbs/mba/1440/1176117/artclView.do",
+     "summary_ko": "5월 30일 재학생과 졸업 동문이 함께하는 네트워킹 행사가 열려 AI 시대 인사관리, 스타트업 IPO, AI와 재무공시 등을 주제로 강연이 진행됐다."
+    },
+    {
+     "title": "[기사] MBA 선배에게 듣는다 - 건국대 MBA 동문 인터뷰 수록",
+     "date": "2026-06-12",
+     "source_name": "KU MBA Story",
+     "url": "https://mba.konkuk.ac.kr/bbs/mba/1440/1176103/artclView.do",
+     "summary_ko": "일간지 MBA 특집 코너에 실린 건국대 MBA 동문 인터뷰 기사를 원우들과 공유한 게시물이다."
+    }
+   ],
+   "deadlines": [],
+   "notes": "1) 2027학년도 전기 모집요강은 2026-10-15 기준 MBA 공지사항에 아직 게시되지 않음 → 최신 공고인 2026학년도 후기 기준으로 기록(전기 모집은 예년 10~1월). 2) 등록금 금액은 공식 페이지·브로슈어에 미기재 → null. 모집정원도 미기재. 3) KU공공기관 리더십과정의 학위/비학위 여부·기간·일정 미확인(브로슈어 PDF 별도). 4) 건국대 총동문회 공식 사이트·동문회보 및 MBA 동문회 공식 사이트는 확인하지 못함(접속 불가/미발견) → news_sources에서 제외. 5) mba.konkuk.ac.kr 게시판의 RSS(rssList.do) 존재 여부는 접속 차단으로 검증하지 못해 null 처리(대학 본부 NEWS RSS는 확인됨). 6) 공식 페이지에 '대면 면접' 여부 등 면접 방식 미기재.",
+   "guide": {
+    "tagline": "학기 등록금이 낮은 편이고 입학·성적 장학이 넓다. 인사조직·노사와 AI-DX 특화 과정.",
+    "intake": [
+     {
+      "program": "Konkuk · AI-DX · 인사조직·노사 MBA",
+      "start": "3월 · 9월",
+      "apply": "3월 입학은 보통 10월 ~ 1월 (2027 요강 미게시)"
+     }
+    ],
+    "process": [
+     {
+      "title": "2026학년도 후기 (참고)",
+      "steps": [
+       {
+        "label": "1차 접수",
+        "when": "2026.4.14 – 5.8"
+       },
+       {
+        "label": "서류 발표",
+        "when": "5.14"
+       },
+       {
+        "label": "면접",
+        "when": "5.23 (토)"
+       },
+       {
+        "label": "최종 발표",
+        "when": "5.29"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "4년제 대학 학사 학위 (취득 예정 포함)"
+     },
+     {
+      "k": "경력",
+      "v": "필수 요건 없음"
+     },
+     {
+      "k": "영어",
+      "v": "선택 제출"
+     },
+     {
+      "k": "선발",
+      "v": "서류 50% + 면접 50%"
+     },
+     {
+      "k": "전형료",
+      "v": "80,000원"
+     },
+     {
+      "k": "장학",
+      "v": "입학 장학 등록금 15 ~ 30%, 재학 중 성적에 따라 최대 60%"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Konkuk MBA",
+      "per_semester": 9316000,
+      "semesters": 4,
+      "admission": null,
+      "total": 37264000,
+      "all_in": 37264000,
+      "year": "2026",
+      "note": "경영전문대학원 수업료 · 학술활동비 250,000원/학기 별도"
+     },
+     {
+      "program": "AI-DX MBA",
+      "per_semester": 9316000,
+      "semesters": 4,
+      "admission": null,
+      "total": 37264000,
+      "all_in": 37264000,
+      "year": "2026",
+      "note": "경영전문대학원 수업료 · 학술활동비 250,000원/학기 별도"
+     },
+     {
+      "program": "인사조직·노사 MBA",
+      "per_semester": 9316000,
+      "semesters": 4,
+      "admission": null,
+      "total": 37264000,
+      "all_in": 37264000,
+      "year": "2026",
+      "note": "경영전문대학원 수업료 · 학술활동비 250,000원/학기 별도"
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://biz.konkuk.ac.kr/biz/23334/subview.do",
+    "count": 34,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "경영정보",
+      "count": 4
+     },
+     {
+      "area": "마케팅",
+      "count": 6
+     },
+     {
+      "area": "운영관리 및 경영과학",
+      "count": 4
+     },
+     {
+      "area": "재무관리",
+      "count": 5
+     },
+     {
+      "area": "전략 및 국제경영",
+      "count": 5
+     },
+     {
+      "area": "인사조직",
+      "count": 5
+     },
+     {
+      "area": "회계",
+      "count": 5
+     }
+    ],
+    "strengths": [
+     "34명 규모의 교수진이 7개 세부 전공에 고르게 배치되어 있고, 경영대학은 AACSB 국제인증을 보유하며 2026년 재인증 준비를 본격화했습니다.",
+     "인사조직 분야가 강해 경영전문대학원에 '인사조직·노사 MBA' 트랙을 따로 두고, 2026년 첫 'KU HR 학술포럼'을 열어 HR 실무자 네트워크를 만들었습니다.",
+     "AI-DX MBA를 운영하며 Agentic AI·비즈니스 애널리틱스·퀀트 모델링 등 데이터·AI 분야 교수진을 보강하고 있습니다.",
+     "KAIST·Syracuse·Manchester 등에서 학위를 받은 교수들이 Journal of Retailing, Journal of Banking & Finance, Omega 등 해외 학술지에 연구를 꾸준히 발표하고 있습니다."
+    ],
+    "notable": [
+     {
+      "name": "유재욱",
+      "name_en": "Yoo Jae Wook",
+      "role": "경영대학 학장 · 경영전문대학원(KU MBA) 원장",
+      "area": "전략 및 국제경영",
+      "phd": null,
+      "highlights": [
+       "건국대 공식 페이지에 경영대학 학장이자 경영전문대학원 원장으로 올라 있음",
+       "연구 분야는 경영전략과 ESG",
+       "2026년 8월 경영대학·경영전문대학원이 처음 연 'KU HR 학술포럼'에서 원장으로 환영사를 함"
+      ],
+      "source_url": "https://www.konkuk.ac.kr/konkuk/2299/subview.do"
+     },
+     {
+      "name": "정환",
+      "name_en": "Chung, Hwan",
+      "role": "경영전문대학원 부원장",
+      "area": "마케팅",
+      "phd": "Syracuse University (경영학, 마케팅)",
+      "highlights": [
+       "2023년 한국유통학회 회장, 2022~2023년 한국프랜차이즈경영학회 'Journal of Franchising' 편집위원장 역임",
+       "Journal of Retailing(2017, 2018), European Journal of Operational Research(2017), European Journal of Marketing 게재",
+       "St. Joseph's University와 중앙대를 거쳐 2015년부터 건국대 재직, 산업은행 근무 경력"
+      ],
+      "source_url": "https://sites.google.com/view/hwan01/%ED%99%88"
+     },
+     {
+      "name": "정혜정",
+      "name_en": "Heajung Jung",
+      "role": "경영전문대학원 인사조직·노사 MBA 학과장",
+      "area": "인사조직",
+      "phd": null,
+      "highlights": [
+       "연구 분야는 조직행동, 정서, 다양성과 포용, 협상",
+       "2026년 8월 열린 제1회 'KU HR 학술포럼'을 학과장으로서 주관"
+      ],
+      "source_url": "https://www.konkuk.ac.kr/bbs/konkuk/257/1205702/artclView.do"
+     },
+     {
+      "name": "박진용",
+      "name_en": "Park, Jin Yong",
+      "role": "교수 (전 경영대학장·경영전문대학원장, 경영연구소장)",
+      "area": "마케팅",
+      "phd": null,
+      "highlights": [
+       "2026년 3월 AACSB 재인증 자문 방문 당시 경영대학장으로 참여",
+       "2025년 경영전문대학원장 재임 중 MBA 팀이 전국 경영사례 분석대회에서 대상(부총리 겸 교육부장관상)을 받음",
+       "2025년 경영연구소장으로서 베트남 HR 솔루션 기업과 AI 기반 인사 연구 협약 체결"
+      ],
+      "source_url": "https://www.konkuk.ac.kr/bbs/konkuk/257/1169961/artclView.do"
+     },
+     {
+      "name": "김준익",
+      "name_en": "Junic Kim",
+      "role": "경영학과장",
+      "area": "전략 및 국제경영",
+      "phd": "University of Manchester (Business and Management)",
+      "highlights": [
+       "연구 분야는 전략, 혁신, 기업가정신",
+       "2024–25 Study UK Alumni Awards(영국대사관·British Council) 결선 진출, 영국 왕립예술협회 펠로(FRSA)",
+       "삼성전자 본사 전략기획·파트너십 업무 경력, Meta 자문"
+      ],
+      "source_url": "http://www.junickim.com"
+     },
+     {
+      "name": "서성원",
+      "name_en": "Sung Won Seo",
+      "role": "교수",
+      "area": "재무관리",
+      "phd": "KAIST (재무)",
+      "highlights": [
+       "Journal of Banking & Finance, Financial Management, Journal of Financial Markets, Journal of Empirical Finance, Journal of Futures Markets 게재",
+       "2015년 한국금융공학회 최우수논문상 수상",
+       "아주대 경영대학 교수를 거쳐 2019년부터 건국대 재직"
+      ],
+      "source_url": "https://sites.google.com/site/swseo2013/"
+     },
+     {
+      "name": "이근철",
+      "name_en": "Lee, Geun Cheol",
+      "role": "교수",
+      "area": "운영관리 및 경영과학",
+      "phd": "KAIST (산업공학)",
+      "highlights": [
+       "Omega, International Journal of Production Research, IEEE Transactions on Robotics and Automation 등에 연구 게재",
+       "KP-MBA(TOP-MBA) 과정 책임교수(2015~2018), 대학원 경영학과장(2020~2022) 역임",
+       "한국연구재단 지원 'ESG 생태계용 NFT 가치평가 모델' 과제 공동연구책임자(2023~2026)"
+      ],
+      "source_url": "https://sites.google.com/view/gclee/"
+     },
+     {
+      "name": "윤동열",
+      "name_en": "YOON, DONG-YEOL",
+      "role": "교수 · 건국대 한국지속가능경영연구원 원장",
+      "area": "인사조직",
+      "phd": null,
+      "highlights": [
+       "연구 분야는 HR/HRD, 조직행동",
+       "한국지속가능경영연구원장으로서 고용노동부 K-디지털 트레이닝 'KU 바이오헬스 실무 전문과정' 등 인력양성 사업을 운영"
+      ],
+      "source_url": "https://www.konkuk.ac.kr/bbs/konkuk/257/1201907/artclView.do"
+     },
+     {
+      "name": "이명구",
+      "name_en": "Myounggu Lee",
+      "role": "교수 (2024년 신임)",
+      "area": "경영정보",
+      "phd": null,
+      "highlights": [
+       "연구 분야는 Agentic AI, 비즈니스 애널리틱스, AX/DX",
+       "경영대학 DAISY Lab(Data & AI Systems for Business Analytics)에서 생성형·에이전트형 AI 기반 경영 분석 연구"
+      ],
+      "source_url": "https://biz.konkuk.ac.kr/profInfo/biz/667/list.do"
+     }
+    ],
+    "news": [
+     {
+      "title": "건국대, 학계와 인사·노무 현장 잇는 'HR 네트워크' 구축",
+      "date": "2026-09-04",
+      "url": "https://www.konkuk.ac.kr/bbs/konkuk/257/1205702/artclView.do",
+      "summary_ko": "유재욱 원장과 정혜정 인사조직·노사 MBA 학과장이 주도해 약 70명이 참석한 제1회 KU HR 학술포럼을 열고 AI 시대 HR을 논의했다."
+     },
+     {
+      "title": "'글로벌 경영교육의 요람' 건국대 경영대, AACSB 국제 경영교육 재인증 준비 본격화",
+      "date": "2026-03-16",
+      "url": "https://www.konkuk.ac.kr/bbs/konkuk/257/1169961/artclView.do",
+      "summary_ko": "AACSB 부회장단이 경영대학을 방문해 학장과 교수진에게 교원 역량 개발 등 재인증 준비 방향을 자문했다."
+     },
+     {
+      "title": "건국대 경영연구소, AI 활용한 인사 혁신 추진",
+      "date": "2025-03-11",
+      "url": "https://www.konkuk.ac.kr/bbs/konkuk/257/1145894/artclView.do",
+      "summary_ko": "박진용 경영연구소장이 베트남 HR 기업 JobTest와 AI 기반 인사기술 공동연구 협약을 맺었다."
+     }
+    ]
+   }
+  },
+  {
+   "id": "skku",
+   "name": "성균관대학교",
+   "short": "성균관",
+   "color": "#0F6B5C",
+   "soft": "#E7F3F0",
+   "official_name": "성균관대학교 경영전문대학원 (SKK GSB: Sungkyunkwan University Graduate School of Business / 경영대학 소속 경영전문대학원 EMBA·FinTech MBA) 및 경영대학원(IMBA)",
+   "mba_site_url": "https://gsb.skku.edu/",
+   "admissions_url": "https://gsb.skku.edu/Admissions/Overview",
+   "programs": [
+    {
+     "name": "Full-Time MBA",
+     "name_en": "SKK GSB Full-Time MBA",
+     "type": "Full-time",
+     "focus": "AI·데이터 분석 중심 커리큘럼 + 글로벌 경험학습(교환·Kelley 복수학위)",
+     "language": "영어",
+     "duration": "1.5년(18개월)",
+     "schedule": "주중 주간, 8월 입학",
+     "target": "초·중급 경력자(경력 최소요건 없음)",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://gsb.skku.edu/Full-time_MBA/Overview",
+     "type_ko": "주간 풀타임"
+    },
+    {
+     "name": "Professional MBA (PMBA)",
+     "name_en": "SKK GSB Professional MBA",
+     "type": "Global/English",
+     "focus": "100% 영어 파트타임 MBA, AI&Business Analytics·Management·Finance·Marketing 트랙, Kelley 복수학위 옵션",
+     "language": "영어",
+     "duration": "2년",
+     "schedule": "주중 야간, 1월·8월 입학",
+     "target": "경력 2년 이상 초·중급 직장인",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://gsb.skku.edu/Professional_MBA/Overview",
+     "type_ko": "영어 과정"
+    },
+    {
+     "name": "Kelley-SKK GSB Executive MBA",
+     "name_en": "Indiana University Kelley–SKK GSB Executive MBA",
+     "type": "Executive",
+     "focus": "미 인디애나대 Kelley와 복수 MBA 학위, 교수진 50:50, 해외 레지던시(Global Immersion) 3회",
+     "language": "영어",
+     "duration": "1.5년 (45학점)",
+     "schedule": "금 18–21시, 토 9–18시; 8월 입학",
+     "target": "경력 8년 이상 시니어 매니저 이상",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://gsb.skku.edu/Executive_MBA/Overview",
+     "type_ko": "Executive"
+    },
+    {
+     "name": "AI MBA",
+     "name_en": "SKK GSB AI MBA",
+     "type": "Specialized",
+     "focus": "비즈니스 코어 + 비즈니스 애널리틱스·AI·생성형 AI, AI 전환 리더 양성 (기업 맞춤형 AI MBA-Corporate 별도 운영: IIAC·KB)",
+     "language": "영어",
+     "duration": "2년 (45학점)",
+     "schedule": "토요일 09:00–17:15, 1월 입학(1월 부트캠프)",
+     "target": "경력 2년 이상, AI·데이터 기반 의사결정 역량을 키우려는 직장인",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://gsb.skku.edu/AI_MBA/Overview",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "경영전문대학원 EMBA",
+     "name_en": "SKKU EMBA (Most innovative part-time MBA)",
+     "type": "Part-time(야간/주말)",
+     "focus": "국문 파트타임 MBA; 학위명 선택(Management, ICT·Data Analytics, Marketing, Accounting, Finance), 보험금융·금융 계약학과 운영",
+     "language": "한국어",
+     "duration": "2년(4개 학기), 45학점",
+     "schedule": "화~목 야간 / 토(오전·오후)",
+     "target": "재직 중인 경영자·임직원(경력기간 무관)",
+     "intake": "모집인원 '00명'으로 표기(구체 숫자 미공개); 계약학과 보험금융 연 약 20명, 금융 2년마다 약 30명",
+     "tuition": "첫 학기 총액 11,452,000원(수업료 9,387,000원 + 입학금 1,465,000원 + 선택 수납금 600,000원), 2026학년도 2학기 기준",
+     "source_url": "https://emba.skku.edu/emba/community/notice.do?mode=view&articleNo=225350",
+     "type_ko": "야간·주말"
+    },
+    {
+     "name": "경영전문대학원 FinTech MBA",
+     "name_en": "FinTech MBA",
+     "type": "Specialized",
+     "focus": "금융·데이터사이언스·AI 융합; 미 University of South Carolina Business Analytics 석사 선택 취득 가능",
+     "language": null,
+     "duration": "2년(4개 학기), 45학점",
+     "schedule": "토요일 집중수업",
+     "target": "기업 재직자",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://biz.skku.edu/bizskk/grad_ftmba.do",
+     "type_ko": "특화 과정"
+    },
+    {
+     "name": "경영대학원 IMBA",
+     "name_en": "Graduate School of Business Administration (IMBA)",
+     "type": "Part-time(야간/주말)",
+     "focus": "국내 최초 온라인 MBA; 온라인 강의 + 월 평균 2회 주말 오프라인 수업·실시간 화상 Q&A (경영전문대학원이 아닌 특수대학원 과정)",
+     "language": null,
+     "duration": null,
+     "schedule": "온라인 + 월 2회 내외 주말 오프라인",
+     "target": "시간·장소 제약으로 학위 취득이 어려운 직장인",
+     "intake": null,
+     "tuition": null,
+     "source_url": "https://biz.skku.edu/bizskk/grad_imba.do",
+     "type_ko": "야간·주말"
+    }
+   ],
+   "admissions": [
+    {
+     "program": "Full-Time MBA",
+     "cycle": "2027 Incoming Class (2027년 8월 입학)",
+     "application_period": "Round 1 마감 11/6(면접 12/3–4, 발표 12/16) / Round 2 마감 2/26(면접 3/18–19, 발표 3/31)",
+     "stages": [
+      "온라인 지원",
+      "서류심사",
+      "면접(초청자)",
+      "합격 발표"
+     ],
+     "eligibility": "학사 이상, 경력 최소요건 없음, 영어 능력",
+     "documents": [
+      "온라인 지원서·에세이",
+      "학위증명서",
+      "영문 성적증명서",
+      "공인영어성적",
+      "영문 이력서",
+      "재직증명서(전 경력)",
+      "(선택) 장학 신청서, GMAT/GRE"
+     ],
+     "tests": "영어성적 필수(TOEFL·TOEIC·TEPS·IELTS·Duolingo·PTE 등, 원어민·영어학위자 면제), GMAT/GRE 선택",
+     "interview_format": "초청 면접(방식 미기재)",
+     "special_tracks": "Future Leader Scholarship(최대 50%), SKK GSB Scholarship(최대 20%), Study Abroad Fellowship·Kelley Dual Degree Fellowship(1년차 등록금 전액 면제), GKS",
+     "source_url": "https://gsb.skku.edu/Full-time_MBA/Admissions"
+    },
+    {
+     "program": "Professional MBA",
+     "cycle": "2027 Incoming Class (2027-01-12 개강)",
+     "application_period": "Round 1: 9/1–10/16(면접 11/2–6, 발표 11/23) / Round 2: 10/17–11/13(면접 11/30–12/4, 발표 12/16), 등록 2026-12-22~24",
+     "stages": [
+      "온라인 지원",
+      "서류심사",
+      "면접(초청자)",
+      "합격 발표"
+     ],
+     "eligibility": "학사 이상, 풀타임 경력 2년 이상(학생비자 미발급)",
+     "documents": [
+      "온라인 지원서(에세이 없음)",
+      "학위증명서",
+      "영문 성적증명서",
+      "영문 이력서",
+      "재직증명서(최근 2년 이상)",
+      "(선택) 회사 후원서, 동문·재학생 추천서 1부"
+     ],
+     "tests": "영어성적·GMAT/GRE 모두 선택",
+     "interview_format": "초청 면접(방식 미기재)",
+     "special_tracks": "Future Leader 1,200만원, SKK GSB 800만원, Dean's 500만원, KCMC 800만원 장학금",
+     "source_url": "https://gsb.skku.edu/Professional_MBA/admissions"
+    },
+    {
+     "program": "Kelley-SKK GSB Executive MBA",
+     "cycle": "2027 Incoming Class (2027년 8월 개강)",
+     "application_period": "Round 1: 9/7–10/12(면접 10/27–29, 발표 11/23) / Round 2: ~2027-04-09(면접 4/28–30, 발표 5/11)",
+     "stages": [
+      "온라인 지원",
+      "서류심사",
+      "면접(초청자)",
+      "합격 발표",
+      "인디애나대 등록"
+     ],
+     "eligibility": "학사 이상, 경력 8년 이상, 리더십 경험, 영어 능력",
+     "documents": [
+      "온라인 지원서(에세이 없음)",
+      "학위증명서",
+      "영문 성적증명서",
+      "영문 이력서",
+      "재직증명서(최근 8년 이상)",
+      "(선택) 영어성적, GMAT/GRE, 회사 후원서, 추천서"
+     ],
+     "tests": "선택(합격 후 IU에 TOEFL/IELTS/Duolingo/PTE 공식성적 제출)",
+     "interview_format": "초청 면접(방식 미기재)",
+     "special_tracks": "Future CEO 3,000만원, SKK GSB·IU Alumni 1,500만원, SKK GSB 1,500만원, KCMC 1,500만원, Dean's 500만원",
+     "source_url": "https://gsb.skku.edu/Executive_MBA/Admission"
+    },
+    {
+     "program": "AI MBA",
+     "cycle": "2027 Incoming Class (2027-01-16 개강)",
+     "application_period": "Round 1: 9/1–10/16(면접 11/2–6, 발표 11/23) / Round 2: 10/17–11/13(면접 11/30–12/4, 발표 12/16)",
+     "stages": [
+      "온라인 지원",
+      "서류심사",
+      "면접(초청자)",
+      "합격 발표"
+     ],
+     "eligibility": "학사 이상, 풀타임 경력 2년 이상(학생비자 미발급)",
+     "documents": [
+      "온라인 지원서(에세이 없음)",
+      "학위증명서",
+      "영문 성적증명서",
+      "영문 이력서",
+      "재직증명서",
+      "(선택) 영어성적, GMAT/GRE, 회사 후원서, 추천서"
+     ],
+     "tests": "필수 시험 없음(영어·GMAT/GRE 선택)",
+     "interview_format": "초청 면접(방식 미기재)",
+     "special_tracks": "Future Leader 1,200만원, SKK GSB 800만원, Dean's 500만원, KCMC 800만원; 기업 맞춤형 AI MBA-Corporate",
+     "source_url": "https://gsb.skku.edu/AI_MBA/Admission"
+    },
+    {
+     "program": "경영전문대학원 EMBA (121기)",
+     "cycle": "2027학년도 전기 일반전형",
+     "application_period": "원서접수 2026-10-19 ~ 11-02 18:00, 서류제출 ~11-03 17:00, 면접 11-07(토), 합격발표 11-13 17:00, 예치금 11-16~20, 본등록 2027-01-18~22",
+     "stages": [
+      "온라인 원서접수(전형료 80,000원)",
+      "서류제출",
+      "1단계 서류심사",
+      "2단계 면접",
+      "총점(100점) 순 선발"
+     ],
+     "eligibility": "국내외 학사학위 취득(2027.2 취득예정 포함) + 재직 중(경력기간 무관)",
+     "documents": [
+      "입학원서",
+      "학업계획서",
+      "대학 졸업(예정)증명서",
+      "전 학년 성적증명서",
+      "재직증명서",
+      "(해외학위) 아포스티유/영사확인, 중국은 CHSI 인증",
+      "(선택) 추천서, 재직기관 학비지원 확인서, 공인어학성적, 자격증"
+     ],
+     "tests": "없음",
+     "interview_format": "대면 면접, 시간 개별 안내",
+     "special_tracks": "계약학과(보험금융학과·금융학과) 협약기관 추천 전형",
+     "source_url": "https://emba.skku.edu/emba/community/notice.do?mode=view&articleNo=225350"
+    }
+   ],
+   "analysis": [
+    "SKK GSB는 Full-time·PMBA·EMBA·AI MBA를 전부 영어로 운영해, 외국계·글로벌 커리어를 노리는 사람에게 국내 최상위 선택지다.",
+    "Kelley-SKK GSB EMBA는 1.5년 금·토 수업으로 미국 인디애나대 MBA까지 두 학위를 받는 구조라 8년차 이상 리더에게 맞고, 고액 장학금(최대 3,000만원)도 있다.",
+    "AI MBA(토요일 전일제)와 PMBA의 AI&Analytics 트랙은 데이터·AI 전환을 맡은 2년차 이상 실무자에게 적합하며, 시험 제출이 선택이라 진입 부담이 낮다.",
+    "경영대학 산하 국문 EMBA(60년 역사, 121기 모집)는 화~목 야간·토요일 수업, 서류+대면면접만으로 선발해 국내 기업 재직자 네트워크를 원하는 사람에게 맞다.",
+    "FinTech MBA(토요 집중)와 온라인 IMBA까지 있어 금융·핀테크 특화 또는 시간 제약이 큰 직장인도 선택할 수 있다."
+   ],
+   "news_sources": [
+    {
+     "name": "SKK GSB News",
+     "publisher": "성균관대학교 SKK GSB",
+     "url": "https://gsb.skku.edu/board/CN2NXnCwc",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "SKK GSB Notices",
+     "publisher": "성균관대학교 SKK GSB",
+     "url": "https://gsb.skku.edu/board/rRyR2Urxg",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "경영전문대학원 EMBA 소식",
+     "publisher": "성균관대학교 경영전문대학원 EMBA",
+     "url": "https://emba.skku.edu/emba/community/news.do",
+     "kind": "MBA news",
+     "rss_url": null
+    },
+    {
+     "name": "경영대학 소식",
+     "publisher": "성균관대학교 경영대학",
+     "url": "https://biz.skku.edu/bizskk/news.do",
+     "kind": "school news",
+     "rss_url": null
+    },
+    {
+     "name": "성대뉴스",
+     "publisher": "성균관대학교",
+     "url": "https://www.skku.edu/skku/campus/skk_comm/news.do",
+     "kind": "school news",
+     "rss_url": null
+    }
+   ],
+   "news": [
+    {
+     "title": "Indiana Kelley–SKK GSB Executive MBA Opening Party",
+     "date": "2026-10-02",
+     "source_name": "SKK GSB News",
+     "url": "https://gsb.skku.edu/board/CN2NXnCwc/lBLRPyUW77",
+     "summary_ko": "Kelley-SKK GSB EMBA 17·18기 원우와 양교 교수진이 모여 새 학기 시작을 기념하는 오프닝 행사를 가졌다."
+    },
+    {
+     "title": "[원우 인터뷰 특집] 116기 이현승 원우 인터뷰(2026 여름 학위수여식 공로상 학장상 수상)",
+     "date": "2026-10-01",
+     "source_name": "경영전문대학원 EMBA 소식",
+     "url": "https://emba.skku.edu/emba/community/news.do?mode=view&articleNo=226332",
+     "summary_ko": "2026년 여름 학위수여식에서 공로상(학장상)을 받은 EMBA 116기 졸업 원우의 인터뷰를 소개했다."
+    },
+    {
+     "title": "IIAC AI MBA Marks First Anniversary",
+     "date": "2026-07-21",
+     "source_name": "SKK GSB News",
+     "url": "https://gsb.skku.edu/board/CN2NXnCwc/xRGl2ZPSTo",
+     "summary_ko": "인천국제공항공사 직원 전용으로 운영되는 기업형 AI MBA가 출범 1주년을 맞아 기념 행사를 열고 지난 1년의 AI·데이터 학습을 돌아봤다."
+    },
+    {
+     "title": "EMBA 제65대 학생회 부름, 플리마켓 수익금 전액 소아암 아동을 위해 기부",
+     "date": "2026-06-09",
+     "source_name": "경영전문대학원 EMBA 소식",
+     "url": "https://emba.skku.edu/emba/community/news.do?mode=view&articleNo=218854",
+     "summary_ko": "EMBA 학생회가 원우 대상 플리마켓을 열고 수익금 전액을 소아암 아동 지원에 기부했다."
+    },
+    {
+     "title": "경영전문대학원 60주년 기념행사 성료… 미래 60년 향한 '3E VISION' 선포",
+     "date": "2026-06-08",
+     "source_name": "경영전문대학원 EMBA 소식",
+     "url": "https://emba.skku.edu/emba/community/news.do?mode=view&articleNo=218771",
+     "summary_ko": "경영전문대학원이 6월 1일 설립 60주년 행사를 열고 전문성·윤리성·협력을 축으로 한 새 비전 '3E VISION'을 발표했다."
+    },
+    {
+     "title": "SKK GSB Hosts HR Leaders Forum on HR Strategies for AI Era",
+     "date": "2026-05-14",
+     "source_name": "SKK GSB News",
+     "url": "https://gsb.skku.edu/board/CN2NXnCwc/Ya1Vpn4PrV",
+     "summary_ko": "SKK GSB가 국내외 기업 HR 리더들을 초청해 AI 시대 인사 전략을 주제로 포럼과 네트워킹 행사를 열었다."
+    }
+   ],
+   "deadlines": [
+    {
+     "label": "EMBA (경영전문대학원) 121기",
+     "start": "2026-10-19",
+     "end": "2026-11-02"
+    },
+    {
+     "label": "Professional·AI MBA R1",
+     "start": "2026-09-01",
+     "end": "2026-10-16"
+    },
+    {
+     "label": "Professional·AI MBA R2",
+     "start": "2026-10-17",
+     "end": "2026-11-13"
+    },
+    {
+     "label": "Kelley-SKK EMBA R1",
+     "start": "2026-09-07",
+     "end": "2026-10-12"
+    },
+    {
+     "label": "Full-Time MBA R1 마감",
+     "start": "2026-11-06",
+     "end": "2026-11-06"
+    }
+   ],
+   "notes": "1) 성균관대에는 두 계열이 공존: (a) SKK GSB(gsb.skku.edu, 영어 MBA: Full-time·PMBA·Kelley EMBA·AI MBA·MMS), (b) 경영대학 산하 경영전문대학원 EMBA(국문, emba.skku.edu)·FinTech MBA, 그리고 특수대학원인 경영대학원 IMBA(온라인). MMS(3년, EDHEC 복수학위)는 MBA가 아니라 programs에서 제외. 2) SKK GSB 각 프로그램 등록금 금액은 공식 페이지에 미기재 → null(장학금 금액만 공개). EMBA 등록금은 2027 전기 모집요강 PDF의 2026-2학기 기준 금액. 3) SKK GSB 라운드 날짜 중 연도 미표기분은 2026년 가을~2027년 봄 일정으로 해석(Full-time R1 11/6=2026, R2 2/26=2027). 4) SKK GSB 면접 방식, 모집정원, 전형료 미기재. 5) FinTech MBA·IMBA 입학요강·등록금 미확인(IMBA 사이트 imba.ac.kr 접속 실패). 6) 성균관대 총동창회 공식 사이트·동창회보, MBA 동문회 사이트는 접속/확인 실패로 제외. 7) 공식 게시판 RSS 미확인 → 모두 null. 8) 성대뉴스 최근 목록에는 경영전문대학원 관련 기사가 없어 news는 SKK GSB·EMBA 게시판에서 선정.",
+   "guide": {
+    "tagline": "영어로 수업하는 SKK GSB(인디애나대 복수학위 EMBA 포함)와 한국어 EMBA 두 갈래로 운영한다.",
+    "intake": [
+     {
+      "program": "SKK GSB Full-Time MBA",
+      "start": "매년 8월",
+      "apply": "라운드 1: 11월 6일 마감"
+     },
+     {
+      "program": "SKK GSB Professional · AI MBA",
+      "start": "1월 (PMBA는 8월도)",
+      "apply": "9월 ~ 11월, 2라운드"
+     },
+     {
+      "program": "Kelley-SKK Executive MBA",
+      "start": "매년 8월",
+      "apply": "9월 ~ 2027년 4월, 2라운드"
+     },
+     {
+      "program": "경영전문대학원 EMBA (한국어)",
+      "start": "매년 3월",
+      "apply": "10월 중순 ~ 11월 초"
+     }
+    ],
+    "process": [
+     {
+      "title": "경영전문대학원 EMBA 121기 2027년 3월 입학",
+      "steps": [
+       {
+        "label": "원서 접수",
+        "when": "2026.10.19 – 11.2"
+       },
+       {
+        "label": "서류 제출",
+        "when": "~ 11.3"
+       },
+       {
+        "label": "대면 면접",
+        "when": "11.7 (토)"
+       },
+       {
+        "label": "합격 발표",
+        "when": "11.13"
+       }
+      ]
+     },
+     {
+      "title": "SKK GSB Professional · AI MBA 2027년 1월 입학",
+      "steps": [
+       {
+        "label": "라운드 1",
+        "when": "2026.9.1 – 10.16 (면접 11.2 – 6, 발표 11.23)"
+       },
+       {
+        "label": "라운드 2",
+        "when": "10.17 – 11.13 (면접 11.30 – 12.4, 발표 12.16)"
+       }
+      ]
+     }
+    ],
+    "req": [
+     {
+      "k": "학력",
+      "v": "학사 학위"
+     },
+     {
+      "k": "경력",
+      "v": "Full-Time: 요건 없음 / PMBA·AI MBA: 2년 이상 / Kelley EMBA: 8년 이상 / 한국어 EMBA: 재직 중"
+     },
+     {
+      "k": "영어",
+      "v": "Full-Time 성적 필수 / PMBA·AI MBA 선택 / 한국어 EMBA 없음"
+     },
+     {
+      "k": "GMAT",
+      "v": "선택"
+     },
+     {
+      "k": "선발",
+      "v": "서류 → 초청 면접"
+     },
+     {
+      "k": "장학",
+      "v": "SKK GSB는 과정별 500만 ~ 3,000만원 장학 공개"
+     }
+    ],
+    "cost": [
+     {
+      "program": "Full-Time MBA",
+      "per_semester": null,
+      "semesters": 3,
+      "admission": 1300000,
+      "total": 53000000,
+      "all_in": 54300000,
+      "year": "2025",
+      "note": ""
+     },
+     {
+      "program": "Professional MBA",
+      "per_semester": null,
+      "semesters": 6,
+      "admission": 1300000,
+      "total": 53000000,
+      "all_in": 54300000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "Kelley-SKK Executive MBA",
+      "per_semester": null,
+      "semesters": 4,
+      "admission": 1300000,
+      "total": 95000000,
+      "all_in": 96300000,
+      "year": "2026",
+      "note": "인디애나대 학위 포함"
+     },
+     {
+      "program": "AI MBA",
+      "per_semester": null,
+      "semesters": 4,
+      "admission": 1300000,
+      "total": 53000000,
+      "all_in": 54300000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "FinTech MBA",
+      "per_semester": 10600000,
+      "semesters": 4,
+      "admission": 1465000,
+      "total": 42400000,
+      "all_in": 43865000,
+      "year": "2026",
+      "note": ""
+     },
+     {
+      "program": "경영전문대학원 EMBA",
+      "per_semester": 9387000,
+      "semesters": 4,
+      "admission": 1465000,
+      "total": 37548000,
+      "all_in": 39013000,
+      "year": "2026",
+      "note": ""
+     }
+    ]
+   },
+   "faculty": {
+    "url": "https://biz.skku.edu/bizskk/faculty.do?mode=list&srProfessorType=&jojikCode1=3169&categoryId=U",
+    "count": 78,
+    "as_of": "2026-10-15",
+    "areas": [
+     {
+      "area": "경영정보 (경영대학)",
+      "count": 9
+     },
+     {
+      "area": "마케팅 (경영대학)",
+      "count": 13
+     },
+     {
+      "area": "매니지먼트 (경영대학)",
+      "count": 12
+     },
+     {
+      "area": "재무 (경영대학)",
+      "count": 12
+     },
+     {
+      "area": "회계 (경영대학)",
+      "count": 9
+     },
+     {
+      "area": "Economics / Finance (SKK GSB)",
+      "count": 6
+     },
+     {
+      "area": "Marketing (SKK GSB)",
+      "count": 6
+     },
+     {
+      "area": "Management (SKK GSB)",
+      "count": 5
+     },
+     {
+      "area": "Decision Sciences (SKK GSB)",
+      "count": 4
+     },
+     {
+      "area": "Accounting (SKK GSB)",
+      "count": 1
+     },
+     {
+      "area": "Accounting / Finance (SKK GSB)",
+      "count": 1
+     }
+    ],
+    "strengths": [
+     "두 조직을 합쳐 전임교원이 78명에 이르며, 경영대학(55명)과 영어로 수업하는 SKK GSB(23명)가 각각 다른 MBA 라인업을 운영합니다.",
+     "SKK GSB는 해외 박사·해외 교수 출신이 대부분이고, Journal of Consumer Research, Journal of Marketing Research, Academy of Management Journal, The Accounting Review, Operations Research 등 최상위 저널 실적이 두드러집니다.",
+     "경영대학은 Journal of Marketing·MIS Quarterly·Organization Science 게재 교수와 'SKKU Fellowship' 선정 교수 8명을 두고 있으며, 2026년에도 Rising-Fellowship과 Teaching Award를 받았습니다.",
+     "월가 퀀트·투자은행·자산운용사 출신과 상장사 사외이사 교수가 많아 재무·AI 분야 실무 연계가 강하고, 기업 맞춤형 AI MBA(인천국제공항공사·KB금융)도 운영합니다."
+    ],
+    "notable": [
+     {
+      "name": "이종은",
+      "name_en": "LEE JONG EUN",
+      "role": "경영대학장 · 경영전문대학원장 · 경영대학원(IMBA)장 (2025~)",
+      "area": "회계 (경영대학)",
+      "phd": "Temple University (경영학, 회계), 2008",
+      "highlights": [
+       "Auditing: A Journal of Practice & Theory(2018), Accounting Horizons(2020) 등에 감사 품질·내부통제 연구 게재",
+       "한국경영학회 수석부회장(2022~2023), 경영학연구 회계분야 편집위원장 역임",
+       "KB국민카드 사외이사·감사위원장(2023~2026), 증권감독원(현 금융감독원) 감리국 근무 경력"
+      ],
+      "source_url": "https://biz.skku.edu/bizskk/faculty.do?mode=view&perId=LZStrGYNwWgDAyg1A6gUQEwBkDyA7A4gVQE4D0AhlAEakAqA5gLw1A&srProfessorType=&jojikCode1=3169&categoryId=U"
+     },
+     {
+      "name": "서아영",
+      "name_en": "SUH AYOUNG",
+      "role": "경영대학 부학장 · 경영전문대학원 부원장 · 경영연구소장 · 경영원장",
+      "area": "경영정보 (경영대학)",
+      "phd": "이화여자대학교",
+      "highlights": [
+       "2024 SKKU Fellowship 선정",
+       "VR·메타버스·인간-AI 협업 연구를 Information & Management, Journal of Environmental Psychology(2026) 등에 게재",
+       "City University of Hong Kong 조교수·부교수 역임"
+      ],
+      "source_url": "https://biz.skku.edu/bizskk/faculty.do?mode=view&perId=LZStrIINwjgdgGgogqgKQJoBcBmBbACgTgBYDWA6ggK4AiAygO4C8tQA&srProfessorType=&jojikCode1=3169&categoryId=U"
+     },
+     {
+      "name": "장영봉",
+      "name_en": "CHANG YOUNG BONG",
+      "role": "EMBA 주임교수",
+      "area": "경영정보 (경영대학)",
+      "phd": "University of California, Irvine",
+      "highlights": [
+       "MIS Quarterly(2017), Journal of Management Information Systems(2017)에 IT 아웃소싱·IT기업 M&A 연구 게재",
+       "IT 경제학 분야를 연구하며 University of British Columbia, UNIST 교수 역임"
+      ],
+      "source_url": "https://biz.skku.edu/bizskk/faculty.do?mode=view&perId=LZStrBIeQ5g6gDgnANgRgKIAUAyB2AnmAVgVQDYBZJADwDUBFAXhqA&srProfessorType=&jojikCode1=3169&categoryId=U"
+     },
+     {
+      "name": "김영한",
+      "name_en": "KIM YOUNGHAN",
+      "role": "IMBA 주임교수",
+      "area": "재무 (경영대학)",
+      "phd": "University of Minnesota (재무), 2009",
+      "highlights": [
+       "CEO 심리·행동재무 연구를 Organization Science(2017), Journal of Banking & Finance, European Financial Management에 게재",
+       "싱가포르 난양공대(NTU) 조교수, Bank of America 서울지점 근무 경력",
+       "글로벌경영학과장(2019~2020) 역임"
+      ],
+      "source_url": "https://biz.skku.edu/bizskk/faculty.do?mode=view&perId=LZStrA4IwNgwgnArAjgLQPQE1gICICcDsBTAWTxgDs8BBAXkqA&srProfessorType=&jojikCode1=3169&categoryId=U"
+     },
+     {
+      "name": "채인영",
+      "name_en": "CHAE INYOUNG",
+      "role": "글로벌경영학과장",
+      "area": "마케팅 (경영대학)",
+      "phd": "INSEAD (Management, Marketing)",
+      "highlights": [
+       "2026 SKKU Rising-Fellowship 선정",
+       "Journal of Marketing(2026, 마이크로 광고 효과), Journal of Marketing Research(2019, 2025), Marketing Science(2017, 2023) 게재",
+       "Emory Goizueta 경영대학 조교수 역임, JMR·JCR 편집위원"
+      ],
+      "source_url": "https://biz.skku.edu/bizskk/faculty.do?mode=view&perId=LZStrAoJQ7AZgJgXgmgJgQCQGoBYDKANA6gawHFgBZAZwDsBFAXhqA&srProfessorType=&jojikCode1=3169&categoryId=U"
+     },
+     {
+      "name": "오종민",
+      "name_en": "OH JONG MIN",
+      "role": "교수 · BK21 크로스 경영 미래인재 교육연구단장",
+      "area": "재무 (경영대학)",
+      "phd": "The University of Texas at Dallas (재무), 2015",
+      "highlights": [
+       "2023 SKKU Fellowship, 2026 SKKU Business School Distinguished Research Scholar 선정",
+       "KT CS 사외이사, G7 Korea ESG 위원, 한국거래소 기술평가위원(2022~2025) 역임",
+       "한국은행 조사국·금융안정국 근무, University of Central Florida 조교수 경력"
+      ],
+      "source_url": "https://biz.skku.edu/bizskk/faculty.do?mode=view&perId=LZStrCIcQhgjAHAWhAsAhAygZgGwGEAymBmA1gE7oCmA8gO4C81QA&srProfessorType=&jojikCode1=3169&categoryId=U"
+     },
+     {
+      "name": "이춘원 (Andrew Yi)",
+      "name_en": "Yi, Andrew",
+      "role": "SKK GSB 원장(Dean) · 재무 교수",
+      "area": "Economics / Finance (SKK GSB)",
+      "phd": "Columbia Business School (Finance)",
+      "highlights": [
+       "SKK GSB 원장으로 학교를 이끌고 있음",
+       "Contemporary Accounting Research(2016), Strategic Organization(2024) 게재",
+       "학계 진출 전 NERA, A.T. Kearney, Donaldson, Lufkin & Jenrette 근무"
+      ],
+      "source_url": "https://gsb.skku.edu/faculty/4760"
+     },
+     {
+      "name": "구민정",
+      "name_en": "Koo, Minjung",
+      "role": "SKK GSB 부원장 · Full-Time MBA Faculty Chair",
+      "area": "Marketing (SKK GSB)",
+      "phd": "University of Chicago Booth School of Business",
+      "highlights": [
+       "Journal of Consumer Research, Journal of Personality and Social Psychology, Journal of Marketing Research 등에 동기·자기조절·브랜딩 연구 게재",
+       "2018년 한국연구재단·Elsevier 젊은 연구자상 수상, Journal of Consumer Psychology 부편집장(AE)",
+       "브랜드 관리·지속가능성 마케팅 강의, Teaching Excellence Award 2회 수상"
+      ],
+      "source_url": "https://gsb.skku.edu/faculty/3300"
+     },
+     {
+      "name": "에릭 쉬",
+      "name_en": "Shih, Eric",
+      "role": "Kelley-SKK GSB Executive MBA Faculty Chair · 마케팅 교수 (전 원장 2020~2024)",
+      "area": "Marketing (SKK GSB)",
+      "phd": "University of California, Irvine",
+      "highlights": [
+       "2020~2024년 원장으로 SKK GSB를 Financial Times 글로벌 MBA Top 100(국내 1위)에 올리고 AACSB 인증 주기를 이끎",
+       "Strategic Management Journal(2012), Journal of Retailing(2011), Journal of Management Information Systems(2013), Leadership Quarterly(2015) 게재",
+       "Wake Forest University, Brock University 교수 역임"
+      ],
+      "source_url": "https://gsb.skku.edu/faculty/2327"
+     },
+     {
+      "name": "영주닐슨",
+      "name_en": "Nielsen, Youngju",
+      "role": "AI MBA(KB금융) Faculty Chair · 재무 교수",
+      "area": "Economics / Finance (SKK GSB)",
+      "phd": "University of Pittsburgh (통계학)",
+      "highlights": [
+       "15년 이상 월가 퀀트 경력(Citigroup G10 금리 시스템트레이딩 헤드, J.P. Morgan 등)",
+       "한국투자신탁운용·한국밸류자산운용 사외이사, 2024년 산업통상자원부 장관 표창",
+       "투자·AI 관련 저서 8권 이상, 2026년 신간 『연금 투자 불패의 법칙』 출간"
+      ],
+      "source_url": "https://gsb.skku.edu/faculty/2873"
+     },
+     {
+      "name": "Frank Huettner (국문 표기 미게재)",
+      "name_en": "Huettner, Frank",
+      "role": "AI MBA(인천국제공항공사) Faculty Chair · 의사결정과학 부교수",
+      "area": "Decision Sciences (SKK GSB)",
+      "phd": "University of Leipzig (경제학)",
+      "highlights": [
+       "Operations Research, Journal of Economic Theory, Games and Economic Behavior에 섀플리 값·소비자 선택 연구 게재",
+       "Mathematical Social Sciences 부편집장(AE)",
+       "Teaching Excellence Award 2024·2025·2026 수상, 운영관리·의사결정 애널리틱스 강의"
+      ],
+      "source_url": "https://gsb.skku.edu/faculty/2344"
+     },
+     {
+      "name": "Enric Junqué de Fortuny (국문 표기 미게재)",
+      "name_en": "Junqué de Fortuny, Enric",
+      "role": "의사결정과학 조교수",
+      "area": "Decision Sciences (SKK GSB)",
+      "phd": null,
+      "highlights": [
+       "Poets&Quants 'World's Best 40 Under 40 MBA Professors' 선정",
+       "정보시스템학회(AIS) European Research Paper of the Year 수상, MIS Quarterly(2016)·Journal of Consumer Research(2023) 게재",
+       "IESE, NYU Shanghai, Rotterdam School of Management 교수 역임, 임원 1,000명 이상 대상 AI 워크숍 진행"
+      ],
+      "source_url": "https://gsb.skku.edu/faculty/5134"
+     }
+    ],
+    "news": [
+     {
+      "title": "채인영(마케팅) 교수 연구팀, 숏폼 시대 '마이크로 광고'의 강력한 유전성 및 고객 유입 효과 최초 규명",
+      "date": "2026-09-23",
+      "url": "https://biz.skku.edu/bizskk/news.do?mode=view&articleNo=226067",
+      "summary_ko": "10초 이하 마이크로 광고가 기존 광고보다 웹사이트 유입을 최대 40% 더 끌어낸다는 연구를 Journal of Marketing에 발표했다."
+     },
+     {
+      "title": "최아름(회계 전공) 교수, 2026 SKKU Teaching Award 수상",
+      "date": "2026-09-29",
+      "url": "https://biz.skku.edu/bizskk/news.do?mode=view&articleNo=226163",
+      "summary_ko": "경영학과장 겸 회계전공 주임인 최아름 교수가 교육의 질을 높인 교원에게 주는 2026 SKKU Teaching Award를 받았다."
+     },
+     {
+      "title": "Aid Fragmentation and Corruption (SKK GSB News)",
+      "date": "2026-06-22",
+      "url": "https://gsb.skku.edu/board/CN2NXnCwc/K6tX0dGHsG",
+      "summary_ko": "SKK GSB 트래버스 차일드 교수가 아프가니스탄 원조사업 3만여 건을 분석해 원조 분산과 부패의 관계를 다룬 논문을 Review of Economics and Statistics에 게재했다."
+     }
+    ]
+   }
+  }
+ ]
+}
