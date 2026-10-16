@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" data-root="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="Dmxg0WO43QErrMX-Z0xx4QbJuQfgyax34Z1eTFJ0mV4">
+<title>공개 게시판 | MBA Lounge</title>
+<meta name="description" content="MBA 원우와 지원자가 입학, 진학, 모임, 커리어 이야기를 나누는 공개 게시판.">
+<meta name="theme-color" content="#6C5CE7">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MBA Lounge">
+<meta property="og:title" content="공개 게시판 | MBA Lounge">
+<meta property="og:description" content="MBA 원우와 지원자가 입학, 진학, 모임, 커리어 이야기를 나누는 공개 게시판.">
+<meta property="og:url" content="https://728haven-oss.github.io/mba-lounge/board.html">
+<link rel="canonical" href="https://728haven-oss.github.io/mba-lounge/board.html">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="assets/site.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+<script src="assets/site.js" defer></script>
+</head>
+<body data-page="board">
+<a class="sr" href="#main">본문으로 건너뛰기</a>
+<header class="top"><div class="wrap">
+  <a class="logo" href="index.html"><img src="icon-192.png" alt="">MBA Lounge</a>
+  <button class="menu-btn" aria-expanded="false" aria-controls="nav">메뉴</button>
+  <nav class="nav" id="nav" aria-label="주 메뉴"><a href="schools/index.html">학교별 MBA</a><a href="board.html" aria-current="page">공개 게시판</a><a href="app/index.html">앱 기능</a><a href="stories.html">원우 이야기</a></nav>
+  <div class="who" id="who"></div>
+</div></header>
+<main id="main">
+
+<section class="blk tight"><div class="wrap">
+  <h1 class="h-l">공개 게시판</h1>
+  <p class="lead" style="margin-top:8px">열 개 학교 원우와 MBA 지원자가 함께 쓰는 게시판입니다. 누구나 읽을 수 있고, 가입하면 바로 글을 쓸 수 있습니다.</p>
+</div></section>
+<section class="blk tight" style="padding-top:0"><div class="wrap grid" style="grid-template-columns:minmax(0,1fr) 360px;gap:40px;align-items:start" id="board-grid">
+  <div><div class="filters" id="f-school" aria-label="학교"></div><div class="filters" id="f-cat" aria-label="분류"></div><div id="posts"></div></div>
+  <aside id="write"></aside>
+</div></section>
+<style>@media(max-width:900px){#board-grid{grid-template-columns:1fr!important}#write{order:-1}}</style>
+</main>
+<footer class="foot"><div class="wrap">
+  <div><b style="color:var(--ink)">MBA Lounge</b><br>10개 학교 MBA 재학생·동문 커뮤니티</div>
+  <div><a href="privacy.html">개인정보처리방침</a><a href="child-safety.html">커뮤니티 안전 정책</a><a href="delete-account.html">계정 삭제</a><a href="mailto:728haven@gmail.com?subject=MBA%20Lounge%20문의">문의</a></div>
+</div>
+<div class="wrap biz"><p>상호 컨범파트너스 · 대표 김재성 · 사업자등록번호 762-67-00440 · 통신판매업신고 2026-서울구로-1720<br>서울특별시 구로구 구로중앙로 198, B동 13층 103호·203호 (구로동) · 이메일 728haven@gmail.com<br>© 2026 MBA Lounge. All rights reserved.</p></div></footer>
+</body>
+</html>
