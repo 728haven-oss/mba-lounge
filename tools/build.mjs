@@ -94,7 +94,7 @@ ${body}
 </main>
 <footer class="foot"><div class="wrap">
   <div><b style="color:var(--ink)">MBA Lounge</b><br>10개 학교 MBA 재학생·동문 커뮤니티</div>
-  <div><a href="${root}privacy.html">개인정보처리방침</a><a href="${root}child-safety.html">커뮤니티 안전 정책</a><a href="${root}delete-account.html">계정 삭제</a><a href="mailto:${CONTACT}?subject=MBA%20Lounge%20문의">문의</a></div>
+  <div><a href="${root}privacy.html">개인정보처리방침</a><a href="${root}child-safety.html">커뮤니티 안전 정책</a><a href="${root}delete-account.html">계정 삭제</a><a href="${root}feedback.html">의견·오류 신고</a><a href="mailto:${CONTACT}?subject=MBA%20Lounge%20문의">문의</a></div>
 </div>
 <div class="wrap biz"><p>상호 컨범파트너스 · 대표 김재성 · 사업자등록번호 762-67-00440 · 통신판매업신고 2026-서울구로-1720<br>서울특별시 구로구 구로중앙로 198, B동 13층 103호·203호 (구로동) · 이메일 ${CONTACT}<br>© 2026 MBA Lounge. All rights reserved.</p></div></footer>
 </body>
@@ -476,5 +476,29 @@ function stories() {
   write('stories.html', layout({ title: '원우 이야기 | MBA Lounge', desc: 'MBA 원우 인터뷰 시리즈. 연세 헌터 No.01 「졸업, 그 후 10년」.', body, page: 'stories', active: 'stories', path: 'stories.html' }));
 }
 
-home(); schoolsIndex(); S.forEach(schoolPage); board(); join(); me(); admin(); appPages(); stories();
+/* ---------- 의견·오류 신고 ---------- */
+function feedbackPage() {
+  const body = `
+<section class="blk tight"><div class="wrap" style="max-width:720px">
+  <h1 class="h-l">의견 보내기</h1>
+  <p class="muted" style="margin-top:8px">사이트를 쓰다가 생긴 오류, 불편했던 점, 있으면 좋을 기능을 알려 주세요. 운영진이 모두 읽고 처리 상황을 알려 드립니다.</p>
+  <form class="form" id="fb-form" style="margin-top:24px" novalidate>
+    <div class="field"><label id="fb-kind-l">어떤 의견인가요?</label><div class="pick fb-kind" id="fb-kind" role="group" aria-labelledby="fb-kind-l"></div></div>
+    <div class="field"><label for="fb-msg">내용</label><textarea class="input" id="fb-msg" maxlength="3000" required></textarea></div>
+    <div class="field"><label for="fb-page">어느 화면에서 생겼나요? (선택)</label><input class="input" id="fb-page" maxlength="300" placeholder="예: 공개 게시판, 연세대 MBA 페이지"></div>
+    <div class="field" id="fb-contact-wrap"><label for="fb-contact">답변 받을 연락처 (선택)</label><input class="input" id="fb-contact" maxlength="120" placeholder="이메일 또는 휴대폰 번호"><div class="hint">운영진만 볼 수 있고, 답변 외의 용도로 쓰지 않습니다.</div></div>
+    <label class="check"><input type="checkbox" id="fb-attach"><span>오류 확인을 위해 브라우저 정보와 최근 오류 기록을 함께 보냅니다.</span></label>
+    <details class="small"><summary style="cursor:pointer">함께 보내는 정보 보기</summary><pre class="fb-pre" id="fb-env"></pre></details>
+    <input type="text" id="fb-hp" name="website" tabindex="-1" autocomplete="off" class="sr" aria-hidden="true">
+    <p class="small muted" id="fb-who"></p>
+    <button class="btn" id="fb-go" style="width:100%;padding:14px">의견 보내기</button>
+    <div class="note" id="fb-fail" hidden>지금은 의견을 저장하지 못했습니다. <a id="fb-mail" href="#">이메일로 보내기</a>를 누르면 작성한 내용이 담긴 메일이 열립니다.</div>
+  </form>
+  <div class="panel" id="fb-done" hidden style="margin-top:24px"><div class="h-m">의견을 보냈습니다</div><p class="muted" id="fb-done-msg" style="margin-top:6px"></p>
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><a class="btn sm" href="index.html">홈으로</a><a class="btn sm ghost" href="feedback.html">다른 의견 보내기</a></div></div>
+</div></section>`;
+  write('feedback.html', layout({ title: '의견 보내기 | MBA Lounge', desc: 'MBA Lounge 사이트 이용 중 오류, 불편한 점, 제안을 보내 주세요.', body, page: 'feedback', path: 'feedback.html' }));
+}
+
+home(); schoolsIndex(); S.forEach(schoolPage); board(); join(); me(); admin(); appPages(); stories(); feedbackPage();
 console.log('built', 6 + S.length + FEATURES.length + 1, 'pages');
