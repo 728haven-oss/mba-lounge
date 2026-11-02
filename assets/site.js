@@ -120,7 +120,7 @@ async function latestPosts(el,limit){
     if(r.error)throw r.error;
     if(!r.data.length){el.innerHTML='<div class="empty">아직 글이 없습니다. 첫 글을 남겨 보세요.</div>';return;}
     el.innerHTML=r.data.map(p=>'<a class="post" style="display:block;text-decoration:none" href="'+ROOT+'board.html#p-'+esc(p.id)+'"><div class="meta">'+postMeta(p)+'</div><h3>'+esc(p.title)+'</h3></a>').join('');
-  }catch(e){el.innerHTML='<div class="empty">게시판을 불러오지 못했습니다.</div>';}
+  }catch(e){noteError('latestPosts: '+((e&&e.message)||e),'home');el.innerHTML='<div class="empty">게시판을 불러오지 못했습니다. <a href="'+fbLink()+'&kind=bug">오류 신고</a></div>';}
 }
 
 async function initBoard(){
@@ -158,7 +158,7 @@ async function initBoard(){
         const r=await withTimeout(SB.from('site_posts').insert({author:me.uid,school_id:me.school_id,cat:$('#w-cat').value,title,body,author_label:mask(me.name)}));
         if(r.error)throw r.error;
         $('#w-title').value='';$('#w-body').value='';toast('게시했습니다');load();
-      }catch(err){toast('게시하지 못했습니다. 잠시 후 다시 시도하세요');}
+      }catch(err){noteError('post insert: '+((err&&err.message)||err),'board');toast('게시하지 못했습니다. 화면 아래 의견 보내기로 알려 주세요');}
       finally{b.disabled=false;}
     });
   }
@@ -178,7 +178,7 @@ async function initBoard(){
         (me&&me.uid!==p.author?'<button class="btn sm ghost" data-act="report">신고</button>':'')+'</div>'+
         '<div class="cmts"></div></div></article>').join('');
       const h=location.hash.slice(1);if(h){const el=document.getElementById(h);if(el){open(el);el.scrollIntoView({block:'start'});}}
-    }catch(e){listEl.innerHTML='<div class="empty">게시판을 불러오지 못했습니다.</div>';}
+    }catch(e){noteError('board: '+((e&&e.message)||e),'board');listEl.innerHTML='<div class="empty">게시판을 불러오지 못했습니다. <a href="'+fbLink()+'&kind=bug">오류 신고</a></div>';}
   }
   function open(art){const m=$('.more',art),h=$('h3',art);const on=m.hidden;m.hidden=!on;h.setAttribute('aria-expanded',on?'true':'false');if(on)loadComments(art);}
   listEl.addEventListener('click',async e=>{
@@ -396,6 +396,128 @@ async function initSchool(){
   box.innerHTML='<h3 class="h-m" style="margin-bottom:4px">새로 등록된 소식</h3>'+list.map(n=>'<a class="news" href="'+esc(n.url)+'" target="_blank" rel="noopener"><div class="src">'+esc(n.src)+' · '+esc(n.date)+'</div><h3>'+esc(n.title)+'</h3>'+(n.sum?'<p>'+esc(n.sum)+'</p>':'')+'</a>').join('');
 }
 
+/* ---------- 의견·오류 신고 ---------- */
+const FB_KINDS={bug:'오류',inconvenience:'불편한 점',suggestion:'제안',other:'기타'};
+const FB_STATUS={new:'접수',checking:'확인 중',done:'반영 완료',wontfix:'보류'};
+let ERRS=[];
+try{ERRS=JSON.parse(sessionStorage.getItem('mba_site_errs')||'[]');}catch(e){ERRS=[];}
+function noteError(msg,where){
+  ERRS.push({m:String(msg||'').slice(0,300),w:String(where||location.pathname).slice(0,200),t:new Date().toISOString()});
+  ERRS=ERRS.slice(-5);
+  try{sessionStorage.setItem('mba_site_errs',JSON.stringify(ERRS));}catch(e){}
+  nudge();
+}
+window.addEventListener('error',e=>{
+  /* 외부 스크립트의 의미 없는 'Script error.' 는 제외 */
+  if(e&&e.message&&e.message!=='Script error.')noteError(e.message+(e.filename?' @'+e.filename.split('/').pop()+':'+e.lineno:''),location.pathname);
+});
+window.addEventListener('unhandledrejection',e=>{noteError('Promise: '+((e.reason&&e.reason.message)||e.reason),location.pathname);});
+function fbLink(){return ROOT+'feedback.html?from='+encodeURIComponent(location.pathname.replace(/^.*\/mba-lounge\//,'/')+location.hash);}
+let NUDGED=false;
+function nudge(){
+  if(NUDGED||document.body.dataset.page==='feedback'||!document.body)return;
+  NUDGED=true;
+  const n=document.createElement('div');n.className='fb-nudge';n.setAttribute('role','status');
+  n.innerHTML='<span>화면에 문제가 생긴 것 같습니다.</span><a href="'+fbLink()+'&kind=bug">오류 신고하기</a><button type="button" aria-label="닫기">✕</button>';
+  n.querySelector('button').onclick=()=>n.remove();
+  document.body.appendChild(n);
+}
+function fbButton(){
+  if(document.body.dataset.page==='feedback')return;
+  const a=document.createElement('a');a.className='fb-fab';a.href=fbLink();
+  a.innerHTML='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg><span>의견 보내기</span>';
+  document.body.appendChild(a);
+}
+function envInfo(){
+  const ua=navigator.userAgent;
+  return '브라우저: '+ua.slice(0,180)+'\n화면: '+window.innerWidth+'×'+window.innerHeight+
+    (ERRS.length?'\n최근 오류:\n'+ERRS.map(x=>'- '+x.t.slice(11,19)+' '+x.w+' '+x.m).join('\n'):'\n최근 오류: 없음');
+}
+async function initFeedback(){
+  const f=$('#fb-form');
+  let kind=qs('kind')||(ERRS.length?'bug':'suggestion');
+  const kp=$('#fb-kind');
+  kp.innerHTML=Object.keys(FB_KINDS).map(k=>'<button type="button" data-v="'+k+'" aria-pressed="'+(k===kind)+'">'+esc(FB_KINDS[k])+'</button>').join('');
+  kp.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;kind=b.dataset.v;$$('button',kp).forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));hint();});
+  const HINT={bug:'어느 화면에서, 무엇을 눌렀을 때, 어떻게 됐는지 적어 주세요. 예: 공개 게시판에서 게시하기를 눌렀는데 "게시하지 못했습니다"가 떠요.',
+    inconvenience:'쓰기 불편했던 부분과 기대한 동작을 적어 주세요.',suggestion:'있으면 좋을 기능이나 바꾸면 좋을 점을 자유롭게 적어 주세요.',other:'무엇이든 적어 주세요.'};
+  function hint(){$('#fb-msg').placeholder=HINT[kind];}
+  hint();
+  const from=qs('from')||'';
+  $('#fb-page').value=from;
+  $('#fb-env').textContent=envInfo();
+  $('#fb-attach').checked=ERRS.length>0||kind==='bug';
+  const me=await loadMe();
+  if(me){$('#fb-contact-wrap').hidden=true;$('#fb-who').textContent=me.name+' 님('+((byId(me.school_id)||{}).short||me.school)+')으로 보냅니다. 답변은 내 라운지에서 볼 수 있습니다.';}
+  else $('#fb-who').textContent='로그인하지 않아도 보낼 수 있습니다. 답변을 받으려면 연락처를 남겨 주세요.';
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+    if($('#fb-hp').value)return;                 /* 자동 등록 방지 */
+    const msg=$('#fb-msg').value.trim();
+    if(msg.length<5){toast('내용을 5자 이상 적어 주세요');return;}
+    const row={kind,message:msg.slice(0,3000),page:$('#fb-page').value.trim().slice(0,300),
+      error_info:$('#fb-attach').checked?envInfo().slice(0,2000):'',contact:me?'':$('#fb-contact').value.trim().slice(0,120),
+      reporter:me?me.uid:null,reporter_label:me?mask(me.name):'',school_id:me?me.school_id:null};
+    const b=$('#fb-go');b.disabled=true;b.textContent='보내는 중…';
+    let ok=false;
+    try{if(SB){const r=await withTimeout(SB.from('site_feedback').insert(row));ok=!r.error;}}catch(err){ok=false;}
+    b.disabled=false;b.textContent='의견 보내기';
+    if(ok){
+      try{sessionStorage.removeItem('mba_site_errs');}catch(e){}
+      $('#fb-done').hidden=false;f.hidden=true;
+      $('#fb-done-msg').textContent=me?'운영진이 확인한 뒤 내 라운지의 "보낸 의견"에 답변을 남깁니다.':(row.contact?'운영진이 확인한 뒤 남겨 주신 연락처로 답변드립니다.':'보내 주신 의견은 운영진이 모두 확인합니다.');
+      window.scrollTo(0,0);
+    }else{
+      const body='['+FB_KINDS[kind]+'] '+row.page+'\n\n'+msg+(row.error_info?'\n\n---\n'+row.error_info:'');
+      $('#fb-fail').hidden=false;
+      $('#fb-mail').href='mailto:728haven@gmail.com?subject='+encodeURIComponent('MBA Lounge 의견: '+FB_KINDS[kind])+'&body='+encodeURIComponent(body.slice(0,1500));
+    }
+  });
+}
+async function myFeedback(){
+  const me=await loadMe();const box=$('#me');if(!me||!box||!SB)return;
+  const r=await SB.from('site_feedback').select('kind,message,status,reply,created_at,updated_at').eq('reporter',me.uid).order('created_at',{ascending:false}).limit(20);
+  if(r.error||!r.data.length)return;
+  const sec=document.createElement('section');sec.className='panel';sec.style.marginTop='20px';
+  sec.innerHTML='<h2 class="h-m">보낸 의견</h2>'+r.data.map(x=>'<div class="post"><div class="meta"><span class="fb-st '+esc(x.status)+'">'+esc(FB_STATUS[x.status]||x.status)+'</span><span>'+esc(FB_KINDS[x.kind]||'')+'</span><span>'+fmtDate(x.created_at)+'</span></div>'+
+    '<div class="body" style="margin-top:6px">'+esc(x.message)+'</div>'+(x.reply?'<div class="cmt"><div class="meta">운영진 답변 · '+fmtDate(x.updated_at)+'</div>'+esc(x.reply)+'</div>':'')+'</div>').join('')+
+    '<a class="btn sm ghost" style="margin-top:14px" href="feedback.html?from=/me.html">의견 더 보내기</a>';
+  box.appendChild(sec);
+}
+async function adminFeedback(){
+  const me=await loadMe();const box=$('#admin');
+  if(!me||me.role!=='admin'||me.status!=='approved'||!box)return;
+  const sec=document.createElement('section');sec.className='panel';sec.style.marginTop='20px';sec.id='fb-admin';
+  sec.innerHTML='<div class="blk-head" style="margin-bottom:8px"><h2 class="h-m">의견·오류 신고</h2><div class="filters" id="fb-f" style="margin:0"></div></div>'+
+    '<p class="muted small">'+esc((byId(me.school_id)||{}).short||'')+' 회원이 보낸 의견과 비회원·전체 의견이 보입니다. 상태를 바꾸고 답변을 남기면 보낸 회원의 내 라운지에 표시됩니다.</p><div id="fb-list" style="margin-top:8px"></div>';
+  box.appendChild(sec);
+  let filt='open';
+  const ff=$('#fb-f');
+  ff.innerHTML=[['open','처리 전'],['all','전체'],['done','완료']].map(([v,t])=>'<button class="chip" data-v="'+v+'" aria-pressed="'+(v===filt)+'">'+t+'</button>').join('');
+  ff.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;filt=b.dataset.v;$$('button',ff).forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));load();});
+  async function load(){
+    const w=$('#fb-list');w.innerHTML='<div class="muted small">불러오는 중…</div>';
+    let q=SB.from('site_feedback').select('*').order('created_at',{ascending:false}).limit(100);
+    if(filt==='open')q=q.in('status',['new','checking']);
+    if(filt==='done')q=q.in('status',['done','wontfix']);
+    const r=await q;
+    if(r.error){w.innerHTML='<div class="muted small">의견 목록을 불러오지 못했습니다. supabase/feedback.sql 을 실행했는지 확인하세요.</div>';return;}
+    if(!r.data.length){w.innerHTML='<div class="empty" style="padding:20px 0">'+(filt==='open'?'처리할 의견이 없습니다.':'의견이 없습니다.')+'</div>';return;}
+    w.innerHTML=r.data.map(x=>'<article class="post" data-id="'+esc(x.id)+'"><div class="meta"><span class="fb-st '+esc(x.status)+'">'+esc(FB_STATUS[x.status])+'</span><b>'+esc(FB_KINDS[x.kind])+'</b><span>'+esc(x.reporter_label||'비회원')+'</span><span>'+fmtDate(x.created_at)+'</span>'+(x.page?'<span>'+esc(x.page)+'</span>':'')+'</div>'+
+      '<div class="body">'+esc(x.message)+'</div>'+(x.contact?'<div class="small" style="margin-top:6px">연락처: '+esc(x.contact)+'</div>':'')+
+      (x.error_info?'<details style="margin-top:8px"><summary class="small" style="cursor:pointer">오류·브라우저 정보</summary><pre class="fb-pre">'+esc(x.error_info)+'</pre></details>':'')+
+      '<div class="fb-act"><select class="input" aria-label="상태">'+Object.keys(FB_STATUS).map(k=>'<option value="'+k+'"'+(k===x.status?' selected':'')+'>'+FB_STATUS[k]+'</option>').join('')+'</select>'+
+      '<input class="input" maxlength="1000" placeholder="답변 (보낸 회원에게 보임)" aria-label="답변" value="'+esc(x.reply)+'"><button class="btn sm sc">저장</button></div></article>').join('');
+  }
+  $('#fb-list').addEventListener('click',async e=>{
+    const b=e.target.closest('.fb-act button');if(!b)return;
+    const art=b.closest('.post');
+    const r=await SB.from('site_feedback').update({status:$('select',art).value,reply:$('.fb-act input',art).value.trim()}).eq('id',art.dataset.id);
+    toast(r.error?'저장하지 못했습니다':'저장했습니다');if(!r.error)load();
+  });
+  load();
+}
+
 /* ---------- 시작 ---------- */
 document.addEventListener('DOMContentLoaded',()=>{
   header();
@@ -404,8 +526,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(p==='home'){const el=$('#latest');if(el)latestPosts(el,5);}
   if(p==='board')initBoard();
   if(p==='join')initJoin();
-  if(p==='me')initMe();
-  if(p==='admin')initAdmin();
+  if(p==='me')initMe().then(myFeedback);
+  if(p==='admin')initAdmin().then(adminFeedback);
+  if(p==='feedback')initFeedback();
+  fbButton();
   if(p==='school')initSchool();
 });
 })();
