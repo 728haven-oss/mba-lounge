@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /mba-lounge/admin.html
+Disallow: /mba-lounge/me.html
+
+Sitemap: https://728haven-oss.github.io/mba-lounge/sitemap.xml
