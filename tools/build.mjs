@@ -57,7 +57,9 @@ const FEATURES = [
 const svg = (d, n = 20) => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
 
 /* ---------- 공통 레이아웃 ---------- */
-function layout({ title, desc, body, page, root = '', active = '', school = null, path: p = '' }) {
+function layout({ title, desc, body, page, root = '', active = '', school = null, path: p = '', ld = null, noindex = false, ogImage = null }) {
+  const og = SITE + (ogImage || (school ? `assets/og/${school.id}.png` : 'assets/og/default.png'));
+  const ldTag = ld ? `\n<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>` : '';
   const nav = [['schools/index.html', '학교별 MBA', 'schools'], ['board.html', '공개 게시판', 'board'], ['app/index.html', '앱 기능', 'app'], ['stories.html', '원우 이야기', 'stories']];
   const sc = school ? ` style="--sc:${school.color};--sc-soft:${school.soft}"` : '';
   return `<!DOCTYPE html>
@@ -67,14 +69,19 @@ function layout({ title, desc, body, page, root = '', active = '', school = null
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="google-site-verification" content="Dmxg0WO43QErrMX-Z0xx4QbJuQfgyax34Z1eTFJ0mV4">
 <title>${esc(title)}</title>
-<meta name="description" content="${esc(desc)}">
+<meta name="description" content="${esc(desc)}">${noindex ? '\n<meta name="robots" content="noindex">' : ''}
 <meta name="theme-color" content="${school ? school.color : '#6C5CE7'}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="MBA Lounge">
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:url" content="${SITE}${p}">
-<link rel="canonical" href="${SITE}${p}">
+<meta property="og:image" content="${og}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="${SITE}${p}">${ldTag}
 <link rel="icon" type="image/png" href="${root}icon.png">
 <link rel="manifest" href="${root}manifest.json">
 <link rel="stylesheet" href="${root}assets/site.css">
@@ -158,7 +165,11 @@ function home() {
     <span class="btn ghost sm" style="margin-top:16px">이야기 읽기</span></div>
   </a>
 </div></section>`;
-  write('index.html', layout({ title: 'MBA Lounge | 10개 학교 MBA 정보와 원우 커뮤니티', desc: '연세·서울대·KAIST·고려·서강·한양·이화·중앙·건국·성균관 MBA 과정과 입학 정보를 비교하고, 같은 학교 원우들과 커뮤니티에서 만나세요.', body, page: 'home', active: '' }));
+  write('index.html', layout({ title: 'MBA Lounge | 10개 학교 MBA 정보와 원우 커뮤니티', desc: '연세·서울대·KAIST·고려·서강·한양·이화·중앙·건국·성균관 MBA 과정과 입학 정보를 비교하고, 같은 학교 원우들과 커뮤니티에서 만나세요.', body, page: 'home', active: '', ld: [
+    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'MBA Lounge', alternateName: 'MBA 라운지', url: SITE, inLanguage: 'ko' },
+    { '@context': 'https://schema.org', '@type': 'Organization', name: 'MBA Lounge', url: SITE, logo: SITE + 'icon-512.png', email: CONTACT,
+      description: '연세·서울대·KAIST·고려·서강·한양·이화·중앙·건국·성균관 MBA 재학생·동문 커뮤니티' },
+  ] }));
 }
 
 /* ---------- 금액·비교 도우미 ---------- */
@@ -211,7 +222,7 @@ function schoolsIndex() {
 
 <section class="blk alt" id="calendar"><div class="wrap">
   <h2 class="h-l">2027년 입학 원서 일정</h2>
-  <p class="muted" style="margin-top:6px">접수 중인 곳이 먼저, 그다음 마감이 가까운 순서입니다. 건국대는 2027학년도 전기 요강이 아직 게시되지 않았습니다. (${CHECKED} 확인)</p>
+  <p class="muted" style="margin-top:6px">접수 중인 곳이 먼저, 그다음 마감이 가까운 순서입니다. (${CHECKED} 확인, 건국대는 ${DATA.news_checked || DATA.checked} 확인)</p>
   <div class="dl-list" style="margin-top:20px">${allDeadlines().map(([s, d]) => dlRow(s, d, root)).join('')}</div>
 </div></section>
 
@@ -241,7 +252,11 @@ function schoolsIndex() {
   </table></div>
   <p class="tiny" style="margin-top:10px">과정 분류는 각 학교 공식 안내를 바탕으로 라운지가 나눈 것입니다. 특화 과정: 금융·AI·ESG처럼 분야를 정한 과정이나 기업·기관 협약 과정.</p>
 </div></section>`;
-  write('schools/index.html', layout({ title: '학교별 MBA 비교: 입학·금액·교수진 | MBA Lounge', desc: '연세·서울대·KAIST·고려·서강·한양·이화·중앙·건국·성균관 MBA의 입학 시기와 방법, 졸업까지 등록금, 교수진 비교.', body, page: 'schools', root, active: 'schools', path: 'schools/' }));
+  write('schools/index.html', layout({ title: '학교별 MBA 비교: 입학·금액·교수진 | MBA Lounge', desc: '연세·서울대·KAIST·고려·서강·한양·이화·중앙·건국·성균관 MBA의 입학 시기와 방법, 졸업까지 등록금, 교수진 비교.', body, page: 'schools', root, active: 'schools', path: 'schools/', ld: [
+    { '@context': 'https://schema.org', '@type': 'ItemList', name: '10개 학교 MBA', itemListElement: S.map((s, i) => ({ '@type': 'ListItem', position: i + 1, url: `${SITE}schools/${s.id}.html`, name: `${s.name} MBA` })) },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'MBA Lounge', item: SITE }, { '@type': 'ListItem', position: 2, name: '학교별 MBA 비교', item: `${SITE}schools/` }] },
+  ] }));
 }
 
 /* ---------- 학교 상세 ---------- */
@@ -346,7 +361,7 @@ function schoolPage(s) {
   <div id="live-news" style="margin-top:18px"></div>
   <div style="margin-top:18px">${news || '<div class="empty">아직 모은 소식이 없습니다.</div>'}</div>
   ${srcs ? `<p class="small" style="margin-top:22px;font-weight:700">소식 출처</p><div class="src-list">${srcs}</div>` : ''}
-  <p class="note">요약은 라운지가 직접 쓴 것이며, 기사 본문의 저작권은 각 발행처에 있습니다. ${esc(s.short)} 관리자는 관리자 화면에서 동문회보 등 공식 기사 링크를 추가할 수 있습니다. (${CHECKED} 확인)</p>
+  <p class="note">요약은 라운지가 직접 쓴 것이며, 기사 본문의 저작권은 각 발행처에 있습니다. ${esc(s.short)} 관리자는 관리자 화면에서 동문회보 등 공식 기사 링크를 추가할 수 있습니다. (${(DATA.news_checked || DATA.checked).replace(/-/g, '.')} 확인)</p>
 </div></section>
 
 <section class="blk alt" id="community"><div class="wrap">
@@ -357,7 +372,13 @@ function schoolPage(s) {
     <div style="display:flex;flex-direction:column;gap:10px"><a class="btn sc" href="${root}join.html?school=${s.id}">${esc(s.short)} 라운지 가입하기</a><a class="btn ghost" href="${root}board.html?school=${s.id}">${esc(s.short)} 공개 게시판 글 보기</a>${s.id === 'yonsei' ? `<a class="btn ghost" href="${root}stories.html">연세 헌터: 원우 이야기</a>` : ''}</div>
   </div>
 </div></section>`;
-  write(`schools/${s.id}.html`, layout({ title: `${s.name} MBA 입학 시기·방법·등록금·교수진 | MBA Lounge`, desc: `${s.name} MBA의 특징, 2027년 입학 시기와 지원 방법, 졸업까지 등록금, 교수진과 실적.`, body, page: 'school', root, active: 'schools', school: s, path: `schools/${s.id}.html` }));
+  write(`schools/${s.id}.html`, layout({ title: `${s.name} MBA 입학 시기·방법·등록금·교수진 | MBA Lounge`, desc: `${s.name} MBA의 특징, 2027년 입학 시기와 지원 방법, 졸업까지 등록금, 교수진과 실적.`, body, page: 'school', root, active: 'schools', school: s, path: `schools/${s.id}.html`, ld: [
+    { '@context': 'https://schema.org', '@type': 'WebPage', name: `${s.name} MBA 입학 시기·방법·등록금·교수진`, url: `${SITE}schools/${s.id}.html`, inLanguage: 'ko', dateModified: DATA.checked,
+      about: { '@type': 'CollegeOrUniversity', name: s.official_name || s.name, ...(safeUrl(s.mba_site_url) ? { url: s.mba_site_url } : {}) } },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'MBA Lounge', item: SITE }, { '@type': 'ListItem', position: 2, name: '학교별 MBA 비교', item: `${SITE}schools/` },
+      { '@type': 'ListItem', position: 3, name: `${s.name} MBA`, item: `${SITE}schools/${s.id}.html` }] },
+  ] }));
 }
 
 /* ---------- 공개 게시판 ---------- */
@@ -412,12 +433,12 @@ function join() {
 
 function me() {
   const body = `<section class="blk tight"><div class="wrap" style="max-width:760px"><h1 class="h-l" style="margin-bottom:20px">내 라운지</h1><div id="me"><div class="empty">불러오는 중…</div></div></div></section>`;
-  write('me.html', layout({ title: '내 라운지 | MBA Lounge', desc: '가입 상태와 학교 커뮤니티 승인 진행 상황.', body, page: 'me', path: 'me.html' }));
+  write('me.html', layout({ title: '내 라운지 | MBA Lounge', desc: '가입 상태와 학교 커뮤니티 승인 진행 상황.', body, page: 'me', path: 'me.html', noindex: true }));
 }
 
 function admin() {
   const body = `<section class="blk tight"><div class="wrap" style="max-width:900px"><p class="muted small">학교 관리자</p><h1 class="h-l" style="margin-bottom:20px"><span id="admin-school">학교</span> 라운지 관리</h1><div id="admin"><div class="empty">불러오는 중…</div></div></div></section>`;
-  write('admin.html', layout({ title: '학교 관리자 | MBA Lounge', desc: '학교 커뮤니티 가입 승인과 학교 소식 관리.', body, page: 'admin', path: 'admin.html' }).replace('<meta name="description"', '<meta name="robots" content="noindex">\n<meta name="description"'));
+  write('admin.html', layout({ title: '학교 관리자 | MBA Lounge', desc: '학교 커뮤니티 가입 승인과 학교 소식 관리.', body, page: 'admin', path: 'admin.html', noindex: true }));
 }
 
 /* ---------- 앱 기능 ---------- */
@@ -476,6 +497,22 @@ function stories() {
   write('stories.html', layout({ title: '원우 이야기 | MBA Lounge', desc: 'MBA 원우 인터뷰 시리즈. 연세 헌터 No.01 「졸업, 그 후 10년」.', body, page: 'stories', active: 'stories', path: 'stories.html' }));
 }
 
+/* ---------- 검색엔진: sitemap · robots · 404 ---------- */
+function seoFiles() {
+  const today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+  const pages = [
+    ['', 'daily', '1.0'], ['schools/', 'weekly', '0.9'], ...S.map(s => [`schools/${s.id}.html`, 'weekly', '0.9']),
+    ['board.html', 'daily', '0.7'], ['stories.html', 'monthly', '0.6'], ['app/', 'monthly', '0.6'], ...FEATURES.map(f => [`app/${f.id}.html`, 'monthly', '0.5']),
+    ['join.html', 'monthly', '0.4'], ['feedback.html', 'yearly', '0.3'], ['privacy.html', 'yearly', '0.2'], ['child-safety.html', 'yearly', '0.2'], ['delete-account.html', 'yearly', '0.2'],
+  ];
+  write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(([u, f, pr]) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod><changefreq>${f}</changefreq><priority>${pr}</priority></url>`).join('\n')}\n</urlset>\n`);
+  write('robots.txt', `User-agent: *\nAllow: /\nDisallow: /mba-lounge/admin.html\nDisallow: /mba-lounge/me.html\n\nSitemap: ${SITE}sitemap.xml\n`);
+  const body = `<section class="blk"><div class="wrap" style="max-width:640px"><h1 class="h-l">페이지를 찾을 수 없습니다</h1>
+  <p class="muted" style="margin-top:10px">주소가 바뀌었거나 없는 페이지입니다. 아래에서 원하는 곳으로 이동하세요.</p>
+  <div class="hero-cta"><a class="btn" href="/mba-lounge/index.html">홈으로</a><a class="btn ghost" href="/mba-lounge/schools/index.html">학교별 MBA 비교</a><a class="btn ghost" href="/mba-lounge/feedback.html?kind=bug">깨진 링크 알리기</a></div></div></section>`;
+  write('404.html', layout({ title: '페이지를 찾을 수 없습니다 | MBA Lounge', desc: 'MBA Lounge', body, page: 'notfound', root: '/mba-lounge/', noindex: true }));
+}
+
 /* ---------- 의견·오류 신고 ---------- */
 function feedbackPage() {
   const body = `
@@ -500,5 +537,5 @@ function feedbackPage() {
   write('feedback.html', layout({ title: '의견 보내기 | MBA Lounge', desc: 'MBA Lounge 사이트 이용 중 오류, 불편한 점, 제안을 보내 주세요.', body, page: 'feedback', path: 'feedback.html' }));
 }
 
-home(); schoolsIndex(); S.forEach(schoolPage); board(); join(); me(); admin(); appPages(); stories(); feedbackPage();
+home(); schoolsIndex(); S.forEach(schoolPage); board(); join(); me(); admin(); appPages(); stories(); feedbackPage(); seoFiles();
 console.log('built', 6 + S.length + FEATURES.length + 1, 'pages');
