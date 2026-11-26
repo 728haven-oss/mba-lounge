@@ -328,6 +328,41 @@
     .mob-subtabs::-webkit-scrollbar{display:none}
     .mob-subtabs .chip{flex:0 0 auto}
   }
+
+  /* ===== 2026-11 간결화 ===== */
+  .more-btn{background:none;border:none;color:#9aa0ad;font-size:18px;line-height:1;padding:2px 8px;border-radius:8px;cursor:pointer;font-weight:800}
+  .more-btn:hover{background:var(--soft);color:var(--pri)}
+  .more-hidden{display:none!important}
+  details.opt-fields{margin:4px 0 12px;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+  details.opt-fields summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--sub)}
+  details.opt-fields .fields{margin-top:12px}
+  details.past-meets{margin-top:22px}
+  details.past-meets summary{cursor:pointer;font-weight:800;color:var(--sub);font-size:14px;margin-bottom:14px}
+  details.past-meets .meet-card{opacity:.6}
+  .d-search{margin:10px 16px 4px;display:flex}
+  .d-search input{flex:1;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:14px}
+  .sr-row{cursor:pointer}
+  .sr-row:hover{background:var(--soft)}
+  .meet-grid .empty,.dir-grid .empty{grid-column:1/-1}
+  @media(min-width:861px){.mob-subtabs{display:none}}
+  @media(max-width:860px){
+    .menu-btn{display:none!important}
+    .school-chip{display:none}
+    .sidebar .nav-item[data-view=home]{order:0}
+    .hero-band{padding:18px 20px;border-radius:18px}
+    .hero-band h2{font-size:19px}
+    .hero-band p{display:none}
+    .hero-band .slogan{margin-top:10px;font-size:12px;padding:5px 12px}
+    .kpis{grid-template-columns:repeat(3,1fr)!important;gap:8px;margin-top:12px}
+    .kpi{padding:12px 10px;text-align:center}
+    .kpi .k-ic{display:none}
+    .kpi .k-n{font-size:20px}
+    .kpi .k-l{font-size:11px}
+    .page-head{margin-bottom:14px}
+    .page-head h1{font-size:22px}
+    .page-head p{display:none}
+    .page-head .btn{white-space:nowrap;flex-shrink:0}
+  }
 </style>
 </head>
 <body>
@@ -336,10 +371,7 @@
 <div id="login">
   <div class="login-card">
     <div class="login-brand"><span id="login-mark"></span>MBA <b>Lounge</b></div>
-    <div class="login-sub" id="login-sub">라운지, 만남이 쉬워지는 공간 · 데스크톱 웹앱</div>
-
-    <div class="login-schools" id="loginSchools"></div>
-    <div class="login-hint">학교를 선택하면 화면이 그 학교 테마로 바뀝니다</div>
+    <div class="login-sub" id="login-sub">우리 학교 MBA 원우 커뮤니티</div>
 
     <div class="tabs"><button id="tab-login" class="on">로그인</button><button id="tab-signup">회원가입</button></div>
 
@@ -356,26 +388,31 @@
 
     <!-- SIGNUP PANE -->
     <div id="pane-signup" class="hidden">
-      <div class="login-step"><span class="st-n">1</span>프로필 정보를 입력하세요 <span style="font-weight:600;color:var(--sub);font-size:12px">· 위에서 학교를 먼저 선택하세요</span></div>
+      <div class="login-step"><span class="st-n">1</span>학교를 선택하세요</div>
+      <div class="login-schools" id="loginSchools"></div>
+      <div class="login-step" style="margin-top:14px"><span class="st-n">2</span>기본 정보 4가지만 입력하세요</div>
       <div class="fields">
         <div class="fld"><label>학번 (아이디) <span class="req">*</span></label><input id="su-sid" placeholder="예: 2024-1234 (학교 발급 학번)" /></div>
         <div class="fld"><label>비밀번호 <span class="req">*</span></label><input id="su-pw" type="password" value="" placeholder="6자 이상" autocomplete="new-password" /></div>
         <div class="fld"><label>이름 <span class="req">*</span></label><input id="su-name" placeholder="예: 김재성" /></div>
         <div class="fld"><label>기수 <span class="req">*</span></label><input id="su-gisu" placeholder="예: 12" /></div>
-        <div class="fld"><label>생년월일</label><input id="su-birth" placeholder="예: 1985-03-12" /></div>
-        <div class="fld"><label>현재 회사 <span class="req">*</span></label><input id="su-company" placeholder="예: OO기업" /></div>
-        <div class="fld"><label>직책 <span class="req">*</span></label><input id="su-title" placeholder="예: 전략기획 부장" /></div>
-        <div class="fld"><label>이메일 <span class="req">*</span></label><input id="su-email" placeholder="예: me@company.com" /></div>
-        <div class="fld"><label>연락처</label><input id="su-phone" placeholder="예: 010-0000-0000" /></div>
-        <div class="fld full"><label>한 줄 소개 (헤드라인)</label><input id="su-head" placeholder="예: 제조업 전략기획 · 신사업 개발 관심" /></div>
       </div>
+      <details class="opt-fields"><summary>선택 정보 (가입 후 프로필에서 입력해도 됩니다)</summary>
+      <div class="fields">
+        <div class="fld"><label>현재 회사</label><input id="su-company" placeholder="예: OO기업" /></div>
+        <div class="fld"><label>직책</label><input id="su-title" placeholder="예: 전략기획 부장" /></div>
+        <div class="fld"><label>이메일</label><input id="su-email" placeholder="예: me@company.com" /></div>
+        <div class="fld"><label>연락처</label><input id="su-phone" placeholder="예: 010-0000-0000" /></div>
+        <div class="fld"><label>생년월일</label><input id="su-birth" placeholder="예: 1985-03-12" /></div>
+        <div class="fld full"><label>한 줄 소개</label><input id="su-head" placeholder="예: 제조업 전략기획 · 신사업 개발 관심" /></div>
+      </div></details>
       <label style="display:flex;gap:10px;align-items:flex-start;margin:6px 0 14px;font-size:13.5px;line-height:1.55;cursor:pointer">
         <input type="checkbox" id="su-agree" style="margin-top:3px;flex-shrink:0">
         <span><b>이용약관 및 커뮤니티 규정</b>에 동의합니다 <span class="req">*</span><br>
         <span style="color:var(--sub)">불쾌감을 주는 콘텐츠와 다른 이용자를 괴롭히는 행위에 대해 <b>무관용 원칙</b>이 적용됩니다.</span>
         <a href="#" id="su-terms" style="color:var(--pri);font-weight:700;text-decoration:underline">전문 보기</a></span></label>
-      <button class="login-go" id="signupBtn">가입하고 시작하기</button>
-      <div class="login-note">학번·이름·회사·직책·이메일은 항상 공개됩니다. 연락처·생년월일·이력은 가입 후 프로필에서 공개 범위를 조절할 수 있어요.</div>
+      <button class="login-go" id="signupBtn">가입 신청하기</button>
+      <div class="login-note">학교 관리자 승인 후 로그인할 수 있습니다. 연락처·생년월일·이력은 프로필에서 공개 범위를 정하고, 서로 교환을 수락한 원우에게만 보입니다.</div>
     </div>
   </div>
 </div>
@@ -515,7 +552,12 @@ const seedNotices=[
 const LS='mbaweb_v6';
 let S=load();
 function load(){try{const r=JSON.parse(localStorage.getItem(LS));if(r&&r.accounts)return r;}catch(e){}
-  return {accounts:seedMembers.concat(buildSystemAccounts()),session:null,remember:true,exchanged:[],posts:seedPosts,meets:seedMeets,notices:seedNotices,officerPosts:seedOfficerPosts,officerInvites:[],clubs:seedClubs.map(c=>({...c,icon:''}))};}
+  return {accounts:buildSystemAccounts(),session:null,remember:true,exchanged:[],exchIn:[],posts:[],meets:[],notices:[],officerPosts:[],officerInvites:[],clubs:[],clean:2};}
+/* 예전 버전이 기기에 저장해 둔 샘플 인물·샘플 임원 공지 정리 (1회) */
+(function(){ if(S.clean===2)return;
+  S.accounts=(S.accounts||[]).filter(a=>a.system||a.uid);
+  S.officerPosts=[];S.officerInvites=[];S.exchIn=S.exchIn||[];
+  S.clean=2; try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){} })();
 function save(){try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}}
 function schoolByName(n){return schools.find(s=>s.name===n);}
 function acctBySid(sid){return S.accounts.find(a=>a.sid===sid);}
@@ -672,7 +714,7 @@ function buildLogin(){
     wrap.querySelectorAll('.sch-chip').forEach(x=>x.classList.remove('sel'));
     b.classList.add('sel');applyTheme(pickedSchool);
     document.getElementById('login-mark').innerHTML=schoolMark(pickedSchool,32);
-    document.getElementById('login-sub').textContent=pickedSchool.name+' MBA · '+(slogans[pickedSchool.name]||'라운지, 만남이 쉬워지는 공간');
+    document.getElementById('login-sub').textContent=pickedSchool.name+' MBA · '+(slogans[pickedSchool.name]||'우리 학교 MBA 원우 커뮤니티');
   }));
   document.getElementById('tab-login').addEventListener('click',()=>switchTab('login'));
   document.getElementById('tab-signup').addEventListener('click',()=>switchTab('signup'));
@@ -728,7 +770,7 @@ async function cloudPull(){
     title:r.title,body:r.body,img:r.img||'',lead:r.lead||'',assets:r.assets||{},
     likes:(lby[r.id]||[]).length,liked:(lby[r.id]||[]).some(x=>x.member===uid),
     comments:(cby[r.id]||[]).map(c=>({id:c.id,by:c.by_name,txt:c.txt}))}));
-  S.meets=(me.data||[]).map(r=>({id:r.id,date:r.when_at||dstr(r.created_at),title:r.title,org:r.org||'',
+  S.meets=(me.data||[]).map(r=>({id:r.id,date:r.when_at||dstr(r.created_at),created:r.created_at,title:r.title,org:r.org||'',
     place:r.place||'',by:r.by_name||'',cap:r.cap||20,going:(jby[r.id]||[]).length,
     attend:(jby[r.id]||[]).some(x=>x.member===uid),desc:r.body||'',img:r.img||''}));
   S.notices=(no.data||[]).map(r=>({id:r.id,src:r.src||'공지',title:r.title,body:r.body||'',date:r.date_txt||dstr(r.created_at)}));
@@ -739,7 +781,11 @@ async function cloudPull(){
       ratings:rt};
   });
   if(!bl.error)S.blocked=(bl.data||[]).map(x=>x.blocked_name);
-  if(!ex.error)S.exchanged=(ex.data||[]).map(x=>x.peer_sid);
+  if(!ex.error)S.exchanged=(ex.data||[]).filter(x=>!x.member||x.member===uid).map(x=>x.peer_sid);
+  /* 나에게 교환을 요청한 원우(학번) — 서버 함수 exchange_incoming() */
+  try{const xi=await fbTimeout(SB.rpc('exchange_incoming'),8000,'exin');
+    S.exchIn=xi.error?[]:(xi.data||[]).map(x=>typeof x==='string'?x:(x&&(x.sid||x.exchange_incoming))).filter(Boolean);
+  }catch(e){S.exchIn=S.exchIn||[];}
   CLOUD_OK=true;save();return true;
 }
 function cloudFail(e){
@@ -800,6 +846,11 @@ async function cloudBlock(name,on){
             :await SB.from('blocks').delete().eq('member',myUid()).eq('blocked_name',name);
   if(r.error)cloudFail(r.error);
 }
+async function cloudSetOfficer(sid,role){
+  if(!FB_ON||!myUid())return;
+  const r=await SB.from(MEMBERS).update({officer:role||''}).eq('sid',sid).eq('school_id',mySchoolId());
+  if(r.error)cloudFail(r.error);
+}
 async function cloudExchange(sid){
   if(!FB_ON||!myUid())return;
   const r=await SB.from('exchanges').upsert({member:myUid(),peer_sid:sid});
@@ -822,7 +873,12 @@ async function cloudPullClubs(){
   }catch(e){return false;}
   if(cl.error)return false;
   /* 서버 원우를 로컬 계정 목록에 병합 (원우수첩·동아리 회원 목록용) */
-  if(!mb.error)(mb.data||[]).forEach(applyRemoteMember);
+  if(!mb.error){
+    const live={};(mb.data||[]).forEach(r=>{live[r.sid]=1;});
+    S.accounts=(S.accounts||[]).filter(a=>a.system||live[a.sid]||(S.user&&a.sid===S.user.sid));
+    (mb.data||[]).forEach(applyRemoteMember);
+    if(S.user)S.user=acctBySid(S.user.sid)||S.user;
+  }
   const byClub=grp(cm.data,'club_id');
   S.clubMembers={};
   S.clubs=(cl.data||[]).map(r=>{
@@ -943,16 +999,14 @@ async function doLogin(){
       toast('로그인 확인 중 오류가 발생했습니다. 네트워크를 확인하고 다시 시도해주세요');return;
     }finally{ if(btn){btn.disabled=false;btn.textContent='로그인';} }
   }
-  const local=acctBySid(sid);            // 오프라인 폴백
-  if(local&&local.pw===pw){S.session=sid;S.remember=document.getElementById('lg-remember').checked;save();enterApp();return;}
-  toast('등록되지 않은 학번입니다. 회원가입을 이용하세요');
+  toast('서버에 연결할 수 없습니다. 네트워크를 확인하고 다시 시도해주세요');
 }
 async function doSignup(){
   if(!pickedSchool){toast('학교를 선택하세요');return;}
   const ag=document.getElementById('su-agree');
   if(ag&&!ag.checked){toast('이용약관 및 커뮤니티 규정에 동의해주세요');return;}
   const sid=gv('su-sid');
-  const need=['su-sid','su-name','su-gisu','su-company','su-title','su-email'];
+  const need=['su-sid','su-name','su-gisu'];
   if(!need.every(id=>gv(id))){toast('필수 항목(*)을 모두 입력하세요');return;}
   const pw=gv('su-pw');
   if(pw.length<6){toast('비밀번호는 6자 이상으로 입력해주세요');return;}
@@ -983,7 +1037,7 @@ async function doSignup(){
     switchTab('login');
   }catch(e){
     toast('가입 신청 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요');
-  }finally{ if(btn){btn.disabled=false;btn.textContent='가입하고 시작하기';} }
+  }finally{ if(btn){btn.disabled=false;btn.textContent='가입 신청하기';} }
 }
 function gv(id){return document.getElementById(id).value.trim();}
 
@@ -992,8 +1046,9 @@ function enterApp(){
   S.user=acctBySid(S.session);if(!S.user){S.session=null;save();return;}
   const u=S.user;
   if(!u.career)u.career=[];if(!u.clubs)u.clubs=[];if(u.exposure===undefined)u.exposure='basic';if(u.role===undefined)u.role='member';if(u.officer===undefined)u.officer='';
-  if(!S.clubs)S.clubs=seedClubs.map(c=>({...c,icon:''}));
+  if(!S.clubs)S.clubs=[];
   S.clubs.forEach(c=>{if(!c.scope)c.scope='all';});
+  if(!S.exchIn)S.exchIn=[];
   if(!S.clubPosts)S.clubPosts={};
   if(!S.clubRooms)S.clubRooms={};
   if(!S.jokbo)S.jokbo=[];
@@ -1005,7 +1060,7 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
-  const NAVM=[['home','홈','home'],['board','BZ 게시판','briefcase','','mob'],['jokbo','족보','book'],['club','동아리','ticket','','mob'],['officer','임원방','award'],['dir','원우수첩','idcard','','mob'],['signups','가입 승인','usercheck','admin'],['officeradmin','임원 관리','settings','admin'],['logs','오류 로그','activity','admin']];
+  const NAVM=[['home','홈','home','','mob'],['board','BZ 게시판','briefcase','','mob'],['meet','만남 · 미팅','users'],['notice','공지','bell'],['jokbo','족보','book'],['club','동아리','ticket','','mob'],['dir','원우수첩','idcard','','mob'],['officer','임원방','award'],['admin','관리','settings','admin']];
   window.NAVM_ALL=NAVM;
   document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item${x[3]==='admin'?' nav-admin-only':''}${x[4]==='mob'?' nav-mob':''}" data-view="${x[0]}"><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
   document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>
@@ -1031,32 +1086,46 @@ function openMenuDrawer(){
   const dr=document.createElement('div');dr.className='drawer';dr.id='drawer';
   dr.innerHTML=`
     <div class="d-head">${schoolMark(s,24)}<span>${s.short} MBA Lounge</span><button class="d-x" id="drawerX">✕</button></div>
+    <div class="d-search"><input id="drawerSearch" placeholder="원우·모임·게시글 검색" enterkeyhint="search"></div>
     <div class="d-sec">메인</div>
-    ${item('home','홈','home')}${item('board','BZ 게시판','briefcase')}${item('meet','만남 · 미팅','users')}${item('jokbo','족보','book')}${item('officer','임원방','award')}
+    ${item('home','홈','home')}${item('board','BZ 게시판','briefcase')}${item('meet','만남 · 미팅','users')}${item('notice','공지','bell')}${item('jokbo','족보','book')}${item('officer','임원방','award')}
     <div class="d-sec">커뮤니티</div>
     ${item('club','동아리','ticket')}${item('dir','원우수첩','idcard')}
     <div class="d-sec">내 활동</div>
     ${item('me','내 프로필','user')}
-    ${u.role==='admin'?`<div class="d-sec">관리자</div>${item('signups','가입 승인','usercheck')}${item('officeradmin','임원 관리','settings')}${item('logs','오류 로그','activity')}`:''}
+    ${u.role==='admin'?`<div class="d-sec">관리자</div>${item('admin','관리 (가입 승인 · 임원 · 오류 로그)','settings')}`:''}
     <button class="d-out" id="drawerOut">로그아웃</button>`;
   document.body.appendChild(bg);document.body.appendChild(dr);
   bg.onclick=closeMenuDrawer;
   dr.querySelector('#drawerX').onclick=closeMenuDrawer;
+  dr.querySelector('#drawerSearch').onkeydown=e=>{if(e.key==='Enter'){const q=e.target.value;closeMenuDrawer();doSearch(q);}};
   dr.querySelector('#drawerOut').onclick=()=>{closeMenuDrawer();ask('로그아웃하시겠어요?',()=>{S.session=null;S.user=null;save();doSignOut();});};
   dr.querySelectorAll('.d-item').forEach(b=>b.onclick=()=>{closeMenuDrawer();go(b.dataset.view);});
 }
 function closeMenuDrawer(){['drawerBg','drawer'].forEach(id=>{const e=document.getElementById(id);if(e)e.remove();});}
 let currentView='home';
 const BOARD_FAMILY=['notice','board','meet'];
+const ADMIN_VIEWS=['admin','signups','officeradmin','logs'];
+let adminTab='signups';
+/* 관리자 메뉴 통합: 가입 승인 · 임원 관리 · 오류 로그를 한 화면의 탭으로 */
+function viewAdmin(m,tab){
+  if(S.user.role!=='admin'){m.innerHTML='<div class="empty">관리자만 접근할 수 있습니다.</div>';return;}
+  if(tab)adminTab=tab;
+  const T=[['signups','가입 승인'],['officeradmin','임원 관리'],['logs','오류 로그']];
+  m.innerHTML=`<div class="chip-row" id="admTabs">${T.map(t=>`<button class="chip${t[0]===adminTab?' on':''}" data-t="${t[0]}">${t[1]}</button>`).join('')}</div><div id="admBody"></div>`;
+  m.querySelectorAll('#admTabs .chip').forEach(c=>c.onclick=()=>viewAdmin(m,c.dataset.t));
+  ({signups:viewSignups,officeradmin:viewOfficerAdmin,logs:viewLogs}[adminTab])(m.querySelector('#admBody'));
+}
 function go(v){currentView=v;
   const isMob=window.matchMedia('(max-width:860px)').matches;
   document.querySelectorAll('.nav-item').forEach(b=>{
     let on=b.dataset.view===v;
-    if(b.dataset.view==='board'&&(v==='meet'||(isMob&&BOARD_FAMILY.includes(v))))on=true;
+    if(b.dataset.view==='board'&&isMob&&BOARD_FAMILY.includes(v))on=true;
+    if(b.dataset.view==='admin'&&ADMIN_VIEWS.includes(v))on=true;
     b.classList.toggle('active',on);
   });
   const m=document.getElementById('main');window.scrollTo(0,0);
-  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,jokbo:viewJokboHome,signups:viewSignups,officeradmin:viewOfficerAdmin,logs:viewLogs,me:viewMe}[v]||viewHome)(m);
+  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,jokbo:viewJokboHome,admin:x=>viewAdmin(x),signups:x=>viewAdmin(x,'signups'),officeradmin:x=>viewAdmin(x,'officeradmin'),logs:x=>viewAdmin(x,'logs'),me:viewMe}[v]||viewHome)(m);
   /* 모바일: 게시판 계열 화면 상단에 서브탭(게시판·만남·공지·임원) 노출 */
   if(BOARD_FAMILY.includes(v)){
     const bar=document.createElement('div');bar.className='mob-subtabs';
@@ -1069,7 +1138,7 @@ function go(v){currentView=v;
 
 /* ---------- HOME ---------- */
 function viewHome(m){
-  const s=schoolByName(S.user.school)||schools[0];const ex=S.exchanged.length;
+  const s=schoolByName(S.user.school)||schools[0];const ex=(S.exchanged||[]).filter(exIn).length;const up=upcomingMeets();
   m.innerHTML=`
     <div class="hero-band">
       <div class="eyebrow" style="color:rgba(255,255,255,.85)">${s.name} MBA</div>
@@ -1078,24 +1147,23 @@ function viewHome(m){
       <span class="slogan">“${slogans[s.name]||'함께 성장하는 원우 네트워크'}”</span>
     </div>
     <div class="kpis">
-      <div class="kpi card"><div class="k-ic">${ico('users',24)}</div><div class="k-n">${S.meets.length}</div><div class="k-l">참여 가능한 만남·미팅</div></div>
+      <div class="kpi card"><div class="k-ic">${ico('users',24)}</div><div class="k-n">${up.length}</div><div class="k-l">예정된 모임</div></div>
       <div class="kpi card"><div class="k-ic">${ico('idcard',24)}</div><div class="k-n">${ex}</div><div class="k-l">교환한 연락처</div></div>
-      <div class="kpi card"><div class="k-ic">${ico('briefcase',24)}</div><div class="k-n">${S.posts.length}</div><div class="k-l">비즈니스 게시글</div></div>
+      <div class="kpi card"><div class="k-ic">${ico('briefcase',24)}</div><div class="k-n">${S.posts.length}</div><div class="k-l">게시글</div></div>
     </div>
     <div class="dash-grid">
       <div class="panel card">
         <h3>${ico('users',18)} 다가오는 만남·미팅 <span class="more" data-go="meet">전체보기</span></h3>
-        ${S.meets.slice(0,3).map(x=>`<div class="mini-row"><span class="date-chip">${x.date}</span><div><div class="mt">${esc(x.title)}</div><div class="ms">${esc(x.place)} · ${x.going}/${x.cap}명</div></div></div>`).join('')}
+        ${up.slice(0,3).map(x=>`<div class="mini-row"><span class="date-chip">${esc(mdate(x))}</span><div><div class="mt">${esc(x.title)}</div><div class="ms">${esc(x.place)} · ${x.going}/${x.cap}명</div></div></div>`).join('')||'<div class="ms" style="color:var(--sub);padding:8px 0">예정된 모임이 없습니다.</div>'}
       </div>
       <div class="panel card">
         <h3>${ico('briefcase',18)} 최신 비즈니스 소식 <span class="more" data-go="board">전체보기</span></h3>
-        ${S.posts.slice(0,3).map(x=>`<div class="mini-row"><span class="cat-tag ${x.cat}">${catName(x.cat)}</span><div><div class="mt">${esc(x.title)}</div><div class="ms">${esc(x.who)} · ${esc(x.co)}</div></div></div>`).join('')}
+        ${S.posts.slice(0,3).map(x=>`<div class="mini-row"><span class="cat-tag ${x.cat}">${catName(x.cat)}</span><div><div class="mt">${esc(x.title)}</div><div class="ms">${esc(x.who)} · ${esc(x.co)}</div></div></div>`).join('')||'<div class="ms" style="color:var(--sub);padding:8px 0">아직 게시글이 없습니다.</div>'}
       </div>
-    </div>
+    </div>${(S.exchIn||[]).filter(k=>!exOut(k)).length?`
     <div class="panel card" style="margin-top:16px">
-      <h3>${ico('idcard',18)} 원우수첩에서 새로운 인연을 <span class="more" data-go="dir">원우 보기</span></h3>
-      <p style="color:var(--sub);font-size:13.5px;margin-top:4px">관심 있는 원우와 연락처를 교환하고 사업·커리어로 연결되세요.</p>
-    </div>`;
+      <h3>${ico('idcard',18)} 연락처 교환 요청 ${(S.exchIn||[]).filter(k=>!exOut(k)).length}건 <span class="more" data-go="dir">원우수첩에서 수락</span></h3>
+    </div>`:''}`;
   m.querySelectorAll('[data-go]').forEach(e=>e.addEventListener('click',()=>go(e.dataset.go)));
 }
 
@@ -1303,7 +1371,8 @@ function viewMeet(m){
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between">
       <div><div class="eyebrow">Meet</div><h1>만남 · 미팅</h1><p>원우들과의 모임과 네트워킹 행사에 참여하세요.</p></div>
       <button class="btn" id="newMeet">${ico('plus',15)} 모임 만들기</button></div>
-    <div class="meet-grid">${S.meets.filter(x=>!isBlocked(x.by)).map(meetHTML).join('')}</div>`;
+    <div class="meet-grid">${upcomingMeets().map(meetHTML).join('')||'<div class="empty">예정된 모임이 없습니다. 첫 모임을 만들어 보세요.</div>'}</div>
+    ${(()=>{const past=S.meets.filter(x=>meetPast(x)&&!isBlocked(x.by));return past.length?`<details class="past-meets"><summary>지난 모임 ${past.length}</summary><div class="meet-grid">${past.map(meetHTML).join('')}</div></details>`:'';})()}`;
   m.querySelector('#newMeet').addEventListener('click',newMeet);
   m.querySelectorAll('.attend').forEach(b=>b.addEventListener('click',()=>{const x=S.meets.find(z=>z.id===b.dataset.id);
     x.attend=!x.attend;x.going+=x.attend?1:-1;save();cloudJoin(x.id,x.attend);viewMeet(m);toast(x.attend?'참여 신청 완료':'참여를 취소했습니다');}));
@@ -1313,7 +1382,7 @@ function viewMeet(m){
 function meetHTML(x){const pct=Math.min(100,Math.round(x.going/x.cap*100));
   return `<div class="meet-card card">
     ${x.img?`<div style="margin:-22px -22px 14px;border-radius:16px 16px 0 0;overflow:hidden;height:150px;background-image:url('${x.img}');background-size:cover;background-position:center"></div>`:''}
-    <div class="m-date">${ico('calendar',15)} ${x.date}</div><h3>${esc(x.title)}</h3>
+    <div class="m-date">${ico('calendar',15)} ${esc(mdate(x))}${meetPast(x)?' · 종료':''}</div><h3>${esc(x.title)}</h3>
     <div class="m-info"><span>${ico('pin',14)} ${esc(x.place)}</span><span>${ico('tag',14)} ${esc(x.org)}</span><span>${ico('user',14)} 주최 ${esc(x.by)}</span></div>
     <div style="color:#464c59;font-size:13.5px;margin-top:10px;flex:1">${esc(x.desc)}</div>
     <div class="meet-foot"><div class="cap-bar"><i style="width:${pct}%"></i></div><span class="cap-txt">${x.going}/${x.cap}</span>
@@ -1324,7 +1393,7 @@ function newMeet(){
   let imgData='';
   openModal('모임 만들기',`
     <div class="fld"><label>모임명</label><input id="nm-title" placeholder="예: 업종별 비즈니스 조찬회"></div>
-    <div class="fld"><label>날짜 (M/D)</label><input id="nm-date" placeholder="예: 7/20"></div>
+    <div class="fld"><label>날짜</label><input id="nm-date" type="date"></div>
     <div class="fld"><label>장소</label><input id="nm-place" placeholder="예: 강남 OO"></div>
     <div class="fld"><label>정원</label><input id="nm-cap" placeholder="예: 20" type="number"></div>
     <div class="fld"><label>소개</label><textarea id="nm-desc" placeholder="모임을 소개해 주세요"></textarea></div>
@@ -1333,7 +1402,8 @@ function newMeet(){
       <button type="button" class="btn sm ghost" id="nm-pic">${ico('camera',14)} 이미지 업로드</button></div>
       <input type="file" id="nm-file" accept="image/*" hidden></div>`,
     ()=>{const t=document.getElementById('nm-title').value.trim();if(!t){toast('모임명을 입력하세요');return false;}
-      const nm={id:uuid(),date:document.getElementById('nm-date').value.trim()||today(),
+      const dv=document.getElementById('nm-date').value.trim();if(!dv){toast('날짜를 선택하세요');return false;}
+      const nm={id:uuid(),date:dv,created:new Date().toISOString(),
         title:t,org:S.user.school+' MBA',place:document.getElementById('nm-place').value.trim()||'미정',by:S.user.name,
         cap:parseInt(document.getElementById('nm-cap').value)||20,going:1,attend:true,desc:document.getElementById('nm-desc').value.trim(),img:imgData};
       S.meets.unshift(nm);
@@ -1348,22 +1418,22 @@ function newMeet(){
 let dirScope='mine';
 const EXP={full:{protect:[]},basic:{protect:['phone','birth']},minimal:{protect:['phone','birth','career']}};
 function isProtected(exp,f){return (EXP[exp]||EXP.basic).protect.includes(f);}
-function realMembers(){return S.accounts.filter(a=>!a.system);}
+function exOut(k){return (S.exchanged||[]).includes(k);}
+function exIn(k){return (S.exchIn||[]).includes(k);}
+function exDone(k){return exOut(k)&&exIn(k);}   /* 양쪽이 모두 요청·수락해야 공개 */
+function realMembers(){return S.accounts.filter(a=>!a.system&&a.uid);}   /* 서버에 있는 승인 원우만 */
 function viewDir(m){
   const mine=S.user.school;
-  const list=realMembers().filter(x=>x.sid!==S.user.sid&&!isBlocked(x.name)&&(dirScope==='all'||x.school===mine));
+  const list=realMembers().filter(x=>x.sid!==S.user.sid&&!isBlocked(x.name)&&x.school===mine);
   m.innerHTML=`
-    <div class="page-head"><div class="eyebrow">Directory</div><h1>원우수첩</h1><p>원우와 연락처를 교환하고 사업·커리어로 연결되세요. 각 원우가 설정한 공개 범위에 따라 보이는 정보가 달라집니다.</p></div>
-    <div class="chip-row">
-      <button class="chip ${dirScope==='mine'?'on':''}" data-s="mine">우리 학교</button>
-      <button class="chip ${dirScope==='all'?'on':''}" data-s="all">전국 원우</button></div>
-    <div class="dir-grid">${list.map(memHTML).join('')||'<div class="empty">표시할 원우가 없습니다.</div>'}</div>`;
-  m.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',()=>{dirScope=c.dataset.s;viewDir(m);}));
+    <div class="page-head"><div class="eyebrow">Directory</div><h1>원우수첩</h1><p>우리 학교 승인 원우 ${list.length}명. 연락처는 서로 교환을 수락해야 공개됩니다.</p></div>
+    <div class="dir-grid">${list.map(memHTML).join('')||'<div class="empty">아직 승인된 다른 원우가 없습니다.</div>'}</div>`;
   m.querySelectorAll('.exch').forEach(b=>b.addEventListener('click',()=>{const key=b.dataset.k;
-    if(!S.exchanged.includes(key)){S.exchanged.push(key);save();cloudExchange(key);}viewDir(m);toast('연락처를 교환했습니다');}));
+    if(!S.exchanged.includes(key)){S.exchanged.push(key);save();cloudExchange(key);}viewDir(m);
+    toast(exIn(key)?'연락처를 교환했습니다':'교환을 요청했습니다. 상대가 수락하면 공개됩니다');}));
 }
 function memHTML(x){
-  const key=x.sid,done=S.exchanged.includes(key),ss=schoolByName(x.school),exp=x.exposure||'basic';
+  const key=x.sid,done=exDone(key),ss=schoolByName(x.school),exp=x.exposure||'basic';
   const canSee=f=>!isProtected(exp,f)||done;
   const expBadge=exp==='full'?'<span class="badge-exp full">전체 공개</span>':(exp==='minimal'?'<span class="badge-exp minimal">최소 공개</span>':'<span class="badge-exp">기본</span>');
   let rows=`<div class="kv"><span class="k">학번</span><span class="v">${esc(x.sid)}</span></div>
@@ -1381,7 +1451,9 @@ function memHTML(x){
     <div class="mem-sec">${rows}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">소속 동아리</div>${(x.clubs&&x.clubs.length)?`<div class="club-tags">${x.clubs.map(c=>`<span class="club-chip">${esc(c)}</span>`).join('')}</div>`:'<div class="lock">없음</div>'}</div>
     <div class="mem-sec"><div style="font-size:12px;font-weight:800;color:var(--sub);margin-bottom:6px">이력</div>${careerHTML}</div>
-    ${needExch?`<div class="exch-line"><button class="btn sm exch" data-k="${key}">연락처 교환</button><span class="lock">교환하면 잠긴 정보가 공개됩니다</span></div>`:(done?('<div class="exch-line"><span class="exchanged">'+ico('check',13)+' 연락처 교환 완료</span></div>'):'')}
+    ${needExch?(exOut(key)?`<div class="exch-line"><span class="lock">${ico('check',13)} 교환 요청함 · 상대가 수락하면 공개됩니다</span></div>`
+      :(exIn(key)?`<div class="exch-line"><button class="btn sm exch" data-k="${key}">교환 수락</button><span class="lock">${esc(x.name)}님이 연락처 교환을 요청했습니다</span></div>`
+      :`<div class="exch-line"><button class="btn sm exch" data-k="${key}">연락처 교환 요청</button><span class="lock">상대가 수락하면 서로 공개됩니다</span></div>`)):(done?('<div class="exch-line"><span class="exchanged">'+ico('check',13)+' 연락처 교환 완료</span></div>'):'')}
   </div>`;
 }
 
@@ -1695,9 +1767,9 @@ function viewOfficerAdmin(m){
       ${officers.length?officers.map(x=>`<div class="mini-row"><span class="badge-off">${ico('star',11)} ${esc(x.officer)}</span><div style="flex:1"><div class="mt">${esc(x.name)}</div><div class="ms">${esc(x.company)} · ${esc(x.title)}</div></div><button class="btn sm gray unoff" data-k="${esc(x.sid)}">해제</button></div>`).join(''):'<div class="ms" style="color:var(--sub)">임명된 임원이 없습니다.</div>'}</div>`;
   m.querySelector('#inv-send').addEventListener('click',()=>{const sid=document.getElementById('inv-mem').value;const acc=acctBySid(sid);if(!acc)return;const role=document.getElementById('inv-role').value;
     S.officerInvites=S.officerInvites||[];S.officerInvites.push({sid:sid,name:acc.name,role:role});save();viewOfficerAdmin(m);toast(acc.name+'님께 '+role+' 임원 초대를 보냈습니다');});
-  m.querySelectorAll('.apprv').forEach(b=>b.addEventListener('click',()=>{const iv=S.officerInvites[b.dataset.i];const acc=acctBySid(iv.sid);if(acc)acc.officer=iv.role;S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast(iv.name+'님이 '+iv.role+'(으)로 임명되었습니다');}));
+  m.querySelectorAll('.apprv').forEach(b=>b.addEventListener('click',()=>{const iv=S.officerInvites[b.dataset.i];const acc=acctBySid(iv.sid);if(acc)acc.officer=iv.role;cloudSetOfficer(iv.sid,iv.role);S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast(iv.name+'님이 '+iv.role+'(으)로 임명되었습니다');}));
   m.querySelectorAll('.rej').forEach(b=>b.addEventListener('click',()=>{S.officerInvites.splice(b.dataset.i,1);save();viewOfficerAdmin(m);toast('초대를 취소했습니다');}));
-  m.querySelectorAll('.unoff').forEach(b=>b.addEventListener('click',()=>{const acc=acctBySid(b.dataset.k);if(acc)acc.officer='';save();viewOfficerAdmin(m);toast('임원 직책을 해제했습니다');}));
+  m.querySelectorAll('.unoff').forEach(b=>b.addEventListener('click',()=>{const acc=acctBySid(b.dataset.k);if(acc)acc.officer='';cloudSetOfficer(b.dataset.k,'');save();viewOfficerAdmin(m);toast('임원 직책을 해제했습니다');}));
 }
 
 /* ---------- NOTICE ---------- */
@@ -1849,10 +1921,27 @@ function doSearch(q){q=q.trim();if(!q)return;
   const mem=realMembers().filter(x=>(x.name+x.company+x.title+x.sid).includes(q));
   const meets=S.meets.filter(x=>(x.title+x.place+x.org).includes(q));
   openModal('“'+esc(q)+'” 검색 결과',`
-    <p style="font-weight:800;margin:6px 0 6px">${ico('briefcase',15)} 게시글 ${posts.length}</p>${posts.map(p=>`<div class="cmt"><b>${esc(p.who)}</b><span>${esc(p.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
-    <p style="font-weight:800;margin:14px 0 6px">${ico('idcard',15)} 원우 ${mem.length}</p>${mem.map(x=>`<div class="cmt"><b>${esc(x.name)}</b><span>${esc(x.company)} ${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
-    <p style="font-weight:800;margin:14px 0 6px">${ico('users',15)} 모임 ${meets.length}</p>${meets.map(x=>`<div class="cmt"><b>${esc(x.date)}</b><span>${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}`,null,true);
+    <p style="font-weight:800;margin:6px 0 6px">${ico('briefcase',15)} 게시글 ${posts.length}</p>${posts.map(p=>`<div class="cmt sr-row" data-sr="board"><b>${esc(p.who)}</b><span>${esc(p.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
+    <p style="font-weight:800;margin:14px 0 6px">${ico('idcard',15)} 원우 ${mem.length}</p>${mem.map(x=>`<div class="cmt sr-row" data-sr="dir"><b>${esc(x.name)}</b><span>${esc(x.company)} ${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}
+    <p style="font-weight:800;margin:14px 0 6px">${ico('users',15)} 모임 ${meets.length}</p>${meets.map(x=>`<div class="cmt sr-row" data-sr="meet"><b>${esc(mdate(x))}</b><span>${esc(x.title)}</span></div>`).join('')||'<div style="color:var(--sub);font-size:13px">없음</div>'}`,null,true);
+  document.querySelectorAll('.modal .sr-row').forEach(r=>r.onclick=()=>{const v=r.dataset.sr;closeModal();go(v);});
 }
+
+/* 신고·차단 버튼을 '⋯' 뒤로 접기 (모든 카드 공통) */
+const TIDY_SEL='button.rep-j,button.blk-j,button.rep-p,button.blk-p,button.rep-c,button.rep-m,button.blk-m';
+function tidyActions(){
+  document.querySelectorAll(TIDY_SEL).forEach(b=>{
+    if(b.dataset.td)return;b.dataset.td='1';
+    const prev=b.previousElementSibling;
+    if(prev&&prev.dataset&&prev.dataset.td&&!prev.classList.contains('more-btn')){b.classList.add('more-hidden');return;}
+    const mb=document.createElement('button');mb.type='button';mb.className='more-btn';mb.dataset.td='1';mb.textContent='⋯';mb.title='신고 · 차단';mb.setAttribute('aria-label','신고 · 차단 메뉴');
+    if(b.style.marginLeft==='auto'){mb.style.marginLeft='auto';b.style.marginLeft='';}
+    b.parentNode.insertBefore(mb,b);b.classList.add('more-hidden');
+    mb.onclick=e=>{e.stopPropagation();let n=mb.nextElementSibling;
+      while(n&&n.dataset&&n.dataset.td&&!n.classList.contains('more-btn')){n.classList.toggle('more-hidden');n=n.nextElementSibling;}};
+  });
+}
+try{new MutationObserver(tidyActions).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
 
 /* ---------- utils ---------- */
 function openModal(title,html,onOk,infoOnly){
@@ -1879,6 +1968,15 @@ function ask(msg,onYes){openModal('확인','<p style="font-size:14px;line-height
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(()=>el.classList.remove('show'),2000);}
 function esc(s){return (s==null?'':''+s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function val(id){return document.getElementById(id).value.trim();}
+/* 모임 날짜: 새 글은 YYYY-MM-DD, 예전 글은 'M/D'(연도 없음 → 작성 연도로 해석) */
+function meetTime(x){const d=''+(x.date||'');let m=d.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(m)return new Date(+m[1],+m[2]-1,+m[3]).getTime();
+  m=d.match(/^(\d{1,2})\/(\d{1,2})$/);
+  if(m){const y=x.created?new Date(x.created).getFullYear():new Date().getFullYear();return new Date(y,+m[1]-1,+m[2]).getTime();}
+  return NaN;}
+function meetPast(x){const t=meetTime(x);if(isNaN(t))return false;const n=new Date();return t<new Date(n.getFullYear(),n.getMonth(),n.getDate()).getTime();}
+function mdate(x){const m=(''+(x.date||'')).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);return m?(+m[2])+'/'+(+m[3]):(x.date||'');}
+function upcomingMeets(){return (S.meets||[]).filter(x=>!meetPast(x)&&!isBlocked(x.by)).sort((a,b)=>(meetTime(a)||9e15)-(meetTime(b)||9e15));}
 function today(){const d=new Date();return (d.getMonth()+1)+'/'+d.getDate();}
 
 /* ===================== 이용약관(EULA) · Apple Guideline 1.2 ===================== */
