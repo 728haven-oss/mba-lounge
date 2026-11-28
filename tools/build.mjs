@@ -9,7 +9,8 @@ const DATA = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets/data/schools.jso
 const S = DATA.schools;
 const CHECKED = DATA.checked.replace(/-/g, '.');
 const SITE = 'https://728haven-oss.github.io/mba-lounge/';
-const CONTACT = '728haven@gmail.com';
+// 사업자 정보에 표시할 이메일: 빌드할 때 환경변수 SITE_CONTACT 로 넣는다 (코드에 주소를 두지 않음)
+const CONTACT = process.env.SITE_CONTACT || '';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const safeUrl = u => (/^https?:\/\//.test(u || '') ? u : null);
@@ -18,6 +19,12 @@ const TYPES = ['주간 풀타임', '야간·주말', 'Executive', '영어 과정
 
 /* ---------- 앱 기능 ---------- */
 const FEATURES = [
+  { id: 'biz', name: '비즈니스 매칭', icon: 'M3 12h4l3-8 4 16 3-8h4', shot: null, href: 'biz.html',
+    lead: '원우의 문제를 원우가 풉니다. 문제를 올리면 도울 수 있는 원우에게 먼저 보이고, 답변·사람 연결을 거쳐 프로젝트로 이어집니다.',
+    points: [['사업 프로필', '"제가 가진 문제"와 "제가 해줄 수 있는 것"을 분야 태그와 함께 적습니다.'],
+      ['나에게 맞는 문제', '내 분야와 겹치는 문제가 먼저 보여, 답하거나 아는 사람을 연결할 수 있습니다.'],
+      ['연결 성사', '작성자가 연결을 받으면 당사자끼리만 연락처가 보입니다.'],
+      ['프로젝트', '문제에서 시작해 필요한 역할을 정하고 원우의 참여 신청을 받습니다.']] },
   { id: 'board', name: 'BZ 게시판', icon: 'M4 5h16v11H8l-4 4z', shot: 'shot_2_board.png',
     lead: '사업제휴, 투자, 채용, 정보공유, 원우 인터뷰. 원우끼리 일 이야기를 나누는 게시판입니다.',
     points: [['분류별 게시판', '사업제휴·투자·채용·정보공유·원우 인터뷰로 나뉘어 필요한 글만 골라 봅니다.'],
@@ -39,10 +46,10 @@ const FEATURES = [
       ['별점', '수업 만족도를 별점으로 남겨 수강 신청 때 참고합니다.'],
       ['우리 학교 전용', '족보는 같은 학교 승인 회원에게만 보입니다.']] },
   { id: 'clubs', name: '동아리', icon: 'M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM16 11a3 3 0 1 0 0-6M2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 6 2 6 5', shot: null,
-    lead: '우리 학교 동아리와 10개 학교 연합 동아리. 가입하면 동아리방에서 소식과 회비를 관리합니다.',
-    points: [['학교·연합 동아리', '골프, 축구, 와인, 재테크 스터디처럼 우리 학교 동아리와 전체 MBA 연합 동아리로 나뉩니다.'],
-      ['가입 신청과 승인', '동아리장이 가입 신청을 승인하고, 새 동아리 개설은 임원이 승인합니다.'],
-      ['동아리방', '동아리 공지·게시판과 회비 입출금 장부를 함께 씁니다.']] },
+    lead: '우리 학교 동아리와 10개 학교 연합 동아리를 소개하고, 정기 모임과 공지를 알립니다.',
+    points: [['동아리 소개', '골프, 축구, 와인, 재테크 스터디처럼 우리 학교 동아리와 전체 MBA 연합 동아리를 한눈에 봅니다.'],
+      ['정기 모임', '다음 모임 날짜와 장소를 확인하고 참석을 신청합니다.'],
+      ['공지', '동아리장이 올린 공지를 놓치지 않고 받아 봅니다.']] },
   { id: 'directory', name: '원우수첩', icon: 'M4 5h16v14H4zM9 10a2 2 0 1 0 0-.01M6 16c.5-2 5.5-2 6 0M14 9h4M14 13h4', shot: null,
     lead: '원우 프로필을 찾아보고 연락처를 교환합니다. 무엇이 보일지는 각자 정합니다.',
     points: [['원우 찾기', '회사·직함·한 줄 소개·경력·소속 동아리로 원우를 찾습니다.'],
@@ -60,7 +67,7 @@ const svg = (d, n = 20) => `<svg width="${n}" height="${n}" viewBox="0 0 24 24" 
 function layout({ title, desc, body, page, root = '', active = '', school = null, path: p = '', ld = null, noindex = false, ogImage = null }) {
   const og = SITE + (ogImage || (school ? `assets/og/${school.id}.png` : 'assets/og/default.png'));
   const ldTag = ld ? `\n<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>` : '';
-  const nav = [['schools/index.html', '학교별 MBA', 'schools'], ['board.html', '공개 게시판', 'board'], ['app/index.html', '앱 기능', 'app'], ['stories.html', '원우 이야기', 'stories']];
+  const nav = [['schools/index.html', '학교별 MBA', 'schools'], ['biz.html', '비즈니스 매칭', 'biz'], ['board.html', '공개 게시판', 'board'], ['app/index.html', '앱 기능', 'app'], ['stories.html', '원우 이야기', 'stories']];
   const sc = school ? ` style="--sc:${school.color};--sc-soft:${school.soft}"` : '';
   return `<!DOCTYPE html>
 <html lang="ko" data-root="${root}"${sc}>
@@ -86,7 +93,7 @@ function layout({ title, desc, body, page, root = '', active = '', school = null
 <link rel="manifest" href="${root}manifest.json">
 <link rel="stylesheet" href="${root}assets/site.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
-<script src="${root}assets/site.js" defer></script>
+<script src="${root}assets/site.js" defer></script>${page === 'biz' || page === 'me' ? `\n<script src="${root}assets/biz.js" defer></script>` : ''}
 </head>
 <body data-page="${page}"${school ? ` data-school="${school.id}"` : ''}>
 <a class="sr" href="#main">본문으로 건너뛰기</a>
@@ -101,9 +108,9 @@ ${body}
 </main>
 <footer class="foot"><div class="wrap">
   <div><b style="color:var(--ink)">MBA Lounge</b><br>10개 학교 MBA 재학생·동문 커뮤니티</div>
-  <div><a href="${root}privacy.html">개인정보처리방침</a><a href="${root}child-safety.html">커뮤니티 안전 정책</a><a href="${root}delete-account.html">계정 삭제</a><a href="${root}feedback.html">의견·오류 신고</a><a href="mailto:${CONTACT}?subject=MBA%20Lounge%20문의">문의</a></div>
+  <div><a href="${root}privacy.html">개인정보처리방침</a><a href="${root}child-safety.html">커뮤니티 안전 정책</a><a href="${root}delete-account.html">계정 삭제</a><a href="${root}feedback.html">의견·문의</a></div>
 </div>
-<div class="wrap biz"><p>상호 컨범파트너스 · 대표 김재성 · 사업자등록번호 762-67-00440 · 통신판매업신고 2026-서울구로-1720<br>서울특별시 구로구 구로중앙로 198, B동 13층 103호·203호 (구로동) · 이메일 ${CONTACT}<br>© 2026 MBA Lounge. All rights reserved.</p></div></footer>
+<div class="wrap biz"><p>상호 컨범파트너스 · 대표 김재성 · 사업자등록번호 762-67-00440 · 통신판매업신고 2026-서울구로-1720<br>서울특별시 구로구 구로중앙로 198, B동 13층 103호·203호 (구로동)${CONTACT ? ` · 이메일 ${CONTACT}` : ''}<br>© 2026 MBA Lounge. All rights reserved.</p></div></footer>
 </body>
 </html>
 `;
@@ -154,7 +161,7 @@ function home() {
 
 <section class="blk"><div class="wrap">
   <div class="blk-head"><div><h2 class="h-l">앱에서 하는 일</h2><p>승인된 원우는 앱과 웹에서 같은 계정으로 학교 커뮤니티를 이용합니다.</p></div><a class="btn ghost sm" href="app-web.html">웹에서 앱 열기</a></div>
-  <div class="grid g3">${FEATURES.map(f => `<a class="feat" href="app/${f.id}.html"><span class="ic">${svg(f.icon)}</span><h3>${esc(f.name)}</h3><p>${esc(f.lead)}</p></a>`).join('')}</div>
+  <div class="grid g3">${FEATURES.map(f => `<a class="feat" href="${f.href || `app/${f.id}.html`}"><span class="ic">${svg(f.icon)}</span><h3>${esc(f.name)}</h3><p>${esc(f.lead)}</p></a>`).join('')}</div>
 </div></section>
 
 <section class="blk alt"><div class="wrap">
@@ -167,7 +174,7 @@ function home() {
 </div></section>`;
   write('index.html', layout({ title: 'MBA Lounge | 10개 학교 MBA 정보와 원우 커뮤니티', desc: '연세·서울대·KAIST·고려·서강·한양·이화·중앙·건국·성균관 MBA 과정과 입학 정보를 비교하고, 같은 학교 원우들과 커뮤니티에서 만나세요.', body, page: 'home', active: '', ld: [
     { '@context': 'https://schema.org', '@type': 'WebSite', name: 'MBA Lounge', alternateName: 'MBA 라운지', url: SITE, inLanguage: 'ko' },
-    { '@context': 'https://schema.org', '@type': 'Organization', name: 'MBA Lounge', url: SITE, logo: SITE + 'icon-512.png', email: CONTACT,
+    { '@context': 'https://schema.org', '@type': 'Organization', name: 'MBA Lounge', url: SITE, logo: SITE + 'icon-512.png',
       description: '연세·서울대·KAIST·고려·서강·한양·이화·중앙·건국·성균관 MBA 재학생·동문 커뮤니티' },
   ] }));
 }
@@ -425,7 +432,7 @@ function join() {
     <div class="field"><label for="lg-sid">학번</label><input class="input" id="lg-sid" autocomplete="username"></div>
     <div class="field"><label for="lg-pw">비밀번호</label><input class="input" id="lg-pw" type="password" autocomplete="current-password"></div>
     <button class="btn" id="lg-go" style="width:100%;padding:14px">로그인</button>
-    <p class="tiny">앱과 같은 학번·비밀번호를 씁니다. 비밀번호를 잊었다면 <a href="mailto:${CONTACT}?subject=MBA%20Lounge%20비밀번호%20재설정">운영팀에 문의</a>하세요.</p>
+    <p class="tiny">앱과 같은 학번·비밀번호를 씁니다. 비밀번호를 잊었다면 <a href="feedback.html?kind=other&from=/join.html">운영팀에 문의</a>하세요.</p>
   </form>
 </div></section>`;
   write('join.html', layout({ title: '가입 · 로그인 | MBA Lounge', desc: 'MBA Lounge 가입과 학교 등록. 학교 커뮤니티는 학교 관리자 승인 후 이용합니다.', body, page: 'join', path: 'join.html' }));
@@ -464,7 +471,7 @@ function appPages() {
     <h1 class="h-xl" style="margin-top:8px">${esc(f.name)}</h1>
     <p class="lead" style="margin-top:14px">${esc(f.lead)}</p>
     <ul class="f-points">${f.points.map(([b, t]) => `<li><b>${esc(b)}</b><span>${esc(t)}</span></li>`).join('')}</ul>
-    <div class="hero-cta"><a class="btn" href="${root}app-web.html">웹에서 ${esc(f.name)} 열기</a><a class="btn ghost" href="${root}join.html">가입하기</a></div>
+    <div class="hero-cta"><a class="btn" href="${root}${f.href || 'app-web.html'}">웹에서 ${esc(f.name)} 열기</a><a class="btn ghost" href="${root}join.html">가입하기</a></div>
     <p class="tiny" style="margin-top:12px">학교 관리자 승인을 받은 원우가 이용할 수 있습니다.</p>
   </div>
   ${f.shot ? `<div class="phone"><img src="${root}${f.shot}" alt="${esc(f.name)} 화면" loading="lazy" width="1080" height="1920"></div>` : `<div class="panel flat" style="justify-self:stretch;display:grid;place-items:center;min-height:260px;color:var(--brand-ink)">${svg(f.icon, 96)}</div>`}
@@ -492,9 +499,23 @@ function stories() {
   </div>
   <h2 class="h-m" style="margin:48px 0 16px">지면 미리보기</h2>
   <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr))">${pages.map((p, i) => `<a href="${p}" target="_blank" rel="noopener"><img src="${p}" alt="연세 헌터 No.01 ${i + 1}쪽" loading="lazy" width="911" height="1288" style="border:1px solid var(--line);border-radius:4px"></a>`).join('')}</div>
-  <p class="note">다른 학교 원우 이야기도 준비하고 있습니다. 인터뷰를 추천하고 싶은 원우가 있다면 <a href="mailto:${CONTACT}?subject=원우%20이야기%20추천">알려주세요</a>.</p>
+  <p class="note">다른 학교 원우 이야기도 준비하고 있습니다. 인터뷰를 추천하고 싶은 원우가 있다면 <a href="feedback.html?kind=suggestion&from=/stories.html">알려주세요</a>.</p>
 </div></section>`;
   write('stories.html', layout({ title: '원우 이야기 | MBA Lounge', desc: 'MBA 원우 인터뷰 시리즈. 연세 헌터 No.01 「졸업, 그 후 10년」.', body, page: 'stories', active: 'stories', path: 'stories.html' }));
+}
+
+/* ---------- 비즈니스 매칭 ---------- */
+function bizPage() {
+  const steps = [['문제를 올립니다', '원하는 도움(답변·사람 연결)과 분야를 고릅니다.'], ['맞는 원우에게 먼저 보입니다', '분야가 겹치는 원우의 "나에게 맞는 문제"에 올라갑니다.'],
+    ['답변하거나 사람을 이어 줍니다', '원우가 답하거나 아는 분을 연결 제안합니다. 받으면 당사자끼리 연락처가 열립니다.'], ['프로젝트로 키웁니다', '필요한 역할을 정하고 원우의 참여 신청을 받습니다.']];
+  const body = `
+<section class="blk tight"><div class="wrap">
+  <h1 class="h-l">비즈니스 매칭</h1>
+  <p class="lead" style="margin-top:8px">원우의 문제를 원우가 풉니다. 10개 학교 MBA 원우가 서로 가진 문제와 해줄 수 있는 것을 이어, 답과 사람과 프로젝트를 만듭니다.</p>
+  <ol class="biz-flow">${steps.map(([t, d]) => `<li><b>${t}</b><span>${d}</span></li>`).join('')}</ol>
+</div></section>
+<section class="blk tight" style="padding-top:0"><div class="wrap" id="biz"><div class="empty">불러오는 중…</div></div></section>`;
+  write('biz.html', layout({ title: '비즈니스 매칭 | MBA Lounge', desc: '10개 학교 MBA 원우가 서로의 사업 문제를 풀고 사람을 연결해 프로젝트로 키우는 원우 전용 공간.', body, page: 'biz', active: 'biz', path: 'biz.html' }));
 }
 
 /* ---------- 검색엔진: sitemap · robots · 404 ---------- */
@@ -502,7 +523,7 @@ function seoFiles() {
   const today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
   const pages = [
     ['', 'daily', '1.0'], ['schools/', 'weekly', '0.9'], ...S.map(s => [`schools/${s.id}.html`, 'weekly', '0.9']),
-    ['board.html', 'daily', '0.7'], ['stories.html', 'monthly', '0.6'], ['app/', 'monthly', '0.6'], ...FEATURES.map(f => [`app/${f.id}.html`, 'monthly', '0.5']),
+    ['biz.html', 'daily', '0.8'], ['board.html', 'daily', '0.7'], ['stories.html', 'monthly', '0.6'], ['app/', 'monthly', '0.6'], ...FEATURES.map(f => [`app/${f.id}.html`, 'monthly', '0.5']),
     ['join.html', 'monthly', '0.4'], ['feedback.html', 'yearly', '0.3'], ['privacy.html', 'yearly', '0.2'], ['child-safety.html', 'yearly', '0.2'], ['delete-account.html', 'yearly', '0.2'],
   ];
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${pages.map(([u, f, pr]) => `  <url><loc>${SITE}${u}</loc><lastmod>${today}</lastmod><changefreq>${f}</changefreq><priority>${pr}</priority></url>`).join('\n')}\n</urlset>\n`);
@@ -529,7 +550,7 @@ function feedbackPage() {
     <input type="text" id="fb-hp" name="website" tabindex="-1" autocomplete="off" class="sr" aria-hidden="true">
     <p class="small muted" id="fb-who"></p>
     <button class="btn" id="fb-go" style="width:100%;padding:14px">의견 보내기</button>
-    <div class="note" id="fb-fail" hidden>지금은 의견을 저장하지 못했습니다. <a id="fb-mail" href="#">이메일로 보내기</a>를 누르면 작성한 내용이 담긴 메일이 열립니다.</div>
+    <div class="note" id="fb-fail" hidden>지금은 의견을 저장하지 못했습니다. <a id="fb-mail" href="#">작성한 내용 복사하기</a>를 눌러 두고 잠시 후 다시 보내 주세요.</div>
   </form>
   <div class="panel" id="fb-done" hidden style="margin-top:24px"><div class="h-m">의견을 보냈습니다</div><p class="muted" id="fb-done-msg" style="margin-top:6px"></p>
     <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap"><a class="btn sm" href="index.html">홈으로</a><a class="btn sm ghost" href="feedback.html">다른 의견 보내기</a></div></div>
@@ -537,5 +558,5 @@ function feedbackPage() {
   write('feedback.html', layout({ title: '의견 보내기 | MBA Lounge', desc: 'MBA Lounge 사이트 이용 중 오류, 불편한 점, 제안을 보내 주세요.', body, page: 'feedback', path: 'feedback.html' }));
 }
 
-home(); schoolsIndex(); S.forEach(schoolPage); board(); join(); me(); admin(); appPages(); stories(); feedbackPage(); seoFiles();
+home(); schoolsIndex(); S.forEach(schoolPage); board(); join(); me(); admin(); appPages(); stories(); feedbackPage(); bizPage(); seoFiles();
 console.log('built', 6 + S.length + FEATURES.length + 1, 'pages');
