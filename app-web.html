@@ -14,6 +14,7 @@
 <link rel="icon" type="image/png" href="icon-192.png" />
 <!-- Supabase (계정·가입승인 백엔드) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<link rel="stylesheet" href="assets/biz.css">
 <style>
   :root{
     --pri:#6C5CE7; --pri2:#8B7CF7; --soft:#EFEBFF;
@@ -1060,7 +1061,7 @@ function enterApp(){
   document.getElementById('top-mark').innerHTML=schoolMark(s,30);
   document.getElementById('schoolChip').innerHTML=schoolMark(s,22)+'<span>'+s.short+'</span>';
   const av=document.getElementById('meAv');av.style.cssText='width:40px;height:40px;font-size:15px;'+(u.photo?`background-image:url('${u.photo}');color:transparent;`:'');av.textContent=u.photo?'':u.name.slice(0,1);
-  const NAVM=[['home','홈','home','','mob'],['board','BZ 게시판','briefcase','','mob'],['meet','만남 · 미팅','users'],['notice','공지','bell'],['jokbo','족보','book'],['club','동아리','ticket','','mob'],['dir','원우수첩','idcard','','mob'],['officer','임원방','award'],['admin','관리','settings','admin']];
+  const NAVM=[['home','홈','home','','mob'],['board','BZ 게시판','briefcase','','mob'],['biz','비즈 매칭','activity','','mob'],['meet','만남 · 미팅','users'],['notice','공지','bell'],['jokbo','족보','book'],['club','동아리','ticket'],['dir','원우수첩','idcard','','mob'],['officer','임원방','award'],['admin','관리','settings','admin']];
   window.NAVM_ALL=NAVM;
   document.getElementById('navMain').innerHTML=NAVM.map(x=>`<button class="nav-item${x[3]==='admin'?' nav-admin-only':''}${x[4]==='mob'?' nav-mob':''}" data-view="${x[0]}"><span class="ni">${ico(x[2],20)}</span>${x[1]}</button>`).join('');
   document.getElementById('navMine').innerHTML=`<button class="nav-item" data-view="me"><span class="ni">${ico('user',20)}</span>내 프로필</button>
@@ -1088,7 +1089,7 @@ function openMenuDrawer(){
     <div class="d-head">${schoolMark(s,24)}<span>${s.short} MBA Lounge</span><button class="d-x" id="drawerX">✕</button></div>
     <div class="d-search"><input id="drawerSearch" placeholder="원우·모임·게시글 검색" enterkeyhint="search"></div>
     <div class="d-sec">메인</div>
-    ${item('home','홈','home')}${item('board','BZ 게시판','briefcase')}${item('meet','만남 · 미팅','users')}${item('notice','공지','bell')}${item('jokbo','족보','book')}${item('officer','임원방','award')}
+    ${item('home','홈','home')}${item('board','BZ 게시판','briefcase')}${item('biz','비즈니스 매칭','activity')}${item('meet','만남 · 미팅','users')}${item('notice','공지','bell')}${item('jokbo','족보','book')}${item('officer','임원방','award')}
     <div class="d-sec">커뮤니티</div>
     ${item('club','동아리','ticket')}${item('dir','원우수첩','idcard')}
     <div class="d-sec">내 활동</div>
@@ -1125,7 +1126,7 @@ function go(v){currentView=v;
     b.classList.toggle('active',on);
   });
   const m=document.getElementById('main');window.scrollTo(0,0);
-  ({home:viewHome,board:viewBoard,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,jokbo:viewJokboHome,admin:x=>viewAdmin(x),signups:x=>viewAdmin(x,'signups'),officeradmin:x=>viewAdmin(x,'officeradmin'),logs:x=>viewAdmin(x,'logs'),me:viewMe}[v]||viewHome)(m);
+  ({home:viewHome,board:viewBoard,biz:viewBiz,meet:viewMeet,dir:viewDir,club:viewClub,notice:viewNotice,officer:viewOfficer,jokbo:viewJokboHome,admin:x=>viewAdmin(x),signups:x=>viewAdmin(x,'signups'),officeradmin:x=>viewAdmin(x,'officeradmin'),logs:x=>viewAdmin(x,'logs'),me:viewMe}[v]||viewHome)(m);
   /* 모바일: 게시판 계열 화면 상단에 서브탭(게시판·만남·공지·임원) 노출 */
   if(BOARD_FAMILY.includes(v)){
     const bar=document.createElement('div');bar.className='mob-subtabs';
@@ -1516,14 +1517,20 @@ function viewClubRoom(m,name,tab,skipPull){
   const r=clubRoom(name);
   const isLeader=(c.ownerUid?c.ownerUid===myUid():c.leaderSid===S.user.sid)||S.user.role==='admin';
   if(FB_ON&&joined&&!skipPull){cloudPullRoom(name).then(function(ok){if(ok)viewClubRoom(m,name,crTab,true);});}
-  const T=[['notice','공지사항','bell'],['post','게시판','comment'],['photo','사진첩','camera'],['member','회원 목록','users'],['ledger','회계 현황','trend']];
+  /* 동아리는 소개 · 정기 모임 · 공지 중심으로 운영 (게시판·사진첩·회계 탭은 숨김, 기존 데이터는 보존) */
+  const T=[['notice','공지 · 정기 모임','bell'],['member','회원 목록','users']];
+  if(!T.some(t=>t[0]===crTab))crTab='notice';
+  const MEET='[정기 모임] ';
   let body='';
   if(crTab==='notice'){
-    body=`${isLeader?`<button class="btn sm" id="crAddNotice" style="margin-bottom:14px">${ico('plus',14)} 공지 올리기</button>`
-        :`<div class="card" style="padding:12px 18px;margin-bottom:14px;font-size:12.5px;color:var(--sub)">${ico('lock',13)} 공지는 동아리 회장만 올릴 수 있습니다.</div>`}
+    const isMeet=p=>(p.title||'').indexOf(MEET)===0;
+    const next=r.notices.filter(isMeet)[0];
+    body=`${next?`<div class="card" style="padding:14px 18px;margin-bottom:14px;border-left:4px solid var(--brand,#6C5CE7)"><div style="font-size:12px;color:var(--sub)">${ico('calendar',13)} 가장 최근 정기 모임 안내</div><b style="display:block;margin-top:4px">${esc(next.title.slice(MEET.length))}</b><div style="font-size:13px;color:var(--sub);white-space:pre-wrap;margin-top:4px">${esc((next.body||'').split('\n\n')[0])}</div></div>`:''}
+      ${isLeader?`<button class="btn sm" id="crAddNotice" style="margin-bottom:14px">${ico('plus',14)} 공지 · 정기 모임 올리기</button>`
+        :`<div class="card" style="padding:12px 18px;margin-bottom:14px;font-size:12.5px;color:var(--sub)">${ico('lock',13)} 공지와 정기 모임 안내는 동아리 회장이 올립니다.</div>`}
       ${r.notices.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
-        <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">${ico('bell',11)} 공지</span></div><div class="meta">${p.date}</div></div></div>
-        <h3>${esc(p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지가 없습니다.</div>'}`;
+        <div style="flex:1"><div class="who">${esc(p.by)} <span class="badge-off">${isMeet(p)?ico('calendar',11)+' 정기 모임':ico('bell',11)+' 공지'}</span></div><div class="meta">${p.date}</div></div></div>
+        <h3>${esc(isMeet(p)?p.title.slice(MEET.length):p.title)}</h3><div class="body">${esc(p.body)}</div></div>`).join('')||'<div class="empty">아직 공지나 정기 모임 안내가 없습니다.</div>'}`;
   }else if(crTab==='post'){
     body=`${joined?`<button class="btn sm" id="crAddPost" style="margin-bottom:14px">${ico('plus',14)} 글쓰기</button>`:''}
       ${r.posts.map(p=>`<div class="post-card card"><div class="post-top">${avatarHTML({name:p.by},40)}
@@ -1565,9 +1572,10 @@ function viewClubRoom(m,name,tab,skipPull){
   m.innerHTML=`
     <div class="page-head" style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:14px">${clubIcHTML(c)}
-        <div><div class="eyebrow">Club Room</div><h1>${esc(name)}</h1><p>${clubScopeLabel(c)} · ${esc(c.cat)} · ${esc(c.desc)}</p></div></div>
+        <div><div class="eyebrow">Club Room</div><h1>${esc(name)}</h1><p>${clubScopeLabel(c)} · ${esc(c.cat)}${c.leader?' · 회장 '+esc(c.leader):''}</p></div></div>
       <button class="btn gray sm" id="crBack">← 동아리 목록</button></div>
-    ${joined?'':`<div class="card" style="padding:16px 20px;margin-bottom:14px;color:var(--sub);font-size:13.5px">${ico('lock',14)} 가입하면 공지·게시판·사진첩·회계에 참여할 수 있습니다.</div>`}
+    <div class="card" style="padding:16px 20px;margin-bottom:14px"><div style="font-size:12px;color:var(--sub);margin-bottom:4px">동아리 소개</div><div style="font-size:14px;white-space:pre-wrap">${esc(c.desc||'아직 소개가 없습니다.')}</div></div>
+    ${joined?'':`<div class="card" style="padding:16px 20px;margin-bottom:14px;color:var(--sub);font-size:13.5px">${ico('lock',14)} 가입하면 공지와 정기 모임 안내를 받아 볼 수 있습니다.</div>`}
     <div class="chip-row">${T.map(t=>`<button class="chip ${crTab===t[0]?'on':''}" data-t="${t[0]}">${ico(t[2],13)} ${t[1]}</button>`).join('')}</div>
     <div id="crBody">${body}</div>`;
   m.querySelector('#crBack').onclick=()=>go('club');
@@ -1586,11 +1594,19 @@ function viewClubRoom(m,name,tab,skipPull){
       c.leader=a.name;c.leaderSid=a.sid;
       if(a.uid){const r=await SB.from('clubs').update({owner:a.uid,meta:{cat:c.cat,scope:c.scope,school:c.school,leader:a.name,leaderSid:a.sid}}).eq('id',c.id);if(r.error)cloudFail(r.error);}
       save();viewClubRoom(m,name,'member');toast(a.name+'님이 새 회장이 되었습니다');});});
-  bind('#crAddNotice',()=>openModal(name+' 공지 올리기',
-    `<div class="fld"><label>제목</label><input id="cn-t" placeholder="공지 제목"></div><div class="fld"><label>내용</label><textarea id="cn-b" placeholder="동아리 회원들에게 알릴 내용"></textarea></div>`,
+  bind('#crAddNotice',()=>openModal(name+' 공지 · 정기 모임 올리기',
+    `<div class="fld"><label>구분</label><select id="cn-k"><option value="notice">공지</option><option value="meet">정기 모임 안내</option></select></div>
+     <div class="fld"><label>제목</label><input id="cn-t" placeholder="예: 12월 정기 라운딩 / 연말 총회 안내"></div>
+     <div class="fld cn-meet" style="display:none"><label>일시</label><input id="cn-when" placeholder="예: 12월 13일(토) 오전 7시"></div>
+     <div class="fld cn-meet" style="display:none"><label>장소</label><input id="cn-where" placeholder="예: 레이크사이드CC"></div>
+     <div class="fld"><label>내용</label><textarea id="cn-b" placeholder="동아리 회원들에게 알릴 내용"></textarea></div>`,
     ()=>{const t=val('cn-t');if(!t){toast('제목을 입력하세요');return false;}
-      const it={id:uuid(),by:S.user.name,date:today(),title:t,body:val('cn-b')};
-      r.notices.unshift(it);save();cloudAddRoomItem(name,'notice',it);viewClubRoom(m,name,null,true);toast('공지가 등록되었습니다');}));
+      const meet=document.getElementById('cn-k').value==='meet';
+      const info=meet?[val('cn-when')?'일시: '+val('cn-when'):'',val('cn-where')?'장소: '+val('cn-where'):''].filter(Boolean).join('\n'):'';
+      const it={id:uuid(),by:S.user.name,date:today(),title:(meet?MEET:'')+t,body:info?(info+(val('cn-b')?'\n\n'+val('cn-b'):'')):val('cn-b')};
+      r.notices.unshift(it);save();cloudAddRoomItem(name,'notice',it);viewClubRoom(m,name,null,true);toast(meet?'정기 모임 안내가 등록되었습니다':'공지가 등록되었습니다');}));
+  /* 정기 모임을 고르면 일시·장소 칸을 보여 준다 */
+  if(!window.__cnK){window.__cnK=1;document.addEventListener('change',function(e){if(e.target&&e.target.id==='cn-k'){document.querySelectorAll('.cn-meet').forEach(x=>x.style.display=e.target.value==='meet'?'':'none');}});}
   bind('#crAddPost',()=>openModal(name+' 글쓰기',
     `<div class="fld"><label>제목</label><input id="cr-t" placeholder="제목"></div><div class="fld"><label>내용</label><textarea id="cr-b" placeholder="동아리 원우들과 나눌 이야기"></textarea></div>`,
     ()=>{const t=val('cr-t');if(!t){toast('제목을 입력하세요');return false;}
@@ -1836,6 +1852,7 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
       <div class="exp-seg">${['full','basic','minimal'].map(e=>`<button class="exp-opt ${(u.exposure||'basic')===e?'on':''}" data-e="${e}"><b>${expTitle(e)}</b><span>${expDesc(e)}</span></button>`).join('')}</div>
       <div style="margin-top:20px"><div style="font-weight:700;font-size:13px;color:var(--sub);margin-bottom:10px">${ico('eye',15)} 다른 원우에게 보이는 내 카드 미리보기</div><div id="prevBox">${myPreviewCard()}</div></div>
     </div>
+    <div class="bizs" id="me-biz" style="max-width:620px;margin-top:16px"></div>
     <div class="card" style="padding:28px;max-width:620px;margin-top:16px">
       <div style="font-weight:800;font-size:16px">차단한 사용자</div>
       <p style="color:var(--sub);font-size:13.5px;margin-top:4px;margin-bottom:14px">차단한 사용자의 게시글·댓글·모임·족보 기록은 앱에서 보이지 않습니다. 언제든 해제할 수 있습니다.</p>
@@ -1847,6 +1864,7 @@ function viewMe(m){const s=schoolByName(S.user.school)||schools[0];const u=S.use
       <button class="btn" id="me-del" style="background:#C0392B;border-color:#C0392B">계정 삭제하기</button>
     </div>`;
   renderMeAvatar(m);renderCareerEditor(m);renderBlocked(m);
+  if(window.BIZ){try{BIZ.profile(m.querySelector('#me-biz'));}catch(e){}}
   m.querySelector('#me-del').addEventListener('click',deleteAccount);
   m.querySelector('#btn-photo').addEventListener('click',()=>m.querySelector('#me-photo').click());
   m.querySelector('#me-photo').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{u.photo=rd.result;save();renderMeAvatar(m);document.getElementById('meAv').style.backgroundImage=`url('${u.photo}')`;document.getElementById('meAv').style.color='transparent';document.getElementById('meAv').textContent='';m.querySelector('#prevBox').innerHTML=myPreviewCard();toast('프로필 사진이 변경되었습니다');};rd.readAsDataURL(f);});
@@ -2091,6 +2109,25 @@ if('serviceWorker' in navigator){window.addEventListener('load',function(){navig
 /* 전역 오류 자동 기록 → Supabase error_logs */
 window.addEventListener('error',function(e){try{logError('js',e.message,(e.filename||'')+':'+(e.lineno||'')+':'+(e.colno||'')+'\n'+((e.error&&e.error.stack)||''));}catch(_){}});
 window.addEventListener('unhandledrejection',function(e){try{var r=e.reason;logError('promise',(r&&r.message)||(''+r),(r&&r.stack)||'');}catch(_){}});
+
+/* ---------- 비즈니스 매칭 (assets/biz.js 를 앱 안에 붙인다. 홈페이지와 같은 데이터) ---------- */
+window.MBA={
+  get SB(){return SB;},
+  byId:function(id){var s=schools.find(function(x){return x.id===id;});return s?{short:s.short,name:s.name}:null;},
+  esc:esc, toast:toast,
+  fmtDate:function(iso){var d=new Date(iso);return isNaN(d)?'':d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0');},
+  $:function(s,el){return (el||document).querySelector(s);},
+  $$:function(s,el){return Array.from((el||document).querySelectorAll(s));},
+  loadMe:async function(){var u=S.user;if(!u||!myUid())return null;
+    return {uid:myUid(),name:u.name,school_id:mySchoolId(),status:u.status||'approved',role:u.role,company:u.company,title:u.title};},
+  profileLink:'#app-me'
+};
+window.addEventListener('hashchange',function(){if(location.hash==='#app-me'){history.replaceState(null,'',location.pathname+location.search);go('me');setTimeout(function(){var el=document.getElementById('me-biz');if(el)el.scrollIntoView({block:'start'});},400);}});
+function viewBiz(m){
+  m.innerHTML='<div class="page-head"><div class="eyebrow">Business Matching</div><h1>비즈니스 매칭</h1><p>원우의 문제를 원우가 풉니다. 문제를 올리면 도울 수 있는 원우에게 먼저 보이고, 답변·사람 연결을 거쳐 프로젝트로 이어집니다.</p></div><div class="bizs" id="biz"><div class="empty">불러오는 중…</div></div>';
+  if(window.BIZ)BIZ.mount();else m.querySelector('#biz').innerHTML='<div class="empty">비즈니스 매칭을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.</div>';
+}
 </script>
+<script src="assets/biz.js"></script>
 </body>
 </html>
